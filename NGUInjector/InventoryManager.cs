@@ -549,6 +549,12 @@ namespace NGUInjector
             _outputWriter.Flush();
         }
 
+        internal void MergeGuffs()
+        {
+            for (var id = 1000000; id - 1000000 < _character.inventory.macguffins.Count; ++id)
+                _controller.mergeAll(id);
+        }
+
         internal void ManagePendant(ih[] ci)
         {
             var grouped = ci.Where(x => _pendants.Contains(x.id));
