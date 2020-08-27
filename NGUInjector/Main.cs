@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Pipes;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading;
 using NGUInjector.AllocationProfiles;
@@ -66,73 +67,135 @@ namespace NGUInjector
         private CombatManager _combManager;
         private AllocationProfile _profile;
         
-        private int _trainingCap = 0;
-        
         private Rect _windowRect = new Rect(20, 20, 500,400);
 
         private bool _optionsVisible = false;
+
+        private static string _dir;
 
         private bool _active;
         internal static bool SnipeActive;
         
         private bool _manageEnergy;
         private bool _manageMagic;
-        private bool _manageTitanLoadouts;
+        
         private bool _manageYggdrasilLoadout;
         private bool _manageInventory;
         private bool _manageYggdrasil;
         private readonly Dictionary<int, string> _titanList = new Dictionary<int, string>();
 
+
         internal static int HighestAk;
         internal static int SnipeZoneTarget;
-        internal static bool SnipeWithBuffs;
+        private static bool _snipeWithBuffs;
+        private static bool _manageTitanLoadouts;
+        private static int[] _boostedItems;
+
+        private static FileSystemWatcher _configWatcher;
+
+        internal static bool SnipeWithBuffs
+        {
+            get => _snipeWithBuffs;
+            set
+            {
+                _snipeWithBuffs = value;
+                SaveSettings();
+            }
+        }
+
+        internal static bool ManageTitanLoadouts
+        {
+            get => _manageTitanLoadouts;
+            set
+            {
+                _manageTitanLoadouts = value;
+                SaveSettings();
+            }
+        }
+
 
         public void Start()
         {
-            OutputWriter = new StreamWriter(Environment.ExpandEnvironmentVariables("%userprofile%/Desktop/inject.log"));
-            LootWriter = new StreamWriter(Environment.ExpandEnvironmentVariables("%userprofile%/Desktop/loot.log"));
+            _dir = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%/Desktop"), "NGUInjector");
+            OutputWriter = new StreamWriter(Path.Combine(_dir, "inject.log"));
+            LootWriter = new StreamWriter(Path.Combine(_dir, "loot.log"));
             OutputWriter.WriteLine("Injected");
+            OutputWriter.Flush();
             LootWriter.WriteLine("Starting Loot Writer");
             LootWriter.Flush();
-            Character = FindObjectOfType<Character>();
-            Controller = Character.inventoryController;
-            PlayerController = FindObjectOfType<PlayerController>();
-            _invManager = new InventoryManager();
-            _yggManager = new YggdrasilManager(_invManager);
-            _combManager = new CombatManager();
-            _profile = new TwentyFourHourRebirth();
+            try
+            {
+                if (!Directory.Exists(_dir))
+                {
+                    Directory.CreateDirectory(_dir);
+                }
 
-            _titanList.Add(0, "None");
-            _titanList.Add(1, "GRB");
-            _titanList.Add(2, "GCT");
-            _titanList.Add(3, "Jake");
-            _titanList.Add(4, "UUG");
-            _titanList.Add(5, "Walderp");
-            _titanList.Add(6, "Beast");
-            _titanList.Add(7, "Greasy Nerd");
-            _titanList.Add(8, "Godmother");
-            _titanList.Add(9, "Exile");
-            _titanList.Add(10, "IT HUNGERS");
-            _titanList.Add(11, "Rock Lobster");
-            _titanList.Add(12, "Amalgamate");
 
-            _active = true;
-            SnipeActive = false;
-            SnipeWithBuffs = true;
-            _manageEnergy = false;
-            _manageMagic = false;
-            _manageTitanLoadouts = false;
-            _manageYggdrasilLoadout = false;
-            _manageInventory = true;
-            _manageYggdrasil = true;
-            SnipeZoneTarget = -1;
 
+                Character = FindObjectOfType<Character>();
+                Controller = Character.inventoryController;
+                PlayerController = FindObjectOfType<PlayerController>();
+                _invManager = new InventoryManager();
+                _yggManager = new YggdrasilManager(_invManager);
+                _combManager = new CombatManager();
+                _profile = new TwentyFourHourRebirth();
+
+                _titanList.Add(0, "None");
+                _titanList.Add(1, "GRB");
+                _titanList.Add(2, "GCT");
+                _titanList.Add(3, "Jake");
+                _titanList.Add(4, "UUG");
+                _titanList.Add(5, "Walderp");
+                _titanList.Add(6, "Beast");
+                _titanList.Add(7, "Greasy Nerd");
+                _titanList.Add(8, "Godmother");
+                _titanList.Add(9, "Exile");
+                _titanList.Add(10, "IT HUNGERS");
+                _titanList.Add(11, "Rock Lobster");
+                _titanList.Add(12, "Amalgamate");
+
+                _active = true;
+                SnipeActive = false;
+
+                _manageEnergy = false;
+                _manageMagic = false;
+                _manageYggdrasilLoadout = false;
+                _manageInventory = true;
+                _manageYggdrasil = true;
+
+                if (!LoadSettings())
+                {
+                    SnipeZoneTarget = -1;
+                    _snipeWithBuffs = true;
+                    HighestAk = 0;
+                    _manageTitanLoadouts = false;
+                    _boostedItems = new int[] { };
+                    SaveSettings();
+                    OutputWriter.WriteLine($"Loaded default settings");
+                }
+
+                _configWatcher = new FileSystemWatcher
+                {
+                    Path = _dir,
+                    Filter = "settings.json",
+                    NotifyFilter = NotifyFilters.LastWrite,
+                    EnableRaisingEvents = true
+                };
+
+                _configWatcher.Changed += (sender, args) => { LoadSettings(); };
+
+                InvokeRepeating("AutomationRoutine", 0.0f, 15.0f);
+                InvokeRepeating("SnipeZone", 0.0f, .1f);
+                InvokeRepeating("MonitorLog", 0.0f, 1f);
+            }
+            catch (Exception e)
+            {
+                OutputWriter.WriteLine(e);
+                OutputWriter.Flush();
+            }
             
-            HighestAk = 0;
+            
 
-            InvokeRepeating("AutomationRoutine", 0.0f, 15.0f);
-            InvokeRepeating("SnipeZone", 0.0f, .1f);
-            InvokeRepeating("MonitorLog", 0.0f, 1f);
         }
 
         public void Update()
@@ -151,6 +214,53 @@ namespace NGUInjector
                 _active = false;
                 SnipeActive = false;
                 Loader.Unload();
+            }
+
+        }
+
+        static bool LoadSettings()
+        {
+            var path = Path.Combine(_dir, "settings.json");
+            if (File.Exists(path))
+            {
+                try
+                {
+                    var settings = JsonUtility.FromJson<SavedSettings>(File.ReadAllText(path));
+                    HighestAk = settings.HighestAKZone;
+                    SnipeZoneTarget = settings.SnipeZone;
+                    _snipeWithBuffs = settings.PrecastBuffs;
+                    _manageTitanLoadouts = settings.SwapTitanLoadouts;
+                    _boostedItems = settings.BoostIDs;
+                    OutputWriter.WriteLine($"Loaded settings: {JsonUtility.ToJson(settings, true)}");
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+
+            }
+
+            return false;
+        }
+
+        static void SaveSettings()
+        {
+            var path = Path.Combine(_dir, "settings.json");
+            //remove filtered items
+            var settings = new SavedSettings
+            {
+                SnipeZone = SnipeZoneTarget,
+                HighestAKZone = HighestAk,
+                PrecastBuffs = SnipeWithBuffs,
+                SwapTitanLoadouts = _manageTitanLoadouts,
+                BoostIDs = _boostedItems
+            };
+            var serialized = JsonUtility.ToJson(settings, true);
+            using (var writer = new StreamWriter(path))
+            {
+                writer.Write(serialized);
+                writer.Flush();
             }
         }
 
@@ -173,6 +283,7 @@ namespace NGUInjector
             if (HighestAk == 0)
                 return;
             HighestAk -= 1;
+            SaveSettings();
         }
 
         private void AkForward()
@@ -180,6 +291,7 @@ namespace NGUInjector
             if (HighestAk == 11)
                 return;
             HighestAk += 1;
+            SaveSettings();
         }
 
         private void ZoneBack()
@@ -187,6 +299,7 @@ namespace NGUInjector
             if (SnipeZoneTarget == -1)
                 return;
             SnipeZoneTarget -= 1;
+            SaveSettings();
         }
 
         private void ZoneForward()
@@ -194,6 +307,7 @@ namespace NGUInjector
             if (SnipeZoneTarget == 44)
                 return;
             SnipeZoneTarget += 1;
+            SaveSettings();
         }
 
         void DoGui(int windowId)
@@ -246,7 +360,7 @@ namespace NGUInjector
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            _manageTitanLoadouts = GUILayout.Toggle(_manageTitanLoadouts, "Swap Loadout For Titan (Slot 2)");
+            ManageTitanLoadouts = GUILayout.Toggle(ManageTitanLoadouts, "Swap Loadout For Titan (Slot 2)");
             _manageYggdrasilLoadout = GUILayout.Toggle(_manageYggdrasilLoadout, "Swap Loadout For Yggdrasil (Slot 3)");
             GUILayout.EndHorizontal();
 
@@ -292,18 +406,6 @@ namespace NGUInjector
 
                 if (_manageInventory)
                 {
-                    var itemsToBoostList = new[]
-                    {
-                        "an infinitely long strand of beard hair",
-                        "ascended forest pendant",
-                        "ascended ascended forest pendant",
-                        "Sir Looty McLootington III, Esquire",
-                        "ring of greed",
-                        "ring of way too much energy",
-                        "stapler",
-                        "dragon wings",
-                        "a beard comb",
-                    };
                     var converted = Character.inventory.GetConvertedInventory(Controller).ToArray();
                     _invManager.EnsureFiltered(converted);
                     _invManager.ManagePendant(converted);
@@ -317,9 +419,7 @@ namespace NGUInjector
                     _invManager.BoostEquipped();
                     //Walderp Items
                     _invManager.BoostInventory(
-                        new[] { 149, 150, 151, 152, 153, 154, 155, 156, 157, 158,159, 160, 161 }, converted);
-                    _invManager.BoostInventory(
-                        itemsToBoostList, converted);
+                        _boostedItems, converted);
                     _invManager.BoostInfinityCube();
                 }
 
@@ -348,7 +448,7 @@ namespace NGUInjector
 
         void GetTotalTrainingCaps()
         {
-            _trainingCap = Character.training.attackCaps.Sum() + Character.training.defenseCaps.Sum();
+            //_trainingCap = Character.training.attackCaps.Sum() + Character.training.defenseCaps.Sum();
         }
 
 
