@@ -52,6 +52,24 @@ namespace NGUInjector.AllocationProfiles
                     Main.OutputWriter.Flush();
                 }
             }
+            else
+            {
+                var w = new BreakpointWrapper
+                {
+                    Breakpoints = new Breakpoints
+                    {
+                        Energy = new AllocationBreakPoint[] { },
+                        Magic = new AllocationBreakPoint[] { },
+                        Gear = new GearBreakpoint[] { }
+                    }
+                };
+
+                using (var writer = new StreamWriter(File.Open(_allocationPath, FileMode.CreateNew)))
+                {
+                    writer.WriteLine(JsonUtility.ToJson(w));
+                    writer.Flush();
+                }
+            }
         }
         
         public override void AllocateEnergy()
@@ -72,7 +90,23 @@ namespace NGUInjector.AllocationProfiles
             if (_character.idleEnergy == 0)
                 return;
 
-            var prioCount = bp.Priorities.Length;
+            var usedWandoos = false;
+            if (bp.Priorities.Contains("WAN"))
+            {
+                usedWandoos = true;
+                if (_character.wandoos98.wandoosEnergy < _character.wandoos98Controller.capAmountEnergy())
+                {
+                    _character.removeMostEnergy();
+                    _character.wandoos98Controller.addCapEnergy();
+                }
+                else
+                {
+                    _character.wandoos98Controller.addCapEnergy();
+                }
+            }
+
+
+            var prioCount = bp.Priorities.Length - (usedWandoos ? 1 : 0);
             var toAdd = (int)Math.Floor((double)_character.idleEnergy / prioCount);
             _character.input.energyRequested.text = toAdd.ToString();
             _character.input.validateInput();
@@ -96,13 +130,26 @@ namespace NGUInjector.AllocationProfiles
             {
                 _character.removeMostMagic();
                 _currentMagicBreakpoint = bp;
-                Main.OutputWriter.WriteLine(_currentMagicBreakpoint.Priorities[0]);
             }
 
             if (_character.magic.idleMagic == 0)
                 return;
 
-            var prioCount = bp.Priorities.Length;
+            var usedWandoos = false;
+            if (bp.Priorities.Contains("WAN"))
+            {
+                usedWandoos = true;
+                if (_character.wandoos98.wandoosMagic < _character.wandoos98Controller.capAmountMagic())
+                {
+                    _character.removeMostMagic();
+                    _character.wandoos98Controller.addCapMagic();
+                }
+                else
+                {
+                    _character.wandoos98Controller.addCapMagic();
+                }
+            }
+            var prioCount = bp.Priorities.Length - (usedWandoos ? 1 : 0);
             var toAdd = (int)Math.Floor((double)_character.magic.idleMagic / prioCount);
             _character.input.energyRequested.text = toAdd.ToString();
             _character.input.validateInput();
@@ -141,7 +188,8 @@ namespace NGUInjector.AllocationProfiles
         {
             foreach (var b in energy ? _wrapper.Breakpoints.Energy : _wrapper.Breakpoints.Magic)
             {
-                if (_character.rebirthTime.totalseconds > b.Time)
+                var rbTime = _character.rebirthTime.totalseconds;
+                if (rbTime > b.Time)
                 {
                     if (energy && _currentEnergyBreakpoint == null)
                     {
@@ -223,6 +271,7 @@ namespace NGUInjector.AllocationProfiles
                     return;
                 }
                 _character.NGUController.NGUMagic[index].add();
+                return;
             }
         }
 
