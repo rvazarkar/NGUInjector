@@ -154,8 +154,12 @@ namespace NGUInjector
             if (!_pc.moveCheck())
                 return;
 
-            if (CombatBuffs())
-                return;
+            if (!Main.FastCombat)
+            {
+                if (CombatBuffs())
+                    return;
+            }
+            
 
             CombatAttacks();
         }
@@ -316,10 +320,14 @@ namespace NGUInjector
         {
             var ac = _character.adventureController;
 
-            if (ParalyzeBoss())
+            if (!Main.FastCombat)
             {
-                return;
+                if (ParalyzeBoss())
+                {
+                    return;
+                }
             }
+            
 
             if (ChargeActive() && ac.ultimateAttackMove.button.IsInteractable())
             {

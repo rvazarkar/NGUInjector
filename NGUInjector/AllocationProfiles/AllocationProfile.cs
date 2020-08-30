@@ -25,6 +25,7 @@ namespace NGUInjector
 
         public abstract void AllocateEnergy();
         public abstract void AllocateMagic();
+        public abstract void EquipGear();
 
         public void ResetAllocationStages()
         {

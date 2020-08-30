@@ -16,16 +16,6 @@ namespace NGUInjector
             Titan,
             None
         }
-        class SavedLoadout
-        {
-            internal int Head { get; set; }
-            internal int Chest { get; set; }
-            internal int Legs { get; set; }
-            internal int Boots { get; set; }
-            internal int Weapon { get; set; }
-            internal int Weapon2 { get; set; }
-            internal List<int> Accessories { get; set; }
-        }
 
         private readonly Character _character;
         private readonly StreamWriter _outputWriter;
@@ -36,7 +26,6 @@ namespace NGUInjector
         private readonly int[] _wandoos = {66, 169};
 
         private LockType _lock;
-        private SavedLoadout _originalLoadout;
 
         //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane
         private readonly int[] _filterExcludes = { 66, 92, 163, 120, 154 };
@@ -395,10 +384,10 @@ namespace NGUInjector
             return _lock;
         }
 
-        internal void SwapLoadoutForTitans()
+        internal bool SwapLoadoutForTitans()
         {
             if (_lock == LockType.Yggdrasil)
-                return;
+                return false;
 
             if (TitansSpawningSoon() && _lock != LockType.Titan)
             {
@@ -407,13 +396,16 @@ namespace NGUInjector
                 _character.removeMostEnergy();
                 _character.removeMostMagic();
                 _controller.equipLoadout(1);
-                return;
+                return true;
             }
 
             if (_lock == LockType.Titan && !TitansSpawningSoon())
             {
                 RestoreOriginalLoadout();
+                return true;
             }
+
+            return false;
         }
 
         internal void BoostEquipped()
@@ -596,6 +588,34 @@ namespace NGUInjector
                         ?.Invoke(ic, null);
                 }
             }
+        }
+
+        internal void OptimizeSeedGain(ih[] ci)
+        {
+            var items = ci.Where(x => x.equipment.isEquipment() && GetSeedGain(x.equipment) > 0);
+        }
+
+        internal float GetSeedGain(Equipment e)
+        {
+            var amount =
+                typeof(ItemController).GetMethod("effectBonus", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (e.spec1Type == specType.Seeds)
+            {
+                var p = new object[] {e.spec1Cur, e.spec1Type};
+                return (float)amount?.Invoke(_controller, p);
+            }
+            if (e.spec2Type == specType.Seeds)
+            {
+                var p = new object[] { e.spec2Cur, e.spec2Type };
+                return (float)amount?.Invoke(_controller, p);
+            }
+            if (e.spec3Type == specType.Seeds)
+            {
+                var p = new object[] { e.spec3Cur, e.spec3Type };
+                return (float)amount?.Invoke(_controller, p);
+            }
+
+            return 0;
         }
 
         #region Filtering

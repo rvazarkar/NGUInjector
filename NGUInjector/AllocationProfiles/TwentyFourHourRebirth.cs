@@ -9,7 +9,7 @@ namespace NGUInjector.AllocationProfiles
     {
         public override void AllocateEnergy()
         {
-            var actualHours = _character.rebirthTime.days * 24 + _character.rebirthTime.hours;
+            var actualHours = Math.Floor(_character.rebirthTime.totalseconds / 60 / 60);
             if (actualHours < 1)
             {
                 if (_character.idleEnergy > 0)
@@ -46,7 +46,7 @@ namespace NGUInjector.AllocationProfiles
                     break;
                 if (i >= _character.bloodMagicController.ritualsUnlocked())
                     continue;
-                var goldCost = _character.bloodMagic.ritual[i].baseCost * _character.totalDiscount();
+                var goldCost = _character.bloodMagicController.bloodMagics[i].baseCost * _character.totalDiscount();
                 if (goldCost > _character.realGold && _character.bloodMagic.ritual[i].progress <= 0.0)
                     continue;
 
@@ -76,6 +76,11 @@ namespace NGUInjector.AllocationProfiles
                 _character.removeMostMagic();
                 CastRituals();
             }
+        }
+
+        public override void EquipGear()
+        {
+            throw new NotImplementedException();
         }
     }
 }

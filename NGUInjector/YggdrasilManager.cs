@@ -37,26 +37,38 @@ namespace NGUInjector
 
             return false;
         }
-        internal void ManageYggHarvest(bool swapLoadout)
+        internal void ManageYggHarvest()
         {
+            //We need to harvest but we dont have a loadout to manage OR we're not managing loadout
+            if (!Main.ManageYggdrasilLoadouts || LoadoutManager.YggdrasilLoadout.Length == 0)
+            {
+                //Not sure why this would be true, but safety first
+                if (LoadoutManager.CurrentLock == LoadoutManager.LockType.Yggdrasil)
+                {
+                    LoadoutManager.RestoreGear();
+                    LoadoutManager.ReleaseLock();
+                }
+                _character.yggdrasilController.consumeAll();
+                return;
+            }
+
+            //We dont need to harvest anymore and we've already swapped, so swap back
+            if (!NeedsHarvest() && LoadoutManager.CurrentLock == LoadoutManager.LockType.Yggdrasil)
+            {
+                LoadoutManager.RestoreGear();
+                LoadoutManager.ReleaseLock();
+            }
+
+            //We're managing loadouts
             if (NeedsHarvest())
             {
-                if (swapLoadout && _inv.CanSwapYgg())
-                {
-                    if (!_inv.SwapForYgg()) return;
-                    _character.yggdrasilController.consumeAll();
-                }
-                else
-                {
-                    _character.yggdrasilController.consumeAll();
-                }
-            }
-            else
-            {
-                if (_inv.GetLockType() == InventoryManager.LockType.Yggdrasil)
-                {
-                    _inv.RestoreOriginalLoadout();
-                }
+                if (!LoadoutManager.TryYggdrasilSwap())
+                    return;
+
+                //We swapped so harvest and then swap back
+                _character.yggdrasilController.consumeAll();
+                LoadoutManager.RestoreGear();
+                LoadoutManager.ReleaseLock();
             }
         }
 
