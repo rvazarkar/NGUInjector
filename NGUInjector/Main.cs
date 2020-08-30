@@ -68,6 +68,7 @@ namespace NGUInjector
         private InventoryManager _invManager;
         private CombatManager _combManager;
         private CustomAllocation _profile;
+        private float _timeLeft = 15.0f;
 
         private Rect _windowRect = new Rect(20, 20, 500,400);
 
@@ -207,6 +208,7 @@ namespace NGUInjector
 
         public void Update()
         {
+            _timeLeft -= Time.deltaTime;
             if (Input.GetKeyDown(KeyCode.KeypadMinus))
             {
                 _active = !_active;
@@ -222,6 +224,8 @@ namespace NGUInjector
                 SnipeActive = false;
                 Loader.Unload();
             }
+
+            
 
         }
 
@@ -307,6 +311,7 @@ namespace NGUInjector
 
             GUI.Label(new Rect(10, 10, 200, 40), $"Injected");
             GUI.Label(new Rect(10, 20, 200, 40), $"Automation - {(_active ? "Active" : "Inactive")}");
+            GUI.Label(new Rect(10, 30, 200, 40), $"Next Loop - {_timeLeft:00.0}s");
         }
 
         private void SnipeZone()
@@ -438,8 +443,17 @@ namespace NGUInjector
             try
             {
                 SaveSettings();
+                
                 if (!_active)
+                {
+                    _timeLeft = 15f;
                     return;
+                }
+
+                if (Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking)
+                {
+                    Character.adventureController.idleAttackMove.setToggle();
+                }
 
                 GetTotalTrainingCaps();
 
@@ -461,14 +475,14 @@ namespace NGUInjector
                     _invManager.BoostInfinityCube();
                 }
 
+                if (ManageTitanLoadouts)
+                    LoadoutManager.TryTitanSwap();
+
                 if (_manageYggdrasil)
                 {
                     _yggManager.ManageYggHarvest();
                     _yggManager.CheckFruits();
                 }
-
-                if (ManageTitanLoadouts)
-                    LoadoutManager.TryTitanSwap();
 
                 if (ManageGear)
                     _profile.EquipGear();
@@ -484,6 +498,7 @@ namespace NGUInjector
                 OutputWriter.WriteLine(e.StackTrace);
                 OutputWriter.Flush();
             }
+            _timeLeft = 15f;
         }
 
         void GetTotalTrainingCaps()

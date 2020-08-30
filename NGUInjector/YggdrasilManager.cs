@@ -65,10 +65,8 @@ namespace NGUInjector
                 if (!LoadoutManager.TryYggdrasilSwap())
                     return;
 
-                //We swapped so harvest and then swap back
+                //We swapped so harvest
                 _character.yggdrasilController.consumeAll();
-                LoadoutManager.RestoreGear();
-                LoadoutManager.ReleaseLock();
             }
         }
 
