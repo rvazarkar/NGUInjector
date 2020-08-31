@@ -180,7 +180,9 @@ namespace NGUInjector.AllocationProfiles
                 Main.Character.removeMostEnergy();
                 Main.Character.removeMostMagic();
                 _hasSwapped = true;
+                _currentGearBreakpoint = bp;
                 LoadoutManager.ChangeGear(bp.Gear);
+                Main.Controller.assignCurrentEquipToLoadout(0);
             }
         }
 
