@@ -287,7 +287,7 @@ namespace NGUInjector
                 return false;
             if (Main.Character.bossID >= 58 || Main.Character.achievements.achievementComplete[128])
             {
-                if (Math.Abs(ac.boss1SpawnTime() - a.boss1Spawn.totalseconds) < 30)
+                if (Math.Abs(ac.boss1SpawnTime() - a.boss1Spawn.totalseconds) < 20)
                 {
                     return true;
                 }
@@ -298,7 +298,7 @@ namespace NGUInjector
                 return false;
             if (Main.Character.bossID >= 66 || Main.Character.achievements.achievementComplete[129])
             {
-                if (Math.Abs(ac.boss2SpawnTime() - a.boss2Spawn.totalseconds) < 30)
+                if (Math.Abs(ac.boss2SpawnTime() - a.boss2Spawn.totalseconds) < 20)
                 {
                     return true;
                 }
@@ -308,7 +308,7 @@ namespace NGUInjector
                 return false;
             if (Main.Character.bossID >= 82 || Main.Character.bestiary.enemies[304].kills > 0)
             {
-                if (Math.Abs(ac.boss3SpawnTime() - a.boss3Spawn.totalseconds) < 30)
+                if (Math.Abs(ac.boss3SpawnTime() - a.boss3Spawn.totalseconds) < 20)
                 {
                     return true;
                 }
@@ -318,7 +318,7 @@ namespace NGUInjector
                 return false;
             if (Main.Character.bossID >= 100 || Main.Character.achievements.achievementComplete[130])
             {
-                if (Math.Abs(ac.boss4SpawnTime() - a.boss4Spawn.totalseconds) < 30)
+                if (Math.Abs(ac.boss4SpawnTime() - a.boss4Spawn.totalseconds) < 20)
                 {
                     return true;
                 }
@@ -328,7 +328,7 @@ namespace NGUInjector
                 return false;
             if (Main.Character.bossID >= 116 || Main.Character.achievements.achievementComplete[145])
             {
-                if (Math.Abs(ac.boss5SpawnTime() - a.boss5Spawn.totalseconds) < 30)
+                if (Math.Abs(ac.boss5SpawnTime() - a.boss5Spawn.totalseconds) < 20)
                 {
                     return true;
                 }
@@ -338,7 +338,7 @@ namespace NGUInjector
                 return false;
             if (Main.Character.bossID >= 132 || Main.Character.adventure.boss6Kills >= 1)
             {
-                if (Math.Abs(ac.boss6SpawnTime() - a.boss6Spawn.totalseconds) < 30)
+                if (Math.Abs(ac.boss6SpawnTime() - a.boss6Spawn.totalseconds) < 20)
                 {
                     return true;
                 }
@@ -348,7 +348,7 @@ namespace NGUInjector
                 return false;
             if (Main.Character.effectiveBossID() >= 426 || Main.Character.adventure.boss7Kills >= 1)
             {
-                if (Math.Abs(ac.boss7SpawnTime() - a.boss7Spawn.totalseconds) < 30)
+                if (Math.Abs(ac.boss7SpawnTime() - a.boss7Spawn.totalseconds) < 20)
                 {
                     return true;
                 }
@@ -358,7 +358,7 @@ namespace NGUInjector
                 return false;
             if (Main.Character.effectiveBossID() >= 467 || Main.Character.adventure.boss8Kills >= 1)
             {
-                if (Math.Abs(ac.boss8SpawnTime() - a.boss8Spawn.totalseconds) < 30)
+                if (Math.Abs(ac.boss8SpawnTime() - a.boss8Spawn.totalseconds) < 20)
                 {
                     return true;
                 }
@@ -368,7 +368,7 @@ namespace NGUInjector
                 return false;
             if (Main.Character.effectiveBossID() >= 491 || Main.Character.adventure.boss9Kills >= 1)
             {
-                if (Math.Abs(ac.boss9SpawnTime() - a.boss9Spawn.totalseconds) < 30)
+                if (Math.Abs(ac.boss9SpawnTime() - a.boss9Spawn.totalseconds) < 20)
                 {
                     return true;
                 }
@@ -378,7 +378,7 @@ namespace NGUInjector
                 return false;
             if (Main.Character.effectiveBossID() >= 727 || Main.Character.adventure.boss10Kills >= 1)
             {
-                if (Math.Abs(ac.boss10SpawnTime() - a.boss10Spawn.totalseconds) < 30)
+                if (Math.Abs(ac.boss10SpawnTime() - a.boss10Spawn.totalseconds) < 20)
                 {
                     return true;
                 }
@@ -388,7 +388,7 @@ namespace NGUInjector
                 return false;
             if (Main.Character.effectiveBossID() >= 826 || Main.Character.adventure.boss11Kills >= 1)
             {
-                if (Math.Abs(ac.boss11SpawnTime() - a.boss11Spawn.totalseconds) < 30)
+                if (Math.Abs(ac.boss11SpawnTime() - a.boss11Spawn.totalseconds) < 20)
                 {
                     return true;
                 }
@@ -398,7 +398,7 @@ namespace NGUInjector
                 return false;
             if (Main.Character.effectiveBossID() >= 848 || Main.Character.adventure.boss12Kills >= 1)
             {
-                if (Math.Abs(ac.boss12SpawnTime() - a.boss12Spawn.totalseconds) < 30)
+                if (Math.Abs(ac.boss12SpawnTime() - a.boss12Spawn.totalseconds) < 20)
                 {
                     return true;
                 }

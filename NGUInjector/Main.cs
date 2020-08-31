@@ -68,7 +68,7 @@ namespace NGUInjector
         private InventoryManager _invManager;
         private CombatManager _combManager;
         private CustomAllocation _profile;
-        private float _timeLeft = 15.0f;
+        private float _timeLeft = 10.0f;
 
         private Rect _windowRect = new Rect(20, 20, 500,400);
 
@@ -194,7 +194,7 @@ namespace NGUInjector
 
                 _allocationWatcher.Changed += (sender, args) => { LoadAllocation(); };
 
-                InvokeRepeating("AutomationRoutine", 0.0f, 15.0f);
+                InvokeRepeating("AutomationRoutine", 0.0f, 10.0f);
                 InvokeRepeating("SnipeZone", 0.0f, .1f);
                 InvokeRepeating("MonitorLog", 0.0f, 1f);
             }
@@ -457,7 +457,7 @@ namespace NGUInjector
                 
                 if (!_active)
                 {
-                    _timeLeft = 15f;
+                    _timeLeft = 10f;
                     return;
                 }
 
@@ -509,7 +509,7 @@ namespace NGUInjector
                 OutputWriter.WriteLine(e.StackTrace);
                 OutputWriter.Flush();
             }
-            _timeLeft = 15f;
+            _timeLeft = 10f;
         }
 
         void GetTotalTrainingCaps()
