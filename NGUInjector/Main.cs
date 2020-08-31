@@ -261,8 +261,8 @@ namespace NGUInjector
                     SnipeWithBuffs = settings.PrecastBuffs;
                     ManageTitanLoadouts = settings.SwapTitanLoadouts;
                     ManageYggdrasilLoadouts = settings.SwapYggdrasilLoadouts;
-                    _boostedItems = settings.BoostIDs;
-                    InventoryManager.BoostBlacklist = settings.BoostBlacklist;
+                    _boostedItems = settings.BoostIDs.OrderBy(x => x).ToArray();
+                    InventoryManager.BoostBlacklist = settings.BoostBlacklist.OrderBy(x => x).ToArray();
                     ManageEnergy = settings.ManageEnergy;
                     ManageMagic = settings.ManageMagic;
                     FastCombat = settings.FastCombat;
@@ -270,8 +270,8 @@ namespace NGUInjector
 
                     HighestAk = settings.HighestAKZone;
                     SnipeZoneTarget = settings.SnipeZone;
-                    LoadoutManager.TitanLoadout = settings.TitanLoadout;
-                    LoadoutManager.YggdrasilLoadout = settings.YggdrasilLoadout;
+                    LoadoutManager.TitanLoadout = settings.TitanLoadout.OrderBy(x => x).ToArray();
+                    LoadoutManager.YggdrasilLoadout = settings.YggdrasilLoadout.OrderBy(x => x).ToArray();
                     OutputWriter.WriteLine($"Loaded settings: {JsonUtility.ToJson(settings, true)}");
                     _currentSettings = settings;
                     return true;
@@ -296,17 +296,19 @@ namespace NGUInjector
                 PrecastBuffs = SnipeWithBuffs,
                 SwapTitanLoadouts = ManageTitanLoadouts,
                 SwapYggdrasilLoadouts = ManageYggdrasilLoadouts,
-                BoostIDs = _boostedItems,
+                BoostIDs = _boostedItems.OrderBy(x => x).ToArray(),
                 ManageEnergy = ManageEnergy,
                 ManageMagic = ManageMagic,
                 ManageGear = ManageGear,
-                YggdrasilLoadout = LoadoutManager.YggdrasilLoadout,
-                TitanLoadout = LoadoutManager.TitanLoadout,
-                FastCombat = FastCombat
+                YggdrasilLoadout = LoadoutManager.YggdrasilLoadout.OrderBy(x => x).ToArray(),
+                TitanLoadout = LoadoutManager.TitanLoadout.OrderBy(x => x).ToArray(),
+                FastCombat = FastCombat,
+                BoostBlacklist = InventoryManager.BoostBlacklist.OrderBy(x => x).ToArray()
             };
 
             if (!settings.Equals(_currentSettings))
             {
+                OutputWriter.WriteLine("Saving updated settings");
                 _currentSettings = settings;
                 var serialized = JsonUtility.ToJson(settings, true);
                 using (var writer = new StreamWriter(path))
@@ -315,7 +317,6 @@ namespace NGUInjector
                     writer.Flush();
                 }
             }
-            
         }
 
         public void OnGUI()

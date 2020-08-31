@@ -23,6 +23,11 @@ namespace NGUInjector
         [SerializeField] private int[] _yggdrasilLoadout;
         [SerializeField] private int[] _boostBlacklist;
 
+        public override string ToString()
+        {
+            return $"{nameof(_highestAkZone)}: {_highestAkZone}, {nameof(_snipeZone)}: {_snipeZone}, {nameof(_precastBuffs)}: {_precastBuffs}, {nameof(_swapTitanLoadouts)}: {_swapTitanLoadouts}, {nameof(_swapYggdrasilLoadouts)}: {_swapYggdrasilLoadouts}, {nameof(_boostIds)}: {_boostIds}, {nameof(_manageEnergy)}: {_manageEnergy}, {nameof(_manageMagic)}: {_manageMagic}, {nameof(_fastCombat)}: {_fastCombat}, {nameof(_manageGear)}: {_manageGear}, {nameof(_titanLoadout)}: {_titanLoadout}, {nameof(_yggdrasilLoadout)}: {_yggdrasilLoadout}, {nameof(_boostBlacklist)}: {_boostBlacklist}";
+        }
+
         public int HighestAKZone
         {
             get => _highestAkZone;
@@ -104,7 +109,7 @@ namespace NGUInjector
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _highestAkZone == other._highestAkZone && _snipeZone == other._snipeZone && _precastBuffs == other._precastBuffs && _swapTitanLoadouts == other._swapTitanLoadouts && _swapYggdrasilLoadouts == other._swapYggdrasilLoadouts && Equals(_boostIds, other._boostIds) && _manageEnergy == other._manageEnergy && _manageMagic == other._manageMagic && _fastCombat == other._fastCombat && _manageGear == other._manageGear && Equals(_titanLoadout, other._titanLoadout) && Equals(_yggdrasilLoadout, other._yggdrasilLoadout);
+            return _highestAkZone == other._highestAkZone && _snipeZone == other._snipeZone && _precastBuffs == other._precastBuffs && _swapTitanLoadouts == other._swapTitanLoadouts && _swapYggdrasilLoadouts == other._swapYggdrasilLoadouts  && _manageEnergy == other._manageEnergy && _manageMagic == other._manageMagic && _fastCombat == other._fastCombat && _manageGear == other._manageGear;
         }
 
         public override bool Equals(object obj)
@@ -124,13 +129,10 @@ namespace NGUInjector
                 hashCode = (hashCode * 397) ^ _precastBuffs.GetHashCode();
                 hashCode = (hashCode * 397) ^ _swapTitanLoadouts.GetHashCode();
                 hashCode = (hashCode * 397) ^ _swapYggdrasilLoadouts.GetHashCode();
-                hashCode = (hashCode * 397) ^ (_boostIds != null ? _boostIds.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ _manageEnergy.GetHashCode();
                 hashCode = (hashCode * 397) ^ _manageMagic.GetHashCode();
                 hashCode = (hashCode * 397) ^ _fastCombat.GetHashCode();
                 hashCode = (hashCode * 397) ^ _manageGear.GetHashCode();
-                hashCode = (hashCode * 397) ^ (_titanLoadout != null ? _titanLoadout.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (_yggdrasilLoadout != null ? _yggdrasilLoadout.GetHashCode() : 0);
                 return hashCode;
             }
         }
