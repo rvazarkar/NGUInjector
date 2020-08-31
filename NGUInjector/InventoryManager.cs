@@ -16,6 +16,7 @@ namespace NGUInjector
         private readonly int[] _pendants = { 53, 76, 94, 142, 170, 229, 295, 388, 430, 504 };
         private readonly int[] _lootys = { 67, 128, 169, 230, 296, 389, 431, 505 };
         private readonly int[] _wandoos = {66, 169};
+        internal static int[] BoostBlacklist;
 
 
         //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane
@@ -25,28 +26,33 @@ namespace NGUInjector
             _character = Main.Character;
             _outputWriter = Main.OutputWriter;
             _controller = Main.Controller;
+            BoostBlacklist = new int[]{};
         }
-
+        
         internal void BoostEquipped()
         {
             // Boost Equipped Slots
-            _controller.applyAllBoosts(-1);
-            _controller.applyAllBoosts(-2);
-            _controller.applyAllBoosts(-3);
-            _controller.applyAllBoosts(-4);
-            _controller.applyAllBoosts(-5);
+            if (!BoostBlacklist.Contains(_character.inventory.head.id))
+                _controller.applyAllBoosts(-1);
+            if (!BoostBlacklist.Contains(_character.inventory.chest.id))
+                _controller.applyAllBoosts(-2);
+            if (!BoostBlacklist.Contains(_character.inventory.legs.id))
+                _controller.applyAllBoosts(-3);
+            if (!BoostBlacklist.Contains(_character.inventory.boots.id))
+                _controller.applyAllBoosts(-4);
+            if (!BoostBlacklist.Contains(_character.inventory.weapon.id))
+                _controller.applyAllBoosts(-5);
 
-            if (_controller.weapon2Unlocked())
-            {
+            if (_controller.weapon2Unlocked() && !BoostBlacklist.Contains(_character.inventory.head.id))
                 _controller.applyAllBoosts(-6);
-            }
         }
 
         internal void BoostAccessories()
         {
             for (var i = 10000; _controller.accessoryID(i) < _controller.accessorySpaces(); i++)
             {
-                _controller.applyAllBoosts(i);
+                if (!BoostBlacklist.Contains(_character.inventory.accs[_controller.accessoryID(i)].id))
+                    _controller.applyAllBoosts(i);
             }
         }
 
@@ -56,7 +62,7 @@ namespace NGUInjector
             {
                 //Find all inventory slots that match this item name
                 var targets =
-                    ih.Where(x => x.id == item).ToArray();
+                    ih.Where(x => x.id == item && !BoostBlacklist.Contains(x.id)).ToArray();
 
                 switch (targets.Length)
                 {

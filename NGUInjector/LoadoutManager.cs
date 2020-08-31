@@ -4,15 +4,10 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
+using UnityEngine;
 
 namespace NGUInjector
 {
-    internal class SwapRequest
-    {
-        internal int[] Gear { get; set; }
-        internal float Time { get; set; }
-        internal float Expiry { get; set; }
-    }
 
     internal static class LoadoutManager
     {
@@ -45,6 +40,7 @@ namespace NGUInjector
 
         internal static void RestoreGear()
         {
+            Main.OutputWriter.WriteLine($"Restoring original loadout");
             ChangeGear(_savedLoadout);
         }
 
@@ -72,6 +68,7 @@ namespace NGUInjector
             //No lock currently, check if titans are spawning
             if (TitansSpawningSoon())
             {
+                Main.OutputWriter.WriteLine("Equipping Loadout for Titans");
                 //Titans are spawning soon, grab a lock and swap
                 AcquireLock(LockType.Titan);
                 SaveCurrentLoadout();
@@ -91,11 +88,14 @@ namespace NGUInjector
 
         internal static void ChangeGear(int[] gearIds)
         {
+            Main.OutputWriter.WriteLine($"Received New Gear: {string.Join(",", gearIds.Select(x => x.ToString()).ToArray())}");
             var accSlots = new List<int>();
             var inv = Main.Character.inventory;
             var controller = Main.Controller;
             var ci = inv.GetConvertedInventory(controller).ToArray();
             var weaponSlot = -5;
+            Main.Character.removeMostEnergy();
+            Main.Character.removeMostMagic();
             foreach (var itemId in gearIds)
             {
                 var slot = FindItemSlot(ci, itemId);
@@ -114,7 +114,6 @@ namespace NGUInjector
                 }
 
                 Main.OutputWriter.WriteLine($"Found {itemId} in slot {slot}");
-                Main.OutputWriter.Flush();
 
                 var type = inv.inventory[slot].type;
 
@@ -172,7 +171,6 @@ namespace NGUInjector
                         weaponSlot--;
                         break;
                     case part.Accessory:
-                        Main.OutputWriter.WriteLine($"Added {slot} to acc list");
                         accSlots.Add(slot);
                         break;
                 }
@@ -183,7 +181,7 @@ namespace NGUInjector
 
             foreach (var acc in accSlots)
             {
-                for (var i = 10000; Main.Controller.accessoryID(i) < inv.accs.Count; i++)
+                for (var i = 10000; controller.accessoryID(i) < inv.accs.Count; i++)
                 {
                     if (usedSlots.Contains(i))
                         continue;
@@ -195,11 +193,13 @@ namespace NGUInjector
                     break;
                 }
             }
+
             controller.updateBonuses();
             controller.updateInventory();
+            Main.OutputWriter.WriteLine($"Done equipping new gear");
         }
 
-        private static int FindItemSlot(ih[] ci, int id)
+        private static int FindItemSlot(IEnumerable<ih> ci, int id)
         {
             var items = ci.Where(x => x.id == id).ToArray();
             if (items.Length != 0) return items.MaxItem().slot;
@@ -248,7 +248,7 @@ namespace NGUInjector
             return -1000;
         }
 
-        static void SaveCurrentLoadout()
+        private static void SaveCurrentLoadout()
         {
             var inv = Main.Character.inventory;
             var loadout = new List<int>
@@ -272,6 +272,7 @@ namespace NGUInjector
                 loadout.Add(Main.Character.inventory.accs[index].id);
             }
             _savedLoadout = loadout.ToArray();
+            Main.OutputWriter.WriteLine($"Saved Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
         }
         private static bool TitansSpawningSoon()
         {

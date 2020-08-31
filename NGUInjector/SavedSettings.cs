@@ -21,6 +21,7 @@ namespace NGUInjector
         [SerializeField] private bool _manageGear;
         [SerializeField] private int[] _titanLoadout;
         [SerializeField] private int[] _yggdrasilLoadout;
+        [SerializeField] private int[] _boostBlacklist;
 
         public int HighestAKZone
         {
@@ -91,6 +92,12 @@ namespace NGUInjector
         {
             get => _yggdrasilLoadout;
             set => _yggdrasilLoadout = value;
+        }
+
+        public int[] BoostBlacklist
+        {
+            get => _boostBlacklist;
+            set => _boostBlacklist = value;
         }
 
         public bool Equals(SavedSettings other)

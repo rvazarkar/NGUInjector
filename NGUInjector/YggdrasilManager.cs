@@ -65,8 +65,11 @@ namespace NGUInjector
                 if (!LoadoutManager.TryYggdrasilSwap())
                     return;
 
+                Main.OutputWriter.WriteLine("Equipping Loadout for Yggdrasil and Harvesting");
                 //We swapped so harvest
                 _character.yggdrasilController.consumeAll();
+                LoadoutManager.RestoreGear();
+                LoadoutManager.ReleaseLock();
             }
         }
 

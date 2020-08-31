@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using NGUInjector.AllocationProfiles;
 using UnityEngine;
@@ -168,6 +169,7 @@ namespace NGUInjector
                     HighestAk = 0;
                     ManageTitanLoadouts = false;
                     _boostedItems = new int[] { };
+                    InventoryManager.BoostBlacklist = new int[] {};
                     LoadoutManager.TitanLoadout = new int[] { };
                     LoadoutManager.YggdrasilLoadout = new int[] { };
                     SaveSettings();
@@ -260,6 +262,7 @@ namespace NGUInjector
                     ManageTitanLoadouts = settings.SwapTitanLoadouts;
                     ManageYggdrasilLoadouts = settings.SwapYggdrasilLoadouts;
                     _boostedItems = settings.BoostIDs;
+                    InventoryManager.BoostBlacklist = settings.BoostBlacklist;
                     ManageEnergy = settings.ManageEnergy;
                     ManageMagic = settings.ManageMagic;
                     FastCombat = settings.FastCombat;
@@ -443,7 +446,8 @@ namespace NGUInjector
                 if (!line.Contains("dropped")) continue;
                 if (line.Contains("gold")) continue;
                 if (line.EndsWith("<b></b>")) continue;
-                LootWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{DateTime.Now.ToShortTimeString()}: {line}");
+                var result = Regex.Replace(line, @"\r\n?|\n", "");
+                LootWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{DateTime.Now.ToShortTimeString()}: {result}");
                 log[i] = $"{line}<b></b>";
             }
             LootWriter.Flush();
