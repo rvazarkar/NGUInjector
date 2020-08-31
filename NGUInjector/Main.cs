@@ -225,7 +225,20 @@ namespace NGUInjector
                 Loader.Unload();
             }
 
-            
+            if (Input.GetKeyDown(KeyCode.KeypadDivide))
+            {
+                var data = Character.importExport.getBase64Data();
+                using (var writer = new StreamWriter(Path.Combine(_dir, "NGUSave.txt")))
+                {
+                    writer.WriteLine(data);
+                }
+
+                data = JsonUtility.ToJson(Character.importExport.gameStateToData());
+                using (var writer = new StreamWriter(Path.Combine(_dir, "NGUSave.json")))
+                {
+                    writer.WriteLine(data);
+                }
+            }
 
         }
 
@@ -272,8 +285,6 @@ namespace NGUInjector
 
         static void SaveSettings()
         {
-            //OutputWriter.WriteLine(Environment.StackTrace);
-            //OutputWriter.Flush();
             var path = Path.Combine(_dir, "settings.json");
             var settings = new SavedSettings
             {
@@ -407,10 +418,10 @@ namespace NGUInjector
             ManageYggdrasilLoadouts = GUILayout.Toggle(ManageYggdrasilLoadouts, "Swap Loadout For Yggdrasil");
             GUILayout.EndHorizontal();
 
-            if (GUILayout.Button("Test Swap"))
-            {
-                _invManager.TestSwap();
-            }
+            //if (GUILayout.Button("Test Swap"))
+            //{
+            //    _invManager.TestSwap();
+            //}
 
 
             GUI.DragWindow(new Rect(0,0, 10000,10000));
@@ -506,74 +517,5 @@ namespace NGUInjector
             //_trainingCap = Character.training.attackCaps.Sum() + Character.training.defenseCaps.Sum();
         }
 
-
-
-
-        //private void StartPipeServer()
-        //{
-        //    do
-        //    {
-        //        _server = new NamedPipeServerStream("NGUPipe", PipeDirection.In, 10);
-        //        _server.WaitForConnection();
-        //        var br = new BinaryReader(_server);
-
-                
-
-        //        while (true)
-        //        {
-        //            try
-        //            {
-        //                var len = (int)br.ReadUInt32();            // Read string length
-        //                var data = new string(br.ReadChars(len));    // Read string
-
-        //                if (data.StartsWith("boostequipped"))
-        //                {
-        //                    outputWriter.WriteLine("Got command boostequipped");
-        //                    _controller.applyAllBoosts(-1);
-        //                    _controller.applyAllBoosts(-2);
-        //                    _controller.applyAllBoosts(-3);
-        //                    _controller.applyAllBoosts(-4);
-        //                    _controller.applyAllBoosts(-5);
-
-        //                    if (_controller.weapon2Unlocked())
-        //                    {
-        //                        _controller.applyAllBoosts(-6);
-        //                    }
-
-        //                    for (var i = 10000; _controller.accessoryID(i) < _controller.accessorySpaces(); i++)
-        //                    {
-        //                        _controller.applyAllBoosts(i);
-        //                    }
-
-        //                    //_controller.itemInfo.itemName[item.id]
-        //                    var msg = "Finished Boosting Equipped Items";
-        //                    outputWriter.WriteLine(msg);
-        //                    outputWriter.Flush();
-        //                }else if (data.StartsWith("boostinventory"))
-        //                {
-        //                    var argument = data.Split("-");
-        //                }
-        //                else if (data.StartsWith("close"))
-        //                {
-        //                    outputWriter.WriteLine("Client Disconnected");
-        //                    outputWriter.Flush();
-        //                    break;
-        //                }
-        //                else
-        //                {
-        //                    break;
-        //                }
-        //            }
-        //            catch
-        //            {
-        //                outputWriter.WriteLine("Client Disconnected");
-        //                outputWriter.Flush();
-        //                break;                    // When client disconnects
-        //            }
-        //        }
-        //        _server.Close();
-        //        _server.Dispose();
-        //    } while (true);
-        //}
     }
 }
