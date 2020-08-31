@@ -75,7 +75,7 @@ namespace NGUInjector
                 //Titans are spawning soon, grab a lock and swap
                 AcquireLock(LockType.Titan);
                 SaveCurrentLoadout();
-                Main.Controller.equipLoadout(1);
+                ChangeGear(TitanLoadout);
             }
         }
 
