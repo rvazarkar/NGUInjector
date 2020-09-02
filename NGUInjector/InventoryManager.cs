@@ -16,11 +16,12 @@ namespace NGUInjector
         private readonly int[] _pendants = { 53, 76, 94, 142, 170, 229, 295, 388, 430, 504 };
         private readonly int[] _lootys = { 67, 128, 169, 230, 296, 389, 431, 505 };
         private readonly int[] _wandoos = {66, 169};
+        private readonly int[] _guffs = {228, 211, 250, 291, 289, 290, 298, 299, 300};
         internal static int[] BoostBlacklist;
 
 
-        //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane
-        private readonly int[] _filterExcludes = { 66, 92, 163, 120, 154 };
+        //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane, Guffs
+        private readonly int[] _filterExcludes = { 66, 92, 163, 120, 154, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287  };
         public InventoryManager()
         {
             _character = Main.Character;
@@ -163,6 +164,7 @@ namespace NGUInjector
                 if (item.level != 100) continue;
                 var temp = _character.inventory.inventory[item.slot];
                 if (!temp.removable) continue;
+                ChangePage(item.slot);
                 var ic = _controller.inventory[item.slot];
                 _outputWriter.WriteLine();
                 typeof(ItemController).GetMethod("consumeItem", BindingFlags.NonPublic | BindingFlags.Instance)
@@ -179,22 +181,9 @@ namespace NGUInjector
                 var temp = _character.inventory.inventory[item.slot];
                 if (!temp.removable) continue;
                 var ic = _controller.inventory[item.slot];
+                ChangePage(item.slot);
                 typeof(ItemController).GetMethod("consumeItem", BindingFlags.NonPublic | BindingFlags.Instance)
                     ?.Invoke(ic, null);
-            }
-        }
-
-        internal void ManageWandoos(ih[] ci)
-        {
-            var win = ci.Where(x => x.id == _wandoos[0]).DefaultIfEmpty(null).FirstOrDefault();
-            if (win != null)
-            {
-                if (win.level > _character.wandoos98.OSlevel)
-                {
-                    var ic = _controller.inventory[win.slot];
-                    typeof(ItemController).GetMethod("consumeItem", BindingFlags.NonPublic | BindingFlags.Instance)
-                        ?.Invoke(ic, null);
-                }
             }
         }
 
@@ -223,8 +212,14 @@ namespace NGUInjector
 
         void FilterItem(int id)
         {
-            if (_pendants.Contains(id) || _lootys.Contains(id) || _filterExcludes.Contains(id) || id < 40)
+            if (_pendants.Contains(id) || _lootys.Contains(id) || _wandoos.Contains(id) ||
+                _filterExcludes.Contains(id) || _guffs.Contains(id) || id < 40)
                 return;
+
+            //Dont filter quest items
+            if (id >= 198 && id <= 210)
+                return;
+
 
             _character.inventory.itemList.itemFiltered[id] = true;
         }
