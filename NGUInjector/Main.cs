@@ -476,13 +476,16 @@ namespace NGUInjector
                 if (AutoFight)
                 {
                     var bc = Character.bossController;
-                    if (bc.character.attack / 5.0 > bc.character.bossDefense && bc.character.defense / 5.0 > bc.character.bossAttack)
-                        bc.startNuke();
-                    else
+                    if (!bc.isFighting && !bc.nukeBoss)
                     {
-                        if (bc.character.attack > (bc.character.bossDefense * 1.4))
+                        if (bc.character.attack / 5.0 > bc.character.bossDefense && bc.character.defense / 5.0 > bc.character.bossAttack)
+                            bc.startNuke();
+                        else
                         {
-                            bc.beginFight();
+                            if (bc.character.attack > (bc.character.bossDefense * 1.4))
+                            {
+                                bc.beginFight();
+                            }
                         }
                     }
                 }
