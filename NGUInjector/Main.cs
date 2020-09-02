@@ -81,7 +81,7 @@ namespace NGUInjector
         internal static bool SnipeActive;
 
         private bool _manageInventory;
-        private bool _manageYggdrasil;
+        private static bool _manageYggdrasil;
         
         private readonly Dictionary<int, string> _titanList = new Dictionary<int, string>();
 
@@ -158,7 +158,6 @@ namespace NGUInjector
                 ManageMagic = false;
                 ManageGear = false;
                 _manageInventory = true;
-                _manageYggdrasil = true;
                 LoadoutManager.TitanLoadout = new int[] { };
                 LoadoutManager.YggdrasilLoadout = new int[] { };
 
@@ -168,6 +167,7 @@ namespace NGUInjector
                     SnipeWithBuffs = true;
                     HighestAk = 0;
                     ManageTitanLoadouts = false;
+                    _manageYggdrasil = true;
                     _boostedItems = new int[] { };
                     InventoryManager.BoostBlacklist = new int[] {};
                     LoadoutManager.TitanLoadout = new int[] { };
@@ -224,6 +224,9 @@ namespace NGUInjector
             {
                 _active = false;
                 SnipeActive = false;
+                CancelInvoke("AutomationRoutine");
+                CancelInvoke("SnipeZone");
+                CancelInvoke("MonitorLog");
                 Loader.Unload();
             }
 
@@ -261,12 +264,13 @@ namespace NGUInjector
                     SnipeWithBuffs = settings.PrecastBuffs;
                     ManageTitanLoadouts = settings.SwapTitanLoadouts;
                     ManageYggdrasilLoadouts = settings.SwapYggdrasilLoadouts;
-                    _boostedItems = settings.BoostIDs.OrderBy(x => x).ToArray();
+                    _boostedItems = settings.BoostIDs;
                     InventoryManager.BoostBlacklist = settings.BoostBlacklist.OrderBy(x => x).ToArray();
                     ManageEnergy = settings.ManageEnergy;
                     ManageMagic = settings.ManageMagic;
                     FastCombat = settings.FastCombat;
                     ManageGear = settings.ManageGear;
+                    _manageYggdrasil = settings.ManageYggdrasil;
 
                     HighestAk = settings.HighestAKZone;
                     SnipeZoneTarget = settings.SnipeZone;
@@ -296,10 +300,11 @@ namespace NGUInjector
                 PrecastBuffs = SnipeWithBuffs,
                 SwapTitanLoadouts = ManageTitanLoadouts,
                 SwapYggdrasilLoadouts = ManageYggdrasilLoadouts,
-                BoostIDs = _boostedItems.OrderBy(x => x).ToArray(),
+                BoostIDs = _boostedItems,
                 ManageEnergy = ManageEnergy,
                 ManageMagic = ManageMagic,
                 ManageGear = ManageGear,
+                ManageYggdrasil = _manageYggdrasil,
                 YggdrasilLoadout = LoadoutManager.YggdrasilLoadout.OrderBy(x => x).ToArray(),
                 TitanLoadout = LoadoutManager.TitanLoadout.OrderBy(x => x).ToArray(),
                 FastCombat = FastCombat,
@@ -421,12 +426,6 @@ namespace NGUInjector
             ManageTitanLoadouts = GUILayout.Toggle(ManageTitanLoadouts, "Swap Loadout For Titan");
             ManageYggdrasilLoadouts = GUILayout.Toggle(ManageYggdrasilLoadouts, "Swap Loadout For Yggdrasil");
             GUILayout.EndHorizontal();
-
-            //if (GUILayout.Button("Test Swap"))
-            //{
-            //    _invManager.TestSwap();
-            //}
-
 
             GUI.DragWindow(new Rect(0,0, 10000,10000));
         }

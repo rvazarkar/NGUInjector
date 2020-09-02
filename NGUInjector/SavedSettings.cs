@@ -19,6 +19,7 @@ namespace NGUInjector
         [SerializeField]private bool _manageMagic;
         [SerializeField] private bool _fastCombat;
         [SerializeField] private bool _manageGear;
+        [SerializeField] private bool _manageYggdrasil;
         [SerializeField] private int[] _titanLoadout;
         [SerializeField] private int[] _yggdrasilLoadout;
         [SerializeField] private int[] _boostBlacklist;
@@ -105,11 +106,17 @@ namespace NGUInjector
             set => _boostBlacklist = value;
         }
 
+        public bool ManageYggdrasil
+        {
+            get => _manageYggdrasil;
+            set => _manageYggdrasil = value;
+        }
+
         public bool Equals(SavedSettings other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _highestAkZone == other._highestAkZone && _snipeZone == other._snipeZone && _precastBuffs == other._precastBuffs && _swapTitanLoadouts == other._swapTitanLoadouts && _swapYggdrasilLoadouts == other._swapYggdrasilLoadouts  && _manageEnergy == other._manageEnergy && _manageMagic == other._manageMagic && _fastCombat == other._fastCombat && _manageGear == other._manageGear;
+            return _highestAkZone == other._highestAkZone && _snipeZone == other._snipeZone && _precastBuffs == other._precastBuffs && _swapTitanLoadouts == other._swapTitanLoadouts && _swapYggdrasilLoadouts == other._swapYggdrasilLoadouts && _manageEnergy == other._manageEnergy && _manageMagic == other._manageMagic && _fastCombat == other._fastCombat && _manageGear == other._manageGear && _manageYggdrasil == other._manageYggdrasil;
         }
 
         public override bool Equals(object obj)
@@ -133,6 +140,7 @@ namespace NGUInjector
                 hashCode = (hashCode * 397) ^ _manageMagic.GetHashCode();
                 hashCode = (hashCode * 397) ^ _fastCombat.GetHashCode();
                 hashCode = (hashCode * 397) ^ _manageGear.GetHashCode();
+                hashCode = (hashCode * 397) ^ _manageYggdrasil.GetHashCode();
                 return hashCode;
             }
         }
