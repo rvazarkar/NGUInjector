@@ -15,6 +15,7 @@ namespace NGUInjector
 
         private readonly int[] _pendants = { 53, 76, 94, 142, 170, 229, 295, 388, 430, 504 };
         private readonly int[] _lootys = { 67, 128, 169, 230, 296, 389, 431, 505 };
+        private readonly int[] _convertibles;
         private readonly int[] _wandoos = {66, 169};
         private readonly int[] _guffs = {228, 211, 250, 291, 289, 290, 298, 299, 300};
         internal static int[] BoostBlacklist;
@@ -28,6 +29,9 @@ namespace NGUInjector
             _outputWriter = Main.OutputWriter;
             _controller = Main.Controller;
             BoostBlacklist = new int[]{};
+            var temp = _pendants.Concat(_lootys).ToList();
+            temp.Add(154);
+            _convertibles = temp.ToArray();
         }
         
         internal void BoostEquipped()
@@ -156,9 +160,9 @@ namespace NGUInjector
                 _controller.mergeAll(id);
         }
 
-        internal void ManagePendant(ih[] ci)
+        internal void ManageConvertibles(ih[] ci)
         {
-            var grouped = ci.Where(x => _pendants.Contains(x.id));
+            var grouped = ci.Where(x => _convertibles.Contains(x.id));
             foreach (var item in grouped)
             {
                 if (item.level != 100) continue;
@@ -167,21 +171,6 @@ namespace NGUInjector
                 ChangePage(item.slot);
                 var ic = _controller.inventory[item.slot];
                 _outputWriter.WriteLine();
-                typeof(ItemController).GetMethod("consumeItem", BindingFlags.NonPublic | BindingFlags.Instance)
-                    ?.Invoke(ic, null);
-            }
-        }
-
-        internal void ManageLooty(ih[] ci)
-        {
-            var grouped = ci.Where(x => _lootys.Contains(x.id));
-            foreach (var item in grouped)
-            {
-                if (item.level != 100) continue;
-                var temp = _character.inventory.inventory[item.slot];
-                if (!temp.removable) continue;
-                var ic = _controller.inventory[item.slot];
-                ChangePage(item.slot);
                 typeof(ItemController).GetMethod("consumeItem", BindingFlags.NonPublic | BindingFlags.Instance)
                     ?.Invoke(ic, null);
             }
