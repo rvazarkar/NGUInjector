@@ -107,6 +107,8 @@ namespace NGUInjector
 
         internal static bool ManageGear { get; set; }
 
+        internal static bool AutoFight { get; set; }
+
         private static SavedSettings _currentSettings;
 
 
@@ -380,6 +382,7 @@ namespace NGUInjector
             GUILayout.BeginHorizontal();
             _manageInventory = GUILayout.Toggle(_manageInventory, "Manage Inventory");
             _manageYggdrasil = GUILayout.Toggle(_manageYggdrasil, "Manage Yggdrasil");
+            AutoFight = GUILayout.Toggle(AutoFight, "Auto Fight Bosses");
             GUILayout.EndHorizontal();
             
             GUILayout.BeginHorizontal();
@@ -470,15 +473,27 @@ namespace NGUInjector
                     Character.adventureController.idleAttackMove.setToggle();
                 }
 
+                if (AutoFight)
+                {
+                    var bc = Character.bossController;
+                    if (bc.character.attack / 5.0 > bc.character.bossDefense && bc.character.defense / 5.0 > bc.character.bossAttack)
+                        bc.startNuke();
+                    else
+                    {
+                        if (bc.character.attack > (bc.character.bossDefense * 1.4))
+                        {
+                            bc.beginFight();
+                        }
+                    }
+                }
+
                 GetTotalTrainingCaps();
 
                 if (_manageInventory)
                 {
                     var converted = Character.inventory.GetConvertedInventory(Controller).ToArray();
                     _invManager.EnsureFiltered(converted);
-                    _invManager.ManagePendant(converted);
-                    _invManager.ManageLooty(converted);
-                    //_invManager.ManageWandoos(converted);
+                    _invManager.ManageConvertibles(converted);
                     _invManager.MergeEquipped();
                     _invManager.MergeInventory(converted);
                     _invManager.MergeBoosts(converted);
