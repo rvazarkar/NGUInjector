@@ -84,10 +84,11 @@ namespace NGUInjector
             }
         }
 
-        private void ChangePage(int slot)
+        private int ChangePage(int slot)
         {
             var page = (int)Math.Floor((double)slot / 60);
             _controller.changePage(page);
+            return slot - (page * 60);
         }
 
         internal void BoostInfinityCube()
@@ -168,8 +169,8 @@ namespace NGUInjector
                 if (item.level != 100) continue;
                 var temp = _character.inventory.inventory[item.slot];
                 if (!temp.removable) continue;
-                ChangePage(item.slot);
-                var ic = _controller.inventory[item.slot];
+                var newSlot = ChangePage(item.slot);
+                var ic = _controller.inventory[newSlot];
                 _outputWriter.WriteLine();
                 typeof(ItemController).GetMethod("consumeItem", BindingFlags.NonPublic | BindingFlags.Instance)
                     ?.Invoke(ic, null);
