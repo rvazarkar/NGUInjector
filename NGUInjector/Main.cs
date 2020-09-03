@@ -485,6 +485,7 @@ namespace NGUInjector
                             if (bc.character.attack > (bc.character.bossDefense * 1.4))
                             {
                                 bc.beginFight();
+                                bc.stopButton.gameObject.SetActive(true);
                             }
                         }
                     }
