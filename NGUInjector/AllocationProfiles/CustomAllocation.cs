@@ -239,7 +239,13 @@ namespace NGUInjector.AllocationProfiles
                     continue;
                 var goldCost = _character.bloodMagicController.bloodMagics[i].baseCost * _character.totalDiscount();
                 if (goldCost > _character.realGold && _character.bloodMagic.ritual[i].progress <= 0.0)
+                {
+                    if (_character.bloodMagic.ritual[i].magic > 0)
+                    {
+                        _character.bloodMagicController.bloodMagics[i].removeAllMagic();
+                    }
                     continue;
+                }
 
                 var tLeft = _character.bloodMagicController.bloodMagics[i].timeLeft();
                 if (!tLeft.EndsWith("s"))
