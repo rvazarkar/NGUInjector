@@ -8,7 +8,12 @@ using UnityEngine;
 
 namespace NGUInjector
 {
-
+    internal enum LockType
+    {
+        Titan,
+        Yggdrasil,
+        None
+    }
     internal static class LoadoutManager
     {
         private static int[] _savedLoadout;
@@ -16,13 +21,6 @@ namespace NGUInjector
         internal static int[] YggdrasilLoadout { get; set; }
         internal static int[] TitanLoadout { get; set; }
 
-
-        internal enum LockType
-        {
-            Titan,
-            Yggdrasil,
-            None
-        }
         internal static bool CanSwap()
         {
             return CurrentLock == LockType.None;
@@ -274,7 +272,7 @@ namespace NGUInjector
             _savedLoadout = loadout.ToArray();
             Main.OutputWriter.WriteLine($"Saved Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
         }
-        private static bool TitansSpawningSoon()
+        internal static bool TitansSpawningSoon()
         {
             if (!Main.Character.buttons.adventure.IsInteractable())
                 return false;

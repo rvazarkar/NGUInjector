@@ -58,6 +58,7 @@
     <Compile Include="AllocationProfiles\AllocationProfile.cs" />
     <Compile Include="AllocationProfiles\TwentyFourHourRebirth.cs" />
     <Compile Include="CombatManager.cs" />
+    <Compile Include="DiggerManager.cs" />
     <Compile Include="InventoryManager.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="LoadoutManager.cs" />

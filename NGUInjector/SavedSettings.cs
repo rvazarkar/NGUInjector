@@ -19,6 +19,7 @@ namespace NGUInjector
         [SerializeField]private bool _manageMagic;
         [SerializeField] private bool _fastCombat;
         [SerializeField] private bool _manageGear;
+        [SerializeField] private bool _manageDiggers;
         [SerializeField] private bool _manageYggdrasil;
         [SerializeField] private int[] _titanLoadout;
         [SerializeField] private int[] _yggdrasilLoadout;
@@ -112,11 +113,17 @@ namespace NGUInjector
             set => _manageYggdrasil = value;
         }
 
+        public bool ManageDiggers
+        {
+            get => _manageDiggers;
+            set => _manageDiggers = value;
+        }
+
         public bool Equals(SavedSettings other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _highestAkZone == other._highestAkZone && _snipeZone == other._snipeZone && _precastBuffs == other._precastBuffs && _swapTitanLoadouts == other._swapTitanLoadouts && _swapYggdrasilLoadouts == other._swapYggdrasilLoadouts && _manageEnergy == other._manageEnergy && _manageMagic == other._manageMagic && _fastCombat == other._fastCombat && _manageGear == other._manageGear && _manageYggdrasil == other._manageYggdrasil;
+            return _highestAkZone == other._highestAkZone && _snipeZone == other._snipeZone && _precastBuffs == other._precastBuffs && _swapTitanLoadouts == other._swapTitanLoadouts && _swapYggdrasilLoadouts == other._swapYggdrasilLoadouts && _manageEnergy == other._manageEnergy && _manageMagic == other._manageMagic && _fastCombat == other._fastCombat && _manageGear == other._manageGear && _manageDiggers == other._manageDiggers && _manageYggdrasil == other._manageYggdrasil;
         }
 
         public override bool Equals(object obj)
@@ -140,6 +147,7 @@ namespace NGUInjector
                 hashCode = (hashCode * 397) ^ _manageMagic.GetHashCode();
                 hashCode = (hashCode * 397) ^ _fastCombat.GetHashCode();
                 hashCode = (hashCode * 397) ^ _manageGear.GetHashCode();
+                hashCode = (hashCode * 397) ^ _manageDiggers.GetHashCode();
                 hashCode = (hashCode * 397) ^ _manageYggdrasil.GetHashCode();
                 return hashCode;
             }

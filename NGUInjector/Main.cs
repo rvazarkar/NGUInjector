@@ -107,6 +107,8 @@ namespace NGUInjector
 
         internal static bool ManageGear { get; set; }
 
+        internal static bool ManageDiggers { get; set; }
+
         internal static bool AutoFight { get; set; }
 
         private static SavedSettings _currentSettings;
@@ -135,6 +137,7 @@ namespace NGUInjector
                 _yggManager = new YggdrasilManager(_invManager);
                 _combManager = new CombatManager();
                 LoadoutManager.ReleaseLock();
+                DiggerManager.ReleaseLock();
                 _profile = new CustomAllocation(_dir);
                 _profile.ReloadAllocation();
                 
@@ -272,6 +275,7 @@ namespace NGUInjector
                     ManageMagic = settings.ManageMagic;
                     FastCombat = settings.FastCombat;
                     ManageGear = settings.ManageGear;
+                    ManageDiggers = settings.ManageDiggers;
                     _manageYggdrasil = settings.ManageYggdrasil;
 
                     HighestAk = settings.HighestAKZone;
@@ -306,6 +310,7 @@ namespace NGUInjector
                 ManageEnergy = ManageEnergy,
                 ManageMagic = ManageMagic,
                 ManageGear = ManageGear,
+                ManageDiggers = ManageDiggers,
                 ManageYggdrasil = _manageYggdrasil,
                 YggdrasilLoadout = LoadoutManager.YggdrasilLoadout.OrderBy(x => x).ToArray(),
                 TitanLoadout = LoadoutManager.TitanLoadout.OrderBy(x => x).ToArray(),
@@ -423,6 +428,7 @@ namespace NGUInjector
             ManageEnergy = GUILayout.Toggle(ManageEnergy, "Manage Energy");
             ManageMagic = GUILayout.Toggle(ManageMagic, "Manage Magic");
             ManageGear = GUILayout.Toggle(ManageGear, "Manage Gear");
+            ManageDiggers = GUILayout.Toggle(ManageDiggers, "Manage Diggers");
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
@@ -510,7 +516,12 @@ namespace NGUInjector
                 }
 
                 if (ManageTitanLoadouts)
+                {
                     LoadoutManager.TryTitanSwap();
+                    DiggerManager.TryTitanSwap();
+                }
+                    
+                
 
                 if (_manageYggdrasil)
                 {
@@ -524,6 +535,8 @@ namespace NGUInjector
                     _profile.AllocateEnergy();
                 if (ManageMagic)
                     _profile.AllocateMagic();
+                if (ManageDiggers)
+                    _profile.EquipDiggers();
                 
             }
             catch (Exception e)

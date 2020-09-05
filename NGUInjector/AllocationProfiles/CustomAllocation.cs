@@ -16,7 +16,9 @@ namespace NGUInjector.AllocationProfiles
         private AllocationBreakPoint _currentMagicBreakpoint;
         private AllocationBreakPoint _currentEnergyBreakpoint;
         private GearBreakpoint _currentGearBreakpoint;
-        private bool _hasSwapped = false;
+        private DiggerBreakpoint _currentDiggerBreakpoint;
+        private bool _hasGearSwapped;
+        private bool _hasDiggerSwapped;
         private readonly string _allocationPath;
 
         public CustomAllocation(string dir)
@@ -38,11 +40,13 @@ namespace NGUInjector.AllocationProfiles
                     _wrapper.Breakpoints.Magic = breakpoints["Magic"].Children.Select(bp => new AllocationBreakPoint { Time = bp["Time"].AsInt, Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Energy = breakpoints["Energy"].Children.Select(bp => new AllocationBreakPoint { Time = bp["Time"].AsInt, Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Gear = breakpoints["Gear"].Children.Select(bp => new GearBreakpoint { Time = bp["Time"].AsInt, Gear = bp["ID"].AsArray.Children.Select(x => x.AsInt).ToArray() }).OrderByDescending(x => x.Time).ToArray();
-                    Main.OutputWriter.WriteLine($"Loaded custom allocation:\n{_wrapper.Breakpoints.Energy.Length} energy breakpoints\n{_wrapper.Breakpoints.Magic.Length} magic breakpoints\n{_wrapper.Breakpoints.Gear.Length} gear breakpoints");
+                    _wrapper.Breakpoints.Diggers = breakpoints["Diggers"].Children.Select(bp => new DiggerBreakpoint { Time = bp["Time"].AsInt, Diggers = bp["List"].AsArray.Children.Select(x => x.AsInt).ToArray() }).OrderByDescending(x => x.Time).ToArray();
+                    Main.OutputWriter.WriteLine($"Loaded custom allocation:\n{_wrapper.Breakpoints.Energy.Length} energy breakpoints\n{_wrapper.Breakpoints.Magic.Length} magic breakpoints\n{_wrapper.Breakpoints.Gear.Length} gear breakpoints\n{_wrapper.Breakpoints.Diggers.Length} digger breakpoints");
                     Main.OutputWriter.Flush();
                     _currentEnergyBreakpoint = null;
                     _currentMagicBreakpoint = null;
                     _currentGearBreakpoint = null;
+                    _currentDiggerBreakpoint = null;
                     _character.removeMostEnergy();
                     _character.removeMostMagic();
                 }
@@ -60,7 +64,8 @@ namespace NGUInjector.AllocationProfiles
                     {
                         Energy = new AllocationBreakPoint[] { },
                         Magic = new AllocationBreakPoint[] { },
-                        Gear = new GearBreakpoint[] { }
+                        Gear = new GearBreakpoint[] { },
+                        Diggers = new DiggerBreakpoint[] {}
                     }
                 };
 
@@ -170,19 +175,45 @@ namespace NGUInjector.AllocationProfiles
 
             if (bp.Time != _currentGearBreakpoint.Time)
             {
-                _hasSwapped = false;
+                _hasGearSwapped = false;
             }
 
-            if (_hasSwapped) return;
+            if (_hasGearSwapped) return;
 
             if (LoadoutManager.CanSwap())
             {
                 Main.Character.removeMostEnergy();
                 Main.Character.removeMostMagic();
-                _hasSwapped = true;
+                _hasGearSwapped = true;
                 _currentGearBreakpoint = bp;
                 LoadoutManager.ChangeGear(bp.Gear);
                 Main.Controller.assignCurrentEquipToLoadout(0);
+            }
+        }
+
+        public override void EquipDiggers()
+        {
+            if (_wrapper == null)
+                return;
+            var bp = GetCurrentDiggerBreakpoint();
+            if (bp == null)
+                return;
+
+            if (bp.Time != _currentDiggerBreakpoint.Time)
+            {
+                _hasDiggerSwapped = false;
+            }
+
+            if (_hasDiggerSwapped) return;
+
+            if (LoadoutManager.CanSwap())
+            {
+                Main.Character.removeMostEnergy();
+                Main.Character.removeMostMagic();
+                _hasDiggerSwapped = true;
+                _currentDiggerBreakpoint = bp;
+                Main.OutputWriter.WriteLine($"Len: {bp.Diggers.Length}");
+                DiggerManager.EquipDiggers(bp.Diggers);
             }
         }
 
@@ -219,8 +250,26 @@ namespace NGUInjector.AllocationProfiles
                 {
                     if (_currentGearBreakpoint == null)
                     {
-                        _hasSwapped = false;
+                        _hasGearSwapped = false;
                         _currentGearBreakpoint = b;
+                    }
+                    return b;
+                }
+            }
+
+            return null;
+        }
+
+        private DiggerBreakpoint GetCurrentDiggerBreakpoint()
+        {
+            foreach (var b in _wrapper.Breakpoints.Diggers)
+            {
+                if (_character.rebirthTime.totalseconds > b.Time)
+                {
+                    if (_currentDiggerBreakpoint == null)
+                    {
+                        _hasDiggerSwapped = false;
+                        _currentDiggerBreakpoint = b;
                     }
                     return b;
                 }
@@ -365,6 +414,7 @@ namespace NGUInjector.AllocationProfiles
         [SerializeField] public AllocationBreakPoint[] Magic;
         [SerializeField] public AllocationBreakPoint[] Energy;
         [SerializeField] public GearBreakpoint[] Gear;
+        [SerializeField] public DiggerBreakpoint[] Diggers;
 
     }
 
@@ -375,9 +425,17 @@ namespace NGUInjector.AllocationProfiles
         [SerializeField] public string[] Priorities;
     }
 
+    [Serializable]
     public class GearBreakpoint
     {
         public int Time;
         public int[] Gear;
+    }
+
+    [Serializable]
+    public class DiggerBreakpoint
+    {
+        public int Time;
+        public int[] Diggers;
     }
 }

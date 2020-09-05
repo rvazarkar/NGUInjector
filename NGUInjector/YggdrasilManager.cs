@@ -43,7 +43,7 @@ namespace NGUInjector
             if (!Main.ManageYggdrasilLoadouts || LoadoutManager.YggdrasilLoadout.Length == 0)
             {
                 //Not sure why this would be true, but safety first
-                if (LoadoutManager.CurrentLock == LoadoutManager.LockType.Yggdrasil)
+                if (LoadoutManager.CurrentLock == LockType.Yggdrasil)
                 {
                     LoadoutManager.RestoreGear();
                     LoadoutManager.ReleaseLock();
@@ -53,7 +53,7 @@ namespace NGUInjector
             }
 
             //We dont need to harvest anymore and we've already swapped, so swap back
-            if (!NeedsHarvest() && LoadoutManager.CurrentLock == LoadoutManager.LockType.Yggdrasil)
+            if (!NeedsHarvest() && LoadoutManager.CurrentLock == LockType.Yggdrasil)
             {
                 LoadoutManager.RestoreGear();
                 LoadoutManager.ReleaseLock();

@@ -82,5 +82,10 @@ namespace NGUInjector.AllocationProfiles
         {
             throw new NotImplementedException();
         }
+
+        public override void EquipDiggers()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
