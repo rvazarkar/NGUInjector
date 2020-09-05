@@ -482,7 +482,7 @@ namespace NGUInjector
                             bc.startNuke();
                         else
                         {
-                            if (bc.character.attack > (bc.character.bossDefense * 1.4))
+                            if (bc.character.attack > (bc.character.bossDefense * 1.4) && bc.character.defense > bc.character.bossAttack * 1.4)
                             {
                                 bc.beginFight();
                                 bc.stopButton.gameObject.SetActive(true);

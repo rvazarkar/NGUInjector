@@ -24,6 +24,7 @@ namespace NGUInjector
 
         private static void _Unload()
         {
+            _load.SetActive(false);
             Object.Destroy(_load);
         }
     }
