@@ -10,7 +10,6 @@ namespace NGUInjector
     internal class InventoryManager
     {
         private readonly Character _character;
-        private readonly StreamWriter _outputWriter;
         private readonly InventoryController _controller;
 
         private readonly int[] _pendants = { 53, 76, 94, 142, 170, 229, 295, 388, 430, 504 };
@@ -26,7 +25,6 @@ namespace NGUInjector
         public InventoryManager()
         {
             _character = Main.Character;
-            _outputWriter = Main.OutputWriter;
             _controller = Main.Controller;
             BoostBlacklist = new int[]{};
             var temp = _pendants.Concat(_lootys).ToList();
@@ -128,16 +126,15 @@ namespace NGUInjector
             {
                 if (target.level == 100)
                 {
-                    _outputWriter.WriteLine($"Removing protection from {target.name} in slot {target.slot}");
+                    Main.Log($"Removing protection from {target.name} in slot {target.slot}");
                     _character.inventory.inventory[target.slot].removable = false;
                     continue;
                 }
 
                 if (ci.Count(x => x.id == target.id) <= 1) continue;
-                _outputWriter.WriteLine($"Merging {target.name} in slot {target.slot}");
+                Main.Log($"Merging {target.name} in slot {target.slot}");
                 _controller.mergeAll(target.slot);
             }
-            _outputWriter.Flush();
         }
 
         internal void MergeInventory(ih[] ci)
@@ -149,10 +146,9 @@ namespace NGUInjector
             {
                 var target = item.MaxItem();
 
-                _outputWriter.WriteLine($"Merging {target.name} in slot {target.slot}");
+                Main.Log($"Merging {target.name} in slot {target.slot}");
                 _controller.mergeAll(target.slot);
             }
-            _outputWriter.Flush();
         }
 
         internal void MergeGuffs()
@@ -171,7 +167,6 @@ namespace NGUInjector
                 if (!temp.removable) continue;
                 var newSlot = ChangePage(item.slot);
                 var ic = _controller.inventory[newSlot];
-                _outputWriter.WriteLine();
                 typeof(ItemController).GetMethod("consumeItem", BindingFlags.NonPublic | BindingFlags.Instance)
                     ?.Invoke(ic, null);
             }

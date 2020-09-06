@@ -12,12 +12,10 @@ namespace NGUInjector
         private readonly Character _character;
         private readonly PlayerController _pc;
         private int _snipeStage = 0;
-        private readonly StreamWriter _outputWriter;
 
         public CombatManager()
         {
             _character = Main.Character;
-            _outputWriter = Main.OutputWriter;
             _pc = Main.PlayerController;
         }
 
@@ -40,52 +38,45 @@ namespace NGUInjector
         {
             if (!needsBuff && HasFullHP())
             {
-                _outputWriter.WriteLine("Skipping buffs, moving to stage 3");
-                _outputWriter.Flush();
+                Main.LogCombat("Skipping buffs, moving to stage 3");
                 _snipeStage = 3;
                 return;
             }
 
             if (_character.adventure.autoattacking)
             {
-                _outputWriter.WriteLine("Toggling off autoattack");
-                _outputWriter.Flush();
+                Main.LogCombat("Toggling off autoattack");
                 _character.adventureController.idleAttackMove.setToggle();
             }
 
             if (_character.adventureController.zone != -1)
             {
-                _outputWriter.WriteLine("Moving to safe zone to prep and wait for full HP");
-                _outputWriter.Flush();
+                Main.LogCombat("Moving to safe zone to prep and wait for full HP");
                 _character.adventureController.zoneSelector.changeZone(-1);
             }
 
             _snipeStage = 1;
-            _outputWriter.WriteLine("In safe zone, moving to stage 1");
-            _outputWriter.Flush();
+            Main.LogCombat("In safe zone, moving to stage 1");
         }
 
         void DoBuffs()
         {
             if (!Main.SnipeWithBuffs && HasFullHP())
             {
-                _outputWriter.WriteLine("Buffs disabled, moving to stage 3");
-                _outputWriter.Flush();
+                Main.LogCombat("Buffs disabled, moving to stage 3");
                 _snipeStage = 3;
                 return;
             }
             if (ChargeActive())
             {
-                _outputWriter.WriteLine("Charge active, moving to stage 2");
-                _outputWriter.Flush();
+                Main.LogCombat("Charge active, moving to stage 2");
                 _snipeStage = 2;
                 return;
             }
 
             if (_character.adventureController.chargeMove.button.IsInteractable())
             {
-                _outputWriter.WriteLine("Using charge, moving to stage 2");
-                _outputWriter.Flush();
+                Main.LogCombat("Using charge, moving to stage 2");
                 _character.adventureController.chargeMove.doMove();
                 _snipeStage = 2;
             }
@@ -100,16 +91,14 @@ namespace NGUInjector
 
             if (!Main.SnipeWithBuffs)
             {
-                _outputWriter.WriteLine("Buffs disabled, moving to stage 3");
-                _outputWriter.Flush();
+                Main.LogCombat("Buffs disabled, moving to stage 3");
                 _snipeStage = 3;
                 return;
             }
 
             if (_character.adventureController.chargeMove.button.IsInteractable() && ChargeActive() && (Math.Abs(_character.totalAdvHP() - _character.adventure.curHP) < 5))
             {
-                _outputWriter.WriteLine("Charge ready, moving to stage 4");
-                _outputWriter.Flush();
+                Main.LogCombat("Charge ready, moving to stage 4");
                 _snipeStage = 3;
             }
         }
@@ -397,21 +386,19 @@ namespace NGUInjector
 
                     if (ac.currentEnemy == null || ac.zone == -1)
                     {
-                        _outputWriter.WriteLine(
+                        Main.LogCombat(
                             "Character or Enemy Defeated, or back in safe zone, resetting snipeStage");
-                        _outputWriter.Flush();
                         _snipeStage = 0;
                         return;
                     }
 
                     DoCombat();
                 }
-                _outputWriter.Flush();
             }
             catch (Exception e)
             {
-                _outputWriter.WriteLine(e);
-                _outputWriter.Flush();
+                Main.LogCombat(e.Message);
+                Main.LogCombat(e.StackTrace);
             }
             
         }

@@ -38,7 +38,7 @@ namespace NGUInjector
 
         internal static void RestoreGear()
         {
-            Main.OutputWriter.WriteLine($"Restoring original loadout");
+            Main.Log($"Restoring original loadout");
             ChangeGear(_savedLoadout);
         }
 
@@ -66,7 +66,7 @@ namespace NGUInjector
             //No lock currently, check if titans are spawning
             if (TitansSpawningSoon())
             {
-                Main.OutputWriter.WriteLine("Equipping Loadout for Titans");
+                Main.Log("Equipping Loadout for Titans");
                 //Titans are spawning soon, grab a lock and swap
                 AcquireLock(LockType.Titan);
                 SaveCurrentLoadout();
@@ -86,7 +86,7 @@ namespace NGUInjector
 
         internal static void ChangeGear(int[] gearIds)
         {
-            Main.OutputWriter.WriteLine($"Received New Gear: {string.Join(",", gearIds.Select(x => x.ToString()).ToArray())}");
+            Main.Log($"Received New Gear: {string.Join(",", gearIds.Select(x => x.ToString()).ToArray())}");
             var accSlots = new List<int>();
             var inv = Main.Character.inventory;
             var controller = Main.Controller;
@@ -110,8 +110,6 @@ namespace NGUInjector
                     accSlots.Add(slot);
                     continue;
                 }
-
-                Main.OutputWriter.WriteLine($"Found {itemId} in slot {slot}");
 
                 var type = inv.inventory[slot].type;
 
@@ -194,7 +192,7 @@ namespace NGUInjector
 
             controller.updateBonuses();
             controller.updateInventory();
-            Main.OutputWriter.WriteLine($"Done equipping new gear");
+            Main.Log($"Done equipping new gear");
         }
 
         private static int FindItemSlot(IEnumerable<ih> ci, int id)
@@ -270,7 +268,7 @@ namespace NGUInjector
                 loadout.Add(Main.Character.inventory.accs[index].id);
             }
             _savedLoadout = loadout.ToArray();
-            Main.OutputWriter.WriteLine($"Saved Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
+            Main.Log($"Saved Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
         }
         internal static bool TitansSpawningSoon()
         {

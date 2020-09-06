@@ -10,14 +10,10 @@ namespace NGUInjector
     internal class YggdrasilManager
     {
         private readonly Character _character;
-        private readonly InventoryManager _inv;
-        private StreamWriter _outputWriter;
 
         public YggdrasilManager(InventoryManager inv)
         {
             _character = Main.Character;
-            _outputWriter = Main.OutputWriter;
-            _inv = inv;
         }
 
         bool NeedsHarvest()
@@ -65,7 +61,7 @@ namespace NGUInjector
                 if (!LoadoutManager.TryYggdrasilSwap())
                     return;
 
-                Main.OutputWriter.WriteLine("Equipping Loadout for Yggdrasil and Harvesting");
+                Main.Log("Equipping Loadout for Yggdrasil and Harvesting");
                 //We swapped so harvest
                 _character.yggdrasilController.consumeAll();
                 LoadoutManager.RestoreGear();
@@ -92,7 +88,7 @@ namespace NGUInjector
                 if (_character.yggdrasilController.usesEnergy[i] &&
                     _character.curEnergy >= _character.yggdrasilController.activationCost[i])
                 {
-                    _outputWriter.WriteLine($"Removing energy for fruit {i}");
+                    Main.Log($"Removing energy for fruit {i}");
                     _character.removeMostEnergy();
                     _character.yggdrasilController.fruits[i].activate(i);
                     continue;
@@ -101,7 +97,7 @@ namespace NGUInjector
                 if (!_character.yggdrasilController.usesEnergy[i] &&
                     _character.magic.curMagic >= _character.yggdrasilController.activationCost[i])
                 {
-                    _outputWriter.WriteLine($"Removing magic for fruit {i}");
+                    Main.Log($"Removing magic for fruit {i}");
                     _character.removeMostMagic();
                     _character.yggdrasilController.fruits[i].activate(i);
                 }

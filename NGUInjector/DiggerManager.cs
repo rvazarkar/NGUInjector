@@ -59,7 +59,7 @@ namespace NGUInjector
 
         internal static void EquipDiggers(int[] diggers)
         {
-            Main.OutputWriter.WriteLine($"Equipping Diggers: {string.Join(",", diggers.Select(x => x.ToString()).ToArray())}");
+            Main.Log($"Equipping Diggers: {string.Join(",", diggers.Select(x => x.ToString()).ToArray())}");
             Main.Character.allDiggers.clearAllActiveDiggers();
             var sorted = diggers.OrderByDescending(x => x).ToArray();
             for (var i = 0; i < sorted.Length; i++)

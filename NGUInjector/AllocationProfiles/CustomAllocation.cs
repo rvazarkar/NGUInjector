@@ -41,8 +41,7 @@ namespace NGUInjector.AllocationProfiles
                     _wrapper.Breakpoints.Energy = breakpoints["Energy"].Children.Select(bp => new AllocationBreakPoint { Time = bp["Time"].AsInt, Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Gear = breakpoints["Gear"].Children.Select(bp => new GearBreakpoint { Time = bp["Time"].AsInt, Gear = bp["ID"].AsArray.Children.Select(x => x.AsInt).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Diggers = breakpoints["Diggers"].Children.Select(bp => new DiggerBreakpoint { Time = bp["Time"].AsInt, Diggers = bp["List"].AsArray.Children.Select(x => x.AsInt).ToArray() }).OrderByDescending(x => x.Time).ToArray();
-                    Main.OutputWriter.WriteLine($"Loaded custom allocation:\n{_wrapper.Breakpoints.Energy.Length} energy breakpoints\n{_wrapper.Breakpoints.Magic.Length} magic breakpoints\n{_wrapper.Breakpoints.Gear.Length} gear breakpoints\n{_wrapper.Breakpoints.Diggers.Length} digger breakpoints");
-                    Main.OutputWriter.Flush();
+                    Main.Log($"Loaded custom allocation:\n{_wrapper.Breakpoints.Energy.Length} energy breakpoints\n{_wrapper.Breakpoints.Magic.Length} magic breakpoints\n{_wrapper.Breakpoints.Gear.Length} gear breakpoints\n{_wrapper.Breakpoints.Diggers.Length} digger breakpoints");
                     _currentEnergyBreakpoint = null;
                     _currentMagicBreakpoint = null;
                     _currentGearBreakpoint = null;
@@ -52,8 +51,8 @@ namespace NGUInjector.AllocationProfiles
                 }
                 catch (Exception e)
                 {
-                    Main.OutputWriter.WriteLine(e);
-                    Main.OutputWriter.Flush();
+                    Main.Log(e.Message);
+                    Main.Log(e.StackTrace);
                 }
             }
             else
@@ -180,15 +179,13 @@ namespace NGUInjector.AllocationProfiles
 
             if (_hasGearSwapped) return;
 
-            if (LoadoutManager.CanSwap())
-            {
-                Main.Character.removeMostEnergy();
-                Main.Character.removeMostMagic();
-                _hasGearSwapped = true;
-                _currentGearBreakpoint = bp;
-                LoadoutManager.ChangeGear(bp.Gear);
-                Main.Controller.assignCurrentEquipToLoadout(0);
-            }
+            if (!LoadoutManager.CanSwap()) return;
+            Main.Character.removeMostEnergy();
+            Main.Character.removeMostMagic();
+            _hasGearSwapped = true;
+            _currentGearBreakpoint = bp;
+            LoadoutManager.ChangeGear(bp.Gear);
+            Main.Controller.assignCurrentEquipToLoadout(0);
         }
 
         public override void EquipDiggers()
@@ -206,15 +203,10 @@ namespace NGUInjector.AllocationProfiles
 
             if (_hasDiggerSwapped) return;
 
-            if (LoadoutManager.CanSwap())
-            {
-                Main.Character.removeMostEnergy();
-                Main.Character.removeMostMagic();
-                _hasDiggerSwapped = true;
-                _currentDiggerBreakpoint = bp;
-                Main.OutputWriter.WriteLine($"Len: {bp.Diggers.Length}");
-                DiggerManager.EquipDiggers(bp.Diggers);
-            }
+            if (!DiggerManager.CanSwap()) return;
+            _hasDiggerSwapped = true;
+            _currentDiggerBreakpoint = bp;
+            DiggerManager.EquipDiggers(bp.Diggers);
         }
 
         private AllocationBreakPoint GetCurrentBreakpoint(bool energy)

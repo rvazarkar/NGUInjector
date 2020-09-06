@@ -65,6 +65,7 @@ namespace NGUInjector
         internal static PlayerController PlayerController;
         internal static StreamWriter OutputWriter;
         internal static StreamWriter LootWriter;
+        internal static StreamWriter CombatWriter;
         private YggdrasilManager _yggManager;
         private InventoryManager _invManager;
         private CombatManager _combManager;
@@ -113,16 +114,27 @@ namespace NGUInjector
 
         private static SavedSettings _currentSettings;
 
+        internal static void Log(string msg)
+        {
+            OutputWriter.WriteLine($"{ DateTime.Now.ToShortDateString()} -{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
+        }
+
+        internal static void LogLoot(string msg)
+        {
+            LootWriter.WriteLine($"{ DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
+        }
+
+        internal static void LogCombat(string msg)
+        {
+            CombatWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
+        }
 
         public void Start()
         {
             _dir = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%/Desktop"), "NGUInjector");
             OutputWriter = new StreamWriter(Path.Combine(_dir, "inject.log")) {AutoFlush = true};
-            LootWriter = new StreamWriter(Path.Combine(_dir, "loot.log"));
-            OutputWriter.WriteLine("Injected");
-            OutputWriter.Flush();
-            LootWriter.WriteLine("Starting Loot Writer");
-            LootWriter.Flush();
+            LootWriter = new StreamWriter(Path.Combine(_dir, "loot.log")) { AutoFlush = true };
+            CombatWriter = new StreamWriter(Path.Combine(_dir, "combat.log")) { AutoFlush = true };
             try
             {
                 if (!Directory.Exists(_dir))
@@ -131,6 +143,10 @@ namespace NGUInjector
                 }
 
                 Character = FindObjectOfType<Character>();
+
+                Log("Injected");
+                LogLoot("Starting Loot Writer");
+                LogCombat("Starting Combat Writer");
                 Controller = Character.inventoryController;
                 PlayerController = FindObjectOfType<PlayerController>();
                 _invManager = new InventoryManager();
@@ -178,7 +194,7 @@ namespace NGUInjector
                     LoadoutManager.TitanLoadout = new int[] { };
                     LoadoutManager.YggdrasilLoadout = new int[] { };
                     SaveSettings();
-                    OutputWriter.WriteLine($"Loaded default settings");
+                    Log($"Loaded default settings");
                 }
 
                 _configWatcher = new FileSystemWatcher
@@ -207,8 +223,8 @@ namespace NGUInjector
             }
             catch (Exception e)
             {
-                OutputWriter.WriteLine(e);
-                OutputWriter.Flush();
+                Log(e.Message);
+                Log(e.StackTrace);
             }
 
         }
@@ -282,13 +298,14 @@ namespace NGUInjector
                     SnipeZoneTarget = settings.SnipeZone;
                     LoadoutManager.TitanLoadout = settings.TitanLoadout.OrderBy(x => x).ToArray();
                     LoadoutManager.YggdrasilLoadout = settings.YggdrasilLoadout.OrderBy(x => x).ToArray();
-                    OutputWriter.WriteLine($"Loaded settings: {JsonUtility.ToJson(settings, true)}");
+                    Log($"Loaded settings: {JsonUtility.ToJson(settings, true)}");
                     _currentSettings = settings;
                     return true;
                 }
                 catch (Exception e)
                 {
-                    OutputWriter.WriteLine(e);
+                    Log(e.Message);
+                    Log(e.StackTrace);
                     return false;
                 }
             }
@@ -320,7 +337,7 @@ namespace NGUInjector
 
             if (!settings.Equals(_currentSettings))
             {
-                OutputWriter.WriteLine("Saving updated settings");
+                Log("Saving updated settings");
                 _currentSettings = settings;
                 var serialized = JsonUtility.ToJson(settings, true);
                 using (var writer = new StreamWriter(path))
@@ -456,10 +473,9 @@ namespace NGUInjector
                 if (line.Contains("gold")) continue;
                 if (line.EndsWith("<b></b>")) continue;
                 var result = Regex.Replace(line, @"\r\n?|\n", "");
-                LootWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{DateTime.Now.ToShortTimeString()}: {result}");
+                LogLoot(result);
                 log[i] = $"{line}<b></b>";
             }
-            LootWriter.Flush();
         }
 
         void AutomationRoutine()
@@ -541,9 +557,8 @@ namespace NGUInjector
             }
             catch (Exception e)
             {
-                OutputWriter.WriteLine(e.Message);
-                OutputWriter.WriteLine(e.StackTrace);
-                OutputWriter.Flush();
+                Log(e.Message);
+                Log(e.StackTrace);
             }
             _timeLeft = 10f;
         }
