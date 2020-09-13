@@ -137,10 +137,31 @@ namespace NGUInjector
             }
         }
 
+        internal void MergeQuestItems(ih[] ci)
+        {
+            var grouped = ci.Where(x =>
+                x.id >= 198 && x.id <= 210 && !_character.inventory.inventory[x.slot].removable &&
+                !_character.inventory.itemList.itemMaxxed[x.id]);
+
+            foreach (var target in grouped)
+            {
+                if (target.level == 100)
+                {
+                    Main.Log($"Removing protection from {target.name} in slot {target.slot}");
+                    _character.inventory.inventory[target.slot].removable = false;
+                    continue;
+                }
+
+                if (ci.Count(x => x.id == target.id) <= 1) continue;
+                Main.Log($"Merging {target.name} in slot {target.slot}");
+                _controller.mergeAll(target.slot);
+            }
+        }
+
         internal void MergeInventory(ih[] ci)
         {
             var grouped =
-                ci.Where(x => x.id > 40 && x.level < 100).GroupBy(x => x.id).Where(x => x.Count() > 1);
+                ci.Where(x => x.id > 40 && x.level < 100 && (x.id < 198 || x.id > 210)).GroupBy(x => x.id).Where(x => x.Count() > 1);
 
             foreach (var item in grouped)
             {

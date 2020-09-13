@@ -10,7 +10,7 @@ namespace NGUInjector
     {
         private static int[] _savedDiggers;
         internal static LockType CurrentLock { get; set; }
-        private static int[] _titanDiggers = { 0, 3, 11 };
+        private static readonly int[] TitanDiggers = { 0, 3, 8, 11 };
 
         internal static bool CanSwap()
         {
@@ -33,7 +33,7 @@ namespace NGUInjector
             {
                 CurrentLock = LockType.Titan;
                 SaveDiggers();
-                EquipDiggers(_titanDiggers);
+                EquipDiggers(TitanDiggers);
             }
         }
 

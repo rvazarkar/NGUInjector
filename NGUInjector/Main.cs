@@ -523,6 +523,7 @@ namespace NGUInjector
                     _invManager.MergeEquipped();
                     _invManager.MergeInventory(converted);
                     _invManager.MergeBoosts(converted);
+                    _invManager.MergeQuestItems(converted);
                     _invManager.MergeGuffs();
                     _invManager.BoostAccessories();
                     _invManager.BoostEquipped();
