@@ -80,6 +80,7 @@ namespace NGUInjector
                 return false;
 
             AcquireLock(LockType.Yggdrasil);
+            SaveCurrentLoadout();
             ChangeGear(YggdrasilLoadout);
             return true;
         }
