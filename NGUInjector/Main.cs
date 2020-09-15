@@ -96,6 +96,7 @@ namespace NGUInjector
         private YggdrasilManager _yggManager;
         private InventoryManager _invManager;
         private CombatManager _combManager;
+        private QuestManager _questManager;
         private CustomAllocation _profile;
         private float _timeLeft = 10.0f;
 
@@ -177,7 +178,8 @@ namespace NGUInjector
                 Controller = Character.inventoryController;
                 PlayerController = FindObjectOfType<PlayerController>();
                 _invManager = new InventoryManager();
-                _yggManager = new YggdrasilManager(_invManager);
+                _yggManager = new YggdrasilManager();
+                _questManager = new QuestManager();
                 _combManager = new CombatManager();
                 LoadoutManager.ReleaseLock();
                 DiggerManager.ReleaseLock();
@@ -292,7 +294,92 @@ namespace NGUInjector
                     writer.WriteLine(data);
                 }
             }
+        }
 
+        void AutomationRoutine()
+        {
+            try
+            {
+                SaveSettings();
+
+                if (!_active)
+                {
+                    _timeLeft = 10f;
+                    return;
+                }
+
+                if (Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking)
+                {
+                    Character.adventureController.idleAttackMove.setToggle();
+                }
+
+                if (AutoFight)
+                {
+                    var bc = Character.bossController;
+                    if (!bc.isFighting && !bc.nukeBoss)
+                    {
+                        if (bc.character.attack / 5.0 > bc.character.bossDefense && bc.character.defense / 5.0 > bc.character.bossAttack)
+                            bc.startNuke();
+                        else
+                        {
+                            if (bc.character.attack > (bc.character.bossDefense * 1.4) && bc.character.defense > bc.character.bossAttack * 1.4)
+                            {
+                                bc.beginFight();
+                                bc.stopButton.gameObject.SetActive(true);
+                            }
+                        }
+                    }
+                }
+
+                GetTotalTrainingCaps();
+
+                if (_manageInventory)
+                {
+                    var converted = Character.inventory.GetConvertedInventory(Controller).ToArray();
+                    _invManager.EnsureFiltered(converted);
+                    _invManager.ManageConvertibles(converted);
+                    _invManager.MergeEquipped();
+                    _invManager.MergeInventory(converted);
+                    _invManager.MergeBoosts(converted);
+                    _invManager.ManageQuestItems(converted);
+                    _invManager.MergeGuffs();
+                    _invManager.BoostAccessories();
+                    _invManager.BoostEquipped();
+                    _invManager.BoostInventory(converted);
+                    _invManager.BoostInfinityCube();
+                    _invManager.ChangeBoostConversion(converted);
+                }
+
+                if (ManageTitanLoadouts)
+                {
+                    LoadoutManager.TryTitanSwap();
+                    DiggerManager.TryTitanSwap();
+                }
+
+                if (_manageYggdrasil)
+                {
+                    _yggManager.ManageYggHarvest();
+                    _yggManager.CheckFruits();
+                }
+
+                if (ManageGear)
+                    _profile.EquipGear();
+                if (ManageEnergy)
+                    _profile.AllocateEnergy();
+                if (ManageMagic)
+                    _profile.AllocateMagic();
+                if (ManageDiggers)
+                    _profile.EquipDiggers();
+
+                _questManager.CheckQuestTurnin();
+
+            }
+            catch (Exception e)
+            {
+                Log(e.Message);
+                Log(e.StackTrace);
+            }
+            _timeLeft = 10f;
         }
 
         private void LoadAllocation()
@@ -508,90 +595,6 @@ namespace NGUInjector
                 LogLoot(result);
                 log[i] = $"{line}<b></b>";
             }
-        }
-
-        void AutomationRoutine()
-        {
-            try
-            {
-                SaveSettings();
-                
-                if (!_active)
-                {
-                    _timeLeft = 10f;
-                    return;
-                }
-
-                if (Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking)
-                {
-                    Character.adventureController.idleAttackMove.setToggle();
-                }
-
-                if (AutoFight)
-                {
-                    var bc = Character.bossController;
-                    if (!bc.isFighting && !bc.nukeBoss)
-                    {
-                        if (bc.character.attack / 5.0 > bc.character.bossDefense && bc.character.defense / 5.0 > bc.character.bossAttack)
-                            bc.startNuke();
-                        else
-                        {
-                            if (bc.character.attack > (bc.character.bossDefense * 1.4) && bc.character.defense > bc.character.bossAttack * 1.4)
-                            {
-                                bc.beginFight();
-                                bc.stopButton.gameObject.SetActive(true);
-                            }
-                        }
-                    }
-                }
-
-                GetTotalTrainingCaps();
-
-                if (_manageInventory)
-                {
-                    var converted = Character.inventory.GetConvertedInventory(Controller).ToArray();
-                    _invManager.EnsureFiltered(converted);
-                    _invManager.ManageConvertibles(converted);
-                    _invManager.MergeEquipped();
-                    _invManager.MergeInventory(converted);
-                    _invManager.MergeBoosts(converted);
-                    _invManager.ManageQuestItems(converted);
-                    _invManager.MergeGuffs();
-                    _invManager.BoostAccessories();
-                    _invManager.BoostEquipped();
-                    _invManager.BoostInventory(converted);
-                    _invManager.BoostInfinityCube();
-                    _invManager.ChangeBoostConversion(converted);
-                }
-
-                if (ManageTitanLoadouts)
-                {
-                    LoadoutManager.TryTitanSwap();
-                    DiggerManager.TryTitanSwap();
-                }
-
-                if (_manageYggdrasil)
-                {
-                    _yggManager.ManageYggHarvest();
-                    _yggManager.CheckFruits();
-                }
-
-                if (ManageGear)
-                    _profile.EquipGear();
-                if (ManageEnergy)
-                    _profile.AllocateEnergy();
-                if (ManageMagic)
-                    _profile.AllocateMagic();
-                if (ManageDiggers)
-                    _profile.EquipDiggers();
-                
-            }
-            catch (Exception e)
-            {
-                Log(e.Message);
-                Log(e.StackTrace);
-            }
-            _timeLeft = 10f;
         }
 
         void GetTotalTrainingCaps()

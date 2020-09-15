@@ -64,6 +64,7 @@
     <Compile Include="LoadoutManager.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuestManager.cs" />
     <Compile Include="SavedSettings.cs" />
     <Compile Include="SimpleJson.cs" />
     <Compile Include="YggdrasilManager.cs" />
