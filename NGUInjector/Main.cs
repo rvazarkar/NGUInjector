@@ -15,15 +15,6 @@ using UnityEngine.UI;
 
 namespace NGUInjector
 {
-    public class ih
-    {
-        internal int slot { get; set; }
-        internal string name { get; set; }
-        internal int level { get; set; }
-        internal bool locked { get; set; }
-        internal int id { get; set; }
-        internal Equipment equipment { get; set; }
-    }
     public static class Extension
     {
         public static ih MaxItem(this IEnumerable<ih> items)
@@ -55,6 +46,42 @@ namespace NGUInjector
             var type = ai.GetType().GetField(val,
                 BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             return (T) type?.GetValue(ai);
+        }
+
+        public static BoostsNeeded GetNeededBoosts(this Equipment eq, bool equipped)
+        {
+            var n = new BoostsNeeded();
+
+            if (InventoryManager.BoostBlacklist.Contains(eq.id))
+                return n;
+
+            if (!equipped && !Main.BoostedItems.Contains(eq.id))
+                return n;
+
+            if (!eq.isEquipment())
+                return n;
+
+            if (eq.capAttack != 0.0)
+                n.Power += CalcCap(eq.capAttack, eq.level) - eq.curAttack;
+
+            if (eq.capDefense != 0.0)
+                n.Toughness += CalcCap(eq.capDefense, eq.level) - eq.curDefense;
+
+            if (eq.spec1Type != specType.None)
+                n.Special += CalcCap(eq.spec1Cap, eq.level) - eq.spec1Cur;
+
+            if (eq.spec2Type != specType.None)
+                n.Special += CalcCap(eq.spec2Cap, eq.level) - eq.spec2Cur;
+
+            if (eq.spec3Type != specType.None)
+                n.Special += CalcCap(eq.spec3Cap, eq.level) - eq.spec3Cur;
+
+            return n;
+        }
+
+        private static float CalcCap(float cap, float level)
+        {
+            return Mathf.Floor(cap * (float) (1.0 + level / 100.0));
         }
     }
     
@@ -89,7 +116,7 @@ namespace NGUInjector
 
         internal static int HighestAk;
         internal static int SnipeZoneTarget;
-        private static int[] _boostedItems;
+        internal static int[] BoostedItems;
 
         private static FileSystemWatcher _configWatcher;
         private FileSystemWatcher _allocationWatcher;
@@ -189,7 +216,7 @@ namespace NGUInjector
                     HighestAk = 0;
                     ManageTitanLoadouts = false;
                     _manageYggdrasil = true;
-                    _boostedItems = new int[] { };
+                    BoostedItems = new int[] { };
                     InventoryManager.BoostBlacklist = new int[] {};
                     LoadoutManager.TitanLoadout = new int[] { };
                     LoadoutManager.YggdrasilLoadout = new int[] { };
@@ -285,7 +312,7 @@ namespace NGUInjector
                     SnipeWithBuffs = settings.PrecastBuffs;
                     ManageTitanLoadouts = settings.SwapTitanLoadouts;
                     ManageYggdrasilLoadouts = settings.SwapYggdrasilLoadouts;
-                    _boostedItems = settings.BoostIDs;
+                    BoostedItems = settings.BoostIDs;
                     InventoryManager.BoostBlacklist = settings.BoostBlacklist.OrderBy(x => x).ToArray();
                     ManageEnergy = settings.ManageEnergy;
                     ManageMagic = settings.ManageMagic;
@@ -323,7 +350,7 @@ namespace NGUInjector
                 PrecastBuffs = SnipeWithBuffs,
                 SwapTitanLoadouts = ManageTitanLoadouts,
                 SwapYggdrasilLoadouts = ManageYggdrasilLoadouts,
-                BoostIDs = _boostedItems,
+                BoostIDs = BoostedItems,
                 ManageEnergy = ManageEnergy,
                 ManageMagic = ManageMagic,
                 ManageGear = ManageGear,
@@ -453,6 +480,11 @@ namespace NGUInjector
             ManageYggdrasilLoadouts = GUILayout.Toggle(ManageYggdrasilLoadouts, "Swap Loadout For Yggdrasil");
             GUILayout.EndHorizontal();
 
+            //if (GUILayout.Button("Test"))
+            //{
+            //    Character.itemInfo.makeLevelledLoot(168, 1);
+            //}
+
             GUI.DragWindow(new Rect(0,0, 10000,10000));
         }
 
@@ -523,13 +555,13 @@ namespace NGUInjector
                     _invManager.MergeEquipped();
                     _invManager.MergeInventory(converted);
                     _invManager.MergeBoosts(converted);
-                    _invManager.MergeQuestItems(converted);
+                    _invManager.ManageQuestItems(converted);
                     _invManager.MergeGuffs();
                     _invManager.BoostAccessories();
                     _invManager.BoostEquipped();
-                    _invManager.BoostInventory(
-                        _boostedItems, converted);
+                    _invManager.BoostInventory(converted);
                     _invManager.BoostInfinityCube();
+                    _invManager.ChangeBoostConversion(converted);
                 }
 
                 if (ManageTitanLoadouts)
@@ -537,8 +569,6 @@ namespace NGUInjector
                     LoadoutManager.TryTitanSwap();
                     DiggerManager.TryTitanSwap();
                 }
-                    
-                
 
                 if (_manageYggdrasil)
                 {

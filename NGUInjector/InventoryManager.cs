@@ -18,6 +18,7 @@ namespace NGUInjector
         private readonly int[] _wandoos = {66, 169};
         private readonly int[] _guffs = {228, 211, 250, 291, 289, 290, 298, 299, 300};
         internal static int[] BoostBlacklist;
+        private int counter = 0;
 
 
         //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane, Guffs
@@ -59,9 +60,9 @@ namespace NGUInjector
             }
         }
 
-        internal void BoostInventory(int[] items, ih[] ih)
+        internal void BoostInventory(ih[] ih)
         {
-            foreach (var item in items)
+            foreach (var item in Main.BoostedItems)
             {
                 //Find all inventory slots that match this item name
                 var targets =
@@ -137,13 +138,14 @@ namespace NGUInjector
             }
         }
 
-        internal void MergeQuestItems(ih[] ci)
+        internal void ManageQuestItems(ih[] ci)
         {
-            var grouped = ci.Where(x =>
-                x.id >= 198 && x.id <= 210 && !_character.inventory.inventory[x.slot].removable &&
+            //Merge quest items first
+            var toMerge = ci.Where(x =>
+                x.id >= 278 && x.id <= 287 && !_character.inventory.inventory[x.slot].removable &&
                 !_character.inventory.itemList.itemMaxxed[x.id]);
 
-            foreach (var target in grouped)
+            foreach (var target in toMerge)
             {
                 if (target.level == 100)
                 {
@@ -156,12 +158,24 @@ namespace NGUInjector
                 Main.Log($"Merging {target.name} in slot {target.slot}");
                 _controller.mergeAll(target.slot);
             }
+
+            //Consume quest items that dont need to be merged
+            var questItems = ci.Where(x =>
+                x.id >= 278 && x.id <= 287 && !_character.inventory.inventory[x.slot].removable);
+
+            foreach (var target in questItems)
+            {
+                var newSlot = ChangePage(target.slot);
+                var ic = _controller.inventory[newSlot];
+                typeof(ItemController).GetMethod("consumeItem", BindingFlags.NonPublic | BindingFlags.Instance)
+                    ?.Invoke(ic, null);
+            }
         }
 
         internal void MergeInventory(ih[] ci)
         {
             var grouped =
-                ci.Where(x => x.id > 40 && x.level < 100 && (x.id < 198 || x.id > 210)).GroupBy(x => x.id).Where(x => x.Count() > 1);
+                ci.Where(x => x.id > 40 && x.level < 100 && (x.id < 278 || x.id > 287)).GroupBy(x => x.id).Where(x => x.Count() > 1);
 
             foreach (var item in grouped)
             {
@@ -191,6 +205,70 @@ namespace NGUInjector
                 typeof(ItemController).GetMethod("consumeItem", BindingFlags.NonPublic | BindingFlags.Instance)
                     ?.Invoke(ic, null);
             }
+        }
+
+        internal void ChangeBoostConversion(ih[] ci)
+        {
+            var needed = new BoostsNeeded();
+
+            needed.Add(_character.inventory.head.GetNeededBoosts(true));
+            needed.Add(_character.inventory.chest.GetNeededBoosts(true));
+            needed.Add(_character.inventory.legs.GetNeededBoosts(true));
+            needed.Add(_character.inventory.boots.GetNeededBoosts(true));
+            needed.Add(_character.inventory.weapon.GetNeededBoosts(true));
+            if (_controller.weapon2Unlocked())
+                needed.Add(_character.inventory.weapon2.GetNeededBoosts(true));
+
+            for (var i = 10000; _controller.accessoryID(i) < _controller.accessorySpaces(); i++)
+            {
+                needed.Add(_character.inventory.accs[_controller.accessoryID(i)].GetNeededBoosts(true));
+            }
+
+            foreach (var item in Main.BoostedItems)
+            {
+                //Find all inventory slots that match this item name
+                var targets =
+                    ci.Where(x => x.id == item && !BoostBlacklist.Contains(x.id)).ToArray();
+
+                switch (targets.Length)
+                {
+                    case 0:
+                        continue;
+                    case 1:
+                        needed.Add(targets[0].equipment.GetNeededBoosts(false));
+                        continue;
+                    default:
+                        //Find the highest level version of the item (locked = +100) and apply boosts to it
+                        needed.Add(targets.MaxItem().equipment.GetNeededBoosts(false));
+                        break;
+                }
+            }
+
+            if (counter == 0)
+                Main.Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
+
+            counter++;
+            if (counter == 6) counter = 0;
+
+            if (needed.Power > 0)
+            {
+                _controller.selectAutoPowerTransform();
+                return;
+            }
+
+            if (needed.Toughness > 0)
+            {
+                _controller.selectAutoToughTransform();
+                return;
+            }
+
+            if (needed.Special > 0)
+            {
+                _controller.selectAutoSpecialTransform();
+                return;
+            }
+
+            _controller.selectAutoNoneTransform();
         }
 
         #region Filtering
@@ -223,7 +301,7 @@ namespace NGUInjector
                 return;
 
             //Dont filter quest items
-            if (id >= 198 && id <= 210)
+            if (id >= 278 && id <= 287)
                 return;
 
 
@@ -239,5 +317,36 @@ namespace NGUInjector
         }
         #endregion
 
+    }
+
+    public class ih
+    {
+        internal int slot { get; set; }
+        internal string name { get; set; }
+        internal int level { get; set; }
+        internal bool locked { get; set; }
+        internal int id { get; set; }
+        internal Equipment equipment { get; set; }
+    }
+
+    public class BoostsNeeded
+    {
+        internal float Power { get; set; }
+        internal float Toughness { get; set; }
+        internal float Special { get; set; }
+
+        public BoostsNeeded()
+        {
+            Power = 0;
+            Toughness = 0;
+            Special = 0;
+        }
+
+        public void Add(BoostsNeeded other)
+        {
+            Power += other.Power;
+            Toughness += other.Toughness;
+            Special += other.Special;
+        }
     }
 }

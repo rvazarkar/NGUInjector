@@ -317,7 +317,6 @@ namespace NGUInjector
                 }
             }
             
-
             if (ChargeActive() && ac.ultimateAttackMove.button.IsInteractable())
             {
                 ac.ultimateAttackMove.doMove();
