@@ -11,7 +11,7 @@ namespace NGUInjector
     {
         private readonly Character _character;
 
-        public YggdrasilManager(InventoryManager inv)
+        public YggdrasilManager()
         {
             _character = Main.Character;
         }
@@ -90,7 +90,8 @@ namespace NGUInjector
                 {
                     Main.Log($"Removing energy for fruit {i}");
                     _character.removeMostEnergy();
-                    _character.yggdrasilController.fruits[i].activate(i);
+                    var slot = ChangePage(i);
+                    _character.yggdrasilController.fruits[slot].activate(i);
                     continue;
                 }
 
@@ -99,9 +100,17 @@ namespace NGUInjector
                 {
                     Main.Log($"Removing magic for fruit {i}");
                     _character.removeMostMagic();
-                    _character.yggdrasilController.fruits[i].activate(i);
+                    var slot = ChangePage(i);
+                    _character.yggdrasilController.fruits[slot].activate(i);
                 }
             }
+        }
+
+        private int ChangePage(int slot)
+        {
+            var page = (int)Math.Floor((double)slot / 9);
+            _character.yggdrasilController.changePage(page);
+            return slot - (page * 9);
         }
     }
 }
