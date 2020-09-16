@@ -40,7 +40,7 @@ namespace NGUInjector
         {
             if (_savePath == null) return;
             Main.Log("Saving Settings");
-            Main.IgnoreChange = true;
+            Main.IgnoreNextChange = true;
             var serialized = JsonUtility.ToJson(this, true);
             using (var writer = new StreamWriter(_savePath))
             {
@@ -57,7 +57,7 @@ namespace NGUInjector
                 {
                     var newSettings = JsonUtility.FromJson<SavedSettings>(File.ReadAllText(_savePath));
                     MassUpdate(newSettings);
-                    Main.Log("Loaded Updated Settings");
+                    Main.Log("Loaded Settings");
                     Main.Log(JsonUtility.ToJson(this, true));
                     return true;
                 }

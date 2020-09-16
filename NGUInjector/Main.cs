@@ -45,32 +45,7 @@ namespace NGUInjector
 
         internal static bool SnipeActive { get; set; }
 
-        internal static bool IgnoreChange { get; set; }
-
-        //private bool _manageInventory;
-        //private static bool _manageYggdrasil;
-
-        //internal static int HighestAk;
-        //internal static int SnipeZoneTarget;
-        //internal static int[] BoostedItems;
-
-        //internal static bool SnipeWithBuffs { get; set; }
-
-        //internal static bool ManageTitanLoadouts { get; set; }
-
-        //internal static bool ManageYggdrasilLoadouts { get; set; }
-
-        //internal static bool ManageEnergy { get; set; }
-
-        //internal static bool ManageMagic { get; set; }
-
-        //internal static bool FastCombat { get; set; }
-
-        //internal static bool ManageGear { get; set; }
-
-        //internal static bool ManageDiggers { get; set; }
-
-        //internal static bool AutoFight { get; set; }
+        internal static bool IgnoreNextChange { get; set; }
 
         internal static SavedSettings Settings;
 
@@ -161,7 +136,7 @@ namespace NGUInjector
 
                     Settings.MassUpdate(temp);
 
-                    Log($"Loaded default settings");
+                    Log($"Created default settings");
                 }
 
                 ConfigWatcher = new FileSystemWatcher
@@ -174,9 +149,9 @@ namespace NGUInjector
 
                 ConfigWatcher.Changed += (sender, args) =>
                 {
-                    if (IgnoreChange)
+                    if (IgnoreNextChange)
                     {
-                        IgnoreChange = false;
+                        IgnoreNextChange = false;
                         return;
                     }
                     Settings.LoadSettings();
@@ -203,7 +178,6 @@ namespace NGUInjector
                 Log(e.Message);
                 Log(e.StackTrace);
             }
-
         }
 
         public void Update()
@@ -245,6 +219,7 @@ namespace NGUInjector
                     return;
                 }
 
+                //Turn on autoattack if we're in ITOPOD and its not on
                 if (Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking)
                 {
                     Character.adventureController.idleAttackMove.setToggle();
