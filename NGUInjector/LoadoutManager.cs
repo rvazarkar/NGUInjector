@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using UnityEngine;
+using static NGUInjector.Main;
 
 namespace NGUInjector
 {
@@ -18,8 +19,6 @@ namespace NGUInjector
     {
         private static int[] _savedLoadout;
         internal static LockType CurrentLock { get; set; }
-        internal static int[] YggdrasilLoadout { get; set; }
-        internal static int[] TitanLoadout { get; set; }
 
         internal static bool CanSwap()
         {
@@ -38,13 +37,13 @@ namespace NGUInjector
 
         internal static void RestoreGear()
         {
-            Main.Log($"Restoring original loadout");
+            Log($"Restoring original loadout");
             ChangeGear(_savedLoadout);
         }
 
         internal static void TryTitanSwap()
         {
-            if (TitanLoadout.Length == 0)
+            if (Settings.TitanLoadout.Length == 0)
                 return;
             //Skip if we're currently locked for yggdrasil (although this generally shouldn't happen)
             if (CurrentLock == LockType.Yggdrasil)
@@ -66,11 +65,11 @@ namespace NGUInjector
             //No lock currently, check if titans are spawning
             if (TitansSpawningSoon())
             {
-                Main.Log("Equipping Loadout for Titans");
+                Log("Equipping Loadout for Titans");
                 //Titans are spawning soon, grab a lock and swap
                 AcquireLock(LockType.Titan);
                 SaveCurrentLoadout();
-                ChangeGear(TitanLoadout);
+                ChangeGear(Settings.TitanLoadout);
             }
         }
 
@@ -81,16 +80,16 @@ namespace NGUInjector
 
             AcquireLock(LockType.Yggdrasil);
             SaveCurrentLoadout();
-            ChangeGear(YggdrasilLoadout);
+            ChangeGear(Settings.YggdrasilLoadout);
             return true;
         }
 
         internal static void ChangeGear(int[] gearIds)
         {
-            Main.Log($"Received New Gear: {string.Join(",", gearIds.Select(x => x.ToString()).ToArray())}");
+            Log($"Received New Gear: {string.Join(",", gearIds.Select(x => x.ToString()).ToArray())}");
             var accSlots = new List<int>();
             var inv = Main.Character.inventory;
-            var controller = Main.Controller;
+            var controller = Controller;
             var ci = inv.GetConvertedInventory(controller).ToArray();
             var weaponSlot = -5;
             Main.Character.removeMostEnergy();
@@ -193,7 +192,7 @@ namespace NGUInjector
 
             controller.updateBonuses();
             controller.updateInventory();
-            Main.Log($"Done equipping new gear");
+            Log($"Done equipping new gear");
         }
 
         private static int FindItemSlot(IEnumerable<ih> ci, int id)
@@ -226,7 +225,7 @@ namespace NGUInjector
                 return -5;
             }
 
-            if (Main.Controller.weapon2Unlocked())
+            if (Controller.weapon2Unlocked())
             {
                 if (inv.weapon2.id == id)
                 {
@@ -263,20 +262,20 @@ namespace NGUInjector
                 loadout.Add(inv.weapon2.id);
             }
 
-            for (var id = 10000; Main.Controller.accessoryID(id) < Main.Character.inventory.accs.Count; ++id)
+            for (var id = 10000; Controller.accessoryID(id) < Main.Character.inventory.accs.Count; ++id)
             {
-                var index = Main.Controller.accessoryID(id);
+                var index = Controller.accessoryID(id);
                 loadout.Add(Main.Character.inventory.accs[index].id);
             }
             _savedLoadout = loadout.ToArray();
-            Main.Log($"Saved Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
+            Log($"Saved Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
         }
         internal static bool TitansSpawningSoon()
         {
             if (!Main.Character.buttons.adventure.IsInteractable())
                 return false;
 
-            var ak = Main.HighestAk;
+            var ak = Settings.HighestAKZone;
             var i = 0;
             var a = Main.Character.adventure;
             var ac = Main.Character.adventureController;

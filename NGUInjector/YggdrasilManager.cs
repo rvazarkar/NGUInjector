@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
+using static NGUInjector.Main;
 
 namespace NGUInjector
 {
@@ -36,7 +37,7 @@ namespace NGUInjector
         internal void ManageYggHarvest()
         {
             //We need to harvest but we dont have a loadout to manage OR we're not managing loadout
-            if (!Main.ManageYggdrasilLoadouts || LoadoutManager.YggdrasilLoadout.Length == 0)
+            if (!Settings.SwapYggdrasilLoadouts || Settings.YggdrasilLoadout.Length == 0)
             {
                 //Not sure why this would be true, but safety first
                 if (LoadoutManager.CurrentLock == LockType.Yggdrasil)
@@ -61,7 +62,7 @@ namespace NGUInjector
                 if (!LoadoutManager.TryYggdrasilSwap())
                     return;
 
-                Main.Log("Equipping Loadout for Yggdrasil and Harvesting");
+                Log("Equipping Loadout for Yggdrasil and Harvesting");
                 //We swapped so harvest
                 _character.yggdrasilController.consumeAll();
                 LoadoutManager.RestoreGear();
@@ -88,7 +89,7 @@ namespace NGUInjector
                 if (_character.yggdrasilController.usesEnergy[i] &&
                     _character.curEnergy >= _character.yggdrasilController.activationCost[i])
                 {
-                    Main.Log($"Removing energy for fruit {i}");
+                    Log($"Removing energy for fruit {i}");
                     _character.removeMostEnergy();
                     var slot = ChangePage(i);
                     _character.yggdrasilController.fruits[slot].activate(i);
@@ -98,7 +99,7 @@ namespace NGUInjector
                 if (!_character.yggdrasilController.usesEnergy[i] &&
                     _character.magic.curMagic >= _character.yggdrasilController.activationCost[i])
                 {
-                    Main.Log($"Removing magic for fruit {i}");
+                    Log($"Removing magic for fruit {i}");
                     _character.removeMostMagic();
                     var slot = ChangePage(i);
                     _character.yggdrasilController.fruits[slot].activate(i);

@@ -322,6 +322,17 @@ namespace NGUInjector.AllocationProfiles
                 _character.NGUController.NGUMagic[index].add();
                 return;
             }
+
+            if (breakpoint.StartsWith("CAPNGU"))
+            {
+                var success = int.TryParse(breakpoint.Split('-')[1], out var index);
+                if (!success || index < 0 || index > 6)
+                {
+                    return;
+                }
+                _character.NGUController.NGUMagic[index].cap();
+                return;
+            }
         }
 
         private void ReadEnergyBreakpoint(string breakpoint)
@@ -340,6 +351,17 @@ namespace NGUInjector.AllocationProfiles
                     return;
                 }
                 _character.NGUController.NGU[index].add();
+                return;
+            }
+
+            if (breakpoint.StartsWith("CAPNGU"))
+            {
+                var success = int.TryParse(breakpoint.Split('-')[1], out var index);
+                if (!success || index < 0 || index > 8)
+                {
+                    return;
+                }
+                _character.NGUController.NGU[index].cap();
                 return;
             }
 

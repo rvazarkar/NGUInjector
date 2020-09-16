@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using static NGUInjector.Main;
 
 namespace NGUInjector
 {
@@ -17,7 +18,6 @@ namespace NGUInjector
         private readonly int[] _convertibles;
         private readonly int[] _wandoos = {66, 169};
         private readonly int[] _guffs = {228, 211, 250, 291, 289, 290, 298, 299, 300};
-        internal static int[] BoostBlacklist;
         private int counter = 0;
 
 
@@ -26,8 +26,7 @@ namespace NGUInjector
         public InventoryManager()
         {
             _character = Main.Character;
-            _controller = Main.Controller;
-            BoostBlacklist = new int[]{};
+            _controller = Controller;
             var temp = _pendants.Concat(_lootys).ToList();
             temp.Add(154);
             _convertibles = temp.ToArray();
@@ -36,18 +35,18 @@ namespace NGUInjector
         internal void BoostEquipped()
         {
             // Boost Equipped Slots
-            if (!BoostBlacklist.Contains(_character.inventory.head.id))
+            if (!Settings.BoostBlacklist.Contains(_character.inventory.head.id))
                 _controller.applyAllBoosts(-1);
-            if (!BoostBlacklist.Contains(_character.inventory.chest.id))
+            if (!Settings.BoostBlacklist.Contains(_character.inventory.chest.id))
                 _controller.applyAllBoosts(-2);
-            if (!BoostBlacklist.Contains(_character.inventory.legs.id))
+            if (!Settings.BoostBlacklist.Contains(_character.inventory.legs.id))
                 _controller.applyAllBoosts(-3);
-            if (!BoostBlacklist.Contains(_character.inventory.boots.id))
+            if (!Settings.BoostBlacklist.Contains(_character.inventory.boots.id))
                 _controller.applyAllBoosts(-4);
-            if (!BoostBlacklist.Contains(_character.inventory.weapon.id))
+            if (!Settings.BoostBlacklist.Contains(_character.inventory.weapon.id))
                 _controller.applyAllBoosts(-5);
 
-            if (_controller.weapon2Unlocked() && !BoostBlacklist.Contains(_character.inventory.head.id))
+            if (_controller.weapon2Unlocked() && !Settings.BoostBlacklist.Contains(_character.inventory.head.id))
                 _controller.applyAllBoosts(-6);
         }
 
@@ -55,18 +54,18 @@ namespace NGUInjector
         {
             for (var i = 10000; _controller.accessoryID(i) < _controller.accessorySpaces(); i++)
             {
-                if (!BoostBlacklist.Contains(_character.inventory.accs[_controller.accessoryID(i)].id))
+                if (!Settings.BoostBlacklist.Contains(_character.inventory.accs[_controller.accessoryID(i)].id))
                     _controller.applyAllBoosts(i);
             }
         }
 
         internal void BoostInventory(ih[] ih)
         {
-            foreach (var item in Main.BoostedItems)
+            foreach (var item in Settings.BoostIDs)
             {
                 //Find all inventory slots that match this item name
                 var targets =
-                    ih.Where(x => x.id == item && !BoostBlacklist.Contains(x.id)).ToArray();
+                    ih.Where(x => x.id == item && !Settings.BoostBlacklist.Contains(x.id)).ToArray();
 
                 switch (targets.Length)
                 {
@@ -127,13 +126,13 @@ namespace NGUInjector
             {
                 if (target.level == 100)
                 {
-                    Main.Log($"Removing protection from {target.name} in slot {target.slot}");
+                    Log($"Removing protection from {target.name} in slot {target.slot}");
                     _character.inventory.inventory[target.slot].removable = false;
                     continue;
                 }
 
                 if (ci.Count(x => x.id == target.id) <= 1) continue;
-                Main.Log($"Merging {target.name} in slot {target.slot}");
+                Log($"Merging {target.name} in slot {target.slot}");
                 _controller.mergeAll(target.slot);
             }
         }
@@ -149,24 +148,25 @@ namespace NGUInjector
             {
                 if (target.level == 100)
                 {
-                    Main.Log($"Removing protection from {target.name} in slot {target.slot}");
+                    Log($"Removing protection from {target.name} in slot {target.slot}");
                     _character.inventory.inventory[target.slot].removable = false;
                     continue;
                 }
 
                 if (ci.Count(x => x.id == target.id) <= 1) continue;
-                Main.Log($"Merging {target.name} in slot {target.slot}");
+                Log($"Merging {target.name} in slot {target.slot}");
                 _controller.mergeAll(target.slot);
             }
 
             //Consume quest items that dont need to be merged
             var questItems = ci.Where(x =>
-                x.id >= 278 && x.id <= 287 && !_character.inventory.inventory[x.slot].removable);
+                x.id >= 278 && x.id <= 287 && _character.inventory.inventory[x.slot].removable);
 
             foreach (var target in questItems)
             {
                 var newSlot = ChangePage(target.slot);
                 var ic = _controller.inventory[newSlot];
+                Log($"Using quest item {target.name} in slot {target.slot}");
                 typeof(ItemController).GetMethod("consumeItem", BindingFlags.NonPublic | BindingFlags.Instance)
                     ?.Invoke(ic, null);
             }
@@ -181,7 +181,7 @@ namespace NGUInjector
             {
                 var target = item.MaxItem();
 
-                Main.Log($"Merging {target.name} in slot {target.slot}");
+                Log($"Merging {target.name} in slot {target.slot}");
                 _controller.mergeAll(target.slot);
             }
         }
@@ -224,11 +224,11 @@ namespace NGUInjector
                 needed.Add(_character.inventory.accs[_controller.accessoryID(i)].GetNeededBoosts(true));
             }
 
-            foreach (var item in Main.BoostedItems)
+            foreach (var item in Settings.BoostIDs)
             {
                 //Find all inventory slots that match this item name
                 var targets =
-                    ci.Where(x => x.id == item && !BoostBlacklist.Contains(x.id)).ToArray();
+                    ci.Where(x => x.id == item && !Settings.BoostBlacklist.Contains(x.id)).ToArray();
 
                 switch (targets.Length)
                 {
@@ -245,7 +245,7 @@ namespace NGUInjector
             }
 
             if (counter == 0)
-                Main.Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
+                Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
 
             counter++;
             if (counter == 6) counter = 0;

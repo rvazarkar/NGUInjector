@@ -15,76 +15,6 @@ using UnityEngine.UI;
 
 namespace NGUInjector
 {
-    public static class Extension
-    {
-        public static ih MaxItem(this IEnumerable<ih> items)
-        {
-            return items.Aggregate(
-                new { max = int.MinValue, t = (ih)null },
-                (state, el) =>
-                {
-                    var current = el.locked ? el.level + 101 : el.level;
-                    return current > state.max ? new { max = current, t = el } : state;
-                }).t;
-        }
-
-        public static IEnumerable<ih> GetConvertedInventory(this Inventory inv, InventoryController controller)
-        {
-            return inv.inventory.Select((x, i) => new ih
-                {
-                    level = x.level,
-                    locked = !x.removable,
-                    name = controller.itemInfo.itemName[x.id],
-                    slot = i,
-                    id = x.id,
-                    equipment = x
-                }).Where(x => x.id != 0);
-        }
-
-        public static T GetPV<T>(this EnemyAI ai, string val)
-        {
-            var type = ai.GetType().GetField(val,
-                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            return (T) type?.GetValue(ai);
-        }
-
-        public static BoostsNeeded GetNeededBoosts(this Equipment eq, bool equipped)
-        {
-            var n = new BoostsNeeded();
-
-            if (InventoryManager.BoostBlacklist.Contains(eq.id))
-                return n;
-
-            if (!equipped && !Main.BoostedItems.Contains(eq.id))
-                return n;
-
-            if (!eq.isEquipment())
-                return n;
-
-            if (eq.capAttack != 0.0)
-                n.Power += CalcCap(eq.capAttack, eq.level) - eq.curAttack;
-
-            if (eq.capDefense != 0.0)
-                n.Toughness += CalcCap(eq.capDefense, eq.level) - eq.curDefense;
-
-            if (eq.spec1Type != specType.None)
-                n.Special += CalcCap(eq.spec1Cap, eq.level) - eq.spec1Cur;
-
-            if (eq.spec2Type != specType.None)
-                n.Special += CalcCap(eq.spec2Cap, eq.level) - eq.spec2Cur;
-
-            if (eq.spec3Type != specType.None)
-                n.Special += CalcCap(eq.spec3Cap, eq.level) - eq.spec3Cur;
-
-            return n;
-        }
-
-        private static float CalcCap(float cap, float level)
-        {
-            return Mathf.Floor(cap * (float) (1.0 + level / 100.0));
-        }
-    }
-    
     internal class Main : MonoBehaviour
     {
         internal static InventoryController Controller;
@@ -107,44 +37,46 @@ namespace NGUInjector
         private static string _dir;
 
         private bool _active;
-        internal static bool SnipeActive;
-
-        private bool _manageInventory;
-        private static bool _manageYggdrasil;
         
         private readonly Dictionary<int, string> _titanList = new Dictionary<int, string>();
 
+        internal static FileSystemWatcher ConfigWatcher;
+        internal static FileSystemWatcher AllocationWatcher;
 
-        internal static int HighestAk;
-        internal static int SnipeZoneTarget;
-        internal static int[] BoostedItems;
+        internal static bool SnipeActive { get; set; }
 
-        private static FileSystemWatcher _configWatcher;
-        private FileSystemWatcher _allocationWatcher;
+        internal static bool IgnoreChange { get; set; }
 
-        internal static bool SnipeWithBuffs { get; set; }
+        //private bool _manageInventory;
+        //private static bool _manageYggdrasil;
 
-        internal static bool ManageTitanLoadouts { get; set; }
+        //internal static int HighestAk;
+        //internal static int SnipeZoneTarget;
+        //internal static int[] BoostedItems;
 
-        internal static bool ManageYggdrasilLoadouts { get; set; }
+        //internal static bool SnipeWithBuffs { get; set; }
 
-        internal static bool ManageEnergy { get; set; }
+        //internal static bool ManageTitanLoadouts { get; set; }
 
-        internal static bool ManageMagic { get; set; }
+        //internal static bool ManageYggdrasilLoadouts { get; set; }
 
-        internal static bool FastCombat { get; set; }
+        //internal static bool ManageEnergy { get; set; }
 
-        internal static bool ManageGear { get; set; }
+        //internal static bool ManageMagic { get; set; }
 
-        internal static bool ManageDiggers { get; set; }
+        //internal static bool FastCombat { get; set; }
 
-        internal static bool AutoFight { get; set; }
+        //internal static bool ManageGear { get; set; }
 
-        private static SavedSettings _currentSettings;
+        //internal static bool ManageDiggers { get; set; }
+
+        //internal static bool AutoFight { get; set; }
+
+        internal static SavedSettings Settings;
 
         internal static void Log(string msg)
         {
-            OutputWriter.WriteLine($"{ DateTime.Now.ToShortDateString()} -{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
+            OutputWriter.WriteLine($"{ DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
         }
 
         internal static void LogLoot(string msg)
@@ -201,32 +133,38 @@ namespace NGUInjector
                 _titanList.Add(11, "Rock Lobster");
                 _titanList.Add(12, "Amalgamate");
 
+                Settings = new SavedSettings(_dir);
                 _active = true;
-                SnipeActive = false;
 
-                ManageEnergy = false;
-                ManageMagic = false;
-                ManageGear = false;
-                _manageInventory = true;
-                LoadoutManager.TitanLoadout = new int[] { };
-                LoadoutManager.YggdrasilLoadout = new int[] { };
-
-                if (!LoadSettings())
+                if (!Settings.LoadSettings())
                 {
-                    SnipeZoneTarget = -1;
-                    SnipeWithBuffs = true;
-                    HighestAk = 0;
-                    ManageTitanLoadouts = false;
-                    _manageYggdrasil = true;
-                    BoostedItems = new int[] { };
-                    InventoryManager.BoostBlacklist = new int[] {};
-                    LoadoutManager.TitanLoadout = new int[] { };
-                    LoadoutManager.YggdrasilLoadout = new int[] { };
-                    SaveSettings();
+                    var temp = new SavedSettings(null)
+                    {
+                        BoostIDs = new int[] { },
+                        BoostBlacklist = new int[] { },
+                        YggdrasilLoadout = new int[] { },
+                        SwapYggdrasilLoadouts = true,
+                        HighestAKZone = 0,
+                        SwapTitanLoadouts = true,
+                        TitanLoadout = new int[] { },
+                        SnipeZone = -1,
+                        PrecastBuffs = true,
+                        FastCombat = false,
+                        AutoFight = false,
+                        ManageDiggers = true,
+                        ManageYggdrasil = true,
+                        ManageEnergy = true,
+                        ManageMagic = true,
+                        ManageInventory = true,
+                        ManageGear = true
+                    };
+
+                    Settings.MassUpdate(temp);
+
                     Log($"Loaded default settings");
                 }
 
-                _configWatcher = new FileSystemWatcher
+                ConfigWatcher = new FileSystemWatcher
                 {
                     Path = _dir,
                     Filter = "settings.json",
@@ -234,9 +172,17 @@ namespace NGUInjector
                     EnableRaisingEvents = true
                 };
 
-                _configWatcher.Changed += (sender, args) => { LoadSettings(); };
+                ConfigWatcher.Changed += (sender, args) =>
+                {
+                    if (IgnoreChange)
+                    {
+                        IgnoreChange = false;
+                        return;
+                    }
+                    Settings.LoadSettings();
+                };
 
-                _allocationWatcher = new FileSystemWatcher
+                AllocationWatcher = new FileSystemWatcher
                 {
                     Path = _dir,
                     Filter = "allocation.json",
@@ -244,7 +190,9 @@ namespace NGUInjector
                     EnableRaisingEvents = true
                 };
 
-                _allocationWatcher.Changed += (sender, args) => { LoadAllocation(); };
+                AllocationWatcher.Changed += (sender, args) => { LoadAllocation(); };
+
+                Settings.SaveSettings();
 
                 InvokeRepeating("AutomationRoutine", 0.0f, 10.0f);
                 InvokeRepeating("SnipeZone", 0.0f, .1f);
@@ -270,15 +218,6 @@ namespace NGUInjector
             {
                 _optionsVisible = !_optionsVisible;
             }
-            if (Input.GetKeyDown(KeyCode.KeypadPlus))
-            {
-                _active = false;
-                SnipeActive = false;
-                CancelInvoke("AutomationRoutine");
-                CancelInvoke("SnipeZone");
-                CancelInvoke("MonitorLog");
-                Loader.Unload();
-            }
 
             if (Input.GetKeyDown(KeyCode.KeypadDivide))
             {
@@ -300,8 +239,6 @@ namespace NGUInjector
         {
             try
             {
-                SaveSettings();
-
                 if (!_active)
                 {
                     _timeLeft = 10f;
@@ -313,7 +250,7 @@ namespace NGUInjector
                     Character.adventureController.idleAttackMove.setToggle();
                 }
 
-                if (AutoFight)
+                if (Settings.AutoFight)
                 {
                     var bc = Character.bossController;
                     if (!bc.isFighting && !bc.nukeBoss)
@@ -331,9 +268,7 @@ namespace NGUInjector
                     }
                 }
 
-                GetTotalTrainingCaps();
-
-                if (_manageInventory)
+                if (Settings.ManageInventory)
                 {
                     var converted = Character.inventory.GetConvertedInventory(Controller).ToArray();
                     _invManager.EnsureFiltered(converted);
@@ -350,25 +285,25 @@ namespace NGUInjector
                     _invManager.ChangeBoostConversion(converted);
                 }
 
-                if (ManageTitanLoadouts)
+                if (Settings.SwapTitanLoadouts)
                 {
                     LoadoutManager.TryTitanSwap();
                     DiggerManager.TryTitanSwap();
                 }
 
-                if (_manageYggdrasil)
+                if (Settings.SwapYggdrasilLoadouts)
                 {
                     _yggManager.ManageYggHarvest();
                     _yggManager.CheckFruits();
                 }
 
-                if (ManageGear)
+                if (Settings.ManageGear)
                     _profile.EquipGear();
-                if (ManageEnergy)
+                if (Settings.ManageEnergy)
                     _profile.AllocateEnergy();
-                if (ManageMagic)
+                if (Settings.ManageMagic)
                     _profile.AllocateMagic();
-                if (ManageDiggers)
+                if (Settings.ManageDiggers)
                     _profile.EquipDiggers();
 
                 _questManager.CheckQuestTurnin();
@@ -387,79 +322,41 @@ namespace NGUInjector
             _profile.ReloadAllocation();
         }
 
-        static bool LoadSettings()
+        private void SnipeZone()
         {
-            var path = Path.Combine(_dir, "settings.json");
-            if (File.Exists(path))
-            {
-                try
-                {
-                    var settings = JsonUtility.FromJson<SavedSettings>(File.ReadAllText(path));
-                    
-                    SnipeWithBuffs = settings.PrecastBuffs;
-                    ManageTitanLoadouts = settings.SwapTitanLoadouts;
-                    ManageYggdrasilLoadouts = settings.SwapYggdrasilLoadouts;
-                    BoostedItems = settings.BoostIDs;
-                    InventoryManager.BoostBlacklist = settings.BoostBlacklist.OrderBy(x => x).ToArray();
-                    ManageEnergy = settings.ManageEnergy;
-                    ManageMagic = settings.ManageMagic;
-                    FastCombat = settings.FastCombat;
-                    ManageGear = settings.ManageGear;
-                    ManageDiggers = settings.ManageDiggers;
-                    _manageYggdrasil = settings.ManageYggdrasil;
-
-                    HighestAk = settings.HighestAKZone;
-                    SnipeZoneTarget = settings.SnipeZone;
-                    LoadoutManager.TitanLoadout = settings.TitanLoadout.OrderBy(x => x).ToArray();
-                    LoadoutManager.YggdrasilLoadout = settings.YggdrasilLoadout.OrderBy(x => x).ToArray();
-                    Log($"Loaded settings: {JsonUtility.ToJson(settings, true)}");
-                    _currentSettings = settings;
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    Log(e.Message);
-                    Log(e.StackTrace);
-                    return false;
-                }
-            }
-
-            return false;
+            _combManager.SnipeZone();
         }
 
-        static void SaveSettings()
+        private void AkBack()
         {
-            var path = Path.Combine(_dir, "settings.json");
-            var settings = new SavedSettings
-            {
-                SnipeZone = SnipeZoneTarget,
-                HighestAKZone = HighestAk,
-                PrecastBuffs = SnipeWithBuffs,
-                SwapTitanLoadouts = ManageTitanLoadouts,
-                SwapYggdrasilLoadouts = ManageYggdrasilLoadouts,
-                BoostIDs = BoostedItems,
-                ManageEnergy = ManageEnergy,
-                ManageMagic = ManageMagic,
-                ManageGear = ManageGear,
-                ManageDiggers = ManageDiggers,
-                ManageYggdrasil = _manageYggdrasil,
-                YggdrasilLoadout = LoadoutManager.YggdrasilLoadout.OrderBy(x => x).ToArray(),
-                TitanLoadout = LoadoutManager.TitanLoadout.OrderBy(x => x).ToArray(),
-                FastCombat = FastCombat,
-                BoostBlacklist = InventoryManager.BoostBlacklist.OrderBy(x => x).ToArray()
-            };
+            if (Settings.HighestAKZone == 0)
+                return;
+            Settings.HighestAKZone -= 1;
+            Settings.SaveSettings();
+        }
 
-            if (!settings.Equals(_currentSettings))
-            {
-                Log("Saving updated settings");
-                _currentSettings = settings;
-                var serialized = JsonUtility.ToJson(settings, true);
-                using (var writer = new StreamWriter(path))
-                {
-                    writer.Write(serialized);
-                    writer.Flush();
-                }
-            }
+        private void AkForward()
+        {
+            if (Settings.HighestAKZone == 11)
+                return;
+            Settings.HighestAKZone += 1;
+            Settings.SaveSettings();
+        }
+
+        private void ZoneBack()
+        {
+            if (Settings.SnipeZone == -1)
+                return;
+            Settings.SnipeZone -= 1;
+            Settings.SaveSettings();
+        }
+
+        private void ZoneForward()
+        {
+            if (Settings.SnipeZone == 44)
+                return;
+            Settings.SnipeZone += 1;
+            Settings.SaveSettings();
         }
 
         public void OnGUI()
@@ -472,43 +369,6 @@ namespace NGUInjector
             GUI.Label(new Rect(10, 30, 200, 40), $"Next Loop - {_timeLeft:00.0}s");
         }
 
-        private void SnipeZone()
-        {
-            _combManager.SnipeZone();
-        }
-
-        private void AkBack()
-        {
-            if (HighestAk == 0)
-                return;
-            HighestAk -= 1;
-            SaveSettings();
-        }
-
-        private void AkForward()
-        {
-            if (HighestAk == 11)
-                return;
-            HighestAk += 1;
-            SaveSettings();
-        }
-
-        private void ZoneBack()
-        {
-            if (SnipeZoneTarget == -1)
-                return;
-            SnipeZoneTarget -= 1;
-            SaveSettings();
-        }
-
-        private void ZoneForward()
-        {
-            if (SnipeZoneTarget == 44)
-                return;
-            SnipeZoneTarget += 1;
-            SaveSettings();
-        }
-
         void DoGui(int windowId)
         {
             var centered = new GUIStyle("label") {alignment = TextAnchor.MiddleCenter};
@@ -516,15 +376,15 @@ namespace NGUInjector
             _active = GUILayout.Toggle(_active, "Global Enable");
 
             GUILayout.BeginHorizontal();
-            _manageInventory = GUILayout.Toggle(_manageInventory, "Manage Inventory");
-            _manageYggdrasil = GUILayout.Toggle(_manageYggdrasil, "Manage Yggdrasil");
-            AutoFight = GUILayout.Toggle(AutoFight, "Auto Fight Bosses");
+            Settings.ManageInventory = GUILayout.Toggle(Settings.ManageInventory, "Manage Inventory");
+            Settings.ManageYggdrasil = GUILayout.Toggle(Settings.ManageYggdrasil, "Manage Yggdrasil");
+            Settings.AutoFight = GUILayout.Toggle(Settings.AutoFight, "Auto Fight Bosses");
             GUILayout.EndHorizontal();
             
             GUILayout.BeginHorizontal();
             SnipeActive = GUILayout.Toggle(SnipeActive, "Zone Boss Sniping");
-            SnipeWithBuffs = GUILayout.Toggle(SnipeWithBuffs, "Precast Buffs");
-            FastCombat = GUILayout.Toggle(FastCombat, "Fast Combat");
+            Settings.PrecastBuffs = GUILayout.Toggle(Settings.PrecastBuffs, "Precast Buffs");
+            Settings.FastCombat = GUILayout.Toggle(Settings.FastCombat, "Fast Combat");
             GUILayout.EndHorizontal();
 
 
@@ -534,7 +394,7 @@ namespace NGUInjector
             {
                 ZoneBack();
             }
-            GUILayout.Label(Character.adventureController.zoneName(SnipeZoneTarget), centered);
+            GUILayout.Label(Character.adventureController.zoneName(Settings.SnipeZone), centered);
             if (GUILayout.Button(">"))
             {
                 ZoneForward();
@@ -547,7 +407,7 @@ namespace NGUInjector
             {
                 AkBack();
             }
-            GUILayout.Label(_titanList[HighestAk], centered);
+            GUILayout.Label(_titanList[Settings.HighestAKZone], centered);
             if (GUILayout.Button(">"))
             {
                 AkForward();
@@ -556,15 +416,15 @@ namespace NGUInjector
 
 
             GUILayout.BeginHorizontal();
-            ManageEnergy = GUILayout.Toggle(ManageEnergy, "Manage Energy");
-            ManageMagic = GUILayout.Toggle(ManageMagic, "Manage Magic");
-            ManageGear = GUILayout.Toggle(ManageGear, "Manage Gear");
-            ManageDiggers = GUILayout.Toggle(ManageDiggers, "Manage Diggers");
+            Settings.ManageEnergy = GUILayout.Toggle(Settings.ManageEnergy, "Manage Energy");
+            Settings.ManageMagic = GUILayout.Toggle(Settings.ManageMagic, "Manage Magic");
+            Settings.ManageGear = GUILayout.Toggle(Settings.ManageGear, "Manage Gear");
+            Settings.ManageDiggers = GUILayout.Toggle(Settings.ManageDiggers, "Manage Diggers");
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            ManageTitanLoadouts = GUILayout.Toggle(ManageTitanLoadouts, "Swap Loadout For Titan");
-            ManageYggdrasilLoadouts = GUILayout.Toggle(ManageYggdrasilLoadouts, "Swap Loadout For Yggdrasil");
+            Settings.SwapTitanLoadouts = GUILayout.Toggle(Settings.SwapTitanLoadouts, "Swap Loadout For Titan");
+            Settings.SwapYggdrasilLoadouts = GUILayout.Toggle(Settings.SwapYggdrasilLoadouts, "Swap Loadout For Yggdrasil");
             GUILayout.EndHorizontal();
 
             //if (GUILayout.Button("Test"))
@@ -596,11 +456,5 @@ namespace NGUInjector
                 log[i] = $"{line}<b></b>";
             }
         }
-
-        void GetTotalTrainingCaps()
-        {
-            //_trainingCap = Character.training.attackCaps.Sum() + Character.training.defenseCaps.Sum();
-        }
-
     }
 }

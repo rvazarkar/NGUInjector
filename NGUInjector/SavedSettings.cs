@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine;
 namespace NGUInjector
 {
     [Serializable]
-    public class SavedSettings : IEquatable<SavedSettings>
+    public class SavedSettings
     {
         [SerializeField] private int _highestAkZone;
         [SerializeField] private int _snipeZone;
@@ -15,8 +16,8 @@ namespace NGUInjector
         [SerializeField] private bool _swapTitanLoadouts;
         [SerializeField] private bool _swapYggdrasilLoadouts;
         [SerializeField] private int[] _boostIds;
-        [SerializeField]private bool _manageEnergy;
-        [SerializeField]private bool _manageMagic;
+        [SerializeField] private bool _manageEnergy;
+        [SerializeField] private bool _manageMagic;
         [SerializeField] private bool _fastCombat;
         [SerializeField] private bool _manageGear;
         [SerializeField] private bool _manageDiggers;
@@ -24,6 +25,78 @@ namespace NGUInjector
         [SerializeField] private int[] _titanLoadout;
         [SerializeField] private int[] _yggdrasilLoadout;
         [SerializeField] private int[] _boostBlacklist;
+        [SerializeField] private bool _manageInventory;
+        [SerializeField] private bool _autoFight;
+
+
+        private readonly string _savePath;
+        
+        public SavedSettings(string dir)
+        {
+            _savePath = Path.Combine(dir, "settings.json");
+        }
+
+        internal void SaveSettings()
+        {
+            if (_savePath == null) return;
+            Main.Log("Saving Settings");
+            Main.IgnoreChange = true;
+            var serialized = JsonUtility.ToJson(this, true);
+            using (var writer = new StreamWriter(_savePath))
+            {
+                writer.Write(serialized);
+                writer.Flush();
+            }
+        }
+
+        internal bool LoadSettings()
+        {
+            if (File.Exists(_savePath))
+            {
+                try
+                {
+                    var newSettings = JsonUtility.FromJson<SavedSettings>(File.ReadAllText(_savePath));
+                    MassUpdate(newSettings);
+                    Main.Log("Loaded Updated Settings");
+                    Main.Log(JsonUtility.ToJson(this, true));
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Main.Log(e.Message);
+                    Main.Log(e.StackTrace);
+                    return false;
+                }
+            }
+
+            return false;
+        }
+
+        internal void MassUpdate(SavedSettings other)
+        {
+            _boostIds = other.BoostIDs;
+            _boostBlacklist = other.BoostBlacklist;
+
+            _yggdrasilLoadout = other.YggdrasilLoadout;
+            _swapYggdrasilLoadouts = other.SwapYggdrasilLoadouts;
+
+            _highestAkZone = other.HighestAKZone;
+            _swapTitanLoadouts = other.SwapTitanLoadouts;
+            _titanLoadout = other.TitanLoadout;
+
+            _manageDiggers = other.ManageDiggers;
+            _manageYggdrasil = other.ManageYggdrasil;
+            _manageEnergy = other.ManageEnergy;
+            _manageMagic = other.ManageMagic;
+            _manageInventory = other.ManageInventory;
+            _manageGear = other.ManageGear;
+
+            _snipeZone = other.SnipeZone;
+            _fastCombat = other.FastCombat;
+            _precastBuffs = other.PrecastBuffs;
+            
+            _autoFight = other.AutoFight;
+        }
 
         public override string ToString()
         {
@@ -33,31 +106,53 @@ namespace NGUInjector
         public int HighestAKZone
         {
             get => _highestAkZone;
-            set => _highestAkZone = value;
+            set
+            {
+                _highestAkZone = value;
+                SaveSettings();
+            }
         }
 
         public int SnipeZone
         {
             get => _snipeZone;
-            set => _snipeZone = value;
+            set
+            {
+                if (value == _snipeZone) return;
+                _snipeZone = value;
+                SaveSettings();
+            }
         }
 
         public bool PrecastBuffs
         {
             get => _precastBuffs;
-            set => _precastBuffs = value;
+            set
+            {
+                if (value == _precastBuffs) return;
+                _precastBuffs = value; SaveSettings();
+            }
         }
 
         public bool SwapTitanLoadouts
         {
             get => _swapTitanLoadouts;
-            set => _swapTitanLoadouts = value;
+            set
+            {
+                if (value == _swapTitanLoadouts) return;
+                _swapTitanLoadouts = value; 
+                SaveSettings();
+            }
         }
 
         public bool SwapYggdrasilLoadouts
         {
             get => _swapYggdrasilLoadouts;
-            set => _swapYggdrasilLoadouts = value;
+            set
+            {
+                if (value == _swapYggdrasilLoadouts) return;
+                _swapYggdrasilLoadouts = value; SaveSettings();
+            }
         }
 
         public int[] BoostIDs
@@ -69,24 +164,38 @@ namespace NGUInjector
         public bool ManageEnergy
         {
             get => _manageEnergy;
-            set => _manageEnergy = value;
+            set
+            {
+                if (value == _manageEnergy) return; _manageEnergy = value; SaveSettings();
+            }
         }
 
         public bool ManageMagic
         {
             get => _manageMagic;
-            set => _manageMagic = value;
+            set
+            {
+                if (value == _manageMagic) return; _manageMagic = value; SaveSettings();
+            }
         }
+
         public bool FastCombat
         {
             get => _fastCombat;
-            set => _fastCombat = value;
+            set
+            {
+                if (value == _fastCombat) return;
+                _fastCombat = value; SaveSettings();
+            }
         }
 
         public bool ManageGear
         {
             get => _manageGear;
-            set => _manageGear = value;
+            set
+            {
+                if (value == _manageGear) return; _manageGear = value; SaveSettings();
+            }
         }
 
         public int[] TitanLoadout
@@ -110,46 +219,40 @@ namespace NGUInjector
         public bool ManageYggdrasil
         {
             get => _manageYggdrasil;
-            set => _manageYggdrasil = value;
+            set
+            {
+                if (value == _manageYggdrasil) return; 
+                _manageYggdrasil = value; SaveSettings();
+            }
         }
 
         public bool ManageDiggers
         {
             get => _manageDiggers;
-            set => _manageDiggers = value;
-        }
-
-        public bool Equals(SavedSettings other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return _highestAkZone == other._highestAkZone && _snipeZone == other._snipeZone && _precastBuffs == other._precastBuffs && _swapTitanLoadouts == other._swapTitanLoadouts && _swapYggdrasilLoadouts == other._swapYggdrasilLoadouts && _manageEnergy == other._manageEnergy && _manageMagic == other._manageMagic && _fastCombat == other._fastCombat && _manageGear == other._manageGear && _manageDiggers == other._manageDiggers && _manageYggdrasil == other._manageYggdrasil;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((SavedSettings) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
+            set
             {
-                var hashCode = _highestAkZone;
-                hashCode = (hashCode * 397) ^ _snipeZone;
-                hashCode = (hashCode * 397) ^ _precastBuffs.GetHashCode();
-                hashCode = (hashCode * 397) ^ _swapTitanLoadouts.GetHashCode();
-                hashCode = (hashCode * 397) ^ _swapYggdrasilLoadouts.GetHashCode();
-                hashCode = (hashCode * 397) ^ _manageEnergy.GetHashCode();
-                hashCode = (hashCode * 397) ^ _manageMagic.GetHashCode();
-                hashCode = (hashCode * 397) ^ _fastCombat.GetHashCode();
-                hashCode = (hashCode * 397) ^ _manageGear.GetHashCode();
-                hashCode = (hashCode * 397) ^ _manageDiggers.GetHashCode();
-                hashCode = (hashCode * 397) ^ _manageYggdrasil.GetHashCode();
-                return hashCode;
+                if (value == _manageDiggers) return;
+                _manageDiggers = value; SaveSettings();
+            }
+        }
+
+        public bool ManageInventory
+        {
+            get => _manageInventory;
+            set
+            {
+                if (value == _manageInventory) return;
+                _manageInventory = value; SaveSettings();
+            }
+        }
+
+        public bool AutoFight
+        {
+            get => _autoFight;
+            set
+            {
+                if (value == _autoFight) return;
+                _autoFight = value; SaveSettings();
             }
         }
     }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using static NGUInjector.Main;
 
 namespace NGUInjector
 {
@@ -38,45 +39,45 @@ namespace NGUInjector
         {
             if (!needsBuff && HasFullHP())
             {
-                Main.LogCombat("Skipping buffs, moving to stage 3");
+                LogCombat("Skipping buffs, moving to stage 3");
                 _snipeStage = 3;
                 return;
             }
 
             if (_character.adventure.autoattacking)
             {
-                Main.LogCombat("Toggling off autoattack");
+                LogCombat("Toggling off autoattack");
                 _character.adventureController.idleAttackMove.setToggle();
             }
 
             if (_character.adventureController.zone != -1)
             {
-                Main.LogCombat("Moving to safe zone to prep and wait for full HP");
+                LogCombat("Moving to safe zone to prep and wait for full HP");
                 _character.adventureController.zoneSelector.changeZone(-1);
             }
 
             _snipeStage = 1;
-            Main.LogCombat("In safe zone, moving to stage 1");
+            LogCombat("In safe zone, moving to stage 1");
         }
 
         void DoBuffs()
         {
-            if (!Main.SnipeWithBuffs && HasFullHP())
+            if (!Settings.PrecastBuffs && HasFullHP())
             {
-                Main.LogCombat("Buffs disabled, moving to stage 3");
+                LogCombat("Buffs disabled, moving to stage 3");
                 _snipeStage = 3;
                 return;
             }
             if (ChargeActive())
             {
-                Main.LogCombat("Charge active, moving to stage 2");
+                LogCombat("Charge active, moving to stage 2");
                 _snipeStage = 2;
                 return;
             }
 
             if (_character.adventureController.chargeMove.button.IsInteractable())
             {
-                Main.LogCombat("Using charge, moving to stage 2");
+                LogCombat("Using charge, moving to stage 2");
                 _character.adventureController.chargeMove.doMove();
                 _snipeStage = 2;
             }
@@ -89,16 +90,16 @@ namespace NGUInjector
                 return;
             }
 
-            if (!Main.SnipeWithBuffs)
+            if (!Settings.PrecastBuffs)
             {
-                Main.LogCombat("Buffs disabled, moving to stage 3");
+                LogCombat("Buffs disabled, moving to stage 3");
                 _snipeStage = 3;
                 return;
             }
 
             if (_character.adventureController.chargeMove.button.IsInteractable() && ChargeActive() && (Math.Abs(_character.totalAdvHP() - _character.adventure.curHP) < 5))
             {
-                Main.LogCombat("Charge ready, moving to stage 4");
+                LogCombat("Charge ready, moving to stage 4");
                 _snipeStage = 3;
             }
         }
@@ -143,7 +144,7 @@ namespace NGUInjector
             if (!_pc.moveCheck())
                 return;
 
-            if (!Main.FastCombat)
+            if (!Settings.FastCombat)
             {
                 if (CombatBuffs())
                     return;
@@ -309,7 +310,7 @@ namespace NGUInjector
         {
             var ac = _character.adventureController;
 
-            if (!Main.FastCombat)
+            if (!Settings.FastCombat)
             {
                 if (ParalyzeBoss())
                 {
@@ -350,12 +351,12 @@ namespace NGUInjector
 
         internal void SnipeZone()
         {
-            if (!Main.SnipeActive)
+            if (!SnipeActive)
             {
                 return;
             }
-            var zone = Main.SnipeZoneTarget;
-            var needsBuff = Main.SnipeWithBuffs;
+            var zone = Settings.SnipeZone;
+            var needsBuff = Settings.PrecastBuffs;
             try
             {
                 //Stage 0: Go to safe zone
@@ -385,7 +386,7 @@ namespace NGUInjector
 
                     if (ac.currentEnemy == null || ac.zone == -1)
                     {
-                        Main.LogCombat(
+                        LogCombat(
                             "Character or Enemy Defeated, or back in safe zone, resetting snipeStage");
                         _snipeStage = 0;
                         return;
@@ -396,8 +397,8 @@ namespace NGUInjector
             }
             catch (Exception e)
             {
-                Main.LogCombat(e.Message);
-                Main.LogCombat(e.StackTrace);
+                LogCombat(e.Message);
+                LogCombat(e.StackTrace);
             }
             
         }
