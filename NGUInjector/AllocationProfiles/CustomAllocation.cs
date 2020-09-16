@@ -68,6 +68,7 @@ namespace NGUInjector.AllocationProfiles
                     }
                 };
 
+                Main.Log("Created empty allocation profile. Please update allocation.json");
                 using (var writer = new StreamWriter(File.Open(_allocationPath, FileMode.CreateNew)))
                 {
                     writer.WriteLine(JsonUtility.ToJson(w));
