@@ -35,12 +35,13 @@ namespace NGUInjector
                 if (_character.beastQuest.reducedRewards)
                 {
                     //If idle mode is off, toggle it on
-                    if (_character.beastQuest.idleMode) return;
-                    
-                    Log("Turning on idle mode for minor quest.");
-                    _character.beastQuest.idleMode = true;
-                    _character.beastQuestController.updateButtons();
-                    _character.beastQuestController.updateButtonText();
+                    if (!_character.beastQuest.idleMode)
+                    {
+                        Log("Turning on idle mode for minor quest.");
+                        _character.beastQuest.idleMode = true;
+                        _character.beastQuestController.updateButtons();
+                        _character.beastQuestController.updateButtonText();
+                    }
                     
                     //If we're not in ITOPOD, move there if its set
                     if (_character.adventureController.zone >= 1000 || !Settings.AutoQuestITOPOD) return;
