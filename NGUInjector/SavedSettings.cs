@@ -27,10 +27,15 @@ namespace NGUInjector
         [SerializeField] private int[] _boostBlacklist;
         [SerializeField] private bool _manageInventory;
         [SerializeField] private bool _autoFight;
+        [SerializeField] private bool _autoQuest;
+        [SerializeField] private bool _allowMajorQuests;
+        [SerializeField] private bool _autoConvertBoosts;
 
 
         private readonly string _savePath;
-        
+        private bool _autoQuestItopod;
+
+
         public SavedSettings(string dir)
         {
             _savePath = Path.Combine(dir, "settings.json");
@@ -90,12 +95,17 @@ namespace NGUInjector
             _manageMagic = other.ManageMagic;
             _manageInventory = other.ManageInventory;
             _manageGear = other.ManageGear;
+            _autoConvertBoosts = other.AutoConvertBoosts;
 
             _snipeZone = other.SnipeZone;
             _fastCombat = other.FastCombat;
             _precastBuffs = other.PrecastBuffs;
-            
+
             _autoFight = other.AutoFight;
+
+            _autoQuest = other.AutoQuest;
+            _autoQuestItopod = other.AutoQuestITOPOD;
+            _allowMajorQuests = other.AllowMajorQuests;
         }
 
         public override string ToString()
@@ -140,7 +150,7 @@ namespace NGUInjector
             set
             {
                 if (value == _swapTitanLoadouts) return;
-                _swapTitanLoadouts = value; 
+                _swapTitanLoadouts = value;
                 SaveSettings();
             }
         }
@@ -221,7 +231,7 @@ namespace NGUInjector
             get => _manageYggdrasil;
             set
             {
-                if (value == _manageYggdrasil) return; 
+                if (value == _manageYggdrasil) return;
                 _manageYggdrasil = value; SaveSettings();
             }
         }
@@ -253,6 +263,50 @@ namespace NGUInjector
             {
                 if (value == _autoFight) return;
                 _autoFight = value; SaveSettings();
+            }
+        }
+
+        public bool AutoQuest
+        {
+            get => _autoQuest;
+            set
+            {
+                if (value == _autoQuest) return;
+                _autoQuest = value;
+                SaveSettings();
+            }
+        }
+
+        public bool AllowMajorQuests
+        {
+            get => _allowMajorQuests;
+            set
+            {
+                if (value == _allowMajorQuests) return;
+                _allowMajorQuests = value;
+                SaveSettings();
+            }
+        }
+
+        public bool AutoConvertBoosts
+        {
+            get => _autoConvertBoosts;
+            set
+            {
+                if (value == _autoConvertBoosts) return;
+                _autoConvertBoosts = value;
+                SaveSettings();
+            }
+        }
+
+        public bool AutoQuestITOPOD
+        {
+            get => _autoQuestItopod;
+            set
+            {
+                if (value == _autoQuestItopod) return;
+                _autoQuestItopod = value;
+                SaveSettings();
             }
         }
     }

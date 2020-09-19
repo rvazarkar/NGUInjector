@@ -63,7 +63,7 @@ namespace NGUInjector
         {
             foreach (var item in Settings.BoostIDs)
             {
-                //Find all inventory slots that match this item name
+                //Find all inventory slots that match this item id
                 var targets =
                     ih.Where(x => x.id == item && !Settings.BoostBlacklist.Contains(x.id)).ToArray();
 
@@ -124,13 +124,6 @@ namespace NGUInjector
 
             foreach (var target in grouped)
             {
-                if (target.level == 100)
-                {
-                    Log($"Removing protection from {target.name} in slot {target.slot}");
-                    _character.inventory.inventory[target.slot].removable = false;
-                    continue;
-                }
-
                 if (ci.Count(x => x.id == target.id) <= 1) continue;
                 Log($"Merging {target.name} in slot {target.slot}");
                 _controller.mergeAll(target.slot);
@@ -146,13 +139,6 @@ namespace NGUInjector
 
             foreach (var target in toMerge)
             {
-                if (target.level == 100)
-                {
-                    Log($"Removing protection from {target.name} in slot {target.slot}");
-                    _character.inventory.inventory[target.slot].removable = false;
-                    continue;
-                }
-
                 if (ci.Count(x => x.id == target.id) <= 1) continue;
                 Log($"Merging {target.name} in slot {target.slot}");
                 _controller.mergeAll(target.slot);
@@ -209,6 +195,8 @@ namespace NGUInjector
 
         internal void ChangeBoostConversion(ih[] ci)
         {
+            if (!Settings.AutoConvertBoosts)
+                return;
             var needed = new BoostsNeeded();
 
             needed.Add(_character.inventory.head.GetNeededBoosts(true));

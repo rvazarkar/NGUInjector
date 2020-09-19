@@ -266,7 +266,7 @@ namespace NGUInjector
                     DiggerManager.TryTitanSwap();
                 }
 
-                if (Settings.SwapYggdrasilLoadouts)
+                if (Settings.SwapYggdrasilLoadouts && Character.buttons.yggdrasil.enabled)
                 {
                     _yggManager.ManageYggHarvest();
                     _yggManager.CheckFruits();
@@ -276,13 +276,16 @@ namespace NGUInjector
                     _profile.EquipGear();
                 if (Settings.ManageEnergy)
                     _profile.AllocateEnergy();
-                if (Settings.ManageMagic)
+                if (Settings.ManageMagic && Character.buttons.bloodMagic.enabled)
                     _profile.AllocateMagic();
-                if (Settings.ManageDiggers)
+                if (Settings.ManageDiggers && Character.buttons.diggers.enabled)
                     _profile.EquipDiggers();
 
-                _questManager.CheckQuestTurnin();
-
+                if (Character.buttons.beast.enabled)
+                {
+                    _questManager.CheckQuestTurnin();
+                    _questManager.ManageQuests();
+                }
             }
             catch (Exception e)
             {
@@ -351,7 +354,6 @@ namespace NGUInjector
             _active = GUILayout.Toggle(_active, "Global Enable");
 
             GUILayout.BeginHorizontal();
-            Settings.ManageInventory = GUILayout.Toggle(Settings.ManageInventory, "Manage Inventory");
             Settings.ManageYggdrasil = GUILayout.Toggle(Settings.ManageYggdrasil, "Manage Yggdrasil");
             Settings.AutoFight = GUILayout.Toggle(Settings.AutoFight, "Auto Fight Bosses");
             GUILayout.EndHorizontal();
@@ -389,17 +391,27 @@ namespace NGUInjector
             }
             GUILayout.EndHorizontal();
 
-
             GUILayout.BeginHorizontal();
+            Settings.ManageInventory = GUILayout.Toggle(Settings.ManageInventory, "Manage Inventory");
             Settings.ManageEnergy = GUILayout.Toggle(Settings.ManageEnergy, "Manage Energy");
             Settings.ManageMagic = GUILayout.Toggle(Settings.ManageMagic, "Manage Magic");
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
             Settings.ManageGear = GUILayout.Toggle(Settings.ManageGear, "Manage Gear");
             Settings.ManageDiggers = GUILayout.Toggle(Settings.ManageDiggers, "Manage Diggers");
+            Settings.AutoConvertBoosts = GUILayout.Toggle(Settings.AutoConvertBoosts, "Manage Boost Conversion");
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             Settings.SwapTitanLoadouts = GUILayout.Toggle(Settings.SwapTitanLoadouts, "Swap Loadout For Titan");
             Settings.SwapYggdrasilLoadouts = GUILayout.Toggle(Settings.SwapYggdrasilLoadouts, "Swap Loadout For Yggdrasil");
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            Settings.AutoQuest = GUILayout.Toggle(Settings.AutoQuest, "Auto Quest");
+            Settings.AllowMajorQuests = GUILayout.Toggle(Settings.AllowMajorQuests, "Allow Major Quests");
+            Settings.AutoQuestITOPOD = GUILayout.Toggle(Settings.AutoQuestITOPOD, "Auto-Move to ITOPOD");
             GUILayout.EndHorizontal();
 
             //if (GUILayout.Button("Test"))
