@@ -117,36 +117,26 @@ namespace NGUInjector
                 switch (type)
                 {
                     case part.Head:
-                        if (slot == -1)
-                            break;
                         inv.item1 = -1;
                         controller.swapHead();
                         controller.updateBonuses();
                         break;
                     case part.Chest:
-                        if (slot == -2)
-                            break;
                         inv.item1 = -2;
                         controller.swapChest();
                         controller.updateBonuses();
                         break;
                     case part.Legs:
-                        if (slot == -3)
-                            break;
                         inv.item1 = -3;
                         controller.swapLegs();
                         controller.updateBonuses();
                         break;
                     case part.Boots:
-                        if (slot == -4)
-                            break;
                         inv.item1 = -4;
                         controller.swapBoots();
                         controller.updateBonuses();
                         break;
                     case part.Weapon:
-                        if (slot == weaponSlot)
-                            break;
                         inv.item1 = weaponSlot;
                         if (weaponSlot == -5)
                         {

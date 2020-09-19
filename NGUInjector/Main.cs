@@ -30,6 +30,8 @@ namespace NGUInjector
         private CustomAllocation _profile;
         private float _timeLeft = 10.0f;
 
+        internal static bool Test { get; set; }
+
         private Rect _windowRect = new Rect(20, 20, 500,400);
 
         private bool _optionsVisible;
@@ -416,7 +418,7 @@ namespace NGUInjector
 
             //if (GUILayout.Button("Test"))
             //{
-            //    Character.itemInfo.makeLevelledLoot(168, 1);
+            //    Test = !Test;
             //}
 
             GUI.DragWindow(new Rect(0,0, 10000,10000));

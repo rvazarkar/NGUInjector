@@ -63,6 +63,8 @@ namespace NGUInjector
         {
             foreach (var item in Settings.BoostIDs)
             {
+                if (isEquipped(item))
+                    continue;
                 //Find all inventory slots that match this item id
                 var targets =
                     ih.Where(x => x.id == item && !Settings.BoostBlacklist.Contains(x.id)).ToArray();
@@ -80,6 +82,45 @@ namespace NGUInjector
                         break;
                 }
             }
+        }
+
+        private bool isEquipped(int id)
+        {
+            var inv = Main.Character.inventory;
+            if (inv.head.id == id)
+            {
+                return true;
+            }
+
+            if (inv.chest.id == id)
+            {
+                return true;
+            }
+
+            if (inv.legs.id == id)
+            {
+                return true;
+            }
+
+            if (inv.boots.id == id)
+            {
+                return true;
+            }
+
+            if (inv.weapon.id == id)
+            {
+                return true;
+            }
+
+            if (Controller.weapon2Unlocked())
+            {
+                if (inv.weapon2.id == id)
+                {
+                    return true;
+                }
+            }
+
+            return inv.accs.Any(t => t.id == id);
         }
 
         private int ChangePage(int slot)
@@ -214,6 +255,8 @@ namespace NGUInjector
 
             foreach (var item in Settings.BoostIDs)
             {
+                if (isEquipped(item))
+                    continue;
                 //Find all inventory slots that match this item name
                 var targets =
                     ci.Where(x => x.id == item && !Settings.BoostBlacklist.Contains(x.id)).ToArray();
