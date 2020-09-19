@@ -95,28 +95,22 @@ namespace NGUInjector.AllocationProfiles
             if (_character.idleEnergy == 0)
                 return;
 
-            var usedWandoos = false;
-            if (bp.Priorities.Contains("WAN"))
+            var temp = bp.Priorities.ToList();
+            var capPrios = temp.Where(x => x.StartsWith("WAN") || x.StartsWith("CAPNGU") || x.StartsWith("BR")).ToArray();
+            temp.RemoveAll(x => x.StartsWith("WAN") || x.StartsWith("CAPNGU") || x.StartsWith("BR"));
+
+            foreach (var prio in capPrios)
             {
-                usedWandoos = true;
-                if (_character.wandoos98.wandoosEnergy < _character.wandoos98Controller.capAmountEnergy())
-                {
-                    _character.removeMostEnergy();
-                    _character.wandoos98Controller.addCapEnergy();
-                }
-                else
-                {
-                    _character.wandoos98Controller.addCapEnergy();
-                }
+                ReadEnergyBreakpoint(prio);
             }
 
 
-            var prioCount = bp.Priorities.Length - (usedWandoos ? 1 : 0);
+            var prioCount = temp.Count;
             var toAdd = (int)Math.Floor((double)_character.idleEnergy / prioCount);
             _character.input.energyRequested.text = toAdd.ToString();
             _character.input.validateInput();
 
-            foreach (var prio in bp.Priorities)
+            foreach (var prio in temp)
             {
                 ReadEnergyBreakpoint(prio);
             }
@@ -140,26 +134,21 @@ namespace NGUInjector.AllocationProfiles
             if (_character.magic.idleMagic == 0)
                 return;
 
-            var usedWandoos = false;
-            if (bp.Priorities.Contains("WAN"))
+            var temp = bp.Priorities.ToList();
+            var capPrios = temp.Where(x => x.StartsWith("WAN") || x.StartsWith("CAPNGU") || x.StartsWith("BR")).ToArray();
+            temp.RemoveAll(x => x.StartsWith("WAN") || x.StartsWith("CAPNGU") || x.StartsWith("BR"));
+
+            foreach (var prio in capPrios)
             {
-                usedWandoos = true;
-                if (_character.wandoos98.wandoosMagic < _character.wandoos98Controller.capAmountMagic())
-                {
-                    _character.removeMostMagic();
-                    _character.wandoos98Controller.addCapMagic();
-                }
-                else
-                {
-                    _character.wandoos98Controller.addCapMagic();
-                }
+                ReadMagicBreakpoint(prio);
             }
-            var prioCount = bp.Priorities.Length - (usedWandoos ? 1 : 0);
+
+            var prioCount = temp.Count;
             var toAdd = (int)Math.Floor((double)_character.magic.idleMagic / prioCount);
             _character.input.energyRequested.text = toAdd.ToString();
             _character.input.validateInput();
 
-            foreach (var prio in bp.Priorities)
+            foreach (var prio in temp)
             {
                 ReadMagicBreakpoint(prio);
             }
@@ -302,6 +291,19 @@ namespace NGUInjector.AllocationProfiles
 
         private void ReadMagicBreakpoint(string breakpoint)
         {
+            if (breakpoint.Equals("WAN"))
+            {
+                if (_character.wandoos98.wandoosMagic < _character.wandoos98Controller.capAmountMagic())
+                {
+                    _character.removeMostMagic();
+                    _character.wandoos98Controller.addCapMagic();
+                }
+                else
+                {
+                    _character.wandoos98Controller.addCapMagic();
+                }
+            }
+
             if (breakpoint.Equals("BR"))
             {
                 CastRituals();
@@ -338,6 +340,22 @@ namespace NGUInjector.AllocationProfiles
 
         private void ReadEnergyBreakpoint(string breakpoint)
         {
+
+            if (breakpoint.StartsWith("WAN"))
+            {
+                if (_character.wandoos98.wandoosEnergy < _character.wandoos98Controller.capAmountEnergy())
+                {
+                    _character.removeMostEnergy();
+                    _character.wandoos98Controller.addCapEnergy();
+                }
+                else
+                {
+                    _character.wandoos98Controller.addCapEnergy();
+                }
+
+                return;
+            }
+
             if (breakpoint.StartsWith("TM"))
             {
                 _character.timeMachineController.addEnergy();

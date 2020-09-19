@@ -30,10 +30,11 @@ namespace NGUInjector
         [SerializeField] private bool _autoQuest;
         [SerializeField] private bool _allowMajorQuests;
         [SerializeField] private bool _autoConvertBoosts;
+        [SerializeField] private bool _autoQuestItopod;
 
 
         private readonly string _savePath;
-        private bool _autoQuestItopod;
+        
 
 
         public SavedSettings(string dir)
