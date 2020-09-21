@@ -19,6 +19,7 @@ namespace NGUInjector
         private readonly int[] _wandoos = {66, 169};
         private readonly int[] _guffs = {228, 211, 250, 291, 289, 290, 298, 299, 300};
         private int counter = 0;
+        private BoostsNeeded _previousBoostsNeeded;
 
 
         //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane, Guffs
@@ -276,7 +277,23 @@ namespace NGUInjector
             }
 
             if (counter == 0)
-                Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
+            {
+                if (_previousBoostsNeeded != null)
+                {
+                    var current = needed.Power + needed.Toughness + needed.Special;
+                    var old = _previousBoostsNeeded.Power + _previousBoostsNeeded.Toughness +
+                              _previousBoostsNeeded.Special;
+
+                    Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special ({current - old})");
+                }
+                else
+                {
+                    Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
+                }
+
+                _previousBoostsNeeded = needed;
+            }
+                
 
             counter++;
             if (counter == 6) counter = 0;
