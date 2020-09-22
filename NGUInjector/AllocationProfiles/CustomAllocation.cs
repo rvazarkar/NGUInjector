@@ -289,17 +289,16 @@ namespace NGUInjector.AllocationProfiles
 
         private void ReadMagicBreakpoint(string breakpoint)
         {
+            if (breakpoint.Equals("CAPWAN"))
+            {
+                _character.wandoos98Controller.addCapMagic();
+                return;
+            }
+
             if (breakpoint.Equals("WAN"))
             {
-                if (_character.wandoos98.wandoosMagic < _character.wandoos98Controller.capAmountMagic())
-                {
-                    _character.removeMostMagic();
-                    _character.wandoos98Controller.addCapMagic();
-                }
-                else
-                {
-                    _character.wandoos98Controller.addCapMagic();
-                }
+                _character.wandoos98Controller.addMagic();
+                return;
             }
 
             if (breakpoint.Equals("BR"))
@@ -356,16 +355,13 @@ namespace NGUInjector.AllocationProfiles
 
             if (breakpoint.StartsWith("WAN"))
             {
-                if (_character.wandoos98.wandoosEnergy < _character.wandoos98Controller.capAmountEnergy())
-                {
-                    _character.removeMostEnergy();
-                    _character.wandoos98Controller.addCapEnergy();
-                }
-                else
-                {
-                    _character.wandoos98Controller.addCapEnergy();
-                }
+                _character.wandoos98Controller.addEnergy();
+                return;
+            }
 
+            if (breakpoint.StartsWith("CAPWAN"))
+            {
+                _character.wandoos98Controller.addCapEnergy();
                 return;
             }
 
