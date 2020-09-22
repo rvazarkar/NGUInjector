@@ -125,7 +125,6 @@ namespace NGUInjector
                     var temp = new SavedSettings(null)
                     {
                         BoostIDs = new int[] { },
-                        BoostBlacklist = new int[] { },
                         YggdrasilLoadout = new int[] { },
                         SwapYggdrasilLoadouts = true,
                         HighestAKZone = 0,
@@ -267,8 +266,6 @@ namespace NGUInjector
                     _invManager.MergeBoosts(converted);
                     _invManager.ManageQuestItems(converted);
                     _invManager.MergeGuffs();
-                    _invManager.BoostAccessories();
-                    _invManager.BoostEquipped();
                     _invManager.BoostInventory(converted);
                     _invManager.BoostInfinityCube();
                     _invManager.ChangeBoostConversion(converted);

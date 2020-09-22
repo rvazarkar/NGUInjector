@@ -41,18 +41,9 @@ namespace NGUInjector
             return (T)type?.GetValue(ai);
         }
 
-        public static BoostsNeeded GetNeededBoosts(this Equipment eq, bool equipped)
+        public static BoostsNeeded GetNeededBoosts(this Equipment eq)
         {
             var n = new BoostsNeeded();
-
-            if (Settings.BoostBlacklist.Contains(eq.id))
-                return n;
-
-            if (!equipped && !Settings.BoostIDs.Contains(eq.id))
-                return n;
-
-            if (!eq.isEquipment())
-                return n;
 
             if (eq.capAttack != 0.0)
                 n.Power += CalcCap(eq.capAttack, eq.level) - eq.curAttack;

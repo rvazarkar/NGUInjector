@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Services;
 using System.Text;
 using static NGUInjector.Main;
 
@@ -33,97 +34,141 @@ namespace NGUInjector
             _convertibles = temp.ToArray();
         }
         
-        internal void BoostEquipped()
-        {
-            // Boost Equipped Slots
-            if (!Settings.BoostBlacklist.Contains(_character.inventory.head.id))
-                _controller.applyAllBoosts(-1);
-            if (!Settings.BoostBlacklist.Contains(_character.inventory.chest.id))
-                _controller.applyAllBoosts(-2);
-            if (!Settings.BoostBlacklist.Contains(_character.inventory.legs.id))
-                _controller.applyAllBoosts(-3);
-            if (!Settings.BoostBlacklist.Contains(_character.inventory.boots.id))
-                _controller.applyAllBoosts(-4);
-            if (!Settings.BoostBlacklist.Contains(_character.inventory.weapon.id))
-                _controller.applyAllBoosts(-5);
+        //internal void BoostEquipped()
+        //{
+        //    // Boost Equipped Slots
+        //    if (!Settings.BoostBlacklist.Contains(_character.inventory.head.id))
+        //        _controller.applyAllBoosts(-1);
+        //    if (!Settings.BoostBlacklist.Contains(_character.inventory.chest.id))
+        //        _controller.applyAllBoosts(-2);
+        //    if (!Settings.BoostBlacklist.Contains(_character.inventory.legs.id))
+        //        _controller.applyAllBoosts(-3);
+        //    if (!Settings.BoostBlacklist.Contains(_character.inventory.boots.id))
+        //        _controller.applyAllBoosts(-4);
+        //    if (!Settings.BoostBlacklist.Contains(_character.inventory.weapon.id))
+        //        _controller.applyAllBoosts(-5);
 
-            if (_controller.weapon2Unlocked() && !Settings.BoostBlacklist.Contains(_character.inventory.head.id))
-                _controller.applyAllBoosts(-6);
-        }
+        //    if (_controller.weapon2Unlocked() && !Settings.BoostBlacklist.Contains(_character.inventory.head.id))
+        //        _controller.applyAllBoosts(-6);
+        //}
 
-        internal void BoostAccessories()
-        {
-            for (var i = 10000; _controller.accessoryID(i) < _controller.accessorySpaces(); i++)
-            {
-                if (!Settings.BoostBlacklist.Contains(_character.inventory.accs[_controller.accessoryID(i)].id))
-                    _controller.applyAllBoosts(i);
-            }
-        }
+        //internal void BoostAccessories()
+        //{
+        //    for (var i = 10000; _controller.accessoryID(i) < _controller.accessorySpaces(); i++)
+        //    {
+        //        if (!Settings.BoostBlacklist.Contains(_character.inventory.accs[_controller.accessoryID(i)].id))
+        //            _controller.applyAllBoosts(i);
+        //    }
+        //}
 
         internal void BoostInventory(ih[] ih)
         {
             foreach (var item in Settings.BoostIDs)
             {
-                if (isEquipped(item))
+                var slot = FindItemSlot(ih, item);
+                if (slot == -1000)
                     continue;
-                //Find all inventory slots that match this item id
-                var targets =
-                    ih.Where(x => x.id == item && !Settings.BoostBlacklist.Contains(x.id)).ToArray();
-
-                switch (targets.Length)
-                {
-                    case 0:
-                        continue;
-                    case 1:
-                        _controller.applyAllBoosts(targets[0].slot);
-                        continue;
-                    default:
-                        //Find the highest level version of the item (locked = +100) and apply boosts to it
-                        _controller.applyAllBoosts(targets.MaxItem().slot);
-                        break;
-                }
+                _controller.applyAllBoosts(slot);
             }
         }
 
-        private bool isEquipped(int id)
+        private static int FindItemSlot(IEnumerable<ih> ci, int id)
         {
+            var items = ci.Where(x => x.id == id).ToArray();
+            if (items.Length != 0) return items.MaxItem().slot;
             var inv = Main.Character.inventory;
             if (inv.head.id == id)
             {
-                return true;
+                return -1;
             }
 
             if (inv.chest.id == id)
             {
-                return true;
+                return -2;
             }
 
             if (inv.legs.id == id)
             {
-                return true;
+                return -3;
             }
 
             if (inv.boots.id == id)
             {
-                return true;
+                return -4;
             }
 
             if (inv.weapon.id == id)
             {
-                return true;
+                return -5;
             }
 
             if (Controller.weapon2Unlocked())
             {
                 if (inv.weapon2.id == id)
                 {
-                    return true;
+                    return -6;
                 }
             }
 
-            return inv.accs.Any(t => t.id == id);
+            for (var i = 0; i < inv.accs.Count; i++)
+            {
+                if (inv.accs[i].id == id)
+                {
+                    return i + 10000;
+                }
+            }
+
+            return -1000;
         }
 
+        private static Equipment FindItemEquip(IEnumerable<ih> ci, int id)
+        {
+            var items = ci.Where(x => x.id == id).ToArray();
+            if (items.Length != 0) return items.MaxItem().equipment;
+            var inv = Main.Character.inventory;
+            if (inv.head.id == id)
+            {
+                return inv.head;
+            }
+
+            if (inv.chest.id == id)
+            {
+                return inv.chest;
+            }
+
+            if (inv.legs.id == id)
+            {
+                return inv.legs;
+            }
+
+            if (inv.boots.id == id)
+            {
+                return inv.boots;
+            }
+
+            if (inv.weapon.id == id)
+            {
+                return inv.weapon;
+            }
+
+            if (Controller.weapon2Unlocked())
+            {
+                if (inv.weapon2.id == id)
+                {
+                    return inv.weapon2;
+                }
+            }
+
+            for (var i = 0; i < inv.accs.Count; i++)
+            {
+                if (inv.accs[i].id == id)
+                {
+                    return inv.accs[i];
+                }
+            }
+
+            return null;
+        }
         private int ChangePage(int slot)
         {
             var page = (int)Math.Floor((double)slot / 60);
@@ -241,39 +286,13 @@ namespace NGUInjector
                 return;
             var needed = new BoostsNeeded();
 
-            needed.Add(_character.inventory.head.GetNeededBoosts(true));
-            needed.Add(_character.inventory.chest.GetNeededBoosts(true));
-            needed.Add(_character.inventory.legs.GetNeededBoosts(true));
-            needed.Add(_character.inventory.boots.GetNeededBoosts(true));
-            needed.Add(_character.inventory.weapon.GetNeededBoosts(true));
-            if (_controller.weapon2Unlocked())
-                needed.Add(_character.inventory.weapon2.GetNeededBoosts(true));
-
-            for (var i = 10000; _controller.accessoryID(i) < _controller.accessorySpaces(); i++)
-            {
-                needed.Add(_character.inventory.accs[_controller.accessoryID(i)].GetNeededBoosts(true));
-            }
-
             foreach (var item in Settings.BoostIDs)
             {
-                if (isEquipped(item))
+                var equip  = FindItemEquip(ci, item);
+                if (equip == null)
                     continue;
-                //Find all inventory slots that match this item name
-                var targets =
-                    ci.Where(x => x.id == item && !Settings.BoostBlacklist.Contains(x.id)).ToArray();
 
-                switch (targets.Length)
-                {
-                    case 0:
-                        continue;
-                    case 1:
-                        needed.Add(targets[0].equipment.GetNeededBoosts(false));
-                        continue;
-                    default:
-                        //Find the highest level version of the item (locked = +100) and apply boosts to it
-                        needed.Add(targets.MaxItem().equipment.GetNeededBoosts(false));
-                        break;
-                }
+                needed.Add(equip.GetNeededBoosts());
             }
 
             if (counter == 0)
