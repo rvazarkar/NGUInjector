@@ -45,6 +45,12 @@ namespace NGUInjector
                     LoadoutManager.RestoreGear();
                     LoadoutManager.ReleaseLock();
                 }
+
+                if (DiggerManager.CurrentLock == LockType.Yggdrasil)
+                {
+                    DiggerManager.RestoreDiggers();
+                    DiggerManager.ReleaseLock();
+                }
                 _character.yggdrasilController.consumeAll();
                 return;
             }
@@ -56,10 +62,16 @@ namespace NGUInjector
                 LoadoutManager.ReleaseLock();
             }
 
+            if (!NeedsHarvest() && DiggerManager.CurrentLock == LockType.Yggdrasil)
+            {
+                DiggerManager.RestoreDiggers();
+                DiggerManager.ReleaseLock();
+            }
+
             //We're managing loadouts
             if (NeedsHarvest())
             {
-                if (!LoadoutManager.TryYggdrasilSwap())
+                if (!LoadoutManager.TryYggdrasilSwap() || !DiggerManager.TryYggSwap())
                     return;
 
                 Log("Equipping Loadout for Yggdrasil and Harvesting");
@@ -67,6 +79,8 @@ namespace NGUInjector
                 _character.yggdrasilController.consumeAll();
                 LoadoutManager.RestoreGear();
                 LoadoutManager.ReleaseLock();
+                DiggerManager.RestoreDiggers();
+                DiggerManager.ReleaseLock();
             }
         }
 

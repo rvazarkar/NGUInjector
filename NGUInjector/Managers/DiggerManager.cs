@@ -11,6 +11,7 @@ namespace NGUInjector
         private static int[] _savedDiggers;
         internal static LockType CurrentLock { get; set; }
         private static readonly int[] TitanDiggers = { 0, 3, 8, 11 };
+        private static readonly int[] YggDiggers = {8, 11};
 
         internal static bool CanSwap()
         {
@@ -35,6 +36,17 @@ namespace NGUInjector
                 SaveDiggers();
                 EquipDiggers(TitanDiggers);
             }
+        }
+
+        internal static bool TryYggSwap()
+        {
+            if (CurrentLock == LockType.Titan)
+                return false;
+
+            CurrentLock = LockType.Yggdrasil;
+            SaveDiggers();
+            EquipDiggers(YggDiggers);
+            return true;
         }
 
         internal static void ReleaseLock()
