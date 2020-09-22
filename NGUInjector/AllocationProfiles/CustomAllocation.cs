@@ -89,12 +89,14 @@ namespace NGUInjector.AllocationProfiles
                 _currentEnergyBreakpoint = bp;
             }
 
-            if (_character.idleEnergy == 0)
-                return;
-
             var temp = bp.Priorities.ToList();
             var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
             temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
+
+            if (_character.idleEnergy == 0 && capPrios.Length == 0)
+                return;
+
+            
             if (capPrios.Length > 0) _character.removeMostEnergy();
             foreach (var prio in capPrios)
             {
@@ -128,12 +130,12 @@ namespace NGUInjector.AllocationProfiles
                 _currentMagicBreakpoint = bp;
             }
 
-            if (_character.magic.idleMagic == 0)
-                return;
-
             var temp = bp.Priorities.ToList();
             var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
             temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
+
+            if (_character.magic.idleMagic == 0 && capPrios.Length ==  0)
+                return;
 
             if (capPrios.Length > 0) _character.removeMostMagic();
             foreach (var prio in capPrios)
@@ -317,10 +319,12 @@ namespace NGUInjector.AllocationProfiles
                 var cap = CalculateTMMagicCap();
                 if (cap < _character.magic.idleMagic)
                 {
+                    Main.LogAllocation($"Allocating {cap} to MagicTM ({_character.magic.idleMagic} idle)");
                     _character.input.energyRequested.text = cap.ToString();
                 }
                 else
                 {
+                    Main.LogAllocation($"Allocating {_character.magic.idleMagic} to MagicTM ({cap} cap)");
                     _character.input.energyRequested.text = _character.magic.idleMagic.ToString();
                 }
                 _character.input.validateInput();
@@ -376,10 +380,12 @@ namespace NGUInjector.AllocationProfiles
                 var cap = CalculateTMEnergyCap();
                 if (cap < _character.idleEnergy)
                 {
+                    Main.LogAllocation($"Allocating {cap} to EnergyTM ({_character.idleEnergy} idle)");
                     _character.input.energyRequested.text = cap.ToString();
                 }
                 else
                 {
+                    Main.LogAllocation($"Allocating {_character.idleEnergy} to EnergyTM ({cap} cap)");
                     _character.input.energyRequested.text = _character.idleEnergy.ToString();
                 }
                 _character.input.validateInput();
@@ -398,10 +404,12 @@ namespace NGUInjector.AllocationProfiles
                 var cap = CalculateATCap(index);
                 if (cap < _character.idleEnergy)
                 {
+                    Main.LogAllocation($"Allocating {cap} to AT{index} ({_character.idleEnergy} idle)");
                     _character.input.energyRequested.text = cap.ToString();
                 }
                 else
                 {
+                    Main.LogAllocation($"Allocating {_character.idleEnergy} to AT{index} ({cap} cap)");
                     _character.input.energyRequested.text = _character.idleEnergy.ToString();
                 }
                 _character.input.validateInput();
@@ -501,7 +509,7 @@ namespace NGUInjector.AllocationProfiles
 
         internal float CalculateTMEnergyCap()
         {
-            var formula = 50000 * _character.timeMachineController.baseSpeedDivider() * (1 + _character.machine.levelSpeed + 500) / (
+            var formula = 50000 * _character.timeMachineController.baseSpeedDivider() * (1f + _character.machine.levelSpeed + 500) / (
                 _character.totalEnergyPower() * _character.hacksController.totalTMSpeedBonus() *
                 _character.allChallenges.timeMachineChallenge.TMSpeedBonus() *
                 _character.cardsController.getBonus(cardBonus.TMSpeed));
@@ -511,7 +519,7 @@ namespace NGUInjector.AllocationProfiles
         internal float CalculateTMMagicCap()
         {
             var formula = 50000 * _character.timeMachineController.baseGoldMultiDivider() *
-                (1 + _character.machine.levelGoldMulti + 500) / (
+                (1f + _character.machine.levelGoldMulti + 500) / (
                     _character.totalMagicPower() * _character.hacksController.totalTMSpeedBonus() *
                     _character.allChallenges.timeMachineChallenge.TMSpeedBonus() *
                     _character.cardsController.getBonus(cardBonus.TMSpeed));
@@ -524,10 +532,25 @@ namespace NGUInjector.AllocationProfiles
             if (divisor == 0.0)
                 return 0;
 
-            var formula = GetDivisor(index) /
-                Mathf.Sqrt(_character.totalEnergyPower() / 2) * _character.totalAdvancedTrainingSpeedBonus();
+            var formula = 50f * divisor /
+                Mathf.Sqrt(_character.totalEnergyPower()) * _character.totalAdvancedTrainingSpeedBonus();
 
             return formula;
+        }
+
+        internal void DebugATCap(int index)
+        {
+            var divisor = _character.advancedTrainingController.getDivisor(index);
+            if (divisor == 0.0)
+                return;
+
+            var formula = 50f * divisor /
+                Mathf.Sqrt(_character.totalEnergyPower()) * _character.totalAdvancedTrainingSpeedBonus();
+
+
+            double num = formula / 50f * Mathf.Sqrt(_character.totalEnergyPower()) * _character.totalAdvancedTrainingSpeedBonus() / _character.advancedTrainingController.getDivisor(index);
+            Main.LogAllocation(num.ToString());
+            Main.LogAllocation(formula.ToString());
         }
 
         private float GetDivisor(int index)
@@ -555,7 +578,7 @@ namespace NGUInjector.AllocationProfiles
                     break;
             }
 
-            return baseTime * (_character.advancedTraining.level[index] + 501);
+            return baseTime * (_character.advancedTraining.level[index] + 500 + 1f);
         }
     }
 

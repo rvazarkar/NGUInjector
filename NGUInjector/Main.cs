@@ -23,6 +23,7 @@ namespace NGUInjector
         internal static StreamWriter OutputWriter;
         internal static StreamWriter LootWriter;
         internal static StreamWriter CombatWriter;
+        internal static StreamWriter AllocationWriter;
         private YggdrasilManager _yggManager;
         private InventoryManager _invManager;
         private CombatManager _combManager;
@@ -66,12 +67,18 @@ namespace NGUInjector
             CombatWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
         }
 
+        internal static void LogAllocation(string msg)
+        {
+            AllocationWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
+        }
+
         public void Start()
         {
             _dir = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%/Desktop"), "NGUInjector");
             OutputWriter = new StreamWriter(Path.Combine(_dir, "inject.log")) {AutoFlush = true};
             LootWriter = new StreamWriter(Path.Combine(_dir, "loot.log")) { AutoFlush = true };
             CombatWriter = new StreamWriter(Path.Combine(_dir, "combat.log")) { AutoFlush = true };
+            AllocationWriter = new StreamWriter(Path.Combine(_dir, "allocation.log")) { AutoFlush = true};
             try
             {
                 if (!Directory.Exists(_dir))
@@ -208,6 +215,11 @@ namespace NGUInjector
                 {
                     writer.WriteLine(data);
                 }
+            }
+
+            if (Input.GetKeyDown(KeyCode.KeypadPlus))
+            {
+                Settings.AutoQuestITOPOD = !Settings.AutoQuestITOPOD;
             }
         }
 
@@ -418,7 +430,10 @@ namespace NGUInjector
 
             //if (GUILayout.Button("Test"))
             //{
-            //    Test = !Test;
+            //    for (int i = 0; i < 5; i++)
+            //    {
+            //        _profile.DebugATCap(i);
+            //    }
             //}
 
             GUI.DragWindow(new Rect(0,0, 10000,10000));
