@@ -70,6 +70,26 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assembly-CSharp.dll" />
+    <Content Include="inject\SharpMonoInjector.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="inject\smi.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="inject.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rmdir /S /Q dist
+md dist
+xcopy /E /I inject dist\injector
+copy NGUInjector.dll dist\injector
+copy inject.bat dist\
+xcopy /E /I $(ProjectDir)SampleProfiles dist\sampleprofiles</PostBuildEvent>
+  </PropertyGroup>
 </Project>

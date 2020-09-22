@@ -1,0 +1,64 @@
+{
+  "Breakpoints": {
+    "Magic": [
+      {
+        "Time": 0,
+        "Priorities": ["CAPTM", "WAN"]
+      },
+      {
+        "Time": 3600,
+        "Priorities": ["BR"]
+      },
+      {
+        "Time": 4000,
+        "Priorities": ["TM"]
+      },
+      {
+        "Time": 5200,
+        "Priorities": ["NGU-0", "NGU-1"]
+      },
+      {
+        "Time": 7200,
+        "Priorities": ["NGU-0", "NGU-1"]
+      }
+    ],
+    "Energy": [
+      {
+        "Time": 0,
+        "Priorities": ["CAPTM", "WAN"]
+      },
+      {
+        "Time": 3600,
+        "Priorities": ["AT-0", "AT-1"]
+      },
+      {
+        "Time": 7200,
+        "Priorities": ["NGU-4", "NGU-6"]
+      }
+    ],
+    "Gear": [
+      {
+        "Time": 0,
+        "ID": [189, 442, 160, 441, 148, 169, 139, 184, 187, 185, 186, 188]
+      },
+      {
+        "Time": 3600,
+        "ID": [138, 101, 189, 442, 440, 139, 160, 164, 187, 185, 186, 159]
+      },
+      {
+        "Time": 7200,
+        "ID": [136, 118, 161, 149, 116, 189, 442, 184, 187, 185, 186, 188]
+      }
+    ],
+    "Diggers": [
+      {
+        "Time": 3650,
+        "List": [3, 4, 5, 8]
+      },
+      {
+        "Time": 7300,
+        "List": [3, 4, 5, 8, 9]
+      }
+    ]
+  }
+}
