@@ -24,14 +24,13 @@ namespace NGUInjector
         [SerializeField] private bool _manageYggdrasil;
         [SerializeField] private int[] _titanLoadout;
         [SerializeField] private int[] _yggdrasilLoadout;
-        [SerializeField] private int[] _boostBlacklist;
         [SerializeField] private bool _manageInventory;
         [SerializeField] private bool _autoFight;
         [SerializeField] private bool _autoQuest;
         [SerializeField] private bool _allowMajorQuests;
         [SerializeField] private bool _autoConvertBoosts;
         [SerializeField] private bool _autoQuestItopod;
-
+        [SerializeField] private int[] _goldDropLoadout;
 
         private readonly string _savePath;
         
@@ -81,7 +80,6 @@ namespace NGUInjector
         internal void MassUpdate(SavedSettings other)
         {
             _boostIds = other.BoostIDs;
-            _boostBlacklist = other.BoostBlacklist;
 
             _yggdrasilLoadout = other.YggdrasilLoadout;
             _swapYggdrasilLoadouts = other.SwapYggdrasilLoadouts;
@@ -111,7 +109,7 @@ namespace NGUInjector
 
         public override string ToString()
         {
-            return $"{nameof(_highestAkZone)}: {_highestAkZone}, {nameof(_snipeZone)}: {_snipeZone}, {nameof(_precastBuffs)}: {_precastBuffs}, {nameof(_swapTitanLoadouts)}: {_swapTitanLoadouts}, {nameof(_swapYggdrasilLoadouts)}: {_swapYggdrasilLoadouts}, {nameof(_boostIds)}: {_boostIds}, {nameof(_manageEnergy)}: {_manageEnergy}, {nameof(_manageMagic)}: {_manageMagic}, {nameof(_fastCombat)}: {_fastCombat}, {nameof(_manageGear)}: {_manageGear}, {nameof(_titanLoadout)}: {_titanLoadout}, {nameof(_yggdrasilLoadout)}: {_yggdrasilLoadout}, {nameof(_boostBlacklist)}: {_boostBlacklist}";
+            return $"{nameof(_highestAkZone)}: {_highestAkZone}, {nameof(_snipeZone)}: {_snipeZone}, {nameof(_precastBuffs)}: {_precastBuffs}, {nameof(_swapTitanLoadouts)}: {_swapTitanLoadouts}, {nameof(_swapYggdrasilLoadouts)}: {_swapYggdrasilLoadouts}, {nameof(_boostIds)}: {_boostIds}, {nameof(_manageEnergy)}: {_manageEnergy}, {nameof(_manageMagic)}: {_manageMagic}, {nameof(_fastCombat)}: {_fastCombat}, {nameof(_manageGear)}: {_manageGear}, {nameof(_titanLoadout)}: {_titanLoadout}, {nameof(_yggdrasilLoadout)}: {_yggdrasilLoadout}";
         }
 
         public int HighestAKZone
@@ -221,12 +219,6 @@ namespace NGUInjector
             set => _yggdrasilLoadout = value;
         }
 
-        public int[] BoostBlacklist
-        {
-            get => _boostBlacklist;
-            set => _boostBlacklist = value;
-        }
-
         public bool ManageYggdrasil
         {
             get => _manageYggdrasil;
@@ -309,6 +301,12 @@ namespace NGUInjector
                 _autoQuestItopod = value;
                 SaveSettings();
             }
+        }
+
+        public int[] GoldDropLoadout
+        {
+            get => _goldDropLoadout;
+            set => _goldDropLoadout = value;
         }
     }
 }
