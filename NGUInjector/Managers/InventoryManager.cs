@@ -33,33 +33,6 @@ namespace NGUInjector
             temp.Add(154);
             _convertibles = temp.ToArray();
         }
-        
-        //internal void BoostEquipped()
-        //{
-        //    // Boost Equipped Slots
-        //    if (!Settings.BoostBlacklist.Contains(_character.inventory.head.id))
-        //        _controller.applyAllBoosts(-1);
-        //    if (!Settings.BoostBlacklist.Contains(_character.inventory.chest.id))
-        //        _controller.applyAllBoosts(-2);
-        //    if (!Settings.BoostBlacklist.Contains(_character.inventory.legs.id))
-        //        _controller.applyAllBoosts(-3);
-        //    if (!Settings.BoostBlacklist.Contains(_character.inventory.boots.id))
-        //        _controller.applyAllBoosts(-4);
-        //    if (!Settings.BoostBlacklist.Contains(_character.inventory.weapon.id))
-        //        _controller.applyAllBoosts(-5);
-
-        //    if (_controller.weapon2Unlocked() && !Settings.BoostBlacklist.Contains(_character.inventory.head.id))
-        //        _controller.applyAllBoosts(-6);
-        //}
-
-        //internal void BoostAccessories()
-        //{
-        //    for (var i = 10000; _controller.accessoryID(i) < _controller.accessorySpaces(); i++)
-        //    {
-        //        if (!Settings.BoostBlacklist.Contains(_character.inventory.accs[_controller.accessoryID(i)].id))
-        //            _controller.applyAllBoosts(i);
-        //    }
-        //}
 
         internal void BoostInventory(ih[] ih)
         {
@@ -282,6 +255,10 @@ namespace NGUInjector
 
         internal void ChangeBoostConversion(ih[] ci)
         {
+            if (_character.challenges.levelChallenge10k.curCompletions <
+                _character.allChallenges.level100Challenge.maxCompletions)
+                return;
+
             if (!Settings.AutoConvertBoosts)
                 return;
             var needed = new BoostsNeeded();
@@ -341,6 +318,9 @@ namespace NGUInjector
         #region Filtering
         internal void EnsureFiltered(ih[] ci)
         {
+            if (!Main.Character.arbitrary.lootFilter)
+                return;
+
             var targets = ci.Where(x => x.level == 100);
             foreach (var target in targets)
             {

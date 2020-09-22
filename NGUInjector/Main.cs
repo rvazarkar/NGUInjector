@@ -313,6 +313,8 @@ namespace NGUInjector
 
         private void SnipeZone()
         {
+            if (!_active)
+                return;
             _combManager.SnipeZone();
         }
 
