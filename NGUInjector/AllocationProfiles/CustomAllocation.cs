@@ -93,8 +93,8 @@ namespace NGUInjector.AllocationProfiles
                 return;
 
             var temp = bp.Priorities.ToList();
-            var capPrios = temp.Where(x => x.StartsWith("WAN") || x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
-            temp.RemoveAll(x => x.StartsWith("WAN") || x.StartsWith("BR") || x.StartsWith("CAP"));
+            var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
+            temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
             if (capPrios.Length > 0) _character.removeMostEnergy();
             foreach (var prio in capPrios)
             {
@@ -132,8 +132,8 @@ namespace NGUInjector.AllocationProfiles
                 return;
 
             var temp = bp.Priorities.ToList();
-            var capPrios = temp.Where(x => x.StartsWith("WAN")  || x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
-            temp.RemoveAll(x => x.StartsWith("WAN") || x.StartsWith("BR") || x.StartsWith("CAP"));
+            var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
+            temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
 
             if (capPrios.Length > 0) _character.removeMostMagic();
             foreach (var prio in capPrios)
