@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using UnityEngine;
 using SimpleJSON;
+using UnityEngine;
 
 namespace NGUInjector.AllocationProfiles
 {
@@ -96,9 +93,9 @@ namespace NGUInjector.AllocationProfiles
                 return;
 
             var temp = bp.Priorities.ToList();
-            var capPrios = temp.Where(x => x.StartsWith("WAN") || x.StartsWith("CAPNGU") || x.StartsWith("BR")).ToArray();
-            temp.RemoveAll(x => x.StartsWith("WAN") || x.StartsWith("CAPNGU") || x.StartsWith("BR"));
-
+            var capPrios = temp.Where(x => x.StartsWith("WAN") || x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
+            temp.RemoveAll(x => x.StartsWith("WAN") || x.StartsWith("BR") || x.StartsWith("CAP"));
+            if (capPrios.Length > 0) _character.removeMostEnergy();
             foreach (var prio in capPrios)
             {
                 ReadEnergyBreakpoint(prio);
@@ -135,9 +132,10 @@ namespace NGUInjector.AllocationProfiles
                 return;
 
             var temp = bp.Priorities.ToList();
-            var capPrios = temp.Where(x => x.StartsWith("WAN") || x.StartsWith("CAPNGU") || x.StartsWith("BR")).ToArray();
-            temp.RemoveAll(x => x.StartsWith("WAN") || x.StartsWith("CAPNGU") || x.StartsWith("BR"));
+            var capPrios = temp.Where(x => x.StartsWith("WAN")  || x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
+            temp.RemoveAll(x => x.StartsWith("WAN") || x.StartsWith("BR") || x.StartsWith("CAP"));
 
+            if (capPrios.Length > 0) _character.removeMostMagic();
             foreach (var prio in capPrios)
             {
                 ReadMagicBreakpoint(prio);
@@ -315,6 +313,22 @@ namespace NGUInjector.AllocationProfiles
                 return;
             }
 
+            if (breakpoint.StartsWith("CAPTM"))
+            {
+                var cap = CalculateTMMagicCap();
+                if (cap < _character.magic.idleMagic)
+                {
+                    _character.input.energyRequested.text = cap.ToString();
+                }
+                else
+                {
+                    _character.input.energyRequested.text = _character.magic.idleMagic.ToString();
+                }
+                _character.input.validateInput();
+                _character.timeMachineController.addMagic();
+                return;
+            }
+
             if (breakpoint.StartsWith("NGU"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
@@ -334,7 +348,6 @@ namespace NGUInjector.AllocationProfiles
                     return;
                 }
                 _character.NGUController.NGUMagic[index].cap();
-                return;
             }
         }
 
@@ -359,6 +372,62 @@ namespace NGUInjector.AllocationProfiles
             if (breakpoint.StartsWith("TM"))
             {
                 _character.timeMachineController.addEnergy();
+                return;
+            }
+
+            if (breakpoint.StartsWith("CAPTM"))
+            {
+                var cap = CalculateTMEnergyCap();
+                if (cap < _character.idleEnergy)
+                {
+                    _character.input.energyRequested.text = cap.ToString();
+                }
+                else
+                {
+                    _character.input.energyRequested.text = _character.idleEnergy.ToString();
+                }
+                _character.input.validateInput();
+                _character.timeMachineController.addEnergy();
+                return;
+            }
+
+            if (breakpoint.StartsWith("CAPAT"))
+            {
+                var success = int.TryParse(breakpoint.Split('-')[1], out var index);
+                if (!success || index < 0 || index > 4)
+                {
+                    return;
+                }
+
+                var cap = CalculateATCap(index);
+                if (cap < _character.idleEnergy)
+                {
+                    _character.input.energyRequested.text = cap.ToString();
+                }
+                else
+                {
+                    _character.input.energyRequested.text = _character.idleEnergy.ToString();
+                }
+                _character.input.validateInput();
+
+                switch (index)
+                {
+                    case 0:
+                        _character.advancedTrainingController.defense.addEnergy();
+                        break;
+                    case 1:
+                        _character.advancedTrainingController.attack.addEnergy();
+                        break;
+                    case 2:
+                        _character.advancedTrainingController.block.addEnergy();
+                        break;
+                    case 3:
+                        _character.advancedTrainingController.wandoosEnergy.addEnergy();
+                        break;
+                    case 4:
+                        _character.advancedTrainingController.wandoosMagic.addEnergy();
+                        break;
+                }
                 return;
             }
 
@@ -432,6 +501,65 @@ namespace NGUInjector.AllocationProfiles
                     _character.augmentsController.augments[augIndex].addEnergyUpgrade();
                 }
             }
+        }
+
+        internal float CalculateTMEnergyCap()
+        {
+            var formula = 50000 * _character.timeMachineController.baseSpeedDivider() * (1 + _character.machine.levelSpeed + 500) / (
+                _character.totalEnergyPower() * _character.hacksController.totalTMSpeedBonus() *
+                _character.allChallenges.timeMachineChallenge.TMSpeedBonus() *
+                _character.cardsController.getBonus(cardBonus.TMSpeed));
+            return formula;
+        }
+
+        internal float CalculateTMMagicCap()
+        {
+            var formula = 50000 * _character.timeMachineController.baseGoldMultiDivider() *
+                (1 + _character.machine.levelGoldMulti + 500) / (
+                    _character.totalMagicPower() * _character.hacksController.totalTMSpeedBonus() *
+                    _character.allChallenges.timeMachineChallenge.TMSpeedBonus() *
+                    _character.cardsController.getBonus(cardBonus.TMSpeed));
+            return formula;
+        }
+
+        internal float CalculateATCap(int index)
+        {
+            var divisor = GetDivisor(index);
+            if (divisor == 0.0)
+                return 0;
+
+            var formula = GetDivisor(index) /
+                Mathf.Sqrt(_character.totalEnergyPower() / 2) * _character.totalAdvancedTrainingSpeedBonus();
+
+            return formula;
+        }
+
+        private float GetDivisor(int index)
+        {
+            float baseTime;
+            switch (index)
+            {
+                case 0:
+                    baseTime = _character.advancedTrainingController.defense.baseTime;
+                    break;
+                case 1:
+                    baseTime = _character.advancedTrainingController.attack.baseTime;
+                    break;
+                case 2:
+                    baseTime = _character.advancedTrainingController.block.baseTime;
+                    break;
+                case 3:
+                    baseTime = _character.advancedTrainingController.wandoosEnergy.baseTime;
+                    break;
+                case 4:
+                    baseTime = _character.advancedTrainingController.wandoosMagic.baseTime;
+                    break;
+                default:
+                    baseTime = 0.0f;
+                    break;
+            }
+
+            return baseTime * (_character.advancedTraining.level[index] + 501);
         }
     }
 
