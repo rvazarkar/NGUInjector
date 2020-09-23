@@ -155,7 +155,8 @@ namespace NGUInjector
                         AllowMajorQuests = false,
                         GoldDropLoadout = new int[] {},
                         AutoMoneyPit = false,
-                        AutoSpin = false
+                        AutoSpin = false,
+                        MoneyPitLoadout = new int[] {}
                     };
 
                     Settings.MassUpdate(temp);
