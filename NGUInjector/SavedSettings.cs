@@ -105,11 +105,8 @@ namespace NGUInjector
             _autoQuest = other.AutoQuest;
             _autoQuestItopod = other.AutoQuestITOPOD;
             _allowMajorQuests = other.AllowMajorQuests;
-        }
 
-        public override string ToString()
-        {
-            return $"{nameof(_highestAkZone)}: {_highestAkZone}, {nameof(_snipeZone)}: {_snipeZone}, {nameof(_precastBuffs)}: {_precastBuffs}, {nameof(_swapTitanLoadouts)}: {_swapTitanLoadouts}, {nameof(_swapYggdrasilLoadouts)}: {_swapYggdrasilLoadouts}, {nameof(_boostIds)}: {_boostIds}, {nameof(_manageEnergy)}: {_manageEnergy}, {nameof(_manageMagic)}: {_manageMagic}, {nameof(_fastCombat)}: {_fastCombat}, {nameof(_manageGear)}: {_manageGear}, {nameof(_titanLoadout)}: {_titanLoadout}, {nameof(_yggdrasilLoadout)}: {_yggdrasilLoadout}";
+            _goldDropLoadout = other.GoldDropLoadout;
         }
 
         public int HighestAKZone

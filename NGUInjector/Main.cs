@@ -93,13 +93,12 @@ namespace NGUInjector
 
             try
             {
-                
-
                 Character = FindObjectOfType<Character>();
 
                 Log("Injected");
                 LogLoot("Starting Loot Writer");
                 LogCombat("Starting Combat Writer");
+                LogAllocation("Started Allocation Writer");
                 Controller = Character.inventoryController;
                 PlayerController = FindObjectOfType<PlayerController>();
                 _invManager = new InventoryManager();
@@ -139,16 +138,21 @@ namespace NGUInjector
                         HighestAKZone = 0,
                         SwapTitanLoadouts = true,
                         TitanLoadout = new int[] { },
-                        SnipeZone = -1,
-                        PrecastBuffs = true,
-                        FastCombat = false,
-                        AutoFight = false,
                         ManageDiggers = true,
                         ManageYggdrasil = true,
                         ManageEnergy = true,
                         ManageMagic = true,
                         ManageInventory = true,
-                        ManageGear = true
+                        ManageGear = true,
+                        AutoConvertBoosts = true,
+                        SnipeZone = -1,
+                        FastCombat = false,
+                        PrecastBuffs = true,
+                        AutoFight = false,
+                        AutoQuest = true,
+                        AutoQuestITOPOD = false,
+                        AllowMajorQuests = false,
+                        GoldDropLoadout = new int[] {}
                     };
 
                     Settings.MassUpdate(temp);

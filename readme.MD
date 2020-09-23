@@ -26,7 +26,7 @@ An in game menu can be opened using the \* button on the numeric keypad.
 
 - **Global Enable** - If turned off, all automation functions will stop.
 
-- **Manage Yggdrasil** - Enables automatic harvesting and activation of Yggdrasil fruits.
+- **Manage Yggdrasil** - Enables automatic harvesting and activation of Yggdrasil fruits. Will only harvest max tier fruits
 - **Auto Fight Bosses** - Automatically nuke/fight bosses when an attack/defense threshold is met
 
 - **Zone Boss Sniping** - Automatically snipes bosses in the zone specified in Zone to Snipe.
@@ -186,3 +186,7 @@ The adventure log will automatically be monitored and loot dropped will be writt
 ## Quick Disable/Enable
 
 Pressing the - button on the numpad will globally disable all features of the app until re-enabled
+
+## Turn on Autoattack in ITOPOD
+
+Have you forgotten to turn on auto attack before and left yourself AFK in ITOPOD doing nothing? Me too! The script will automatically turn auto attack on if you're in ITOPOD and its not on.
