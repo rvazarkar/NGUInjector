@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NGUInjector.AllocationProfiles;
+using NGUInjector.Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -152,7 +153,9 @@ namespace NGUInjector
                         AutoQuest = true,
                         AutoQuestITOPOD = false,
                         AllowMajorQuests = false,
-                        GoldDropLoadout = new int[] {}
+                        GoldDropLoadout = new int[] {},
+                        AutoMoneyPit = false,
+                        AutoSpin = false
                     };
 
                     Settings.MassUpdate(temp);
@@ -310,6 +313,16 @@ namespace NGUInjector
                     _questManager.CheckQuestTurnin();
                     _questManager.ManageQuests();
                 }
+
+                if (Settings.AutoMoneyPit)
+                {
+                    MoneyPitManager.CheckMoneyPit();
+                }
+
+                if (Settings.AutoSpin)
+                {
+                    MoneyPitManager.DoDailySpin();
+                }
             }
             catch (Exception e)
             {
@@ -438,6 +451,11 @@ namespace NGUInjector
             Settings.AutoQuest = GUILayout.Toggle(Settings.AutoQuest, "Auto Quest");
             Settings.AllowMajorQuests = GUILayout.Toggle(Settings.AllowMajorQuests, "Allow Major Quests");
             Settings.AutoQuestITOPOD = GUILayout.Toggle(Settings.AutoQuestITOPOD, "Auto-Move to ITOPOD");
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            Settings.AutoMoneyPit = GUILayout.Toggle(Settings.AutoMoneyPit, "Auto Money Pit");
+            Settings.AutoSpin = GUILayout.Toggle(Settings.AutoSpin, "Auto Daily Spin");
             GUILayout.EndHorizontal();
 
             //if (GUILayout.Button("Test"))

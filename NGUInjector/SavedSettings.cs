@@ -31,6 +31,8 @@ namespace NGUInjector
         [SerializeField] private bool _autoConvertBoosts;
         [SerializeField] private bool _autoQuestItopod;
         [SerializeField] private int[] _goldDropLoadout;
+        [SerializeField] private bool _autoMoneyPit;
+        [SerializeField] private bool _autoSpin;
 
         private readonly string _savePath;
         
@@ -107,6 +109,9 @@ namespace NGUInjector
             _allowMajorQuests = other.AllowMajorQuests;
 
             _goldDropLoadout = other.GoldDropLoadout;
+
+            _autoMoneyPit = other.AutoMoneyPit;
+            _autoSpin = other.AutoSpin;
         }
 
         public int HighestAKZone
@@ -304,6 +309,28 @@ namespace NGUInjector
         {
             get => _goldDropLoadout;
             set => _goldDropLoadout = value;
+        }
+
+        public bool AutoMoneyPit
+        {
+            get => _autoMoneyPit;
+            set
+            {
+                if (value == _autoMoneyPit) return;
+                _autoMoneyPit = value;
+                SaveSettings();
+            }
+        }
+
+        public bool AutoSpin
+        {
+            get => _autoSpin;
+            set
+            {
+                if (value == _autoSpin) return;
+                _autoSpin = value;
+                SaveSettings();
+            }
         }
     }
 }
