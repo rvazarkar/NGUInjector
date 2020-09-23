@@ -74,17 +74,26 @@ namespace NGUInjector
 
         public void Start()
         {
+
             _dir = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%/Desktop"), "NGUInjector");
-            OutputWriter = new StreamWriter(Path.Combine(_dir, "inject.log")) {AutoFlush = true};
-            LootWriter = new StreamWriter(Path.Combine(_dir, "loot.log")) { AutoFlush = true };
-            CombatWriter = new StreamWriter(Path.Combine(_dir, "combat.log")) { AutoFlush = true };
-            AllocationWriter = new StreamWriter(Path.Combine(_dir, "allocation.log")) { AutoFlush = true};
+            if (!Directory.Exists(_dir))
+            {
+                Directory.CreateDirectory(_dir);
+            }
+
+            var logDir = Path.Combine(_dir, "logs");
+            if (!Directory.Exists(logDir))
+            {
+                Directory.CreateDirectory(logDir);
+            }
+            OutputWriter = new StreamWriter(Path.Combine(logDir, "inject.log")) {AutoFlush = true};
+            LootWriter = new StreamWriter(Path.Combine(logDir, "loot.log")) { AutoFlush = true };
+            CombatWriter = new StreamWriter(Path.Combine(logDir, "combat.log")) { AutoFlush = true };
+            AllocationWriter = new StreamWriter(Path.Combine(logDir, "allocation.log")) { AutoFlush = true};
+
             try
             {
-                if (!Directory.Exists(_dir))
-                {
-                    Directory.CreateDirectory(_dir);
-                }
+                
 
                 Character = FindObjectOfType<Character>();
 
