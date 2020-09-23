@@ -10,16 +10,12 @@ namespace NGUInjector
     {
         protected Character _character;
         protected EnergyInputController _energyController;
-        protected int _energyAllocationStage;
-        protected int _magicAllocationStage;
         protected StreamWriter _outputWriter;
 
         protected AllocationProfile()
         {
             _character = Main.Character;
             _energyController = _character.energyMagicPanel;
-            _energyAllocationStage = -1;
-            _magicAllocationStage = -1;
             _outputWriter = Main.OutputWriter;
         }
 
@@ -27,11 +23,5 @@ namespace NGUInjector
         public abstract void AllocateMagic();
         public abstract void EquipGear();
         public abstract void EquipDiggers();
-
-        public void ResetAllocationStages()
-        {
-            _energyAllocationStage = -1;
-            _magicAllocationStage = -1;
-        }
     }
 }
