@@ -16,6 +16,7 @@ After injecting the dll, a new folder will be created on your Desktop called NGU
   - \_boostIds - The ids corresponding to items you want to boost. This is in order, so you can boost in a certain order
   - \_titanLoadout - The item IDs for gear you want to equip for autokilling titans.
   - \_yggdrasilLoadout - The item IDs for gear you want to equip when harvesting yggdrasil fruits
+  - \_moneyPitLoadout - The item IDs for gear you want to equip when using the money pit
 - allocation.json - Breakpoints for assigning gear, magic, energy, and diggers. See the allocation section for more information
 
 Saving either file will automatically reload the settings in the configuration file. Reloading the game isn't necessary
