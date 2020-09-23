@@ -22,7 +22,7 @@ Saving either file will automatically reload the settings in the configuration f
 
 # In Game Configuration
 
-An in game menu can be opened using the \* button on the numeric keypad.
+An in game menu can be opened using the F1 button.
 
 ![Settings Menu](https://i.imgur.com/jD3mV2V.png)
 
@@ -179,7 +179,7 @@ The list of diggers is 0 indexed. Drop chance digger is 0, PP digger is 11. More
 
 ## Quicksave + NGUSav.ES JSON
 
-Pressing the / button on the numpad will dump a NGU save file as well as a ngusav.es JSON file in the folder on desktop, which can be loaded into Gear Optimizer.
+Pressing the F3 button numpad will dump a NGU save file as well as a ngusav.es JSON file in the folder on desktop, which can be loaded into Gear Optimizer.
 
 ## Monitor Loot Log File
 
@@ -187,7 +187,7 @@ The adventure log will automatically be monitored and loot dropped will be writt
 
 ## Quick Disable/Enable
 
-Pressing the - button on the numpad will globally disable all features of the app until re-enabled
+Pressing the F2 button will globally disable all features of the app until re-enabled.
 
 ## Turn on Autoattack in ITOPOD
 
