@@ -455,6 +455,10 @@ namespace NGUInjector
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
+            Settings.ManageWandoos = GUILayout.Toggle(Settings.ManageWandoos, "Auto Swap Wandoos");
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
             Settings.SwapTitanLoadouts = GUILayout.Toggle(Settings.SwapTitanLoadouts, "Swap Loadout For Titan");
             Settings.SwapYggdrasilLoadouts = GUILayout.Toggle(Settings.SwapYggdrasilLoadouts, "Swap Loadout For Yggdrasil");
             GUILayout.EndHorizontal();
@@ -470,6 +474,7 @@ namespace NGUInjector
             Settings.AutoSpin = GUILayout.Toggle(Settings.AutoSpin, "Auto Daily Spin");
             Settings.AutoRebirth = GUILayout.Toggle(Settings.AutoRebirth, "Auto Rebirth");
             GUILayout.EndHorizontal();
+
 
             //if (GUILayout.Button("Test"))
             //{
