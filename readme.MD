@@ -107,6 +107,8 @@ Available non-cap priorities for Energy are as follows:
 - WAN - Allocate energy to energy wandoos
 - TM - Allocate energy to energy time machine
 
+More information on allocation indexes can be found on the [wiki](https://github.com/rvazarkar/NGUInjector/wiki/Allocation-Indexes)
+
 ## Magic
 
 A magic breakpoint is structured as follows:
@@ -143,6 +145,8 @@ Available non-cap priorities for Magic are as follows:
 - WAN - Allocate energy to magic wandoos
 - TM - Allocate energy to magic time machine
 
+More information on allocation indexes can be found on the [wiki](https://github.com/rvazarkar/NGUInjector/wiki/Allocation-Indexes)
+
 ## Gear
 
 A gear breakpoint is structured as follows:
@@ -167,7 +171,7 @@ A digger breakpoint is structured as follows:
 }
 ```
 
-The list of diggers is 0 indexed. Drop chance digger is 0, PP digger is 11
+The list of diggers is 0 indexed. Drop chance digger is 0, PP digger is 11. More information can be found on the [wiki](https://github.com/rvazarkar/NGUInjector/wiki/Allocation-Indexes)
 
 # Other Features
 
