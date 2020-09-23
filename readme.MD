@@ -16,6 +16,8 @@ After injecting the dll, a new folder will be created on your Desktop called NGU
   - \_yggdrasilLoadout - The item IDs for gear you want to equip when harvesting yggdrasil fruits
 - allocation.json - Breakpoints for assigning gear, magic, energy, and diggers. See the allocation section for more information
 
+Saving either file will automatically reload the settings in the configuration file. Reloading the game isn't necessary
+
 # In Game Configuration
 
 An in game menu can be opened using the \* button on the numeric keypad.
@@ -165,4 +167,18 @@ A digger breakpoint is structured as follows:
 }
 ```
 
-The list of diggers is 0 indexed. Drop chance digger is 0, PP digger is 13
+The list of diggers is 0 indexed. Drop chance digger is 0, PP digger is 11
+
+# Other Features
+
+## Quicksave + NGUSav.ES JSON
+
+Pressing the / button on the numpad will dump a NGU save file as well as a ngusav.es JSON file in the folder on desktop, which can be loaded into Gear Optimizer.
+
+## Monitor Loot Log File
+
+The adventure log will automatically be monitored and loot dropped will be written to loot.log in the folder on your desktop.
+
+## Quick Disable/Enable
+
+Pressing the - button on the numpad will globally disable all features of the app until re-enabled
