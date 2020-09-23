@@ -211,14 +211,15 @@ namespace NGUInjector
         public void Update()
         {
             _timeLeft -= Time.deltaTime;
+
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                _active = !_active;
+                _optionsVisible = !_optionsVisible;
             }
 
             if (Input.GetKeyDown(KeyCode.F2))
             {
-                _optionsVisible = !_optionsVisible;
+                _active = !_active;
             }
 
             if (Input.GetKeyDown(KeyCode.F3))
