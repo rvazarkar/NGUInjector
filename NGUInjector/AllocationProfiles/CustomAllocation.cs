@@ -51,11 +51,11 @@ namespace NGUInjector.AllocationProfiles
 
                     if (_wrapper.Breakpoints.RebirthTime > 0)
                     {
-                        Main.Log($"Loaded custom allocation:\n{_wrapper.Breakpoints.Energy.Length} energy breakpoints\n{_wrapper.Breakpoints.Magic.Length} magic breakpoints\n{_wrapper.Breakpoints.Gear.Length} gear breakpoints\n{_wrapper.Breakpoints.Diggers.Length} digger breakpoints. \nRebirth at {_wrapper.Breakpoints.RebirthTime}");
+                        Main.Log($"Loaded custom allocation:\n{_wrapper.Breakpoints.Energy.Length} energy breakpoints\n{_wrapper.Breakpoints.Magic.Length} magic breakpoints\n{_wrapper.Breakpoints.Gear.Length} gear breakpoints\n{_wrapper.Breakpoints.Diggers.Length} digger breakpoints,\n{_wrapper.Breakpoints.Wandoos.Length} wandoos OS breakpoints. \nRebirth at {_wrapper.Breakpoints.RebirthTime}");
                     }
                     else
                     {
-                        Main.Log($"Loaded custom allocation:\n{_wrapper.Breakpoints.Energy.Length} energy breakpoints\n{_wrapper.Breakpoints.Magic.Length} magic breakpoints\n{_wrapper.Breakpoints.Gear.Length} gear breakpoints\n{_wrapper.Breakpoints.Diggers.Length} digger breakpoints. \nNo rebirth time specified");
+                        Main.Log($"Loaded custom allocation:\n{_wrapper.Breakpoints.Energy.Length} energy breakpoints\n{_wrapper.Breakpoints.Magic.Length} magic breakpoints\n{_wrapper.Breakpoints.Gear.Length} gear breakpoints\n{_wrapper.Breakpoints.Diggers.Length} digger breakpoints.\n{_wrapper.Breakpoints.Wandoos.Length} wandoos OS breakpoints. \nNo rebirth time specified");
                     }
 
                     _currentEnergyBreakpoint = null;
@@ -113,9 +113,23 @@ namespace NGUInjector.AllocationProfiles
             if (bp.OS == 2 && _character.wandoos98.os == OSType.wandoosXL) return;
 
             var id = bp.OS;
+            if (id == 0)
+            {
+                var controller = Main.Character.wandoos98Controller;
+                var type = controller.GetType().GetField("nextOS",
+                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                type?.SetValue(controller, id);
+                
+                typeof(Wandoos98Controller)
+                    .GetMethod("setOSType", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                    ?.Invoke(controller, null);
+            }
             if (id == 1 && _character.inventory.itemList.jakeComplete)
             {
                 var controller = Main.Character.wandoos98Controller;
+                var type = controller.GetType().GetField("nextOS",
+                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                type?.SetValue(controller, id);
                 typeof(Wandoos98Controller)
                     .GetMethod("setOSType", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
                     ?.Invoke(controller, null);
@@ -124,6 +138,9 @@ namespace NGUInjector.AllocationProfiles
             if (id == 2 && _character.wandoos98.XLLevels > 0)
             {
                 var controller = Main.Character.wandoos98Controller;
+                var type = controller.GetType().GetField("nextOS",
+                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                type?.SetValue(controller, id);
                 typeof(Wandoos98Controller)
                     .GetMethod("setOSType", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
                     ?.Invoke(controller, null);
