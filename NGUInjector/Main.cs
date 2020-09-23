@@ -157,7 +157,8 @@ namespace NGUInjector
                         AutoMoneyPit = false,
                         AutoSpin = false,
                         MoneyPitLoadout = new int[] {},
-                        AutoRebirth = false
+                        AutoRebirth = false,
+                        ManageWandoos = false
                     };
 
                     Settings.MassUpdate(temp);
@@ -210,17 +211,17 @@ namespace NGUInjector
         public void Update()
         {
             _timeLeft -= Time.deltaTime;
-            if (Input.GetKeyDown(KeyCode.KeypadMinus))
+            if (Input.GetKeyDown(KeyCode.F1))
             {
                 _active = !_active;
             }
 
-            if (Input.GetKeyDown(KeyCode.KeypadMultiply))
+            if (Input.GetKeyDown(KeyCode.F2))
             {
                 _optionsVisible = !_optionsVisible;
             }
 
-            if (Input.GetKeyDown(KeyCode.KeypadDivide))
+            if (Input.GetKeyDown(KeyCode.F3))
             {
                 var data = Character.importExport.getBase64Data();
                 using (var writer = new StreamWriter(Path.Combine(_dir, "NGUSave.txt")))
@@ -235,7 +236,7 @@ namespace NGUInjector
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.KeypadPlus))
+            if (Input.GetKeyDown(KeyCode.F4))
             {
                 Settings.AutoQuestITOPOD = !Settings.AutoQuestITOPOD;
             }
@@ -310,6 +311,8 @@ namespace NGUInjector
                     _profile.AllocateMagic();
                 if (Settings.ManageDiggers && Character.buttons.diggers.enabled)
                     _profile.EquipDiggers();
+                if (Settings.ManageWandoos && Character.buttons.wandoos.enabled)
+                    _profile.SwapOS();
 
                 if (Character.buttons.beast.enabled)
                 {
@@ -469,10 +472,7 @@ namespace NGUInjector
 
             //if (GUILayout.Button("Test"))
             //{
-            //    for (int i = 0; i < 5; i++)
-            //    {
-            //        _profile.DebugATCap(i);
-            //    }
+            //    _profile.DebugTMCap();
             //}
 
             GUI.DragWindow(new Rect(0,0, 10000,10000));

@@ -35,9 +35,11 @@ namespace NGUInjector
         [SerializeField] private bool _autoSpin;
         [SerializeField] private int[] _moneyPitLoadout;
         [SerializeField] private bool _autoRebirth;
+        [SerializeField] private bool _manageWandoos;
 
         private readonly string _savePath;
         
+
         public SavedSettings(string dir)
         {
             _savePath = Path.Combine(dir, "settings.json");
@@ -96,6 +98,7 @@ namespace NGUInjector
             _manageMagic = other.ManageMagic;
             _manageInventory = other.ManageInventory;
             _manageGear = other.ManageGear;
+            _manageWandoos = other.ManageWandoos;
             _autoConvertBoosts = other.AutoConvertBoosts;
 
             _snipeZone = other.SnipeZone;
@@ -115,6 +118,7 @@ namespace NGUInjector
             _moneyPitLoadout = other.MoneyPitLoadout;
 
             _autoRebirth = other.AutoRebirth;
+            _manageWandoos = other.ManageWandoos;
         }
 
         public int HighestAKZone
@@ -349,6 +353,17 @@ namespace NGUInjector
             {
                 if (value == _autoRebirth) return;
                 _autoRebirth = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ManageWandoos
+        {
+            get => _manageWandoos;
+            set
+            {
+                if (value == _manageWandoos) return;
+                _manageWandoos = value;
                 SaveSettings();
             }
         }

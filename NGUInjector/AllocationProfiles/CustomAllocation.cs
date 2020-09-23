@@ -15,8 +15,10 @@ namespace NGUInjector.AllocationProfiles
         private AllocationBreakPoint _currentEnergyBreakpoint;
         private GearBreakpoint _currentGearBreakpoint;
         private DiggerBreakpoint _currentDiggerBreakpoint;
+        private WandoosBreakpoint _currentWandoosBreakpoint;
         private bool _hasGearSwapped;
         private bool _hasDiggerSwapped;
+        private bool _hasWandoosSwapped;
         private readonly string _allocationPath;
 
         public CustomAllocation(string dir)
@@ -39,6 +41,7 @@ namespace NGUInjector.AllocationProfiles
                     _wrapper.Breakpoints.Energy = breakpoints["Energy"].Children.Select(bp => new AllocationBreakPoint { Time = bp["Time"].AsInt, Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Gear = breakpoints["Gear"].Children.Select(bp => new GearBreakpoint { Time = bp["Time"].AsInt, Gear = bp["ID"].AsArray.Children.Select(x => x.AsInt).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Diggers = breakpoints["Diggers"].Children.Select(bp => new DiggerBreakpoint { Time = bp["Time"].AsInt, Diggers = bp["List"].AsArray.Children.Select(x => x.AsInt).ToArray() }).OrderByDescending(x => x.Time).ToArray();
+                    _wrapper.Breakpoints.Wandoos = breakpoints["Wandoos"].Children.Select(bp => new WandoosBreakpoint { Time = bp["Time"].AsInt, OS = bp["OS"].AsInt }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.RebirthTime = breakpoints["RebirthTime"].AsInt;
                     if (_wrapper.Breakpoints.RebirthTime < 180 && _wrapper.Breakpoints.RebirthTime != -1)
                     {
@@ -78,6 +81,7 @@ namespace NGUInjector.AllocationProfiles
                         Magic = new AllocationBreakPoint[] { },
                         Gear = new GearBreakpoint[] { },
                         Diggers = new DiggerBreakpoint[] {},
+                        Wandoos = new WandoosBreakpoint[] {},
                         RebirthTime = -1
                     }
                 };
@@ -91,8 +95,46 @@ namespace NGUInjector.AllocationProfiles
             }
         }
 
+        internal void SwapOS()
+        {
+            var bp = GetCurrentWandoosBreakpoint();
+            if (bp == null)
+                return;
+
+            if (bp.Time != _currentWandoosBreakpoint.Time)
+            {
+                _hasWandoosSwapped = false;
+            }
+
+            if (_hasWandoosSwapped) return;
+
+            if (bp.OS == 0 && _character.wandoos98.os == OSType.wandoos98) return;
+            if (bp.OS == 1 && _character.wandoos98.os == OSType.wandoosMEH) return;
+            if (bp.OS == 2 && _character.wandoos98.os == OSType.wandoosXL) return;
+
+            var id = bp.OS;
+            if (id == 1 && _character.inventory.itemList.jakeComplete)
+            {
+                var controller = Main.Character.wandoos98Controller;
+                typeof(Wandoos98Controller)
+                    .GetMethod("setOSType", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                    ?.Invoke(controller, null);
+            }
+
+            if (id == 2 && _character.wandoos98.XLLevels > 0)
+            {
+                var controller = Main.Character.wandoos98Controller;
+                typeof(Wandoos98Controller)
+                    .GetMethod("setOSType", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                    ?.Invoke(controller, null);
+            }
+        }
+
         public void DoRebirth()
         {
+            if (_wrapper == null)
+                return;
+
             if (_wrapper.Breakpoints.RebirthTime < 0)
                 return;
 
@@ -283,6 +325,24 @@ namespace NGUInjector.AllocationProfiles
                     {
                         _hasDiggerSwapped = false;
                         _currentDiggerBreakpoint = b;
+                    }
+                    return b;
+                }
+            }
+
+            return null;
+        }
+
+        private WandoosBreakpoint GetCurrentWandoosBreakpoint()
+        {
+            foreach (var b in _wrapper.Breakpoints.Wandoos)
+            {
+                if (_character.rebirthTime.totalseconds > b.Time)
+                {
+                    if (_currentWandoosBreakpoint == null)
+                    {
+                        _hasWandoosSwapped = false;
+                        _currentWandoosBreakpoint = b;
                     }
                     return b;
                 }
@@ -590,6 +650,14 @@ namespace NGUInjector.AllocationProfiles
             Main.LogAllocation($"Game Divisor: {_character.advancedTrainingController.getDivisor(index)}");
         }
 
+        internal void DebugTMCap()
+        {
+            var energy = CalculateTMEnergyCap();
+            double num = (double)_character.totalEnergyPower() / (double)_character.timeMachineController.baseSpeedDivider() * ((double)energy / 50000) * (double)_character.hacksController.totalTMSpeedBonus() * (double)_character.allChallenges.timeMachineChallenge.TMSpeedBonus() * (double)_character.cardsController.getBonus(cardBonus.TMSpeed) / (double)(_character.machine.levelSpeed + 1L);
+            Main.LogAllocation($"Calculated Energy: {energy}");
+            Main.LogAllocation($"Deviation from game formula: {num}");
+        }
+
         private float GetDivisor(int index)
         {
             float baseTime;
@@ -632,6 +700,7 @@ namespace NGUInjector.AllocationProfiles
         [SerializeField] public AllocationBreakPoint[] Energy;
         [SerializeField] public GearBreakpoint[] Gear;
         [SerializeField] public DiggerBreakpoint[] Diggers;
+        [SerializeField] public WandoosBreakpoint[] Wandoos;
         [SerializeField] public int RebirthTime;
 
     }
@@ -655,5 +724,12 @@ namespace NGUInjector.AllocationProfiles
     {
         public int Time;
         public int[] Diggers;
+    }
+
+    [Serializable]
+    public class WandoosBreakpoint
+    {
+        public int Time;
+        public int OS;
     }
 }
