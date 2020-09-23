@@ -13,6 +13,7 @@ namespace NGUInjector
     {
         Titan,
         Yggdrasil,
+        MoneyPit,
         None
     }
     internal static class LoadoutManager
@@ -46,7 +47,7 @@ namespace NGUInjector
             if (Settings.TitanLoadout.Length == 0)
                 return;
             //Skip if we're currently locked for yggdrasil (although this generally shouldn't happen)
-            if (CurrentLock == LockType.Yggdrasil)
+            if (CurrentLock == LockType.Yggdrasil || CurrentLock == LockType.MoneyPit)
                 return;
 
             //If we're currently holding the lock
@@ -75,12 +76,23 @@ namespace NGUInjector
 
         internal static bool TryYggdrasilSwap()
         {
-            if (CurrentLock == LockType.Titan)
+            if (CurrentLock == LockType.Titan || CurrentLock == LockType.MoneyPit)
                 return false;
 
             AcquireLock(LockType.Yggdrasil);
             SaveCurrentLoadout();
             ChangeGear(Settings.YggdrasilLoadout);
+            return true;
+        }
+
+        internal static bool TryMoneyPitSwap()
+        {
+            if (CurrentLock == LockType.Titan || CurrentLock == LockType.Yggdrasil)
+                return false;
+
+            AcquireLock(LockType.MoneyPit);
+            SaveCurrentLoadout();
+            ChangeGear(Settings.MoneyPitLoadout);
             return true;
         }
 

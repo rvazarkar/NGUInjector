@@ -35,8 +35,7 @@ namespace NGUInjector
         [SerializeField] private bool _autoSpin;
 
         private readonly string _savePath;
-        
-
+        private int[] _moneyPitLoadout;
 
         public SavedSettings(string dir)
         {
@@ -112,6 +111,7 @@ namespace NGUInjector
 
             _autoMoneyPit = other.AutoMoneyPit;
             _autoSpin = other.AutoSpin;
+            _moneyPitLoadout = other.MoneyPitLoadout;
         }
 
         public int HighestAKZone
@@ -309,6 +309,12 @@ namespace NGUInjector
         {
             get => _goldDropLoadout;
             set => _goldDropLoadout = value;
+        }
+
+        public int[] MoneyPitLoadout
+        {
+            get => _moneyPitLoadout;
+            set => _moneyPitLoadout = value;
         }
 
         public bool AutoMoneyPit

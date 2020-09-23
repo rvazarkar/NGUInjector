@@ -12,6 +12,11 @@ namespace NGUInjector.Managers
         {
             if (Main.Character.pit.pitTime.totalseconds < Main.Character.pitController.currentPitTime()) return;
 
+
+            if (Main.Settings.MoneyPitLoadout.Length > 0)
+            {
+                if (!LoadoutManager.TryMoneyPitSwap()) return;
+            }
             var controller = Main.Character.pitController;
             typeof(PitController).GetMethod("engage", BindingFlags.NonPublic | BindingFlags.Instance)
                 ?.Invoke(controller, null);
@@ -22,6 +27,12 @@ namespace NGUInjector.Managers
             if (val == null) return;
             var message = (string) val;
             Main.LogLoot($"Money Pit Reward: {message}");
+
+            if (Main.Settings.MoneyPitLoadout.Length > 0)
+            {
+                LoadoutManager.RestoreGear();
+                LoadoutManager.ReleaseLock();
+            }
         }
 
         internal static void DoDailySpin()
