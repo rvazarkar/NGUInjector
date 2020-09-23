@@ -175,6 +175,29 @@ A digger breakpoint is structured as follows:
 
 The list of diggers is 0 indexed. Drop chance digger is 0, PP digger is 11. More information can be found on the [wiki](https://github.com/rvazarkar/NGUInjector/wiki/Allocation-Indexes)
 
+## Wandoos
+
+A wandoos breakpoint is structured as follows:
+
+```
+{
+    "Time": 0,
+    "OS": 1
+}
+```
+
+The OS is 0 indexed. Wandoos 98 is 0, Wandoos MEH is 1, Wandoos XL is 2
+
+## Rebirth
+
+A rebirth breakpoint is added as follows:
+
+```
+"RebirthTime": -1
+```
+
+A setting of -1 means no rebirths. Otherwise rebirth will be performed when the time in seconds is reached.
+
 # Other Features
 
 ## Quicksave + NGUSav.ES JSON
