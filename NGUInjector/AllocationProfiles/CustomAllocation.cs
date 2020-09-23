@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using SimpleJSON;
 using UnityEngine;
 
@@ -38,7 +39,22 @@ namespace NGUInjector.AllocationProfiles
                     _wrapper.Breakpoints.Energy = breakpoints["Energy"].Children.Select(bp => new AllocationBreakPoint { Time = bp["Time"].AsInt, Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Gear = breakpoints["Gear"].Children.Select(bp => new GearBreakpoint { Time = bp["Time"].AsInt, Gear = bp["ID"].AsArray.Children.Select(x => x.AsInt).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Diggers = breakpoints["Diggers"].Children.Select(bp => new DiggerBreakpoint { Time = bp["Time"].AsInt, Diggers = bp["List"].AsArray.Children.Select(x => x.AsInt).ToArray() }).OrderByDescending(x => x.Time).ToArray();
-                    Main.Log($"Loaded custom allocation:\n{_wrapper.Breakpoints.Energy.Length} energy breakpoints\n{_wrapper.Breakpoints.Magic.Length} magic breakpoints\n{_wrapper.Breakpoints.Gear.Length} gear breakpoints\n{_wrapper.Breakpoints.Diggers.Length} digger breakpoints");
+                    _wrapper.Breakpoints.RebirthTime = breakpoints["RebirthTime"].AsInt;
+                    if (_wrapper.Breakpoints.RebirthTime < 180 && _wrapper.Breakpoints.RebirthTime != -1)
+                    {
+                        _wrapper.Breakpoints.RebirthTime = -1;
+                        Main.Log("Invalid rebirth time in allocation. Rebirth disabled");
+                    }
+
+                    if (_wrapper.Breakpoints.RebirthTime > 0)
+                    {
+                        Main.Log($"Loaded custom allocation:\n{_wrapper.Breakpoints.Energy.Length} energy breakpoints\n{_wrapper.Breakpoints.Magic.Length} magic breakpoints\n{_wrapper.Breakpoints.Gear.Length} gear breakpoints\n{_wrapper.Breakpoints.Diggers.Length} digger breakpoints. \nRebirth at {_wrapper.Breakpoints.RebirthTime}");
+                    }
+                    else
+                    {
+                        Main.Log($"Loaded custom allocation:\n{_wrapper.Breakpoints.Energy.Length} energy breakpoints\n{_wrapper.Breakpoints.Magic.Length} magic breakpoints\n{_wrapper.Breakpoints.Gear.Length} gear breakpoints\n{_wrapper.Breakpoints.Diggers.Length} digger breakpoints. \nNo rebirth time specified");
+                    }
+
                     _currentEnergyBreakpoint = null;
                     _currentMagicBreakpoint = null;
                     _currentGearBreakpoint = null;
@@ -61,7 +77,8 @@ namespace NGUInjector.AllocationProfiles
                         Energy = new AllocationBreakPoint[] { },
                         Magic = new AllocationBreakPoint[] { },
                         Gear = new GearBreakpoint[] { },
-                        Diggers = new DiggerBreakpoint[] {}
+                        Diggers = new DiggerBreakpoint[] {},
+                        RebirthTime = -1
                     }
                 };
 
@@ -72,6 +89,20 @@ namespace NGUInjector.AllocationProfiles
                     writer.Flush();
                 }
             }
+        }
+
+        public void DoRebirth()
+        {
+            if (_wrapper.Breakpoints.RebirthTime < 0)
+                return;
+
+            if (_character.rebirthTime.totalseconds < _wrapper.Breakpoints.RebirthTime)
+                return;
+
+            Main.Log("Rebirth time hit, performing rebirth");
+            var controller = Main.Character.rebirth;
+            typeof(Rebirth).GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                .Single(x => x.Name == "engage" && x.GetParameters().Length == 0).Invoke(controller, null);
         }
         
         public override void AllocateEnergy()
@@ -533,7 +564,7 @@ namespace NGUInjector.AllocationProfiles
                 return 0;
 
             var formula = 50f * divisor /
-                Mathf.Sqrt(_character.totalEnergyPower()) * _character.totalAdvancedTrainingSpeedBonus();
+                (Mathf.Sqrt(_character.totalEnergyPower()) * _character.totalAdvancedTrainingSpeedBonus());
 
             return formula;
         }
@@ -544,13 +575,19 @@ namespace NGUInjector.AllocationProfiles
             if (divisor == 0.0)
                 return;
 
-            var formula = 50f * divisor /
-                Mathf.Sqrt(_character.totalEnergyPower()) * _character.totalAdvancedTrainingSpeedBonus();
+            var formula = (50f * divisor) /
+                (Mathf.Sqrt(_character.totalEnergyPower()) * _character.totalAdvancedTrainingSpeedBonus());
 
 
             double num = formula / 50f * Mathf.Sqrt(_character.totalEnergyPower()) * _character.totalAdvancedTrainingSpeedBonus() / _character.advancedTrainingController.getDivisor(index);
-            Main.LogAllocation(num.ToString());
-            Main.LogAllocation(formula.ToString());
+            Main.LogAllocation($"Dumping values for AT {index}");
+            Main.LogAllocation($"Calculated Energy: {formula}");
+            Main.LogAllocation($"Deviation from Game Formula: {num}");
+            Main.LogAllocation($"Total Energy Power: {_character.totalEnergyPower()}");
+            Main.LogAllocation($"SQRT Energy Power: {Mathf.Sqrt(_character.totalEnergyPower())}");
+            Main.LogAllocation($"Advanced Training Speed Bonus: {_character.totalAdvancedTrainingSpeedBonus()}");
+            Main.LogAllocation($"Calculated Divisor: {GetDivisor(index)}");
+            Main.LogAllocation($"Game Divisor: {_character.advancedTrainingController.getDivisor(index)}");
         }
 
         private float GetDivisor(int index)
@@ -595,6 +632,7 @@ namespace NGUInjector.AllocationProfiles
         [SerializeField] public AllocationBreakPoint[] Energy;
         [SerializeField] public GearBreakpoint[] Gear;
         [SerializeField] public DiggerBreakpoint[] Diggers;
+        [SerializeField] public int RebirthTime;
 
     }
 

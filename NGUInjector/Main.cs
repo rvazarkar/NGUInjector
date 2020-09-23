@@ -156,7 +156,8 @@ namespace NGUInjector
                         GoldDropLoadout = new int[] {},
                         AutoMoneyPit = false,
                         AutoSpin = false,
-                        MoneyPitLoadout = new int[] {}
+                        MoneyPitLoadout = new int[] {},
+                        AutoRebirth = false
                     };
 
                     Settings.MassUpdate(temp);
@@ -193,6 +194,7 @@ namespace NGUInjector
                 AllocationWatcher.Changed += (sender, args) => { LoadAllocation(); };
 
                 Settings.SaveSettings();
+                Settings.LoadSettings();
 
                 InvokeRepeating("AutomationRoutine", 0.0f, 10.0f);
                 InvokeRepeating("SnipeZone", 0.0f, .1f);
@@ -323,6 +325,11 @@ namespace NGUInjector
                 if (Settings.AutoSpin)
                 {
                     MoneyPitManager.DoDailySpin();
+                }
+
+                if (Settings.AutoRebirth)
+                {
+                    _profile.DoRebirth();
                 }
             }
             catch (Exception e)
@@ -457,6 +464,7 @@ namespace NGUInjector
             GUILayout.BeginHorizontal();
             Settings.AutoMoneyPit = GUILayout.Toggle(Settings.AutoMoneyPit, "Auto Money Pit");
             Settings.AutoSpin = GUILayout.Toggle(Settings.AutoSpin, "Auto Daily Spin");
+            Settings.AutoRebirth = GUILayout.Toggle(Settings.AutoRebirth, "Auto Rebirth");
             GUILayout.EndHorizontal();
 
             //if (GUILayout.Button("Test"))
