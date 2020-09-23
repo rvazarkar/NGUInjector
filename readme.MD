@@ -11,7 +11,7 @@ Releases can be found on in the releases section of the github page [here](https
 After injecting the dll, a new folder will be created on your Desktop called NGUInjector. Settings files will be automatically written to this directory. The following files are of interest:
 
 - settings.json - Contains settings used by the application. Many settings can be configured from the in-game menu, while the following can only be configured from this file.
-  - \_boostIds - The ids corresponding to items you want to boost.
+  - \_boostIds - The ids corresponding to items you want to boost. This is in order, so you can boost in a certain order
   - \_titanLoadout - The item IDs for gear you want to equip for autokilling titans.
   - \_yggdrasilLoadout - The item IDs for gear you want to equip when harvesting yggdrasil fruits
 - allocation.json - Breakpoints for assigning gear, magic, energy, and diggers. See the allocation section for more information
