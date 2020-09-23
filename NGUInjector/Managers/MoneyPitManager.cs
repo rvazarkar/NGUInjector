@@ -12,7 +12,6 @@ namespace NGUInjector.Managers
         {
             if (Main.Character.pit.pitTime.totalseconds < Main.Character.pitController.currentPitTime()) return;
 
-
             if (Main.Settings.MoneyPitLoadout.Length > 0)
             {
                 if (!LoadoutManager.TryMoneyPitSwap()) return;
@@ -21,12 +20,7 @@ namespace NGUInjector.Managers
             typeof(PitController).GetMethod("engage", BindingFlags.NonPublic | BindingFlags.Instance)
                 ?.Invoke(controller, null);
 
-            var type = controller.GetType().GetField("message", BindingFlags.NonPublic | BindingFlags.Instance);
-            var val = type?.GetValue(controller);
-
-            if (val == null) return;
-            var message = (string) val;
-            Main.LogLoot($"Money Pit Reward: {message}");
+            Main.LogLoot($"Money Pit Reward: {controller.pitText.text}");
 
             if (Main.Settings.MoneyPitLoadout.Length > 0)
             {

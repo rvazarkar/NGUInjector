@@ -33,9 +33,10 @@ namespace NGUInjector
         [SerializeField] private int[] _goldDropLoadout;
         [SerializeField] private bool _autoMoneyPit;
         [SerializeField] private bool _autoSpin;
+        [SerializeField] private int[] _moneyPitLoadout;
 
         private readonly string _savePath;
-        private int[] _moneyPitLoadout;
+        
 
         public SavedSettings(string dir)
         {
