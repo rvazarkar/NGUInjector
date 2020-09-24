@@ -82,6 +82,17 @@ namespace NGUInjector
             }
         }
 
+        internal static void RecapDiggers()
+        {
+            for (var i = 0; i < Main.Character.diggers.diggers.Count; i++)
+            {
+                if (Main.Character.diggers.diggers[i].active)
+                {
+                    Main.Character.allDiggers.setLevelMaxAffordable(i);
+                }
+            }
+        }
+
         internal static void RestoreDiggers()
         {
             Main.Character.allDiggers.clearAllActiveDiggers();

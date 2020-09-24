@@ -317,7 +317,11 @@ namespace NGUInjector
                 if (Settings.ManageMagic && Character.buttons.bloodMagic.enabled)
                     _profile.AllocateMagic();
                 if (Settings.ManageDiggers && Character.buttons.diggers.enabled)
+                {
                     _profile.EquipDiggers();
+                    DiggerManager.RecapDiggers();
+                }
+                    
                 if (Settings.ManageWandoos && Character.buttons.wandoos.enabled)
                     _profile.SwapOS();
 
