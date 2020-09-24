@@ -108,6 +108,17 @@ namespace NGUInjector.AllocationProfiles
                     _currentDiggerBreakpoint = null;
                     _character.removeMostEnergy();
                     _character.removeMostMagic();
+
+                    if (Main.Settings.ManageGear)
+                        EquipGear();
+                    if (Main.Settings.ManageEnergy)
+                        AllocateEnergy();
+                    if (Main.Settings.ManageMagic && Main.Character.buttons.bloodMagic.enabled)
+                        AllocateMagic();
+                    if (Main.Settings.ManageDiggers && Main.Character.buttons.diggers.enabled)
+                    {
+                        EquipDiggers();
+                    }
                 }
                 catch (Exception e)
                 {
