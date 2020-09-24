@@ -228,12 +228,12 @@ namespace NGUInjector
                 QuickSave();
             }
 
-            if (Input.GetKeyDown(KeyCode.F4))
+            if (Input.GetKeyDown(KeyCode.F7))
             {
                 QuickLoad();
             }
 
-            if (Input.GetKeyDown(KeyCode.F5))
+            if (Input.GetKeyDown(KeyCode.F4))
             {
                 Settings.AutoQuestITOPOD = !Settings.AutoQuestITOPOD;
             }
