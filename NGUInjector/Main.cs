@@ -336,6 +336,9 @@ namespace NGUInjector
                 {
                     _profile.DoRebirth();
                 }
+
+                if (Settings.AutoQuestITOPOD) MoveToITOPOD();
+
             }
             catch (Exception e)
             {
@@ -358,7 +361,24 @@ namespace NGUInjector
             if (!SnipeActive)
                 return;
 
+            if (_questManager.IsQuesting())
+                return;
+
             _combManager.SnipeZone();
+        }
+
+        private void MoveToITOPOD()
+        {
+            if (_questManager.IsQuesting())
+                return;
+
+            if (SnipeActive)
+                return;
+
+            //If we're not in ITOPOD, move there if its set
+            if (Character.adventureController.zone >= 1000 || !Settings.AutoQuestITOPOD) return;
+            Log($"Moving to ITOPOD to idle.");
+            Character.adventureController.zoneSelector.changeZone(1000);
         }
 
         private void AkBack()

@@ -23,6 +23,17 @@ namespace NGUInjector
             }
         }
 
+        internal bool IsQuesting()
+        {
+            if (!_character.beastQuest.inQuest)
+                return false;
+
+            if (_character.beastQuest.reducedRewards)
+                return false;
+
+            return true;
+        }
+
         internal void ManageQuests()
         {
             if (!Settings.AutoQuest)
@@ -42,11 +53,6 @@ namespace NGUInjector
                         _character.beastQuestController.updateButtons();
                         _character.beastQuestController.updateButtonText();
                     }
-                    
-                    //If we're not in ITOPOD, move there if its set
-                    if (_character.adventureController.zone >= 1000 || !Settings.AutoQuestITOPOD) return;
-                    Log($"Moving to ITOPOD to idle.");
-                    _character.adventureController.zoneSelector.changeZone(1000);
                 }
                 else
                 {
