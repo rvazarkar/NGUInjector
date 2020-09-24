@@ -21,16 +21,14 @@ namespace NGUInjector.AllocationProfiles
         private bool _hasDiggerSwapped;
         private bool _hasWandoosSwapped;
         private readonly string _allocationPath;
+        private string[] _validEnergyPriorities = { "WAN", "CAPWAN", "TM", "CAPTM", "CAPAT", "AT", "NGU", "CAPNGU", "AUG", "BT", "CAPBT" };
+        private string[] _validMagicPriorities = { "WAN", "CAPWAN", "BR", "TM", "CAPTM", "NGU", "CAPNGU" };
 
         public CustomAllocation(string dir)
         {
             var path = Path.Combine(dir, "allocation.json");
             _allocationPath = path;
         }
-
-        private string[] ValidEnergyPriorities = {"WAN", "CAPWAN", "TM", "CAPTM", "CAPAT", "AT", "NGU", "CAPNGU", "AUG"};
-        private string[] ValidMagicPriorities = {"WAN", "CAPWAN", "BR", "TM", "CAPTM", "NGU", "CAPNGU"};
-
 
         private List<string> ValidatePriorities(List<string> priorities)
         {
@@ -59,6 +57,16 @@ namespace NGUInjector.AllocationProfiles
                 priorities.RemoveAll(x => x.Contains("NGU"));
             }
 
+            if (!_character.buttons.basicTraining.enabled)
+            {
+                priorities.RemoveAll(x => x.Contains("BT"));
+            }
+
+            if (!_character.buttons.bloodMagic.enabled)
+            {
+                priorities.RemoveAll(x => x.Contains("BR"));
+            }
+
             return priorities;
         }
 
@@ -72,8 +80,8 @@ namespace NGUInjector.AllocationProfiles
                     var parsed = JSON.Parse(text);
                     var breakpoints = parsed["Breakpoints"];
                     _wrapper = new BreakpointWrapper { Breakpoints = new Breakpoints() };
-                    _wrapper.Breakpoints.Magic = breakpoints["Magic"].Children.Select(bp => new AllocationBreakPoint { Time = bp["Time"].AsInt, Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value).Where(x => ValidMagicPriorities.Contains(x)).ToArray() }).OrderByDescending(x => x.Time).ToArray();
-                    _wrapper.Breakpoints.Energy = breakpoints["Energy"].Children.Select(bp => new AllocationBreakPoint { Time = bp["Time"].AsInt, Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value).Where(x => ValidEnergyPriorities.Contains(x)).ToArray() }).OrderByDescending(x => x.Time).ToArray();
+                    _wrapper.Breakpoints.Magic = breakpoints["Magic"].Children.Select(bp => new AllocationBreakPoint { Time = bp["Time"].AsInt, Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value).Where(x => _validMagicPriorities.Any(x.StartsWith)).ToArray() }).OrderByDescending(x => x.Time).ToArray();
+                    _wrapper.Breakpoints.Energy = breakpoints["Energy"].Children.Select(bp => new AllocationBreakPoint { Time = bp["Time"].AsInt, Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value).Where(x => _validEnergyPriorities.Any(x.StartsWith)).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Gear = breakpoints["Gear"].Children.Select(bp => new GearBreakpoint { Time = bp["Time"].AsInt, Gear = bp["ID"].AsArray.Children.Select(x => x.AsInt).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Diggers = breakpoints["Diggers"].Children.Select(bp => new DiggerBreakpoint { Time = bp["Time"].AsInt, Diggers = bp["List"].AsArray.Children.Select(x => x.AsInt).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Wandoos = breakpoints["Wandoos"].Children.Select(bp => new WandoosBreakpoint { Time = bp["Time"].AsInt, OS = bp["OS"].AsInt }).OrderByDescending(x => x.Time).ToArray();
@@ -93,7 +101,7 @@ namespace NGUInjector.AllocationProfiles
                     {
                         Main.Log($"Loaded custom allocation:\n{_wrapper.Breakpoints.Energy.Length} energy breakpoints\n{_wrapper.Breakpoints.Magic.Length} magic breakpoints\n{_wrapper.Breakpoints.Gear.Length} gear breakpoints\n{_wrapper.Breakpoints.Diggers.Length} digger breakpoints.\n{_wrapper.Breakpoints.Wandoos.Length} wandoos OS breakpoints. \nNo rebirth time specified");
                     }
-
+                    
                     _currentEnergyBreakpoint = null;
                     _currentMagicBreakpoint = null;
                     _currentGearBreakpoint = null;
@@ -215,30 +223,39 @@ namespace NGUInjector.AllocationProfiles
                 _currentEnergyBreakpoint = bp;
             }
 
-            var temp = ValidatePriorities(bp.Priorities.ToList());
-            var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
-            temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
+            try
+            {
+                var temp = ValidatePriorities(bp.Priorities.ToList());
+                var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
+                temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
 
-            if (_character.idleEnergy == 0 && capPrios.Length == 0)
-                return;
+                if (_character.idleEnergy == 0 && capPrios.Length == 0)
+                    return;
 
+
+                if (capPrios.Length > 0) _character.removeMostEnergy();
+                foreach (var prio in capPrios)
+                {
+                    ReadEnergyBreakpoint(prio);
+                }
+
+
+                var prioCount = temp.Count;
+                var toAdd = (int) Math.Floor((double) _character.idleEnergy / prioCount);
+                _character.input.energyRequested.text = toAdd.ToString();
+                _character.input.validateInput();
+
+                foreach (var prio in temp)
+                {
+                    ReadEnergyBreakpoint(prio);
+                }
+            }
+            catch (Exception e)
+            {
+                Main.Log(e.Message);
+                Main.Log(e.StackTrace);
+            }
             
-            if (capPrios.Length > 0) _character.removeMostEnergy();
-            foreach (var prio in capPrios)
-            {
-                ReadEnergyBreakpoint(prio);
-            }
-
-
-            var prioCount = temp.Count;
-            var toAdd = (int)Math.Floor((double)_character.idleEnergy / prioCount);
-            _character.input.energyRequested.text = toAdd.ToString();
-            _character.input.validateInput();
-
-            foreach (var prio in temp)
-            {
-                ReadEnergyBreakpoint(prio);
-            }
         }
 
         public override void AllocateMagic()
@@ -435,30 +452,30 @@ namespace NGUInjector.AllocationProfiles
 
         private void ReadMagicBreakpoint(string breakpoint)
         {
-            if (breakpoint.Equals("CAPWAN") && _character.buttons.wandoos.enabled)
+            if (breakpoint.Equals("CAPWAN"))
             {
                 _character.wandoos98Controller.addCapMagic();
                 return;
             }
 
-            if (breakpoint.Equals("WAN") && _character.buttons.wandoos.enabled)
+            if (breakpoint.Equals("WAN"))
             {
                 _character.wandoos98Controller.addMagic();
                 return;
             }
 
-            if (breakpoint.Equals("BR") && _character.buttons.bloodMagic.enabled)
+            if (breakpoint.Equals("BR"))
             {
                 CastRituals();
                 return;
             }
-            if(breakpoint.StartsWith("TM") && _character.buttons.brokenTimeMachine.enabled)
+            if(breakpoint.StartsWith("TM"))
             {
                 _character.timeMachineController.addMagic();
                 return;
             }
 
-            if (breakpoint.StartsWith("CAPTM") && _character.buttons.brokenTimeMachine.enabled)
+            if (breakpoint.StartsWith("CAPTM"))
             {
                 var cap = CalculateTMMagicCap();
                 if (cap < _character.magic.idleMagic)
@@ -476,7 +493,7 @@ namespace NGUInjector.AllocationProfiles
                 return;
             }
 
-            if (breakpoint.StartsWith("NGU") && _character.buttons.ngu.enabled)
+            if (breakpoint.StartsWith("NGU"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 6)
@@ -487,7 +504,7 @@ namespace NGUInjector.AllocationProfiles
                 return;
             }
 
-            if (breakpoint.StartsWith("CAPNGU") && _character.buttons.ngu.enabled)
+            if (breakpoint.StartsWith("CAPNGU"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 6)
@@ -501,25 +518,61 @@ namespace NGUInjector.AllocationProfiles
         private void ReadEnergyBreakpoint(string breakpoint)
         {
 
-            if (breakpoint.StartsWith("WAN") && _character.buttons.wandoos.enabled)
+            if (breakpoint.StartsWith("CAPBT"))
+            {
+                var success = int.TryParse(breakpoint.Split('-')[1], out var index);
+                if (!success || index < 0 || index > 11)
+                {
+                    return;
+                }
+
+                if (index <= 5)
+                {
+                    _character.allOffenseController.trains[index].cap();
+                }
+                else
+                {
+                    _character.allDefenseController.trains[index].cap();
+                }
+            }
+
+            if (breakpoint.StartsWith("BT"))
+            {
+                var success = int.TryParse(breakpoint.Split('-')[1], out var index);
+                if (!success || index < 0 || index > 11)
+                {
+                    return;
+                }
+
+                if (index <= 5)
+                {
+                    _character.allOffenseController.trains[index].addEnergy();
+                }
+                else
+                {
+                    _character.allDefenseController.trains[index].addEnergy();
+                }
+            }
+
+            if (breakpoint.StartsWith("WAN"))
             {
                 _character.wandoos98Controller.addEnergy();
                 return;
             }
 
-            if (breakpoint.StartsWith("CAPWAN") && _character.buttons.wandoos.enabled)
+            if (breakpoint.StartsWith("CAPWAN"))
             {
                 _character.wandoos98Controller.addCapEnergy();
                 return;
             }
 
-            if (breakpoint.StartsWith("TM") && _character.buttons.brokenTimeMachine.enabled)
+            if (breakpoint.StartsWith("TM"))
             {
                 _character.timeMachineController.addEnergy();
                 return;
             }
 
-            if (breakpoint.StartsWith("CAPTM") && _character.buttons.brokenTimeMachine.enabled)
+            if (breakpoint.StartsWith("CAPTM"))
             {
                 var cap = CalculateTMEnergyCap();
                 if (cap < _character.idleEnergy)
@@ -536,10 +589,8 @@ namespace NGUInjector.AllocationProfiles
                 _character.timeMachineController.addEnergy();
                 return;
             }
-
             
-
-            if (breakpoint.StartsWith("NGU") && _character.buttons.ngu.enabled)
+            if (breakpoint.StartsWith("NGU"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 8)
@@ -550,7 +601,7 @@ namespace NGUInjector.AllocationProfiles
                 return;
             }
 
-            if (breakpoint.StartsWith("CAPNGU") && _character.buttons.ngu.enabled)
+            if (breakpoint.StartsWith("CAPNGU"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 8)
@@ -561,7 +612,7 @@ namespace NGUInjector.AllocationProfiles
                 return;
             }
 
-            if (breakpoint.StartsWith("AT") && _character.buttons.advancedTraining.enabled)
+            if (breakpoint.StartsWith("AT"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 4)
@@ -590,7 +641,7 @@ namespace NGUInjector.AllocationProfiles
                 return;
             }
 
-            if (breakpoint.StartsWith("CAPAT") && _character.buttons.advancedTraining.enabled)
+            if (breakpoint.StartsWith("CAPAT"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 4)
@@ -632,7 +683,7 @@ namespace NGUInjector.AllocationProfiles
                 return;
             }
 
-            if (breakpoint.StartsWith("AUG") && _character.buttons.augmentation.enabled)
+            if (breakpoint.StartsWith("AUG"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 13)
