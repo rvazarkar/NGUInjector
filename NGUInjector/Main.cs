@@ -368,6 +368,9 @@ namespace NGUInjector
             if (_questManager.IsQuesting())
                 return;
 
+            if (Settings.SnipeZone > Character.adventureController.zoneDropdown.options.Count - 2)
+                return;
+
             _combManager.SnipeZone();
         }
 
