@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using static NGUInjector.Main;
+﻿using static NGUInjector.Main;
 
-namespace NGUInjector
+namespace NGUInjector.Managers
 {
     internal class QuestManager
     {
