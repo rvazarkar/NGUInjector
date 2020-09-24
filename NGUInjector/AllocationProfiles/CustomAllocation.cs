@@ -728,6 +728,9 @@ namespace NGUInjector.AllocationProfiles
                     return;
                 }
 
+                if (!IsAUGUnlocked(index))
+                    return;
+
                 var augIndex = (int)Math.Floor((double)(index / 2));
 
                 if (index % 2 == 0)
@@ -816,6 +819,18 @@ namespace NGUInjector.AllocationProfiles
                     return true;
                 return _character.training.defenseTraining[index - 1] >= 5000;
             }
+        }
+
+        private bool IsAUGUnlocked(int index)
+        {
+            var augIndex = (int)Math.Floor((double)(index / 2));
+
+            if (index % 2 == 0)
+            {
+                return _character.bossID > _character.augmentsController.augments[augIndex].augBossRequired;
+            }
+
+            return _character.bossID > _character.augmentsController.augments[augIndex].upgradeBossRequired;
         }
 
         private float GetDivisor(int index)
