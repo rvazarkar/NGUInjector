@@ -811,15 +811,13 @@ namespace NGUInjector.AllocationProfiles
             {
                 if (index == 0)
                     return true;
-                return _character.training.attackTraining[index - 1] >= 5000;
+                return _character.training.attackTraining[index - 1] >= 5000 * index;
             }
-            else
-            {
-                index -= 6;
-                if (index == 0)
-                    return true;
-                return _character.training.defenseTraining[index - 1] >= 5000;
-            }
+
+            index -= 6;
+            if (index == 0)
+                return true;
+            return _character.training.defenseTraining[index - 1] >= 5000 * index;
         }
 
         private bool IsAUGUnlocked(int index)
