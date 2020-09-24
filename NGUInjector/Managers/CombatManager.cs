@@ -44,7 +44,7 @@ namespace NGUInjector
                 return;
             }
 
-            if (_character.adventure.autoattacking)
+            if (_character.adventure.autoattacking && _character.training.attackTraining[1] != 0)
             {
                 LogCombat("Toggling off autoattack");
                 _character.adventureController.idleAttackMove.setToggle();
@@ -144,6 +144,12 @@ namespace NGUInjector
             if (!_pc.moveCheck())
                 return;
 
+            if (_character.training.attackTraining[1] == 0 && !_character.adventure.autoattacking)
+            {
+                _character.adventureController.idleAttackMove.setToggle();
+                return;
+            }
+            
             if (!Settings.FastCombat)
             {
                 if (CombatBuffs())
