@@ -391,7 +391,7 @@ namespace NGUInjector
             if (_questManager.IsQuesting())
                 return;
 
-            if (Character.machine.realBaseGold == 0)
+            if (Character.machine.realBaseGold == 0 && Settings.GoldZone < Character.adventureController.zoneDropdown.options.Count - 2)
             {
                 _combManager.SnipeZone(Settings.GoldZone);
                 return;
