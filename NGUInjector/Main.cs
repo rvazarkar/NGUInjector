@@ -241,6 +241,7 @@ namespace NGUInjector
 
         private void QuickSave()
         {
+            Log("Writing quicksave and json");
             var data = Character.importExport.getBase64Data();
             using (var writer = new StreamWriter(Path.Combine(_dir, "NGUSave.txt")))
             {
@@ -263,7 +264,10 @@ namespace NGUInjector
                 return;
             }
 
+            Log("Loading quicksave");
+
             Character.saveLoad.quickLoad(filename);
+            Character.inventoryController.updateInventory();
         }
 
         void AutomationRoutine()
