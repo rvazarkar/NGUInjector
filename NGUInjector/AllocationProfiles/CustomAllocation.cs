@@ -130,10 +130,47 @@ namespace NGUInjector.AllocationProfiles
                     }
                 };
 
+                var emptyAllocation = @"{
+    ""Breakpoints"": {
+      ""Magic"": [
+        {
+          ""Time"": 0,
+          ""Priorities"": []
+        }
+      ],
+      ""Energy"": [
+        {
+          ""Time"": 0,
+          ""Priorities"": []
+        }
+      ],
+      ""Gear"": [
+        {
+          ""Time"": 0,
+          ""ID"": []
+        }
+      ],
+      ""Wandoos"": [
+        {
+          ""Time"": 0,
+          ""OS"": 0
+        }
+      ],
+      ""Diggers"": [
+        {
+          ""Time"": 0,
+          ""List"": []
+        }
+      ],
+      ""RebirthTime"": -1
+    }
+  }
+        ";
+
                 Main.Log("Created empty allocation profile. Please update allocation.json");
                 using (var writer = new StreamWriter(File.Open(_allocationPath, FileMode.CreateNew)))
                 {
-                    writer.WriteLine(JsonUtility.ToJson(w));
+                    writer.WriteLine(emptyAllocation);
                     writer.Flush();
                 }
             }
