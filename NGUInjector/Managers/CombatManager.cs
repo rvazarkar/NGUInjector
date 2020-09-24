@@ -356,9 +356,8 @@ namespace NGUInjector
             }
         }
 
-        internal void SnipeZone()
+        internal void SnipeZone(int zone)
         {
-            var zone = Settings.SnipeZone;
             var needsBuff = Settings.PrecastBuffs;
             try
             {

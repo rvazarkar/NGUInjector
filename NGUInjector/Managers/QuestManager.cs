@@ -31,6 +31,9 @@ namespace NGUInjector
             if (_character.beastQuest.reducedRewards)
                 return false;
 
+            if (_character.beastQuestController.curQuestZone() > _character.adventureController.zoneDropdown.options.Count - 2) 
+                return false;
+
             return true;
         }
 
@@ -59,6 +62,7 @@ namespace NGUInjector
                     //We're in a major quest. Move to the zone
                     var zone = _character.beastQuestController.curQuestZone();
                     if (_character.adventureController.zone == zone) return;
+                    if (zone > _character.adventureController.zoneDropdown.options.Count - 2) return;
                     Log($"Moving to zone {zone} for quest.");
                     _character.adventureController.zoneSelector.changeZone(zone);
                     _character.beastQuestController.updateButtons();

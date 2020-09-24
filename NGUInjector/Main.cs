@@ -158,7 +158,8 @@ namespace NGUInjector
                         AutoSpin = false,
                         MoneyPitLoadout = new int[] {},
                         AutoRebirth = false,
-                        ManageWandoos = false
+                        ManageWandoos = false,
+                        GoldZone = -1
                     };
 
                     Settings.MassUpdate(temp);
@@ -224,24 +225,45 @@ namespace NGUInjector
 
             if (Input.GetKeyDown(KeyCode.F3))
             {
-                var data = Character.importExport.getBase64Data();
-                using (var writer = new StreamWriter(Path.Combine(_dir, "NGUSave.txt")))
-                {
-                    writer.WriteLine(data);
-                }
-
-                data = JsonUtility.ToJson(Character.importExport.gameStateToData());
-                using (var writer = new StreamWriter(Path.Combine(_dir, "NGUSave.json")))
-                {
-                    writer.WriteLine(data);
-                }
-
+                QuickSave();
             }
 
             if (Input.GetKeyDown(KeyCode.F4))
             {
+                QuickLoad();
+            }
+
+            if (Input.GetKeyDown(KeyCode.F5))
+            {
                 Settings.AutoQuestITOPOD = !Settings.AutoQuestITOPOD;
             }
+        }
+
+        private void QuickSave()
+        {
+            var data = Character.importExport.getBase64Data();
+            using (var writer = new StreamWriter(Path.Combine(_dir, "NGUSave.txt")))
+            {
+                writer.WriteLine(data);
+            }
+
+            data = JsonUtility.ToJson(Character.importExport.gameStateToData());
+            using (var writer = new StreamWriter(Path.Combine(_dir, "NGUSave.json")))
+            {
+                writer.WriteLine(data);
+            }
+        }
+
+        private void QuickLoad()
+        {
+            var filename = Path.Combine(_dir, "NGUSave.txt");
+            if (!File.Exists(filename))
+            {
+                Log("Quicksave doesn't exist");
+                return;
+            }
+
+            Character.saveLoad.quickLoad(filename);
         }
 
         void AutomationRoutine()
@@ -362,20 +384,29 @@ namespace NGUInjector
             if (!_active)
                 return;
 
-            if (!SnipeActive)
-                return;
-
             if (_questManager.IsQuesting())
                 return;
 
+            if (Character.machine.realBaseGold == 0)
+            {
+                _combManager.SnipeZone(Settings.GoldZone);
+                return;
+            }
+
+            if (!SnipeActive)
+                return;
+            
             if (Settings.SnipeZone > Character.adventureController.zoneDropdown.options.Count - 2)
                 return;
 
-            _combManager.SnipeZone();
+            _combManager.SnipeZone(Settings.SnipeZone);
         }
 
         private void MoveToITOPOD()
         {
+            if (!_active)
+                return;
+
             if (_questManager.IsQuesting())
                 return;
 
@@ -417,6 +448,22 @@ namespace NGUInjector
             if (Settings.SnipeZone == 44)
                 return;
             Settings.SnipeZone += 1;
+            Settings.SaveSettings();
+        }
+
+        private void GoldZoneBack()
+        {
+            if (Settings.GoldZone == -1)
+                return;
+            Settings.GoldZone -= 1;
+            Settings.SaveSettings();
+        }
+
+        private void GoldZoneForward()
+        {
+            if (Settings.GoldZone == 44)
+                return;
+            Settings.GoldZone += 1;
             Settings.SaveSettings();
         }
 
@@ -511,6 +558,19 @@ namespace NGUInjector
             Settings.AutoMoneyPit = GUILayout.Toggle(Settings.AutoMoneyPit, "Auto Money Pit");
             Settings.AutoSpin = GUILayout.Toggle(Settings.AutoSpin, "Auto Daily Spin");
             Settings.AutoRebirth = GUILayout.Toggle(Settings.AutoRebirth, "Auto Rebirth");
+            GUILayout.EndHorizontal();
+
+            GUILayout.Label("Initial Gold Zone");
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("<"))
+            {
+                GoldZoneBack();
+            }
+            GUILayout.Label(Character.adventureController.zoneName(Settings.GoldZone), centered);
+            if (GUILayout.Button(">"))
+            {
+                GoldZoneForward();
+            }
             GUILayout.EndHorizontal();
 
 
