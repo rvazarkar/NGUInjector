@@ -269,8 +269,9 @@ namespace NGUInjector.AllocationProfiles
                 if (_character.idleEnergy == 0 && capPrios.Length == 0)
                     return;
 
-
                 if (capPrios.Length > 0) _character.removeMostEnergy();
+                if (bp.Priorities.Any(x => x.Contains("BT"))) _character.removeAllEnergy();
+
                 foreach (var prio in capPrios)
                 {
                     ReadEnergyBreakpoint(prio);
