@@ -265,9 +265,41 @@ namespace NGUInjector
             }
 
             Log("Loading quicksave");
+            string base64Data;
+            try
+            {
+                base64Data = File.ReadAllText(filename);
+            }
+            catch (Exception e)
+            {
+                Log($"Failed to read quicksave: {e.Message}");
+                return;
+            }
 
-            Character.saveLoad.quickLoad(filename);
-            Character.inventoryController.updateInventory();
+            try
+            {
+                var saveDataFromString = Character.importExport.getSaveDataFromString(base64Data);
+                var dataFromString = Character.importExport.getDataFromString(base64Data);
+
+                if ((dataFromString == null || dataFromString.version < 361) &&
+                    Application.platform != RuntimePlatform.WindowsEditor)
+                {
+                    Log("Bad save version");
+                    return;
+                }
+
+                if (dataFromString.version > Character.getVersion())
+                {
+                    Log("Bad save version");
+                    return;
+                }
+
+                Character.saveLoad.loadintoGame(saveDataFromString);
+            }
+            catch (Exception e)
+            {
+                Log($"Failed to load quicksave: {e.Message}");
+            }
         }
 
         void AutomationRoutine()
