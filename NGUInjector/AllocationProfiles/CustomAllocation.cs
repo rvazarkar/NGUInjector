@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -27,6 +28,40 @@ namespace NGUInjector.AllocationProfiles
             _allocationPath = path;
         }
 
+        private string[] ValidEnergyPriorities = {"WAN", "CAPWAN", "TM", "CAPTM", "CAPAT", "AT", "NGU", "CAPNGU", "AUG"};
+        private string[] ValidMagicPriorities = {"WAN", "CAPWAN", "BR", "TM", "CAPTM", "NGU", "CAPNGU"};
+
+
+        private List<string> ValidatePriorities(List<string> priorities)
+        {
+            if (!_character.buttons.brokenTimeMachine.enabled)
+            {
+                priorities.RemoveAll(x => x.Contains("TM"));
+            }
+
+            if (!_character.buttons.wandoos.enabled)
+            {
+                priorities.RemoveAll(x => x.Contains("WAN"));
+            }
+
+            if (!_character.buttons.advancedTraining.enabled)
+            {
+                priorities.RemoveAll(x => x.Contains("AT"));
+            }
+
+            if (!_character.buttons.augmentation.enabled)
+            {
+                priorities.RemoveAll(x => x.Contains("AUG"));
+            }
+
+            if (!_character.buttons.ngu.enabled)
+            {
+                priorities.RemoveAll(x => x.Contains("NGU"));
+            }
+
+            return priorities;
+        }
+
         internal void ReloadAllocation()
         {
             if (File.Exists(_allocationPath))
@@ -37,12 +72,13 @@ namespace NGUInjector.AllocationProfiles
                     var parsed = JSON.Parse(text);
                     var breakpoints = parsed["Breakpoints"];
                     _wrapper = new BreakpointWrapper { Breakpoints = new Breakpoints() };
-                    _wrapper.Breakpoints.Magic = breakpoints["Magic"].Children.Select(bp => new AllocationBreakPoint { Time = bp["Time"].AsInt, Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value).ToArray() }).OrderByDescending(x => x.Time).ToArray();
-                    _wrapper.Breakpoints.Energy = breakpoints["Energy"].Children.Select(bp => new AllocationBreakPoint { Time = bp["Time"].AsInt, Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value).ToArray() }).OrderByDescending(x => x.Time).ToArray();
+                    _wrapper.Breakpoints.Magic = breakpoints["Magic"].Children.Select(bp => new AllocationBreakPoint { Time = bp["Time"].AsInt, Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value).Where(x => ValidMagicPriorities.Contains(x)).ToArray() }).OrderByDescending(x => x.Time).ToArray();
+                    _wrapper.Breakpoints.Energy = breakpoints["Energy"].Children.Select(bp => new AllocationBreakPoint { Time = bp["Time"].AsInt, Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value).Where(x => ValidEnergyPriorities.Contains(x)).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Gear = breakpoints["Gear"].Children.Select(bp => new GearBreakpoint { Time = bp["Time"].AsInt, Gear = bp["ID"].AsArray.Children.Select(x => x.AsInt).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Diggers = breakpoints["Diggers"].Children.Select(bp => new DiggerBreakpoint { Time = bp["Time"].AsInt, Diggers = bp["List"].AsArray.Children.Select(x => x.AsInt).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Wandoos = breakpoints["Wandoos"].Children.Select(bp => new WandoosBreakpoint { Time = bp["Time"].AsInt, OS = bp["OS"].AsInt }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.RebirthTime = breakpoints["RebirthTime"].AsInt;
+                    
                     if (_wrapper.Breakpoints.RebirthTime < 180 && _wrapper.Breakpoints.RebirthTime != -1)
                     {
                         _wrapper.Breakpoints.RebirthTime = -1;
@@ -179,7 +215,7 @@ namespace NGUInjector.AllocationProfiles
                 _currentEnergyBreakpoint = bp;
             }
 
-            var temp = bp.Priorities.ToList();
+            var temp = ValidatePriorities(bp.Priorities.ToList());
             var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
             temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
 
@@ -220,7 +256,7 @@ namespace NGUInjector.AllocationProfiles
                 _currentMagicBreakpoint = bp;
             }
 
-            var temp = bp.Priorities.ToList();
+            var temp = ValidatePriorities(bp.Priorities.ToList());
             var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
             temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
 
@@ -501,47 +537,7 @@ namespace NGUInjector.AllocationProfiles
                 return;
             }
 
-            if (breakpoint.StartsWith("CAPAT") && _character.buttons.advancedTraining.enabled)
-            {
-                var success = int.TryParse(breakpoint.Split('-')[1], out var index);
-                if (!success || index < 0 || index > 4)
-                {
-                    return;
-                }
-
-                var cap = CalculateATCap(index);
-                if (cap < _character.idleEnergy)
-                {
-                    Main.LogAllocation($"Allocating {cap} to AT{index} ({_character.idleEnergy} idle)");
-                    _character.input.energyRequested.text = cap.ToString();
-                }
-                else
-                {
-                    Main.LogAllocation($"Allocating {_character.idleEnergy} to AT{index} ({cap} cap)");
-                    _character.input.energyRequested.text = _character.idleEnergy.ToString();
-                }
-                _character.input.validateInput();
-
-                switch (index)
-                {
-                    case 0:
-                        _character.advancedTrainingController.defense.addEnergy();
-                        break;
-                    case 1:
-                        _character.advancedTrainingController.attack.addEnergy();
-                        break;
-                    case 2:
-                        _character.advancedTrainingController.block.addEnergy();
-                        break;
-                    case 3:
-                        _character.advancedTrainingController.wandoosEnergy.addEnergy();
-                        break;
-                    case 4:
-                        _character.advancedTrainingController.wandoosMagic.addEnergy();
-                        break;
-                }
-                return;
-            }
+            
 
             if (breakpoint.StartsWith("NGU") && _character.buttons.ngu.enabled)
             {
@@ -572,6 +568,48 @@ namespace NGUInjector.AllocationProfiles
                 {
                     return;
                 }
+
+                switch (index)
+                {
+                    case 0:
+                        _character.advancedTrainingController.defense.addEnergy();
+                        break;
+                    case 1:
+                        _character.advancedTrainingController.attack.addEnergy();
+                        break;
+                    case 2:
+                        _character.advancedTrainingController.block.addEnergy();
+                        break;
+                    case 3:
+                        _character.advancedTrainingController.wandoosEnergy.addEnergy();
+                        break;
+                    case 4:
+                        _character.advancedTrainingController.wandoosMagic.addEnergy();
+                        break;
+                }
+                return;
+            }
+
+            if (breakpoint.StartsWith("CAPAT") && _character.buttons.advancedTraining.enabled)
+            {
+                var success = int.TryParse(breakpoint.Split('-')[1], out var index);
+                if (!success || index < 0 || index > 4)
+                {
+                    return;
+                }
+
+                var cap = CalculateATCap(index);
+                if (cap < _character.idleEnergy)
+                {
+                    Main.LogAllocation($"Allocating {cap} to AT{index} ({_character.idleEnergy} idle)");
+                    _character.input.energyRequested.text = cap.ToString();
+                }
+                else
+                {
+                    Main.LogAllocation($"Allocating {_character.idleEnergy} to AT{index} ({cap} cap)");
+                    _character.input.energyRequested.text = _character.idleEnergy.ToString();
+                }
+                _character.input.validateInput();
 
                 switch (index)
                 {
