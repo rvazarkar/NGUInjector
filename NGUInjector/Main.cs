@@ -305,6 +305,11 @@ namespace NGUInjector
                     _yggManager.CheckFruits();
                 }
 
+                if (Settings.AutoMoneyPit)
+                {
+                    MoneyPitManager.CheckMoneyPit();
+                }
+
                 if (Settings.ManageGear)
                     _profile.EquipGear();
                 if (Settings.ManageEnergy)
@@ -320,11 +325,6 @@ namespace NGUInjector
                 {
                     _questManager.CheckQuestTurnin();
                     _questManager.ManageQuests();
-                }
-
-                if (Settings.AutoMoneyPit)
-                {
-                    MoneyPitManager.CheckMoneyPit();
                 }
 
                 if (Settings.AutoSpin)
