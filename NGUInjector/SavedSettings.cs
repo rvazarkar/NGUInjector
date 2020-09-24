@@ -42,7 +42,8 @@ namespace NGUInjector
 
         public SavedSettings(string dir)
         {
-            _savePath = Path.Combine(dir, "settings.json");
+            if (dir != null)
+                _savePath = Path.Combine(dir, "settings.json");
         }
 
         internal void SaveSettings()

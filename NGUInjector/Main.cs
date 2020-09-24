@@ -235,6 +235,7 @@ namespace NGUInjector
                 {
                     writer.WriteLine(data);
                 }
+
             }
 
             if (Input.GetKeyDown(KeyCode.F4))
@@ -353,6 +354,10 @@ namespace NGUInjector
         {
             if (!_active)
                 return;
+
+            if (!SnipeActive)
+                return;
+
             _combManager.SnipeZone();
         }
 
@@ -391,7 +396,13 @@ namespace NGUInjector
         public void OnGUI()
         {
             if (_optionsVisible)
+            {
+                var temp = GUI.color;
+                GUI.color = Color.black;
                 _windowRect = GUI.Window(0, _windowRect, DoGui, "Injector Settings");
+                GUI.color = temp;
+            }
+                
 
             GUI.Label(new Rect(10, 10, 200, 40), $"Injected");
             GUI.Label(new Rect(10, 20, 200, 40), $"Automation - {(_active ? "Active" : "Inactive")}");
