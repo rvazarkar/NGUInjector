@@ -425,7 +425,7 @@ namespace NGUInjector
 
             if (Character.machine.realBaseGold == 0 && Settings.GoldZone < Character.adventureController.zoneDropdown.options.Count - 2)
             {
-                _combManager.SnipeZone(Settings.GoldZone);
+                _combManager.SnipeZone(Settings.GoldZone, false);
                 return;
             }
 
@@ -448,6 +448,11 @@ namespace NGUInjector
 
             if (SnipeActive)
                 return;
+
+            if (Character.machine.realBaseGold == 0 && Settings.GoldZone < Character.adventureController.zoneDropdown.options.Count - 2)
+            {
+                return;
+            }
 
             //If we're not in ITOPOD, move there if its set
             if (Character.adventureController.zone >= 1000 || !Settings.AutoQuestITOPOD) return;

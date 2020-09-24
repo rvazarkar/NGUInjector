@@ -35,9 +35,9 @@ namespace NGUInjector
             return _pc.chargeFactor > 1.05;
         }
 
-        void PrepCombat(bool needsBuff)
+        void PrepCombat(bool needsBuff, bool recoverHP)
         {
-            if (!needsBuff && HasFullHP())
+            if (!needsBuff && (HasFullHP() || !recoverHP))
             {
                 LogCombat("Skipping buffs, moving to stage 3");
                 _snipeStage = 3;
@@ -356,7 +356,7 @@ namespace NGUInjector
             }
         }
 
-        internal void SnipeZone(int zone)
+        internal void SnipeZone(int zone, bool recoverHP = true)
         {
             var needsBuff = Settings.PrecastBuffs;
             try
@@ -364,7 +364,7 @@ namespace NGUInjector
                 //Stage 0: Go to safe zone
                 if (_snipeStage == 0)
                 {
-                    PrepCombat(needsBuff);
+                    PrepCombat(needsBuff, recoverHP);
                 }
                 //Stage 1: Cast charge once
                 else if (_snipeStage == 1)
