@@ -144,9 +144,10 @@ namespace NGUInjector
             if (!_pc.moveCheck())
                 return;
 
-            if (_character.training.attackTraining[1] == 0 && !_character.adventure.autoattacking)
+            if (_character.training.attackTraining[1] == 0)
             {
-                _character.adventureController.idleAttackMove.setToggle();
+                if (!_character.adventure.autoattacking)
+                    _character.adventureController.idleAttackMove.setToggle();
                 return;
             }
             
