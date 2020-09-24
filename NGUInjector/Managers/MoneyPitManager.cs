@@ -11,6 +11,7 @@ namespace NGUInjector.Managers
         internal static void CheckMoneyPit()
         {
             if (Main.Character.pit.pitTime.totalseconds < Main.Character.pitController.currentPitTime()) return;
+            if (Main.Character.realGold < Main.Settings.MoneyPitThreshold) return;
 
             if (Main.Settings.MoneyPitLoadout.Length > 0)
             {

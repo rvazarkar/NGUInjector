@@ -37,6 +37,7 @@ namespace NGUInjector
         [SerializeField] private bool _autoRebirth;
         [SerializeField] private bool _manageWandoos;
         [SerializeField] private int _goldZone;
+        [SerializeField] private double _moneyPitThreshold;
 
         private readonly string _savePath;
         
@@ -119,6 +120,7 @@ namespace NGUInjector
             _autoMoneyPit = other.AutoMoneyPit;
             _autoSpin = other.AutoSpin;
             _moneyPitLoadout = other.MoneyPitLoadout;
+            _moneyPitThreshold = other.MoneyPitThreshold;
 
             _autoRebirth = other.AutoRebirth;
             _manageWandoos = other.ManageWandoos;
@@ -381,6 +383,12 @@ namespace NGUInjector
                 _goldZone = value;
                 SaveSettings();
             }
+        }
+
+        public double MoneyPitThreshold
+        {
+            get => _moneyPitThreshold;
+            set => _moneyPitThreshold = value;
         }
     }
 }

@@ -159,7 +159,8 @@ namespace NGUInjector
                         MoneyPitLoadout = new int[] {},
                         AutoRebirth = false,
                         ManageWandoos = false,
-                        GoldZone = -1
+                        GoldZone = -1,
+                        MoneyPitThreshold = 1e5
                     };
 
                     Settings.MassUpdate(temp);
