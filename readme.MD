@@ -101,6 +101,7 @@ Available cap priorities for Energy are as follows:
 - CAPAT-X (0-4) - Calculate a cap for the AT and attempt to BB it.
 - CAPWAN - Use the cap button for wandoos energy
 - CAPTM - Calculate a cap for energy time machine and attempt to BB it.
+- CAPBT-X (0-11) - Use the cap button for basic training
 
 Available non-cap priorities for Energy are as follows:
 
@@ -109,6 +110,7 @@ Available non-cap priorities for Energy are as follows:
 - AUG-X (0-13) - Allocate energy to augment
 - WAN - Allocate energy to energy wandoos
 - TM - Allocate energy to energy time machine
+- BT-X (0-11) - Allocate energy to basic training
 
 More information on allocation indexes can be found on the [wiki](https://github.com/rvazarkar/NGUInjector/wiki/Allocation-Indexes)
 
