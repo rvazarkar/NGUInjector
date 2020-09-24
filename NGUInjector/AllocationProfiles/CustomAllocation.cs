@@ -569,7 +569,7 @@ namespace NGUInjector.AllocationProfiles
                 }
                 else
                 {
-                    index -= 5;
+                    index -= 6;
                     _character.allDefenseController.trains[index].cap();
                 }
             }
@@ -588,7 +588,7 @@ namespace NGUInjector.AllocationProfiles
                 }
                 else
                 {
-                    index -= 5;
+                    index -= 6;
                     _character.allDefenseController.trains[index].addEnergy();
                 }
             }
