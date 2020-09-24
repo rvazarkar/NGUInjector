@@ -559,14 +559,13 @@ namespace NGUInjector.AllocationProfiles
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 11)
-                {
                     return;
-                }
+
+                if (!IsBTUnlocked(index))
+                    return;
 
                 if (index <= 5)
-                {
                     _character.allOffenseController.trains[index].cap();
-                }
                 else
                 {
                     index -= 6;
@@ -578,14 +577,13 @@ namespace NGUInjector.AllocationProfiles
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 11)
-                {
                     return;
-                }
+
+                if (!IsBTUnlocked(index))
+                    return;
 
                 if (index <= 5)
-                {
                     _character.allOffenseController.trains[index].addEnergy();
-                }
                 else
                 {
                     index -= 6;
@@ -801,6 +799,23 @@ namespace NGUInjector.AllocationProfiles
             double num = (double)_character.totalEnergyPower() / (double)_character.timeMachineController.baseSpeedDivider() * ((double)energy / 50000) * (double)_character.hacksController.totalTMSpeedBonus() * (double)_character.allChallenges.timeMachineChallenge.TMSpeedBonus() * (double)_character.cardsController.getBonus(cardBonus.TMSpeed) / (double)(_character.machine.levelSpeed + 1L);
             Main.LogAllocation($"Calculated Energy: {energy}");
             Main.LogAllocation($"Deviation from game formula: {num}");
+        }
+
+        private bool IsBTUnlocked(int index)
+        {
+            if (index <= 5)
+            {
+                if (index == 0)
+                    return true;
+                return _character.training.attackTraining[index - 1] >= 5000;
+            }
+            else
+            {
+                index -= 6;
+                if (index == 0)
+                    return true;
+                return _character.training.defenseTraining[index - 1] >= 5000;
+            }
         }
 
         private float GetDivisor(int index)
