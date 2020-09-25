@@ -445,6 +445,7 @@ namespace NGUInjector
             {
                 SetGoldDropped = true;
                 _combManager.SnipeZone(Settings.GoldZone, false);
+                return;
             }
 
             if (!SnipeActive)
