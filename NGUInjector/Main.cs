@@ -135,7 +135,7 @@ namespace NGUInjector
                 {
                     var temp = new SavedSettings(null)
                     {
-                        BoostIDs = new int[] { },
+                        PriorityBoosts = new int[] { },
                         YggdrasilLoadout = new int[] { },
                         SwapYggdrasilLoadouts = true,
                         HighestAKZone = 0,
@@ -347,7 +347,8 @@ namespace NGUInjector
 
                 if (Settings.ManageInventory)
                 {
-                    var converted = Character.inventory.GetConvertedInventory(Controller).ToArray();
+                    var converted = Character.inventory.GetConvertedInventory().ToArray();
+                    var boostSlots = _invManager.GetBoostSlots(converted);
                     _invManager.EnsureFiltered(converted);
                     _invManager.ManageConvertibles(converted);
                     _invManager.MergeEquipped();
@@ -355,9 +356,9 @@ namespace NGUInjector
                     _invManager.MergeBoosts(converted);
                     _invManager.ManageQuestItems(converted);
                     _invManager.MergeGuffs();
-                    _invManager.BoostInventory(converted);
+                    _invManager.BoostInventory(boostSlots);
                     _invManager.BoostInfinityCube();
-                    _invManager.ChangeBoostConversion(converted);
+                    _invManager.ChangeBoostConversion(boostSlots);
                 }
 
                 if (Settings.SwapTitanLoadouts)
@@ -432,7 +433,7 @@ namespace NGUInjector
             if (_questManager.IsQuesting())
                 return;
 
-            if (Character.machine.realBaseGold == 0 && Settings.InitialGoldZone < Character.adventureController.zoneDropdown.options.Count - 2 && Settings.GoldZone >= 0)
+            if (Character.machine.realBaseGold == 0 && Settings.InitialGoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 && Settings.GoldZone >= 0)
             {
                 Settings.NextGoldSwap = true;
                 _combManager.SnipeZone(Settings.InitialGoldZone, false);

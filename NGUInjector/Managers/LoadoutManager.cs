@@ -145,7 +145,7 @@ namespace NGUInjector.Managers
             var accSlots = new List<int>();
             var inv = Main.Character.inventory;
             var controller = Controller;
-            var ci = inv.GetConvertedInventory(controller).ToArray();
+            var ci = inv.GetConvertedInventory().ToArray();
             var weaponSlot = -5;
             Main.Character.removeMostEnergy();
             Main.Character.removeMostMagic();

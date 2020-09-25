@@ -22,17 +22,45 @@ namespace NGUInjector
                 }).t;
         }
 
-        public static IEnumerable<ih> GetConvertedInventory(this Inventory inv, InventoryController controller)
+        public static ih GetInventoryHelper(this Equipment equip, int slot)
         {
-            return inv.inventory.Select((x, i) => new ih
+            return new ih
             {
-                level = x.level,
-                locked = !x.removable,
-                name = controller.itemInfo.itemName[x.id],
-                slot = i,
-                id = x.id,
-                equipment = x
+                level = equip.level,
+                equipment = equip,
+                id = equip.id,
+                locked = !equip.removable,
+                name = Controller.itemInfo.itemName[equip.id],
+                slot = slot
+            };
+        }
+
+        public static IEnumerable<ih> GetConvertedInventory(this Inventory inv)
+        {
+            return inv.inventory.Select((x, i) =>
+            {
+                var c = x.GetInventoryHelper(i);
+                return c;
             }).Where(x => x.id != 0);
+        }
+
+        public static IEnumerable<ih> GetConvertedEquips(this Inventory inv)
+        {
+            var list = new List<ih>
+            {
+                inv.head.GetInventoryHelper(-1), inv.chest.GetInventoryHelper(-2), inv.legs.GetInventoryHelper(-3),
+                inv.boots.GetInventoryHelper(-4), inv.weapon.GetInventoryHelper(-5)
+            };
+
+            if (Controller.weapon2Unlocked())
+            {
+                list.Add(inv.weapon.GetInventoryHelper(-6));
+            }
+
+            list.AddRange(inv.accs.Select((t, i) => t.GetInventoryHelper(i + 10000)));
+
+            list.RemoveAll(x => x.id == 0);
+            return list;
         }
 
         public static T GetPV<T>(this EnemyAI ai, string val)

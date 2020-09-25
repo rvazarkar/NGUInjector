@@ -31,50 +31,70 @@ namespace NGUInjector.Managers
             _convertibles = temp.ToArray();
         }
 
-        internal void BoostInventory(ih[] ih)
+        internal ih[] GetBoostSlots(ih[] ci)
         {
-            foreach (var item in Settings.BoostIDs)
+            var result = new List<ih>();
+            //First, find items in our priority list
+            foreach (var id in Settings.PriorityBoosts)
             {
-                var slot = FindItemSlot(ih, item);
-                if (slot == -1000)
-                    continue;
-                _controller.applyAllBoosts(slot);
+                var f = FindItemSlot(ci, id);
+                if (f != null)
+                    result.Add(f);
+            }
+
+            //Next, get equipped items that aren't in our priority list and aren't blacklisted
+            var equipped = Main.Character.inventory.GetConvertedEquips()
+                .Where(x => !Settings.PriorityBoosts.Contains(x.id) && !Settings.BoostBlacklist.Contains(x.id));
+            result = result.Concat(equipped).ToList();
+
+            //Finally, find locked items in inventory that aren't blacklisted
+            var invItems = ci.Where(x => x.locked && !Settings.BoostBlacklist.Contains(x.id) && !Settings.PriorityBoosts.Contains(x.id));
+            result = result.Concat(invItems).ToList();
+
+            return result.ToArray();
+        }
+
+        internal void BoostInventory(ih[] boostSlots)
+        {
+            foreach (var item in boostSlots)
+            {
+                _controller.applyAllBoosts(item.slot);
             }
         }
 
-        private static int FindItemSlot(IEnumerable<ih> ci, int id)
+        private static ih FindItemSlot(IEnumerable<ih> ci, int id)
         {
             var inv = Main.Character.inventory;
             if (inv.head.id == id)
             {
-                return -1;
+                return inv.head.GetInventoryHelper(-1);
             }
 
             if (inv.chest.id == id)
             {
-                return -2;
+                return inv.chest.GetInventoryHelper(-2);
             }
 
             if (inv.legs.id == id)
             {
-                return -3;
+                return inv.legs.GetInventoryHelper(-3);
             }
 
             if (inv.boots.id == id)
             {
-                return -4;
+                return inv.boots.GetInventoryHelper(-4);
             }
 
             if (inv.weapon.id == id)
             {
-                return -5;
+                return inv.weapon.GetInventoryHelper(-5);
             }
 
             if (Controller.weapon2Unlocked())
             {
                 if (inv.weapon2.id == id)
                 {
-                    return -6;
+                    inv.weapon2.GetInventoryHelper(-6);
                 }
             }
 
@@ -82,14 +102,14 @@ namespace NGUInjector.Managers
             {
                 if (inv.accs[i].id == id)
                 {
-                    return i + 10000;
+                    return inv.accs[i].GetInventoryHelper(i + 10000);
                 }
             }
 
             var items = ci.Where(x => x.id == id).ToArray();
-            if (items.Length != 0) return items.MaxItem().slot;
+            if (items.Length != 0) return items.MaxItem();
 
-            return -1000;
+            return null;
         }
 
         private static Equipment FindItemEquip(IEnumerable<ih> ci, int id)
@@ -262,7 +282,7 @@ namespace NGUInjector.Managers
                 return;
             var needed = new BoostsNeeded();
 
-            foreach (var item in Settings.BoostIDs)
+            foreach (var item in Settings.PriorityBoosts)
             {
                 var equip  = FindItemEquip(ci, item);
                 if (equip == null)
