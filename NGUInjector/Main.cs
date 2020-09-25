@@ -366,7 +366,7 @@ namespace NGUInjector
                     DiggerManager.TryTitanSwap();
                 }
 
-                if (Settings.SwapYggdrasilLoadouts && Character.buttons.yggdrasil.enabled)
+                if (Character.buttons.yggdrasil.enabled)
                 {
                     _yggManager.ManageYggHarvest();
                     _yggManager.CheckFruits();

@@ -14,21 +14,9 @@ namespace NGUInjector.Managers
 
         bool NeedsHarvest()
         {
-            for (var i = 0; i < _character.yggdrasil.fruits.Count; i++)
-            {
-                var fruit = _character.yggdrasil.fruits[i];
-                if (fruit.maxTier == 0L)
-                    continue;
-
-                if (_character.yggdrasilController.fruits[0].harvestTier(i) >= _character.yggdrasil.fruits[i].maxTier &&
-                    _character.yggdrasilController.fruits[0].harvestTier(i) >= 1)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return _character.yggdrasilController.anyFruitMaxxed();
         }
+
         internal void ManageYggHarvest()
         {
             //We need to harvest but we dont have a loadout to manage OR we're not managing loadout
@@ -46,7 +34,7 @@ namespace NGUInjector.Managers
                     DiggerManager.RestoreDiggers();
                     DiggerManager.ReleaseLock();
                 }
-                _character.yggdrasilController.consumeAll();
+                ActuallyHarvest();
                 return;
             }
 
@@ -71,12 +59,25 @@ namespace NGUInjector.Managers
 
                 Log("Equipping Loadout for Yggdrasil and Harvesting");
                 //We swapped so harvest
-                _character.yggdrasilController.consumeAll();
+                ActuallyHarvest();
                 LoadoutManager.RestoreGear();
                 LoadoutManager.ReleaseLock();
                 DiggerManager.RestoreDiggers();
                 DiggerManager.ReleaseLock();
             }
+        }
+
+        private void ActuallyHarvest()
+        {
+            var currentPage = _character.yggdrasilController.curPage;
+            _character.yggdrasilController.changePage(0);
+            _character.yggdrasilController.consumeAll();
+            _character.yggdrasilController.changePage(1);
+            _character.yggdrasilController.consumeAll();
+            _character.yggdrasilController.changePage(2);
+            _character.yggdrasilController.consumeAll();
+            _character.yggdrasilController.changePage(currentPage);
+            _character.yggdrasilController.refreshMenu();
         }
 
         internal void CheckFruits()
