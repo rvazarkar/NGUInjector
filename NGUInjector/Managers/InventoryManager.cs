@@ -94,8 +94,6 @@ namespace NGUInjector.Managers
 
         private static Equipment FindItemEquip(IEnumerable<ih> ci, int id)
         {
-            var items = ci.Where(x => x.id == id).ToArray();
-            if (items.Length != 0) return items.MaxItem().equipment;
             var inv = Main.Character.inventory;
             if (inv.head.id == id)
             {
@@ -137,6 +135,9 @@ namespace NGUInjector.Managers
                     return inv.accs[i];
                 }
             }
+
+            var items = ci.Where(x => x.id == id).ToArray();
+            if (items.Length != 0) return items.MaxItem().equipment;
 
             return null;
         }
