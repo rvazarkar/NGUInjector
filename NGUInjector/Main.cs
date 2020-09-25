@@ -110,9 +110,6 @@ namespace NGUInjector
                 _combManager = new CombatManager();
                 LoadoutManager.ReleaseLock();
                 DiggerManager.ReleaseLock();
-                _profile = new CustomAllocation(_dir);
-                _profile.ReloadAllocation();
-                
 
                 _titanList.Add(0, "None");
                 _titanList.Add(1, "GRB");
@@ -163,13 +160,18 @@ namespace NGUInjector
                         ManageWandoos = false,
                         InitialGoldZone = -1,
                         MoneyPitThreshold = 1e5,
-                        NextGoldSwap = false
+                        NextGoldSwap = false,
+                        BoostBlacklist = new int[] {},
+                        GoldZone = -1
                     };
 
                     Settings.MassUpdate(temp);
 
                     Log($"Created default settings");
                 }
+
+                _profile = new CustomAllocation(_dir);
+                _profile.ReloadAllocation();
 
                 ConfigWatcher = new FileSystemWatcher
                 {
