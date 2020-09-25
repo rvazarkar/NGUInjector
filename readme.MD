@@ -25,7 +25,7 @@ Saving either file will automatically reload the settings in the configuration f
 
 An in game menu can be opened using the F1 button.
 
-![Settings Menu](https://i.imgur.com/jD3mV2V.png)
+![Settings Menu](https://i.imgur.com/tM64fAY.png)
 
 - **Global Enable** - If turned off, all automation functions will stop.
 
@@ -53,12 +53,15 @@ An in game menu can be opened using the F1 button.
 - **Manage Gear** - Will automatically equip gear based on breakpoints in allocation.json
 - **Manage Diggers** - Will automatically equip diggers based on breakpoints in allocation.json
 - **Manage Boost Conversion** - If boost conversion is unlocked from 100 Level Challenge, will calculate needed boosts for items in boostIds and then switch auto conversion appropriately. Will prioritize power > toughness > special
+- **Auto Swap Wandoos** - Will automatically change wandoos OS version based on breakpoints in allocation.json
 
-- **Swap Loadout for Titan** - Will automatically swap gear and diggers for titan autokills using the TitanLoadout in your settings file.
+- **Use Titan Loadout** - Will automatically swap gear and diggers for titan autokills using the TitanLoadout in your settings file.
   - Will equip the following diggers: EXP Digger, PP Digger, Adventure Digger, Drop Chance Digger
-- **Swap Loadout for Yggdrasil** - Will automatically swap gear and diggers for yggdrasil harvests using the YggdrasilLoadout in your settings file.
+- **Use Ygg Loadout** - Will automatically swap gear and diggers for yggdrasil harvests using the YggdrasilLoadout in your settings file.
 
   - Will equip the following diggers: PP Digger, EXP Digger
+
+- **Use Gold Loadout** - Will equip your gold loadout to AK the titan set in Gold Loadout Zone, or to kill a boss in Gold Loadout Zone. Turns itself off after a kill. Turns itself on at the beginning of a RB
 
 - **Auto Quest** - If enabled, quests will automatically be turned in. Behavior varies based on the Allow Major Quests option
 - **Allow Major Quests**
@@ -66,6 +69,13 @@ An in game menu can be opened using the F1 button.
   - If this option is disabled, major quests will not be accepted.
   - When no major quests are available, minor quests will be accepted and idled.
 - **Auto-Move to ITOPOD** - If enabled, you will automatically be moved to the ITOPOD when no major quests are in progress or if major quests is disabled
+
+- **Auto Money Pit** - If enabled, will automatically use money pit if its available and gold is above the moneyPitThreshold settings
+- **Auto Daily Spin** - If enabled will automatically use daily spin
+- **Auto Rebirth** - If enabled, will automatically rebirth when the appropriate time is hit in the config file
+
+- **Initial Gold Zone** - Will automatically go to this zone at the beginning of a rebirth to snipe a boss and get gold going in TM
+- **Gold Loadout Zone** - Will automatically go to this zone to snipe a boss with Gold Loadout equipped. If set to a titan, will equip gold loadout for first AK of this titan. Only relevant if Use Gold Loadout is checked.
 
 # Allocation
 
@@ -205,7 +215,15 @@ A setting of -1 means no rebirths. Otherwise rebirth will be performed when the 
 
 ## Quicksave + NGUSav.ES JSON
 
-Pressing the F3 button numpad will dump a NGU save file as well as a ngusav.es JSON file in the folder on desktop, which can be loaded into Gear Optimizer.
+Pressing the F3 button will dump a NGU save file as well as a ngusav.es JSON file in the folder on desktop, which can be loaded into Gear Optimizer.
+
+## Quickload
+
+Pressing the F7 button will load the save created by the quicksave function
+
+## Dump Equipment to Log
+
+Pressing the F5 buttonw will dump your current equipment to the log file for use in allocation.json
 
 ## Monitor Loot Log File
 
