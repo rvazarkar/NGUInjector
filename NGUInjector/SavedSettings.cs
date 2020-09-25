@@ -11,7 +11,7 @@ namespace NGUInjector
     public class SavedSettings
     {
         [SerializeField] private int _highestAkZone;
-        [SerializeField] private int _snipeZone;
+        [SerializeField] private int _snipeZone = -1;
         [SerializeField] private bool _precastBuffs;
         [SerializeField] private bool _swapTitanLoadouts;
         [SerializeField] private bool _swapYggdrasilLoadouts;
@@ -36,11 +36,13 @@ namespace NGUInjector
         [SerializeField] private int[] _moneyPitLoadout;
         [SerializeField] private bool _autoRebirth;
         [SerializeField] private bool _manageWandoos;
-        [SerializeField] private int _goldZone;
+        [SerializeField] private int _initialGoldZone = -1;
         [SerializeField] private double _moneyPitThreshold;
+        [SerializeField] private bool _nextGoldSwap;
+        [SerializeField] private int _goldZone = -1;
 
         private readonly string _savePath;
-        private bool _nextGoldSwap;
+        
 
         public SavedSettings(string dir)
         {
@@ -123,8 +125,9 @@ namespace NGUInjector
 
             _autoRebirth = other.AutoRebirth;
             _manageWandoos = other.ManageWandoos;
-            _goldZone = other.GoldZone;
+            _initialGoldZone = other.InitialGoldZone;
             _nextGoldSwap = other.NextGoldSwap;
+            _goldZone = other.GoldZone;
         }
 
         public int HighestAKZone
@@ -374,13 +377,13 @@ namespace NGUInjector
             }
         }
 
-        public int GoldZone
+        public int InitialGoldZone
         {
-            get => _goldZone;
+            get => _initialGoldZone;
             set
             {
-                if (value == _goldZone) return;
-                _goldZone = value;
+                if (value == _initialGoldZone) return;
+                _initialGoldZone = value;
                 SaveSettings();
             }
         }
@@ -398,6 +401,17 @@ namespace NGUInjector
             {
                 if (value == _nextGoldSwap) return;
                 _nextGoldSwap = value;
+                SaveSettings();
+            }
+        }
+
+        public int GoldZone
+        {
+            get => _goldZone;
+            set
+            {
+                if (value == _goldZone) return;
+                _goldZone = value;
                 SaveSettings();
             }
         }

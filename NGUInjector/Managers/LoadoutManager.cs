@@ -73,12 +73,12 @@ namespace NGUInjector.Managers
 
                 if (Settings.NextGoldSwap && ts.IsHighest)
                 {
-                    ChangeGear(Settings.TitanLoadout);
+                    ChangeGear(Settings.GoldDropLoadout);
                     Settings.NextGoldSwap = false;
                 }
                 else
                 {
-                    ChangeGear(Settings.GoldDropLoadout);
+                    ChangeGear(Settings.TitanLoadout);
                 }
 
             }
@@ -329,9 +329,6 @@ namespace NGUInjector.Managers
                 result.SpawningSoon = false;
                 return result;
             }
-            var a = Main.Character.adventure;
-            var ac = Main.Character.adventureController;
-
 
             if (Main.Character.bossID >= 58)
             {
@@ -407,7 +404,6 @@ namespace NGUInjector.Managers
             if (Test)
             {
                 result.SpawningSoon = true;
-                result.IsHighest = true;
             }
 
             if (bossId > Settings.HighestAKZone)
@@ -437,10 +433,16 @@ namespace NGUInjector.Managers
             {
                 result.SpawningSoon = true;
             }
-
-            if (bossId == Settings.HighestAKZone)
+            else
             {
-                result.IsHighest = true;
+                return result;
+            }
+
+            if (ZoneIsTitan(Settings.GoldZone))
+            {
+                var id = Array.IndexOf(TitanZones, Settings.GoldZone) + 1;
+                if (id == bossId)
+                    result.IsHighest = true;
             }
 
             return result;

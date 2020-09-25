@@ -34,7 +34,7 @@ namespace NGUInjector
 
         internal static bool Test { get; set; }
 
-        private Rect _windowRect = new Rect(20, 20, 500,400);
+        private Rect _windowRect = new Rect(20, 20, 500,500);
 
         private bool _optionsVisible;
 
@@ -43,6 +43,7 @@ namespace NGUInjector
         private bool _active;
         
         private readonly Dictionary<int, string> _titanList = new Dictionary<int, string>();
+        internal static readonly int[] TitanZones = {6, 8, 11, 14, 16, 19, 23, 26, 30, 34, 38, 40, 42};
 
         internal static FileSystemWatcher ConfigWatcher;
         internal static FileSystemWatcher AllocationWatcher;
@@ -52,6 +53,7 @@ namespace NGUInjector
         internal static bool IgnoreNextChange { get; set; }
 
         internal static SavedSettings Settings;
+        internal static bool SetGoldDropped = false;
 
         internal static void Log(string msg)
         {
@@ -159,7 +161,7 @@ namespace NGUInjector
                         MoneyPitLoadout = new int[] {},
                         AutoRebirth = false,
                         ManageWandoos = false,
-                        GoldZone = -1,
+                        InitialGoldZone = -1,
                         MoneyPitThreshold = 1e5,
                         NextGoldSwap = false
                     };
@@ -238,6 +240,11 @@ namespace NGUInjector
             if (Input.GetKeyDown(KeyCode.F4))
             {
                 Settings.AutoQuestITOPOD = !Settings.AutoQuestITOPOD;
+            }
+
+            if (Input.GetKeyDown(KeyCode.F5))
+            {
+                DumpEquipped();
             }
         }
 
@@ -425,11 +432,19 @@ namespace NGUInjector
             if (_questManager.IsQuesting())
                 return;
 
-            if (Character.machine.realBaseGold == 0 && Settings.GoldZone < Character.adventureController.zoneDropdown.options.Count - 2)
+            if (Character.machine.realBaseGold == 0 && Settings.InitialGoldZone < Character.adventureController.zoneDropdown.options.Count - 2 && Settings.GoldZone >= 0)
             {
                 Settings.NextGoldSwap = true;
-                _combManager.SnipeZone(Settings.GoldZone, false);
+                _combManager.SnipeZone(Settings.InitialGoldZone, false);
                 return;
+            }
+
+            if (Settings.NextGoldSwap &&
+                Settings.GoldZone < Character.adventureController.zoneDropdown.options.Count - 2 &&
+                !ZoneIsTitan(Settings.GoldZone) && LoadoutManager.TryGoldDropSwap() && Settings.GoldZone >= 0)
+            {
+                SetGoldDropped = true;
+                _combManager.SnipeZone(Settings.GoldZone, false);
             }
 
             if (!SnipeActive)
@@ -452,7 +467,14 @@ namespace NGUInjector
             if (SnipeActive)
                 return;
 
-            if (Character.machine.realBaseGold == 0 && Settings.GoldZone < Character.adventureController.zoneDropdown.options.Count - 2)
+            if (Character.machine.realBaseGold == 0 && Settings.InitialGoldZone < Character.adventureController.zoneDropdown.options.Count - 2)
+            {
+                return;
+            }
+
+            if (Settings.NextGoldSwap &&
+                Settings.GoldZone < Character.adventureController.zoneDropdown.options.Count - 2 &&
+                !ZoneIsTitan(Settings.GoldZone) && LoadoutManager.TryGoldDropSwap())
             {
                 return;
             }
@@ -461,6 +483,37 @@ namespace NGUInjector
             if (Character.adventureController.zone >= 1000 || !Settings.AutoQuestITOPOD) return;
             Log($"Moving to ITOPOD to idle.");
             Character.adventureController.zoneSelector.changeZone(1000);
+        }
+
+        private void DumpEquipped()
+        {
+            var list = new List<int>
+            {
+                Character.inventory.head.id,
+                Character.inventory.chest.id,
+                Character.inventory.legs.id,
+                Character.inventory.boots.id,
+                Character.inventory.weapon.id
+            };
+
+            if (Character.inventoryController.weapon2Unlocked())
+            {
+                list.Add(Character.inventory.weapon2.id);
+            }
+
+            foreach (var acc in Character.inventory.accs)
+            {
+                list.Add(acc.id);
+            }
+
+            list.RemoveAll(x => x == 0);
+
+            Log($"Equipped Items: [{string.Join(", ", list.Select(x => x.ToString()).ToArray())}]");
+        }
+
+        internal static bool ZoneIsTitan(int zone)
+        {
+            return TitanZones.Contains(zone);
         }
 
         private void AkBack()
@@ -495,11 +548,27 @@ namespace NGUInjector
             Settings.SaveSettings();
         }
 
+        private void InitialGoldZoneBack()
+        {
+            if (Settings.InitialGoldZone == -1)
+                return;
+            Settings.InitialGoldZone -= 1;
+            Settings.SaveSettings();
+        }
+
+        private void InitialGoldZoneForward()
+        {
+            if (Settings.InitialGoldZone == 44)
+                return;
+            Settings.InitialGoldZone += 1;
+            Settings.SaveSettings();
+        }
+
         private void GoldZoneBack()
         {
             if (Settings.GoldZone == -1)
                 return;
-            Settings.GoldZone -= 1;
+            Settings.GoldZone-= 1;
             Settings.SaveSettings();
         }
 
@@ -606,6 +675,19 @@ namespace NGUInjector
             GUILayout.EndHorizontal();
 
             GUILayout.Label("Initial Gold Zone");
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("<"))
+            {
+                InitialGoldZoneBack();
+            }
+            GUILayout.Label(Character.adventureController.zoneName(Settings.InitialGoldZone), centered);
+            if (GUILayout.Button(">"))
+            {
+                InitialGoldZoneForward();
+            }
+            GUILayout.EndHorizontal();
+
+            GUILayout.Label("Gold Loadout Zone");
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("<"))
             {

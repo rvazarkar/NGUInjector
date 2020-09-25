@@ -386,6 +386,13 @@ namespace NGUInjector.Managers
                     {
                         LogCombat(
                             "Character or Enemy Defeated, or back in safe zone, resetting snipeStage");
+                        if (SetGoldDropped)
+                        {
+                            Settings.NextGoldSwap = false;
+                            SetGoldDropped = false;
+                            LoadoutManager.RestoreGear();
+                            LoadoutManager.ReleaseLock();
+                        }
                         _snipeStage = 0;
                         return;
                     }
