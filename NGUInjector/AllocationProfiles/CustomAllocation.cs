@@ -107,8 +107,12 @@ namespace NGUInjector.AllocationProfiles
                     _currentMagicBreakpoint = null;
                     _currentGearBreakpoint = null;
                     _currentDiggerBreakpoint = null;
-                    _character.removeMostEnergy();
-                    _character.removeMostMagic();
+
+                    if (Main.Settings.ManageEnergy || Main.Settings.ManageMagic)
+                    {
+                        _character.removeMostEnergy();
+                        _character.removeMostMagic();
+                    }
 
                     if (Main.Settings.ManageGear)
                         EquipGear();
