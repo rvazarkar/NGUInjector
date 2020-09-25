@@ -279,7 +279,11 @@ namespace NGUInjector.Managers
                     var old = _previousBoostsNeeded.Power + _previousBoostsNeeded.Toughness +
                               _previousBoostsNeeded.Special;
 
-                    Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special ({current - old})");
+                    var diff = current - old;
+                    var total = needed.Power + needed.Toughness + needed.Special;
+                    var eta = total / diff;
+
+                    Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special ({current - old} [{eta}m])");
                 }
                 else
                 {
