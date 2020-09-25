@@ -12,7 +12,7 @@ namespace NGUInjector.Managers
         {
             if (Main.Character.pit.pitTime.totalseconds < Main.Character.pitController.currentPitTime()) return;
             if (Main.Character.realGold < Main.Settings.MoneyPitThreshold) return;
-            if (Main.Character.realGold < 1e15) return;
+            if (Main.Character.realGold < 1e5) return;
 
             if (Main.Settings.MoneyPitLoadout.Length > 0)
             {
