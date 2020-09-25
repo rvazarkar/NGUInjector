@@ -441,7 +441,7 @@ namespace NGUInjector
 
             if (Settings.NextGoldSwap &&
                 Settings.GoldZone < Character.adventureController.zoneDropdown.options.Count - 2 &&
-                !ZoneIsTitan(Settings.GoldZone) && LoadoutManager.TryGoldDropSwap() && Settings.GoldZone >= 0)
+                !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone >= 0 && LoadoutManager.TryGoldDropSwap() )
             {
                 SetGoldDropped = true;
                 _combManager.SnipeZone(Settings.GoldZone, false);
