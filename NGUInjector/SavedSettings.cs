@@ -40,8 +40,7 @@ namespace NGUInjector
         [SerializeField] private double _moneyPitThreshold;
 
         private readonly string _savePath;
-        
-
+        private bool _nextGoldSwap;
 
         public SavedSettings(string dir)
         {
@@ -125,6 +124,7 @@ namespace NGUInjector
             _autoRebirth = other.AutoRebirth;
             _manageWandoos = other.ManageWandoos;
             _goldZone = other.GoldZone;
+            _nextGoldSwap = other.NextGoldSwap;
         }
 
         public int HighestAKZone
@@ -389,6 +389,17 @@ namespace NGUInjector
         {
             get => _moneyPitThreshold;
             set => _moneyPitThreshold = value;
+        }
+
+        public bool NextGoldSwap
+        {
+            get => _nextGoldSwap;
+            set
+            {
+                if (value == _nextGoldSwap) return;
+                _nextGoldSwap = value;
+                SaveSettings();
+            }
         }
     }
 }

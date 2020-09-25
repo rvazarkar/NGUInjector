@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using static NGUInjector.Main;
 
 namespace NGUInjector.Managers
@@ -51,7 +52,7 @@ namespace NGUInjector.Managers
             if (CurrentLock == LockType.Titan)
             {
                 //If we haven't AKed yet, just return
-                if (TitansSpawningSoon())
+                if (TitansSpawningSoon().SpawningSoon)
                     return;
 
                 //Titans have been AKed, restore back to original gear
@@ -61,13 +62,25 @@ namespace NGUInjector.Managers
             }
 
             //No lock currently, check if titans are spawning
-            if (TitansSpawningSoon())
+            var ts = TitansSpawningSoon();
+            if (ts.SpawningSoon)
             {
                 Log("Equipping Loadout for Titans");
+                
                 //Titans are spawning soon, grab a lock and swap
                 AcquireLock(LockType.Titan);
                 SaveCurrentLoadout();
-                ChangeGear(Settings.TitanLoadout);
+
+                if (Settings.NextGoldSwap && ts.IsHighest)
+                {
+                    ChangeGear(Settings.TitanLoadout);
+                    Settings.NextGoldSwap = false;
+                }
+                else
+                {
+                    ChangeGear(Settings.GoldDropLoadout);
+                }
+
             }
         }
 
@@ -302,139 +315,138 @@ namespace NGUInjector.Managers
             _savedLoadout = loadout.ToArray();
             Log($"Saved Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
         }
-        internal static bool TitansSpawningSoon()
-        {
-            if (!Main.Character.buttons.adventure.IsInteractable())
-                return false;
 
-            var ak = Settings.HighestAKZone;
-            var i = 0;
+        internal static TitanSpawn TitansSpawningSoon()
+        {
+            var result = new TitanSpawn
+            {
+                IsHighest = false,
+                SpawningSoon = false
+            };
+
+            if (!Main.Character.buttons.adventure.IsInteractable())
+            {
+                result.SpawningSoon = false;
+                return result;
+            }
             var a = Main.Character.adventure;
             var ac = Main.Character.adventureController;
 
-            if (i == ak)
-                return false;
-            if (Main.Character.bossID >= 58 || Main.Character.achievements.achievementComplete[128])
+
+            if (Main.Character.bossID >= 58)
             {
-                if (Math.Abs(ac.boss1SpawnTime() - a.boss1Spawn.totalseconds) < 20)
-                {
-                    return true;
-                }
+                result.Merge(GetTitanSpawn(1));
             }
 
-            i++;
-            if (i == ak)
-                return false;
-            if (Main.Character.bossID >= 66 || Main.Character.achievements.achievementComplete[129])
+            if (Main.Character.bossID >= 66)
             {
-                if (Math.Abs(ac.boss2SpawnTime() - a.boss2Spawn.totalseconds) < 20)
-                {
-                    return true;
-                }
-            }
-            i++;
-            if (i == ak)
-                return false;
-            if (Main.Character.bossID >= 82 || Main.Character.bestiary.enemies[304].kills > 0)
-            {
-                if (Math.Abs(ac.boss3SpawnTime() - a.boss3Spawn.totalseconds) < 20)
-                {
-                    return true;
-                }
-            }
-            i++;
-            if (i == ak)
-                return false;
-            if (Main.Character.bossID >= 100 || Main.Character.achievements.achievementComplete[130])
-            {
-                if (Math.Abs(ac.boss4SpawnTime() - a.boss4Spawn.totalseconds) < 20)
-                {
-                    return true;
-                }
-            }
-            i++;
-            if (i == ak)
-                return false;
-            if (Main.Character.bossID >= 116 || Main.Character.achievements.achievementComplete[145])
-            {
-                if (Math.Abs(ac.boss5SpawnTime() - a.boss5Spawn.totalseconds) < 20)
-                {
-                    return true;
-                }
-            }
-            i++;
-            if (i == ak)
-                return false;
-            if (Main.Character.bossID >= 132 || Main.Character.adventure.boss6Kills >= 1)
-            {
-                if (Math.Abs(ac.boss6SpawnTime() - a.boss6Spawn.totalseconds) < 20)
-                {
-                    return true;
-                }
-            }
-            i++;
-            if (i == ak)
-                return false;
-            if (Main.Character.effectiveBossID() >= 426 || Main.Character.adventure.boss7Kills >= 1)
-            {
-                if (Math.Abs(ac.boss7SpawnTime() - a.boss7Spawn.totalseconds) < 20)
-                {
-                    return true;
-                }
-            }
-            i++;
-            if (i == ak)
-                return false;
-            if (Main.Character.effectiveBossID() >= 467 || Main.Character.adventure.boss8Kills >= 1)
-            {
-                if (Math.Abs(ac.boss8SpawnTime() - a.boss8Spawn.totalseconds) < 20)
-                {
-                    return true;
-                }
-            }
-            i++;
-            if (i == ak)
-                return false;
-            if (Main.Character.effectiveBossID() >= 491 || Main.Character.adventure.boss9Kills >= 1)
-            {
-                if (Math.Abs(ac.boss9SpawnTime() - a.boss9Spawn.totalseconds) < 20)
-                {
-                    return true;
-                }
-            }
-            i++;
-            if (i == ak)
-                return false;
-            if (Main.Character.effectiveBossID() >= 727 || Main.Character.adventure.boss10Kills >= 1)
-            {
-                if (Math.Abs(ac.boss10SpawnTime() - a.boss10Spawn.totalseconds) < 20)
-                {
-                    return true;
-                }
-            }
-            i++;
-            if (i == ak)
-                return false;
-            if (Main.Character.effectiveBossID() >= 826 || Main.Character.adventure.boss11Kills >= 1)
-            {
-                if (Math.Abs(ac.boss11SpawnTime() - a.boss11Spawn.totalseconds) < 20)
-                {
-                    return true;
-                }
-            }
-            i++;
-            if (i == ak)
-                return false;
-            if (Main.Character.effectiveBossID() >= 848 || Main.Character.adventure.boss12Kills >= 1)
-            {
-                if (Math.Abs(ac.boss12SpawnTime() - a.boss12Spawn.totalseconds) < 20)
-                {
-                    return true;
-                }
+                result.Merge(GetTitanSpawn(2));
             }
 
-            return false;
+            if (Main.Character.bossID >= 82)
+            {
+                result.Merge(GetTitanSpawn(3));
+            }
+
+            if (Main.Character.bossID >= 100)
+            {
+                result.Merge(GetTitanSpawn(4));
+            }
+
+            if (Main.Character.bossID >= 116)
+            {
+                result.Merge(GetTitanSpawn(5));
+            }
+
+            if (Main.Character.bossID >= 132)
+            {
+                result.Merge(GetTitanSpawn(6));
+            }
+
+            if (Main.Character.effectiveBossID() >= 426)
+            {
+                result.Merge(GetTitanSpawn(7));
+            }
+
+            if (Main.Character.effectiveBossID() >= 467)
+            {
+                result.Merge(GetTitanSpawn(8));
+            }
+
+            if (Main.Character.effectiveBossID() >= 491)
+            {
+                result.Merge(GetTitanSpawn(9));
+            }
+
+            if (Main.Character.effectiveBossID() >= 727)
+            {
+                result.Merge(GetTitanSpawn(10));
+            }
+
+            if (Main.Character.effectiveBossID() >= 826)
+            {
+                result.Merge(GetTitanSpawn(11));
+            }
+
+            if (Main.Character.effectiveBossID() >= 848)
+            {
+                result.Merge(GetTitanSpawn(12));
+            }
+
+            return result;
         }
+
+        private static TitanSpawn GetTitanSpawn(int bossId)
+        {
+            var result = new TitanSpawn
+            {
+                SpawningSoon = false,
+                IsHighest = false
+            };
+
+            if (Test)
+            {
+                result.SpawningSoon = true;
+                result.IsHighest = true;
+            }
+
+            if (bossId > Settings.HighestAKZone)
+            {
+                return result;
+            }
+
+            var controller = Main.Character.adventureController;
+            var adventure = Main.Character.adventure;
+
+            var spawnMethod = controller.GetType().GetMethod($"boss{bossId}SpawnTime",
+                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            var spawnTimeObj = spawnMethod?.Invoke(controller, null);
+            if (spawnTimeObj == null)
+                return result;
+            var spawnTime = (float)spawnTimeObj;
+
+            var spawnField = adventure.GetType().GetField($"boss{bossId}Spawn",
+                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            var spawnObj = spawnField?.GetValue(adventure);
+
+            if (spawnObj == null)
+                return result;
+            var spawn = (PlayerTime)spawnObj;
+
+            if (Math.Abs(spawnTime - spawn.totalseconds) < 20)
+            {
+                result.SpawningSoon = true;
+            }
+
+            if (bossId == Settings.HighestAKZone)
+            {
+                result.IsHighest = true;
+            }
+
+            return result;
+        }
+
+
 
         //private static float GetSeedGain(Equipment e)
         //{
@@ -458,5 +470,17 @@ namespace NGUInjector.Managers
 
         //    return 0;
         //}
+    }
+
+    public class TitanSpawn
+    {
+        internal bool SpawningSoon { get; set; }
+        internal bool IsHighest { get; set; }
+
+        internal void Merge(TitanSpawn other)
+        {
+            SpawningSoon = SpawningSoon || other.SpawningSoon;
+            IsHighest = IsHighest || other.IsHighest;
+        }
     }
 }

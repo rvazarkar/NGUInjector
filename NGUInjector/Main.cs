@@ -160,7 +160,8 @@ namespace NGUInjector
                         AutoRebirth = false,
                         ManageWandoos = false,
                         GoldZone = -1,
-                        MoneyPitThreshold = 1e5
+                        MoneyPitThreshold = 1e5,
+                        NextGoldSwap = false
                     };
 
                     Settings.MassUpdate(temp);
@@ -426,6 +427,7 @@ namespace NGUInjector
 
             if (Character.machine.realBaseGold == 0 && Settings.GoldZone < Character.adventureController.zoneDropdown.options.Count - 2)
             {
+                Settings.NextGoldSwap = true;
                 _combManager.SnipeZone(Settings.GoldZone, false);
                 return;
             }
@@ -586,8 +588,9 @@ namespace NGUInjector
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            Settings.SwapTitanLoadouts = GUILayout.Toggle(Settings.SwapTitanLoadouts, "Swap Loadout For Titan");
-            Settings.SwapYggdrasilLoadouts = GUILayout.Toggle(Settings.SwapYggdrasilLoadouts, "Swap Loadout For Yggdrasil");
+            Settings.SwapTitanLoadouts = GUILayout.Toggle(Settings.SwapTitanLoadouts, "Use Titan Loadout");
+            Settings.SwapYggdrasilLoadouts = GUILayout.Toggle(Settings.SwapYggdrasilLoadouts, "Use Ygg Loadout");
+            Settings.NextGoldSwap = GUILayout.Toggle(Settings.NextGoldSwap, "Use Gold Loadout");
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
@@ -618,7 +621,7 @@ namespace NGUInjector
 
             //if (GUILayout.Button("Test"))
             //{
-            //    _profile.DebugTMCap();
+            //    Test = !Test;
             //}
 
             GUI.DragWindow(new Rect(0,0, 10000,10000));

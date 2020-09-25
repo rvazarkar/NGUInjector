@@ -8,7 +8,7 @@ namespace NGUInjector.Managers
     {
         private readonly Character _character;
         private readonly PlayerController _pc;
-        private int _snipeStage = 0;
+        private int _snipeStage;
 
         public CombatManager()
         {

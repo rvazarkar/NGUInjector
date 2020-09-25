@@ -18,9 +18,10 @@ namespace NGUInjector.Managers
 
         internal static void TryTitanSwap()
         {
+            var ts = LoadoutManager.TitansSpawningSoon();
             if (CurrentLock == LockType.Titan)
             {
-                if (LoadoutManager.TitansSpawningSoon())
+                if (ts.SpawningSoon)
                     return;
 
                 RestoreDiggers();
@@ -28,7 +29,7 @@ namespace NGUInjector.Managers
                 return;
             }
 
-            if (LoadoutManager.TitansSpawningSoon())
+            if (ts.SpawningSoon)
             {
                 CurrentLock = LockType.Titan;
                 SaveDiggers();
