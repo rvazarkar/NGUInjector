@@ -4,7 +4,7 @@ NGUInjector is an automation platform for the steam version of NGU Idle.
 
 # Instructions
 
-Releases can be found in the releases section of the github page [here](https://github.com/rvazarkar/NGUInjector/releases). The latest release can be found [here](https://github.com/rvazarkar/NGUInjector/releases/latest). Extract the downloaded archive to a directory of your choice. To start automation, run inject.bat in the extracted folder when NGU Idle is open.
+Releases can be found in the releases section of the github page [here](https://github.com/rvazarkar/NGUInjector/releases). The latest release can be found [here](https://github.com/rvazarkar/NGUInjector/releases/latest). Extract the downloaded archive to a directory of your choice. To start automation, run inject.bat as an administrator in the extracted folder when NGU Idle is open.
 
 You'll know the injection has worked if you see the following in the upper left portion of NGU.
 
