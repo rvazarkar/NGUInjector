@@ -246,3 +246,7 @@ Have you forgotten to turn on auto attack before and left yourself AFK in ITOPOD
 ## Auto Merge Boost to 100
 
 Lock a boost in your inventory and the script will automaticaly merge boosts on to that boost until it hits level 100!
+
+# Acknowledgements
+
+SharpMonoInjector can be found [here](https://github.com/warbler/SharpMonoInjector). This wouldn't be possible without the excellent work done there.
