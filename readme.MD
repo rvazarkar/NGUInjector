@@ -4,7 +4,11 @@ NGUInjector is an automation platform for the steam version of NGU Idle.
 
 # Instructions
 
-Releases can be found in the releases section of the github page [here](https://github.com/rvazarkar/NGUInjector/releases). The latest release can be found [here](https://github.com/rvazarkar/NGUInjector/releases/latest). Extract the downloaded archive to a directory of your choice. To start automation, run inject.bat in the releases folder when NGU Idle is open.
+Releases can be found in the releases section of the github page [here](https://github.com/rvazarkar/NGUInjector/releases). The latest release can be found [here](https://github.com/rvazarkar/NGUInjector/releases/latest). Extract the downloaded archive to a directory of your choice. To start automation, run inject.bat in the extracted folder when NGU Idle is open.
+
+You'll know the injection has worked if you see the following in the upper left portion of NGU.
+
+![Injected](https://i.imgur.com/JIF2pl4.png)
 
 To upgrade to a new release, restart NGU idle and run the inject script again.
 
@@ -238,3 +242,7 @@ Pressing the F2 button will globally disable all features of the app until re-en
 ## Turn on Autoattack in ITOPOD
 
 Have you forgotten to turn on auto attack before and left yourself AFK in ITOPOD doing nothing? Me too! The script will automatically turn auto attack on if you're in ITOPOD and its not on.
+
+## Auto Merge Boost to 100
+
+Lock a boost in your inventory and the script will automaticaly merge boosts on to that boost until it hits level 100!
