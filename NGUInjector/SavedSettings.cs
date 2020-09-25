@@ -15,7 +15,7 @@ namespace NGUInjector
         [SerializeField] private bool _precastBuffs;
         [SerializeField] private bool _swapTitanLoadouts;
         [SerializeField] private bool _swapYggdrasilLoadouts;
-        [SerializeField] private int[] _boostIds;
+        [SerializeField] private int[] _priorityBoosts;
         [SerializeField] private bool _manageEnergy;
         [SerializeField] private bool _manageMagic;
         [SerializeField] private bool _fastCombat;
@@ -40,10 +40,11 @@ namespace NGUInjector
         [SerializeField] private double _moneyPitThreshold;
         [SerializeField] private bool _nextGoldSwap;
         [SerializeField] private int _goldZone = -1;
+        [SerializeField] private int[] _boostBlacklist;
 
         private readonly string _savePath;
+        private bool _snipeBossOnly;
         
-
         public SavedSettings(string dir)
         {
             if (dir != null)
@@ -88,7 +89,8 @@ namespace NGUInjector
 
         internal void MassUpdate(SavedSettings other)
         {
-            _boostIds = other.BoostIDs;
+            _priorityBoosts = other.PriorityBoosts;
+            _boostBlacklist = other.BoostBlacklist;
 
             _yggdrasilLoadout = other.YggdrasilLoadout;
             _swapYggdrasilLoadouts = other.SwapYggdrasilLoadouts;
@@ -182,10 +184,10 @@ namespace NGUInjector
             }
         }
 
-        public int[] BoostIDs
+        public int[] PriorityBoosts
         {
-            get => _boostIds;
-            set => _boostIds = value;
+            get => _priorityBoosts;
+            set => _priorityBoosts = value;
         }
 
         public bool ManageEnergy
@@ -414,6 +416,23 @@ namespace NGUInjector
                 _goldZone = value;
                 SaveSettings();
             }
+        }
+
+        public bool SnipeBossOnly
+        {
+            get => _snipeBossOnly;
+            set
+            {
+                if (value == _snipeBossOnly) return;
+                _snipeBossOnly = value;
+                SaveSettings();
+            }
+        }
+
+        public int[] BoostBlacklist
+        {
+            get => _boostBlacklist;
+            set => _boostBlacklist = value;
         }
     }
 }
