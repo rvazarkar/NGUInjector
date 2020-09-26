@@ -47,6 +47,7 @@ namespace NGUInjector.Managers
         private int counter = 0;
         private BoostsNeeded _previousBoostsNeeded;
         private FixedSizedQueue avg = new FixedSizedQueue(60);
+        private int lastNeededCount = 0;
 
 
         //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane, Guffs
@@ -337,16 +338,23 @@ namespace NGUInjector.Managers
 
                     var diff = old - current;
                     var total = needed.Power + needed.Toughness + needed.Special;
-                    if (diff > 0)
+                    //Throw out values where we've added or removed a piece of gear or we've lost boost progress (usually because of levelling gear)
+                    if (diff > 0 && lastNeededCount == boostSlots.Length)
                     {
                         avg.Enqueue((int)diff);
-                    }
-                    var eta = Math.Ceiling(total / avg.Avg());
 
-                    Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special ({current - old} [{eta}m])");
+                        var average = Math.Floor(avg.Avg());
+                        var eta = Math.Ceiling(total / avg.Avg());
+
+                        Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
+                        Log($"Last Minute: {current - old}. Hourly Avg: {average}. ETA: {eta} minutes.");
+                    }
+
+                    lastNeededCount = boostSlots.Length;
                 }
                 else
                 {
+                    lastNeededCount = boostSlots.Length;
                     Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
                 }
 
