@@ -37,6 +37,9 @@ namespace NGUInjector.Managers
             //First, find items in our priority list
             foreach (var id in Settings.PriorityBoosts)
             {
+                if (Settings.BoostBlacklist.Contains(id))
+                    continue;
+                
                 var f = FindItemSlot(ci, id);
                 if (f != null)
                     result.Add(f);
