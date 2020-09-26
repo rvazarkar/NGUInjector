@@ -54,6 +54,7 @@ namespace NGUInjector
 
         internal static SavedSettings Settings;
         internal static bool SetGoldDropped = false;
+        internal static bool IsGettingInitialGold = false;
 
         internal static void Log(string msg)
         {
@@ -264,6 +265,8 @@ namespace NGUInjector
             {
                 writer.WriteLine(data);
             }
+
+            Character.saveLoad.saveGamestateToSteamCloud();
         }
 
         private void QuickLoad()
@@ -435,15 +438,16 @@ namespace NGUInjector
             if (_questManager.IsQuesting())
                 return;
 
-            if (Character.machine.realBaseGold == 0 && Settings.InitialGoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 && Settings.GoldZone >= 0)
+            if (Character.machine.realBaseGold == 0.0 && Settings.InitialGoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 && Settings.InitialGoldZone >= 0)
             {
                 Settings.NextGoldSwap = true;
                 _combManager.SnipeZone(Settings.InitialGoldZone, false);
+                IsGettingInitialGold = true;
                 return;
             }
 
             if (Settings.NextGoldSwap &&
-                Settings.GoldZone < Character.adventureController.zoneDropdown.options.Count - 2 &&
+                Settings.GoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 &&
                 !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone >= 0 && LoadoutManager.TryGoldDropSwap() )
             {
                 SetGoldDropped = true;
@@ -471,17 +475,13 @@ namespace NGUInjector
             if (SnipeActive)
                 return;
 
-            if (Character.machine.realBaseGold == 0 && Settings.InitialGoldZone < Character.adventureController.zoneDropdown.options.Count - 2)
-            {
+            if (Character.machine.realBaseGold == 0 && Settings.InitialGoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 && Settings.InitialGoldZone >= 0)
                 return;
-            }
 
             if (Settings.NextGoldSwap &&
-                Settings.GoldZone < Character.adventureController.zoneDropdown.options.Count - 2 &&
+                Settings.GoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 &&
                 !ZoneIsTitan(Settings.GoldZone) && LoadoutManager.TryGoldDropSwap())
-            {
                 return;
-            }
 
             //If we're not in ITOPOD, move there if its set
             if (Character.adventureController.zone >= 1000 || !Settings.AutoQuestITOPOD) return;
@@ -707,7 +707,7 @@ namespace NGUInjector
 
             //if (GUILayout.Button("Test"))
             //{
-            //    Test = !Test;
+            //    Log(Character.machine.realBaseGold.ToString());
             //}
 
             GUI.DragWindow(new Rect(0,0, 10000,10000));
