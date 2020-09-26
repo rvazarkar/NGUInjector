@@ -275,7 +275,7 @@ namespace NGUInjector.Managers
             }
         }
 
-        internal void ChangeBoostConversion(ih[] ci)
+        internal void ChangeBoostConversion(ih[] boostSlots)
         {
             if (_character.challenges.levelChallenge10k.curCompletions <
                 _character.allChallenges.level100Challenge.maxCompletions)
@@ -283,15 +283,12 @@ namespace NGUInjector.Managers
 
             if (!Settings.AutoConvertBoosts)
                 return;
+
             var needed = new BoostsNeeded();
 
-            foreach (var item in Settings.PriorityBoosts)
+            foreach (var item in boostSlots)
             {
-                var equip  = FindItemEquip(ci, item);
-                if (equip == null)
-                    continue;
-
-                needed.Add(equip.GetNeededBoosts());
+                needed.Add(item.equipment.GetNeededBoosts());
             }
 
             if (counter == 0)
@@ -302,7 +299,7 @@ namespace NGUInjector.Managers
                     var old = _previousBoostsNeeded.Power + _previousBoostsNeeded.Toughness +
                               _previousBoostsNeeded.Special;
 
-                    var diff = current - old;
+                    var diff = old - current;
                     var total = needed.Power + needed.Toughness + needed.Special;
                     var eta = total / diff;
 
