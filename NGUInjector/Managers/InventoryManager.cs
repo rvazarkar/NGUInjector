@@ -6,6 +6,34 @@ using static NGUInjector.Main;
 
 namespace NGUInjector.Managers
 {
+
+    public class FixedSizedQueue
+    {
+        private Queue<int> queue = new Queue<int>();
+
+        public int Size { get; private set; }
+
+        public FixedSizedQueue(int size)
+        {
+            Size = size;
+        }
+
+        public void Enqueue(int obj)
+        {
+            queue.Enqueue(obj);
+
+            while (queue.Count > Size)
+            {
+                queue.Dequeue();
+            }
+        }
+
+        public double Avg()
+        {
+            return queue.Average(x => x);
+        }
+    }
+
     internal class InventoryManager
     {
         private readonly Character _character;
@@ -15,9 +43,10 @@ namespace NGUInjector.Managers
         private readonly int[] _lootys = { 67, 128, 169, 230, 296, 389, 431, 505 };
         private readonly int[] _convertibles;
         private readonly int[] _wandoos = {66, 169};
-        private readonly int[] _guffs = {228, 211, 250, 291, 289, 290, 298, 299, 300};
+        private readonly int[] _guffs = {198, 200, 199, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 228, 211, 250, 291, 289, 290, 298, 299, 300};
         private int counter = 0;
         private BoostsNeeded _previousBoostsNeeded;
+        private FixedSizedQueue avg = new FixedSizedQueue(60);
 
 
         //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane, Guffs
@@ -243,7 +272,7 @@ namespace NGUInjector.Managers
         internal void MergeInventory(ih[] ci)
         {
             var grouped =
-                ci.Where(x => x.id > 40 && x.level < 100 && (x.id < 278 || x.id > 287)).GroupBy(x => x.id).Where(x => x.Count() > 1);
+                ci.Where(x => x.id > 40 && x.level < 100 && !_guffs.Contains(x.id) && (x.id < 278 || x.id > 287)).GroupBy(x => x.id).Where(x => x.Count() > 1);
 
             foreach (var item in grouped)
             {
@@ -254,10 +283,17 @@ namespace NGUInjector.Managers
             }
         }
 
-        internal void MergeGuffs()
+        internal void MergeGuffs(ih[] ci)
         {
             for (var id = 1000000; id - 1000000 < _character.inventory.macguffins.Count; ++id)
                 _controller.mergeAll(id);
+
+            var invGuffs = ci.Where(x => _guffs.Contains(x.id)).GroupBy(x => x.id).Where(x => x.Count() > 1);
+            foreach (var guff in invGuffs)
+            {
+                var target = guff.MaxItem();
+                _controller.mergeAll(target.slot);
+            }
         }
 
         internal void ManageConvertibles(ih[] ci)
@@ -301,7 +337,11 @@ namespace NGUInjector.Managers
 
                     var diff = old - current;
                     var total = needed.Power + needed.Toughness + needed.Special;
-                    var eta = total / diff;
+                    if (diff > 0)
+                    {
+                        avg.Enqueue((int)diff);
+                    }
+                    var eta = Math.Ceiling(total / avg.Avg());
 
                     Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special ({current - old} [{eta}m])");
                 }

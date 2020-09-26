@@ -360,7 +360,7 @@ namespace NGUInjector
                     _invManager.MergeInventory(converted);
                     _invManager.MergeBoosts(converted);
                     _invManager.ManageQuestItems(converted);
-                    _invManager.MergeGuffs();
+                    _invManager.MergeGuffs(converted);
                     _invManager.BoostInventory(boostSlots);
                     _invManager.BoostInfinityCube();
                     _invManager.ChangeBoostConversion(boostSlots);
