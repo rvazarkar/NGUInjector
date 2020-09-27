@@ -9,6 +9,7 @@ namespace NGUInjector.Managers
         private readonly Character _character;
         private readonly PlayerController _pc;
         private int _snipeStage;
+        private bool isFighting = false;
 
         public CombatManager()
         {
@@ -352,6 +353,123 @@ namespace NGUInjector.Managers
             }
         }
 
+        internal bool IsZoneUnlocked(int zone)
+        {
+            return zone <= _character.adventureController.zoneDropdown.options.Count - 2;
+        }
+
+        internal void MoveToZone(int zone)
+        {
+            _character.adventureController.zoneSelector.changeZone(zone);
+        }
+
+        internal void IdleZone(int zone, bool bossOnly, bool recoverHealth)
+        {
+            //Enable idle attack if its not on
+            if (!_character.adventure.autoattacking) _character.adventure.autoattacking = true;
+
+            if (_character.adventure.zone == -1 && !HasFullHP() && recoverHealth)
+                return;
+
+            //Check if we're in the right zone, if not move there
+            if (IsZoneUnlocked(zone) && _character.adventure.zone != zone)
+            {
+                MoveToZone(zone);
+                return;
+            }
+
+            //Wait for an enemy to spawn
+            if (_character.adventureController.currentEnemy == null)
+                return;
+            
+            //If we only want boss enemies
+            if (bossOnly)
+            {
+                //Check the type of the enemy
+                var ec = _character.adventureController.currentEnemy.enemyType;
+                //If its not a boss, move back to safe zone. Next loop will put us back in the right zone.
+                if (ec != enemyType.boss && !ec.ToString().Contains("bigBoss"))
+                {
+                    MoveToZone(-1);
+                }
+            }
+        }
+
+        internal void ManualZone(int zone, bool bossOnly, bool recoverHealth, bool precastBuffs)
+        {
+            //Start by turning off auto attack if its on unless we can only idle attack
+            _character.adventure.autoattacking = _character.training.attackTraining[1] == 0;
+
+
+            //Move back to safe zone if we're in the wrong zone
+            if (_character.adventure.zone != zone && _character.adventure.zone != -1)
+            {
+                MoveToZone(-1);
+            }
+
+            //If precast buffs is true and we have no enemy and charge isn't active, go back to safe zone
+            if (precastBuffs && !ChargeActive() && _character.adventureController.currentEnemy == null)
+            {
+                MoveToZone(-1);
+            }
+
+            //If we're in safe zone, recover health if needed. Also precast buffs
+            if (_character.adventure.zone == -1)
+            {
+                if (precastBuffs)
+                {
+                    if (!ChargeActive())
+                    {
+                        if (CombatHelpers.CastCharge()) return;
+                    }
+
+                    //Wait for Charge to be ready again
+                    if (!CombatHelpers.ChargeReady()) return;
+                }
+
+                if (recoverHealth && !HasFullHP()) return;
+            }
+            
+            //Move to the zone
+            if (_character.adventure.zone != zone)
+            {
+                MoveToZone(zone);
+                return;
+            }
+
+            //Wait for an enemy to spawn
+            if (_character.adventureController.currentEnemy == null)
+            {
+                if (isFighting)
+                {
+                    isFighting = false;
+                    if (precastBuffs)
+                    {
+                        MoveToZone(-1);
+                        return;
+                    }
+                }
+                return;
+            }
+
+            //We have an enemy. Lets check if we're in bossOnly mode
+            if (bossOnly)
+            {
+                var ec = _character.adventureController.currentEnemy.enemyType;
+                if (ec != enemyType.boss && !ec.ToString().Contains("bigBoss"))
+                {
+                    _character.adventureController.zoneSelector.changeZone(-1);
+                    _character.adventureController.zoneSelector.changeZone(zone);
+                    return;
+                }
+            }
+
+            isFighting = true;
+            //We have an enemy and we're ready to fight. Run through our combat routine
+            if (_character.training.attackTraining[1] > 0)
+                DoCombat();
+        }
+
         internal void SnipeZone(int zone, bool recoverHP = true)
         {
             var needsBuff = Settings.PrecastBuffs;
@@ -392,6 +510,12 @@ namespace NGUInjector.Managers
                             SetGoldDropped = false;
                             LoadoutManager.RestoreGear();
                             LoadoutManager.ReleaseLock();
+                        }
+
+                        if (IsGettingInitialGold)
+                        {
+                            IsGettingInitialGold = false;
+                            _character.adventureController.zoneSelector.changeZone(-1);
                         }
                         _snipeStage = 0;
                         return;

@@ -208,6 +208,7 @@ namespace NGUInjector
                 InvokeRepeating("AutomationRoutine", 0.0f, 10.0f);
                 InvokeRepeating("SnipeZone", 0.0f, .1f);
                 InvokeRepeating("MonitorLog", 0.0f, 1f);
+                InvokeRepeating("QuickStuff", 0.0f, .5f);
             }
             catch (Exception e)
             {
@@ -316,6 +317,37 @@ namespace NGUInjector
             }
         }
 
+        void QuickStuff()
+        {
+            if (Settings.AutoFight)
+            {
+                var bc = Character.bossController;
+                if (!bc.isFighting && !bc.nukeBoss)
+                {
+                    if (bc.character.attack / 5.0 > bc.character.bossDefense && bc.character.defense / 5.0 > bc.character.bossAttack)
+                        bc.startNuke();
+                    else
+                    {
+                        if (bc.character.attack > (bc.character.bossDefense * 1.4) && bc.character.defense > bc.character.bossAttack * 1.4)
+                        {
+                            bc.beginFight();
+                            bc.stopButton.gameObject.SetActive(true);
+                        }
+                    }
+                }
+            }
+
+            if (Settings.AutoMoneyPit)
+            {
+                MoneyPitManager.CheckMoneyPit();
+            }
+
+            if (Settings.AutoSpin)
+            {
+                MoneyPitManager.DoDailySpin();
+            }
+        }
+
         void AutomationRoutine()
         {
             try
@@ -330,24 +362,6 @@ namespace NGUInjector
                 if (Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking)
                 {
                     Character.adventureController.idleAttackMove.setToggle();
-                }
-
-                if (Settings.AutoFight)
-                {
-                    var bc = Character.bossController;
-                    if (!bc.isFighting && !bc.nukeBoss)
-                    {
-                        if (bc.character.attack / 5.0 > bc.character.bossDefense && bc.character.defense / 5.0 > bc.character.bossAttack)
-                            bc.startNuke();
-                        else
-                        {
-                            if (bc.character.attack > (bc.character.bossDefense * 1.4) && bc.character.defense > bc.character.bossAttack * 1.4)
-                            {
-                                bc.beginFight();
-                                bc.stopButton.gameObject.SetActive(true);
-                            }
-                        }
-                    }
                 }
 
                 if (Settings.ManageInventory)
@@ -372,15 +386,10 @@ namespace NGUInjector
                     DiggerManager.TryTitanSwap();
                 }
 
-                if (Character.buttons.yggdrasil.enabled)
+                if (Settings.ManageYggdrasil && Character.buttons.yggdrasil.enabled)
                 {
                     _yggManager.ManageYggHarvest();
                     _yggManager.CheckFruits();
-                }
-
-                if (Settings.AutoMoneyPit)
-                {
-                    MoneyPitManager.CheckMoneyPit();
                 }
 
                 if (Settings.ManageGear)
@@ -402,11 +411,6 @@ namespace NGUInjector
                 {
                     _questManager.CheckQuestTurnin();
                     _questManager.ManageQuests();
-                }
-
-                if (Settings.AutoSpin)
-                {
-                    MoneyPitManager.DoDailySpin();
                 }
 
                 if (Settings.AutoRebirth)
@@ -441,7 +445,7 @@ namespace NGUInjector
             if (Character.machine.realBaseGold == 0.0 && Settings.InitialGoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 && Settings.InitialGoldZone >= 0)
             {
                 Settings.NextGoldSwap = true;
-                _combManager.SnipeZone(Settings.InitialGoldZone, false);
+                _combManager.IdleZone(Settings.InitialGoldZone, false, false);
                 IsGettingInitialGold = true;
                 return;
             }
@@ -451,7 +455,7 @@ namespace NGUInjector
                 !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone >= 0 && LoadoutManager.TryGoldDropSwap() )
             {
                 SetGoldDropped = true;
-                _combManager.SnipeZone(Settings.GoldZone, false);
+                _combManager.IdleZone(Settings.GoldZone, true, false);
                 return;
             }
 

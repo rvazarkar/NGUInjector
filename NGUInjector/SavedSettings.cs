@@ -41,9 +41,10 @@ namespace NGUInjector
         [SerializeField] private bool _nextGoldSwap;
         [SerializeField] private int _goldZone = -1;
         [SerializeField] private int[] _boostBlacklist;
+        [SerializeField] private bool _snipeBossOnly;
 
         private readonly string _savePath;
-        private bool _snipeBossOnly;
+        
         
         public SavedSettings(string dir)
         {
