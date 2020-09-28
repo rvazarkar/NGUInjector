@@ -42,10 +42,12 @@ namespace NGUInjector
         [SerializeField] private int _goldZone = -1;
         [SerializeField] private int[] _boostBlacklist;
         [SerializeField] private bool _snipeBossOnly;
+        [SerializeField] private bool _recoverHealth;
 
         private readonly string _savePath;
         
-        
+
+
         public SavedSettings(string dir)
         {
             if (dir != null)
@@ -188,7 +190,11 @@ namespace NGUInjector
         public int[] PriorityBoosts
         {
             get => _priorityBoosts;
-            set => _priorityBoosts = value;
+            set
+            {
+                _priorityBoosts = value;
+                SaveSettings();
+            }
         }
 
         public bool ManageEnergy
@@ -231,13 +237,21 @@ namespace NGUInjector
         public int[] TitanLoadout
         {
             get => _titanLoadout;
-            set => _titanLoadout = value;
+            set
+            {
+                _titanLoadout = value;
+                SaveSettings();
+            }
         }
 
         public int[] YggdrasilLoadout
         {
             get => _yggdrasilLoadout;
-            set => _yggdrasilLoadout = value;
+            set
+            {
+                _yggdrasilLoadout = value;
+                SaveSettings();
+            }
         }
 
         public bool ManageYggdrasil
@@ -327,13 +341,21 @@ namespace NGUInjector
         public int[] GoldDropLoadout
         {
             get => _goldDropLoadout;
-            set => _goldDropLoadout = value;
+            set
+            {
+                _goldDropLoadout = value;
+                SaveSettings();
+            }
         }
 
         public int[] MoneyPitLoadout
         {
             get => _moneyPitLoadout;
-            set => _moneyPitLoadout = value;
+            set
+            {
+                _moneyPitLoadout = value;
+                SaveSettings();
+            }
         }
 
         public bool AutoMoneyPit
@@ -394,7 +416,11 @@ namespace NGUInjector
         public double MoneyPitThreshold
         {
             get => _moneyPitThreshold;
-            set => _moneyPitThreshold = value;
+            set
+            {
+                _moneyPitThreshold = value;
+                SaveSettings();
+            }
         }
 
         public bool NextGoldSwap
@@ -433,7 +459,22 @@ namespace NGUInjector
         public int[] BoostBlacklist
         {
             get => _boostBlacklist;
-            set => _boostBlacklist = value;
+            set
+            {
+                _boostBlacklist = value;
+                SaveSettings();
+            }
+        }
+
+        public bool RecoverHealth
+        {
+            get => _recoverHealth;
+            set
+            {
+                if (value == _recoverHealth) return;
+                _recoverHealth = value;
+                SaveSettings();
+            }
         }
     }
 }
