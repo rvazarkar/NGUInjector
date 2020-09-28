@@ -293,9 +293,8 @@ namespace NGUInjector.AllocationProfiles
                     ReadEnergyBreakpoint(prio);
                 }
 
-
                 var prioCount = temp.Count;
-                var toAdd = (int) Math.Floor((double) _character.idleEnergy / prioCount);
+                var toAdd = (long) Math.Floor((double) _character.idleEnergy / prioCount);
                 _character.input.energyRequested.text = toAdd.ToString();
                 _character.input.validateInput();
 
@@ -341,7 +340,7 @@ namespace NGUInjector.AllocationProfiles
             }
 
             var prioCount = temp.Count;
-            var toAdd = (int)Math.Floor((double)_character.magic.idleMagic / prioCount);
+            var toAdd = (long)Math.Floor((double)_character.magic.idleMagic / prioCount);
             _character.input.energyRequested.text = toAdd.ToString();
             _character.input.validateInput();
 
@@ -791,6 +790,11 @@ namespace NGUInjector.AllocationProfiles
 
             return formula;
         }
+
+        //internal float CalculateAugCap(int index)
+        //{
+        //    var augIndex = (int)Math.Floor((double)(index / 2));
+        //}
 
         internal void DebugATCap(int index)
         {
