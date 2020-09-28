@@ -242,8 +242,6 @@ namespace NGUInjector.Managers
 
         private static int FindItemSlot(IEnumerable<ih> ci, int id)
         {
-            var items = ci.Where(x => x.id == id).ToArray();
-            if (items.Length != 0) return items.MaxItem().slot;
             var inv = Main.Character.inventory;
             if (inv.head.id == id)
             {
@@ -285,6 +283,9 @@ namespace NGUInjector.Managers
                     return i + 10000;
                 }
             }
+
+            var items = ci.Where(x => x.equipment.isEquipment()).Where(x => x.id == id).ToArray();
+            if (items.Length != 0) return items.MaxItem().slot;
 
             return -1000;
         }
