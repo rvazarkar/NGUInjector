@@ -33,37 +33,37 @@ namespace NGUInjector.AllocationProfiles
 
         private List<string> ValidatePriorities(List<string> priorities)
         {
-            if (!_character.buttons.brokenTimeMachine.enabled)
+            if (!_character.buttons.brokenTimeMachine.interactable)
             {
                 priorities.RemoveAll(x => x.Contains("TM"));
             }
 
-            if (!_character.buttons.wandoos.enabled)
+            if (!_character.buttons.wandoos.interactable)
             {
                 priorities.RemoveAll(x => x.Contains("WAN"));
             }
 
-            if (!_character.buttons.advancedTraining.enabled)
+            if (!_character.buttons.advancedTraining.interactable)
             {
                 priorities.RemoveAll(x => x.Contains("AT"));
             }
 
-            if (!_character.buttons.augmentation.enabled)
+            if (!_character.buttons.augmentation.interactable)
             {
                 priorities.RemoveAll(x => x.Contains("AUG"));
             }
 
-            if (!_character.buttons.ngu.enabled)
+            if (!_character.buttons.ngu.interactable)
             {
                 priorities.RemoveAll(x => x.Contains("NGU"));
             }
 
-            if (!_character.buttons.basicTraining.enabled)
+            if (!_character.buttons.basicTraining.interactable)
             {
                 priorities.RemoveAll(x => x.Contains("BT"));
             }
 
-            if (!_character.buttons.bloodMagic.enabled)
+            if (!_character.buttons.bloodMagic.interactable)
             {
                 priorities.RemoveAll(x => x.Contains("BR"));
             }
@@ -118,9 +118,9 @@ namespace NGUInjector.AllocationProfiles
                         EquipGear();
                     if (Main.Settings.ManageEnergy)
                         AllocateEnergy();
-                    if (Main.Settings.ManageMagic && Main.Character.buttons.bloodMagic.enabled)
+                    if (Main.Settings.ManageMagic && Main.Character.buttons.bloodMagic.interactable)
                         AllocateMagic();
-                    if (Main.Settings.ManageDiggers && Main.Character.buttons.diggers.enabled)
+                    if (Main.Settings.ManageDiggers && Main.Character.buttons.diggers.interactable)
                     {
                         EquipDiggers();
                     }
