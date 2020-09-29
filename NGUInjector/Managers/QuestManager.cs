@@ -51,7 +51,7 @@ namespace NGUInjector.Managers
                     if (Settings.AllowMajorQuests && Settings.AbandonMinors & _character.beastQuest.curBankedQuests > 0)
                     {
                         //Check if we're under the threshold for abandoning
-                        if (_character.beastQuest.curDrops / _character.beastQuest.targetDrops <
+                        if ((_character.beastQuest.curDrops / _character.beastQuest.targetDrops) * 100 <
                             Settings.MinorAbandonThreshold)
                         {
                             //If all this is true get rid of this minor quest and pick up a new one.
