@@ -16,72 +16,95 @@ To upgrade to a new release, restart NGU idle and run the inject script again.
 
 After injecting the dll, a new folder will be created on your Desktop called NGUInjector. Settings files will be automatically written to this directory. The following files are of interest:
 
-- settings.json - Contains settings used by the application. Many settings can be configured from the in-game menu, while the following can only be configured from this file.
-  - \_boostIds - The ids corresponding to items you want to boost. This is in order, so you can boost in a certain order
-  - \_titanLoadout - The item IDs for gear you want to equip for autokilling titans.
-  - \_yggdrasilLoadout - The item IDs for gear you want to equip when harvesting yggdrasil fruits
-  - \_moneyPitLoadout - The item IDs for gear you want to equip when using the money pit
-  - \_goldLoadout - The item IDS for gear you want to equip for a gold loadout kill
-  - \_moneyPitThreshold - Gold threshold to use for auto money pit
+- settings.json - Contains settings used by the application. Most settings can be configured from the in-game menu.
 - allocation.json - Breakpoints for assigning gear, magic, energy, wandoos OS, rebirth time, and diggers. See the allocation section for more information
+
+A logs folder will also be created with the following files:
+
+- loot.log - Logs all the loot dropped by enemies. Also logs money pit and daily spin results.
+- inject.log - Logs general information about the injector
+- combat.log - Logs information from the combat algorithm
+- allocation.log - Logs information about allocating energy/magic/gear/diggers
 
 Saving either file will automatically reload the settings in the configuration file. Reloading the game isn't necessary
 
-# In Game Configuration
+# Settings Configuration
 
 An in game menu can be opened using the F1 button.
 
-![Settings Menu](https://i.imgur.com/tM64fAY.png)
+![General Settings](https://i.imgur.com/pCyVNGW.png)
 
-- **Global Enable** - If turned off, all automation functions will stop.
+- **Master Switch** - If turned off, will disable all automation
 
-- **Manage Yggdrasil** - Enables automatic harvesting and activation of Yggdrasil fruits. Will only harvest max tier fruits
-- **Auto Fight Bosses** - Automatically nuke/fight bosses when an attack/defense threshold is met
+- **Auto Daily Spin** - Automatically do daily spin and log the result to the loot.log file
+- **Auto Money Pit** - Automatically throw money into the money pit if the Money Pit Threshold is met. Logs the result to the loot.log file
+- **Auto Move to ITOPOD** - Automatically move to ITOPOD when nothing else is happening in automation.
+- **Auto Fight Bosses** - Automatically nuke/fight bosses.
+- **Money Pit Threshold** - The amount of gold to wait for to throw gold into the money pit. Accepts scientific notation (ex: 1E+28)
 
-- **Zone Boss Sniping** - Automatically snipes bosses in the zone specified in Zone to Snipe.
-- **Precast Buffs** - Cast charge/parry before and wait for cooldowns before starting the snipe process. Good for zones you're still low for.
-- **Fast Combat** - Don't use any buffs during combat, just attacks. Good for zones you're not quite strong enough to idle but dont need to cast buffs for.
+![Allocation Settings](https://i.imgur.com/2KBRwAH.png)
 
-- **Zone to Snipe** - See above
+- **Manage Energy** - Manage energy based on breakpoints in allocation.json
+- **Manage Magic** - Manage magic based on breakpoints in allocation.json
+- **Manage Gear** - Manage gear based on breakpoints in allocation.json
+- **Manage Diggers** - Manage diggers based on breakpoints in allocation.json
+- **Manage Wandoos OS** - Manage wandoos OS based on breakpoints in allocation.json
+- **Auto Rebirth** - Automatically rebirth after the time in allocation.json is reached.
 
-- **Highest Titan AK** - The highest titan you can autokill in your TitanLoadout. When this titan or any previous titan is spawning, gear will be swapped to autokill.
+![Yggdrasil](https://i.imgur.com/UVATSUn.png)
+
+- **Manage Yggdrasil** - Automatically harvest fruits and re-activate fruits you haven't bought the exp perk for.
+- **Swap Loadout for Yggdrasil** - Equip the loadout specified in YggdrasilLoadout before harvesting
+- **Loadout** - Edit the loadout used for harvest yggdrasil. Add items using the box in the bottom.
+
+![Inventory](https://i.imgur.com/HU6Y7lG.png)
 
 - **Manage Inventory** - When enabled, the following features will be enabled
   - **Auto Boost Merging** - If a boost is locked, boosts will automatically be merged until the boost hits 100.
   - **Auto Merging** - Equipped items and items in inventory will automatically be merged, as well as MacGuffins. The highest level item will be selected for merging automatically. A locked item will always be preferred.
-  - **Auto Boosting** - Automatically boost items in your \_boostIds setting. Will select the highest level item if multiple exist. A locked item will always be preferred. Leftover boosts will go to infinity cube.
+  - **Auto Boosting** - Automatically boost items. Will start with items in the PriorityBoosts setting, followed by equipped items, locked items in inventory and finally infinity cube.
   - **Auto Filtering** - If improved loot filter is purchased, will automatically filter items when they hit level 100
   - **Auto Convertible Management** - Will automatically transform non-locked pendants/lootys and other items
   - **Quest Item Management** - Will try to merge a quest item to level 100 if a locked one is found. Otherwise will automatically turn in quest items
-- **Manage Energy** - Will automatically allocate energy based on breakpoints in allocation.json
-- **Manage Magic** - Will automatically allocate magic based on breakpoints in allocation.json
+- **Manage Boost Conversion** - If boost conversion is unlocked from 100 Level Challenge, will calculate needed boosts for items in boostIds and then switch auto conversion appropriately. Will prioritize power > toughness > special. Will also show you the hourly average of boost progress in the inject.log file.
+- **Priority Boosts** - Edit the items you wish to boost before others. Add items using the box in the bottom. Order is respected.
+- **Blacklisted Items** - Edit the items you wish to never be boosted. Add items using the box in the bottom.
 
-- **Manage Gear** - Will automatically equip gear based on breakpoints in allocation.json
-- **Manage Diggers** - Will automatically equip diggers based on breakpoints in allocation.json
-- **Manage Boost Conversion** - If boost conversion is unlocked from 100 Level Challenge, will calculate needed boosts for items in boostIds and then switch auto conversion appropriately. Will prioritize power > toughness > special
-- **Auto Swap Wandoos** - Will automatically change wandoos OS version based on breakpoints in allocation.json
+![Titans](https://i.imgur.com/Ikq0bUZ.png)
 
-- **Use Titan Loadout** - Will automatically swap gear and diggers for titan autokills using the TitanLoadout in your settings file.
-  - Will equip the following diggers: EXP Digger, PP Digger, Adventure Digger, Drop Chance Digger
-- **Use Ygg Loadout** - Will automatically swap gear and diggers for yggdrasil harvests using the YggdrasilLoadout in your settings file.
+- **Swap Loadout for Titans** - Equip the gear in TitanLoadout right before any titan less than or equal your highest autokillable titan spawns
+- **Highest Autokillable Titan** - The highest titan you can autokill in your TitanLoadout. When this titan or any previous titan is spawning.
+- **Loadout** - The gear to equip when autokilling titans.
 
-  - Will equip the following diggers: PP Digger, EXP Digger
+![Adventure](https://i.imgur.com/WHUcSmu.png)
 
-- **Use Gold Loadout** - Will equip your gold loadout to AK the titan set in Gold Loadout Zone, or to kill a boss in Gold Loadout Zone. Turns itself off after a kill. Turns itself on at the beginning of a RB
+- **Combat Enabled** - Turns on auto combat to go to target zone and kill stuff.
+- **Bosses Only** - If enabled, will only fight bosses when doing combat. Good for zone sniping.
+- **Precast Buffs** - If enabled, will cast charge and parry in safe zone before each combat and wait for the cooldowns to recharge.
+- **Recover HP** - If enabled, will recover HP in safe zone between kills
+- **Fast Combat** - If enabled, will just quickly attack and skip buffs altogether.
+- **Combat Mode** - If set to manual, will execute a custom combat routine. If set to idle, will just idle the zone.
+- **Target Zone** - The target zone to snipe/do combat in.
+- **Allow Fallthrough** - If set to true, combat will use the highest unlocked zone you have until the target zone is unlocked.
+
+![Gold](https://i.imgur.com/bnUSR1l.png)
+
+- **Gold Loadout Zone** - The zone in which to snipe a boss with the gold loadout gear equipped
+- **Use Gold Loadout** - If checked, automation will go to the target zone and snipe a boss in gold loadout gear. This will automatically enable itself on each rebirth.
+- **Initial Gold Zone** - Automation will visit this zone to kill an enemy to jumpstart your time machine initially.
+- **Loadout** - Items to use when swapping for gold loadout.
+
+![Quests](https://i.imgur.com/aZOb3hi.png)
 
 - **Auto Quest** - If enabled, quests will automatically be turned in. Behavior varies based on the Allow Major Quests option
 - **Allow Major Quests**
   - If this option is enabled, when major quests are available they will be accepted and automation will manually farm the items from the appropriate zone
   - If this option is disabled, major quests will not be accepted.
   - When no major quests are available, minor quests will be accepted and idled.
-- **Auto-Move to ITOPOD** - If enabled, you will automatically be moved to the ITOPOD when no major quests are in progress or if major quests is disabled
-
-- **Auto Money Pit** - If enabled, will automatically use money pit if its available and gold is above the moneyPitThreshold settings
-- **Auto Daily Spin** - If enabled will automatically use daily spin
-- **Auto Rebirth** - If enabled, will automatically rebirth when the appropriate time is hit in the config file
-
-- **Initial Gold Zone** - Will automatically go to this zone at the beginning of a rebirth to snipe a boss and get gold going in TM
-- **Gold Loadout Zone** - Will automatically go to this zone to snipe a boss with Gold Loadout equipped. If set to a titan, will equip gold loadout for first AK of this titan. Only relevant if Use Gold Loadout is checked.
+- **Abandon Minor Quests** - If enabled and minor quest progress is below the minor quest threshold, the minor quest will be abandoned and a major quest will be picked up.
+- **Abandon Minor Quest Threshold** - Quest progress before which its acceptable to abandon minor quests.
+- **Combat Mode** - If set to manual, will perform a combat routine to do your quest zone. Otherwise will idle the zone.
+- **Fast Combat** - If enabled will skip all buffs during combat.
 
 # Allocation
 
