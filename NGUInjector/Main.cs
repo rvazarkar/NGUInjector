@@ -322,16 +322,20 @@ namespace NGUInjector
         void QuickStuff()
         {
             //Turn on autoattack if we're in ITOPOD and its not on
-            if (Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking && !SnipeActive)
-            {
-                Character.adventureController.idleAttackMove.setToggle();
-            }
+                if (Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking && !SnipeActive)
+                {
+                    Character.adventureController.idleAttackMove.setToggle();
+                }
 
             if (Settings.AutoFight)
             {
+                var needsAllocation = false;
                 var bc = Character.bossController;
                 if (!bc.isFighting && !bc.nukeBoss)
                 {
+                    if (Character.bossID == 0)
+                        needsAllocation = true;
+
                     if (bc.character.attack / 5.0 > bc.character.bossDefense && bc.character.defense / 5.0 > bc.character.bossAttack)
                         bc.startNuke();
                     else
@@ -342,6 +346,24 @@ namespace NGUInjector
                             bc.stopButton.gameObject.SetActive(true);
                         }
                     }
+                }
+
+                if (needsAllocation)
+                {
+                    if (Settings.ManageGear)
+                        _profile.EquipGear();
+                    if (Settings.ManageEnergy)
+                        _profile.AllocateEnergy();
+                    if (Settings.ManageMagic)
+                        _profile.AllocateMagic();
+                    if (Settings.ManageDiggers && Character.buttons.diggers.interactable)
+                    {
+                        _profile.EquipDiggers();
+                        DiggerManager.RecapDiggers();
+                    }
+
+                    if (Settings.ManageWandoos && Character.buttons.wandoos.interactable)
+                        _profile.SwapOS();
                 }
             }
 
