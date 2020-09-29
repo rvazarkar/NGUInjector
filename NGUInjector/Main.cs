@@ -403,7 +403,7 @@ namespace NGUInjector
                     _profile.EquipGear();
                 if (Settings.ManageEnergy)
                     _profile.AllocateEnergy();
-                if (Settings.ManageMagic && Character.buttons.bloodMagic.interactable)
+                if (Settings.ManageMagic)
                     _profile.AllocateMagic();
                 if (Settings.ManageDiggers && Character.buttons.diggers.interactable)
                 {
