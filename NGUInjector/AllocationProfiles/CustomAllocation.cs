@@ -766,6 +766,11 @@ namespace NGUInjector.AllocationProfiles
                 _character.totalEnergyPower() * _character.hacksController.totalTMSpeedBonus() *
                 _character.allChallenges.timeMachineChallenge.TMSpeedBonus() *
                 _character.cardsController.getBonus(cardBonus.TMSpeed));
+
+            if (_character.settings.rebirthDifficulty >= difficulty.sadistic)
+            {
+                formula *= _character.timeMachineController.sadisticDivider();
+            }
             return formula;
         }
 
@@ -776,6 +781,11 @@ namespace NGUInjector.AllocationProfiles
                     _character.totalMagicPower() * _character.hacksController.totalTMSpeedBonus() *
                     _character.allChallenges.timeMachineChallenge.TMSpeedBonus() *
                     _character.cardsController.getBonus(cardBonus.TMSpeed));
+
+            if (_character.settings.rebirthDifficulty >= difficulty.sadistic)
+            {
+                formula *= _character.timeMachineController.sadisticDivider();
+            }
             return formula;
         }
 
@@ -783,6 +793,9 @@ namespace NGUInjector.AllocationProfiles
         {
             var divisor = GetDivisor(index);
             if (divisor == 0.0)
+                return 0;
+
+            if (_character.wishes.wishes[190].level >= 1)
                 return 0;
 
             var formula = 50f * divisor /
