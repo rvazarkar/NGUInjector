@@ -136,26 +136,19 @@ namespace NGUInjector.Managers
             return _pc.defenseBuffTime > 0 && _pc.defenseBuffTime < _character.defenseBuffDuration();
         }
 
-        private void DoCombat()
+        private void DoCombat(bool fastCombat)
         {
             if (!_pc.moveCheck())
                 return;
 
-            if (_character.training.attackTraining[1] == 0)
-            {
-                if (!_character.adventure.autoattacking)
-                    _character.adventureController.idleAttackMove.setToggle();
-                return;
-            }
-            
-            if (!Settings.FastCombat)
+            if (!fastCombat)
             {
                 if (CombatBuffs())
                     return;
             }
             
 
-            CombatAttacks();
+            CombatAttacks(fastCombat);
         }
 
         private float GetUACooldown()
@@ -310,11 +303,11 @@ namespace NGUInjector.Managers
             return false;
         }
 
-        private void CombatAttacks()
+        private void CombatAttacks(bool fastCombat)
         {
             var ac = _character.adventureController;
 
-            if (!Settings.FastCombat)
+            if (!fastCombat)
             {
                 if (ParalyzeBoss())
                 {
@@ -399,20 +392,20 @@ namespace NGUInjector.Managers
             }
         }
 
-        internal void ManualZone(int zone, bool bossOnly, bool recoverHealth, bool precastBuffs, bool fallThrough)
+        internal void ManualZone(int zone, bool bossOnly, bool recoverHealth, bool precastBuffs, bool fastCombat)
         {
             zone -= 1;
             //Start by turning off auto attack if its on unless we can only idle attack
-            if (_character.adventure.autoattacking)
+            if (!_character.adventure.autoattacking)
             {
-                if (_character.training.attackTraining[1] > 0)
+                if (_character.training.attackTraining[1] == 0)
                 {
                     _character.adventureController.idleAttackMove.setToggle();
                 }
             }
             else
             {
-                if (_character.training.attackTraining[1] == 0)
+                if (_character.training.attackTraining[1] > 0)
                 {
                     _character.adventureController.idleAttackMove.setToggle();
                 }
@@ -484,69 +477,7 @@ namespace NGUInjector.Managers
             isFighting = true;
             //We have an enemy and we're ready to fight. Run through our combat routine
             if (_character.training.attackTraining[1] > 0)
-                DoCombat();
-        }
-
-        internal void SnipeZone(int zone, bool recoverHP = true)
-        {
-            var needsBuff = Settings.PrecastBuffs;
-            try
-            {
-                //Stage 0: Go to safe zone
-                if (_snipeStage == 0)
-                {
-                    PrepCombat(needsBuff, recoverHP);
-                }
-                //Stage 1: Cast charge once
-                else if (_snipeStage == 1)
-                {
-                    DoBuffs();
-                }
-                //Stage 2: Wait for charge to be ready
-                else if (_snipeStage == 2)
-                {
-                    WaitForChargeCooldown();
-                }
-                //Stage 3: Look for a boss
-                else if (_snipeStage == 3)
-                {
-                    FindBoss(zone);
-                }
-                //Stage 4: Fight Boss
-                else if (_snipeStage == 4)
-                {
-                    var ac = _character.adventureController;
-
-                    if (ac.currentEnemy == null || ac.zone == -1)
-                    {
-                        LogCombat(
-                            "Character or Enemy Defeated, or back in safe zone, resetting snipeStage");
-                        if (SetGoldDropped)
-                        {
-                            Settings.NextGoldSwap = false;
-                            SetGoldDropped = false;
-                            LoadoutManager.RestoreGear();
-                            LoadoutManager.ReleaseLock();
-                        }
-
-                        if (IsGettingInitialGold)
-                        {
-                            IsGettingInitialGold = false;
-                            _character.adventureController.zoneSelector.changeZone(-1);
-                        }
-                        _snipeStage = 0;
-                        return;
-                    }
-
-                    DoCombat();
-                }
-            }
-            catch (Exception e)
-            {
-                LogCombat(e.Message);
-                LogCombat(e.StackTrace);
-            }
-            
+                DoCombat(fastCombat);
         }
     }
 }

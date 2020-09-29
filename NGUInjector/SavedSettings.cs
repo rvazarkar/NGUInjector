@@ -45,6 +45,10 @@ namespace NGUInjector
         [SerializeField] private bool _recoverHealth;
         [SerializeField] private int _combatMode;
         [SerializeField] private bool _allowZoneFallback;
+        [SerializeField] private bool _abandonMinors;
+        [SerializeField] private int _minorAbandonThreshold;
+        [SerializeField] private int _questCombatMode;
+        [SerializeField] private bool _questFastCombat;
 
         private readonly string _savePath;
         
@@ -140,6 +144,10 @@ namespace NGUInjector
             _recoverHealth = other.RecoverHealth;
             _snipeBossOnly = other.SnipeBossOnly;
             _allowZoneFallback = other.AllowZoneFallback;
+            _abandonMinors = other.AbandonMinors;
+            _minorAbandonThreshold = other.MinorAbandonThreshold;
+            _questCombatMode = other.QuestCombatMode;
+            _questFastCombat = other.QuestFastCombat;
         }
 
         public int HighestAKZone
@@ -502,6 +510,50 @@ namespace NGUInjector
             {
                 if (value == _allowZoneFallback) return;
                 _allowZoneFallback = value;
+                SaveSettings();
+            }
+        }
+
+        public bool AbandonMinors
+        {
+            get => _abandonMinors;
+            set
+            {
+                if (value == _abandonMinors) return;
+                _abandonMinors = value;
+                SaveSettings();
+            }
+        }
+
+        public int MinorAbandonThreshold
+        {
+            get => _minorAbandonThreshold;
+            set
+            {
+                if (value == _minorAbandonThreshold) return;
+                _minorAbandonThreshold = value;
+                SaveSettings();
+            }
+        }
+
+        public int QuestCombatMode
+        {
+            get => _questCombatMode;
+            set
+            {
+                if (value == _questCombatMode) return;
+                _questCombatMode = value;
+                SaveSettings();
+            }
+        }
+
+        public bool QuestFastCombat
+        {
+            get => _questFastCombat;
+            set
+            {
+                if (value == _questFastCombat) return;
+                _questFastCombat = value;
                 SaveSettings();
             }
         }

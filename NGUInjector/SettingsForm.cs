@@ -79,7 +79,7 @@ namespace NGUInjector
             ZoneList.Add(41, "DUCK DUCK ZONE");
             ZoneList.Add(42, "The Nether Regions");
             ZoneList.Add(43, "AMALGAMATE");
-            ZoneList.Add(1000, "ITOPOD");
+            ZoneList.Add(1001, "ITOPOD");
 
             CombatModeList.Add(0, "Manual");
             CombatModeList.Add(1, "Idle");
@@ -91,6 +91,10 @@ namespace NGUInjector
             CombatMode.DataSource = new BindingSource(CombatModeList, null);
             CombatMode.ValueMember = "Key";
             CombatMode.DisplayMember = "Value";
+
+            QuestCombatMode.DataSource = new BindingSource(CombatModeList, null);
+            QuestCombatMode.ValueMember = "Key";
+            QuestCombatMode.DisplayMember = "Value";
 
             CombatTargetZone.DataSource = new BindingSource(ZoneList, null);
             CombatTargetZone.ValueMember = "Key";
@@ -124,11 +128,17 @@ namespace NGUInjector
             yggItemLabel.Text = "";
             priorityBoostLabel.Text = "";
             titanLabel.Text = "";
+            GoldItemLabel.Text = "";
 
             prioUpButton.Text = char.ConvertFromUtf32(8593);
             prioDownButton.Text = char.ConvertFromUtf32(8595);
 
             //TestButton.Visible = false;
+        }
+
+        internal void SetZone(ComboBox control, int setting)
+        {
+            control.SelectedIndex = setting > 1000 ? 43 : setting;
         }
 
         internal void UpdateFromSettings(SavedSettings newSettings)
@@ -156,10 +166,16 @@ namespace NGUInjector
             RecoverHealth.Checked = newSettings.RecoverHealth;
             FastCombat.Checked = newSettings.FastCombat;
             CombatMode.SelectedIndex = newSettings.CombatMode;
-            CombatTargetZone.SelectedIndex = newSettings.SnipeZone;
+            SetZone(CombatTargetZone, newSettings.SnipeZone);
             AllowFallthrough.Checked = newSettings.AllowZoneFallback;
-            GoldLoadoutZone.SelectedIndex = newSettings.GoldZone;
-            InitialGoldTarget.SelectedIndex = newSettings.InitialGoldZone;
+            SetZone(GoldLoadoutZone, newSettings.GoldZone);
+            SetZone(InitialGoldTarget, newSettings.InitialGoldZone);
+            QuestCombatMode.SelectedIndex = newSettings.QuestCombatMode;
+            ManageQuests.Checked = newSettings.AutoQuest;
+            AllowMajor.Checked = newSettings.AllowMajorQuests;
+            AbandonMinors.Checked = newSettings.AbandonMinors;
+            AbandonMinorThreshold.Value = newSettings.MinorAbandonThreshold;
+            QuestFastCombat.Checked = newSettings.QuestFastCombat;
 
             _initializing = false;
         }
@@ -542,15 +558,16 @@ namespace NGUInjector
         private void CombatMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_initializing) return;
-            var selected = CombatTargetZone.SelectedIndex;
+            var selected = CombatMode.SelectedIndex;
             Main.Settings.CombatMode = selected;
         }
 
         private void CombatTargetZone_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_initializing) return;
-            var selected = CombatTargetZone.SelectedIndex;
-            Main.Settings.SnipeZone = selected;
+            var selected = CombatTargetZone.SelectedItem;
+            var item = (KeyValuePair<int, string>) selected;
+            Main.Settings.SnipeZone = item.Key;
         }
 
         private void AllowFallthrough_CheckedChanged(object sender, EventArgs e)
@@ -630,6 +647,36 @@ namespace NGUInjector
         {
             var c = Main.Character;
             Main.Log($"Interactable: {c.buttons.brokenTimeMachine.interactable}\nBaseGold: {c.machine.realBaseGold}\n Zone:{Main.Settings.InitialGoldZone}\n Total: {c.adventureController.zoneDropdown.options.Count}");
+        }
+
+        private void ManageQuests_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.AutoQuest = ManageQuests.Checked;
+        }
+
+        private void AllowMajor_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.AllowMajorQuests = AllowMajor.Checked;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.AbandonMinors = AbandonMinors.Checked;
+        }
+
+        private void AbandonMinorThreshold_ValueChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.MinorAbandonThreshold = decimal.ToInt32(AbandonMinorThreshold.Value);
+        }
+
+        private void QuestFastCombat_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.QuestFastCombat = QuestFastCombat.Checked;
         }
     }
 }

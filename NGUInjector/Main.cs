@@ -151,7 +151,11 @@ namespace NGUInjector
                         CombatMode = 0,
                         RecoverHealth = false,
                         SnipeBossOnly = true,
-                        AllowZoneFallback = false
+                        AllowZoneFallback = false,
+                        QuestFastCombat = true,
+                        AbandonMinors = false,
+                        MinorAbandonThreshold = 30,
+                        QuestCombatMode = 0
                     };
 
                     Settings.MassUpdate(temp);
@@ -360,7 +364,7 @@ namespace NGUInjector
                 }
 
                 //Turn on autoattack if we're in ITOPOD and its not on
-                if (Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking)
+                if (Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking && !SnipeActive)
                 {
                     Character.adventureController.idleAttackMove.setToggle();
                 }
@@ -440,8 +444,20 @@ namespace NGUInjector
             if (!Active)
                 return;
 
-            if (_questManager.IsQuesting())
+            var questZone = _questManager.IsQuesting();
+            if (questZone > 0)
+            {
+                if (Settings.QuestCombatMode== 0)
+                {
+                    _combManager.ManualZone(questZone, false, false, false, Settings.QuestFastCombat);
+                }
+                else
+                {
+                    _combManager.IdleZone(questZone, false, false, false);
+                }
+
                 return;
+            }
 
             if (Character.buttons.brokenTimeMachine.interactable && Character.machine.realBaseGold == 0.0 && Settings.InitialGoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 && Settings.InitialGoldZone >= 0)
             {
@@ -462,30 +478,33 @@ namespace NGUInjector
 
             if (!SnipeActive)
                 return;
-            
-            if (!Settings.AllowZoneFallback && Settings.SnipeZone > Character.adventureController.zoneDropdown.options.Count - 2)
-                return;
 
             var tempZone = Settings.SnipeZone;
-            if (Settings.AllowZoneFallback)
+            if (Settings.SnipeZone < 1000)
             {
-                for (var i = Character.adventureController.zoneDropdown.options.Count - 2; i>=0; i --)
+                if (!Settings.AllowZoneFallback && Settings.SnipeZone > Character.adventureController.zoneDropdown.options.Count - 2)
+                    return;
+
+                if (Settings.AllowZoneFallback)
                 {
-                    if (!ZoneIsTitan(i))
+                    for (var i = Character.adventureController.zoneDropdown.options.Count - 2; i >= 0; i--)
                     {
-                        tempZone = i + 1;
-                        break;
+                        if (!ZoneIsTitan(i))
+                        {
+                            tempZone = i + 1;
+                            break;
+                        }
                     }
                 }
             }
-
+            
             if (Settings.CombatMode == 0)
             {
-                _combManager.IdleZone(tempZone, Settings.SnipeBossOnly, Settings.RecoverHealth, Settings.AllowZoneFallback);
+                _combManager.ManualZone(tempZone, Settings.SnipeBossOnly, Settings.RecoverHealth, Settings.PrecastBuffs, Settings.FastCombat);
             }
             else
             {
-                _combManager.ManualZone(tempZone, Settings.SnipeBossOnly, Settings.RecoverHealth, Settings.PrecastBuffs, Settings.AllowZoneFallback);
+                _combManager.IdleZone(tempZone, Settings.SnipeBossOnly, Settings.RecoverHealth, Settings.AllowZoneFallback);
             }
         }
 
@@ -494,7 +513,7 @@ namespace NGUInjector
             if (!Active)
                 return;
 
-            if (_questManager.IsQuesting())
+            if (_questManager.IsQuesting() >= 0)
                 return;
 
             if (SnipeActive)

@@ -115,6 +115,15 @@
             this.titanErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.goldErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.TestButton = new System.Windows.Forms.Button();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.ManageQuests = new System.Windows.Forms.CheckBox();
+            this.AllowMajor = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.QuestCombatMode = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.AbandonMinorThreshold = new System.Windows.Forms.NumericUpDown();
+            this.AbandonMinors = new System.Windows.Forms.CheckBox();
+            this.QuestFastCombat = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -135,6 +144,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.invBlacklistErrProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.titanErrProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.goldErrorProvider)).BeginInit();
+            this.tabPage8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AbandonMinorThreshold)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -159,6 +170,7 @@
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage7);
+            this.tabControl1.Controls.Add(this.tabPage8);
             resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -815,6 +827,78 @@
             this.TestButton.UseVisualStyleBackColor = true;
             this.TestButton.Click += new System.EventHandler(this.TestButton_Click);
             // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.QuestFastCombat);
+            this.tabPage8.Controls.Add(this.AbandonMinors);
+            this.tabPage8.Controls.Add(this.AbandonMinorThreshold);
+            this.tabPage8.Controls.Add(this.label13);
+            this.tabPage8.Controls.Add(this.label12);
+            this.tabPage8.Controls.Add(this.QuestCombatMode);
+            this.tabPage8.Controls.Add(this.AllowMajor);
+            this.tabPage8.Controls.Add(this.ManageQuests);
+            resources.ApplyResources(this.tabPage8, "tabPage8");
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // ManageQuests
+            // 
+            resources.ApplyResources(this.ManageQuests, "ManageQuests");
+            this.ManageQuests.Name = "ManageQuests";
+            this.ManageQuests.UseVisualStyleBackColor = true;
+            this.ManageQuests.CheckedChanged += new System.EventHandler(this.ManageQuests_CheckedChanged);
+            // 
+            // AllowMajor
+            // 
+            resources.ApplyResources(this.AllowMajor, "AllowMajor");
+            this.AllowMajor.Name = "AllowMajor";
+            this.AllowMajor.UseVisualStyleBackColor = true;
+            this.AllowMajor.CheckedChanged += new System.EventHandler(this.AllowMajor_CheckedChanged);
+            // 
+            // label12
+            // 
+            resources.ApplyResources(this.label12, "label12");
+            this.label12.Name = "label12";
+            // 
+            // QuestCombatMode
+            // 
+            this.QuestCombatMode.FormattingEnabled = true;
+            this.QuestCombatMode.Items.AddRange(new object[] {
+            resources.GetString("QuestCombatMode.Items"),
+            resources.GetString("QuestCombatMode.Items1")});
+            resources.ApplyResources(this.QuestCombatMode, "QuestCombatMode");
+            this.QuestCombatMode.Name = "QuestCombatMode";
+            // 
+            // label13
+            // 
+            resources.ApplyResources(this.label13, "label13");
+            this.label13.Name = "label13";
+            // 
+            // AbandonMinorThreshold
+            // 
+            resources.ApplyResources(this.AbandonMinorThreshold, "AbandonMinorThreshold");
+            this.AbandonMinorThreshold.Name = "AbandonMinorThreshold";
+            this.AbandonMinorThreshold.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.AbandonMinorThreshold.ValueChanged += new System.EventHandler(this.AbandonMinorThreshold_ValueChanged);
+            // 
+            // AbandonMinors
+            // 
+            resources.ApplyResources(this.AbandonMinors, "AbandonMinors");
+            this.AbandonMinors.Name = "AbandonMinors";
+            this.AbandonMinors.UseVisualStyleBackColor = true;
+            this.AbandonMinors.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // QuestFastCombat
+            // 
+            resources.ApplyResources(this.QuestFastCombat, "QuestFastCombat");
+            this.QuestFastCombat.Name = "QuestFastCombat";
+            this.QuestFastCombat.UseVisualStyleBackColor = true;
+            this.QuestFastCombat.CheckedChanged += new System.EventHandler(this.QuestFastCombat_CheckedChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -849,6 +933,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.invBlacklistErrProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.titanErrProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.goldErrorProvider)).EndInit();
+            this.tabPage8.ResumeLayout(false);
+            this.tabPage8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AbandonMinorThreshold)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -940,5 +1027,14 @@
         private System.Windows.Forms.CheckBox UseGoldLoadout;
         private System.Windows.Forms.ErrorProvider goldErrorProvider;
         private System.Windows.Forms.Button TestButton;
+        private System.Windows.Forms.TabPage tabPage8;
+        private System.Windows.Forms.CheckBox AllowMajor;
+        private System.Windows.Forms.CheckBox ManageQuests;
+        private System.Windows.Forms.CheckBox AbandonMinors;
+        private System.Windows.Forms.NumericUpDown AbandonMinorThreshold;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ComboBox QuestCombatMode;
+        private System.Windows.Forms.CheckBox QuestFastCombat;
     }
 }
