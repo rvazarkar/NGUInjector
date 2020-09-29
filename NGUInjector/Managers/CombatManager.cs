@@ -343,6 +343,31 @@ namespace NGUInjector.Managers
             //Wait for an enemy to spawn
             if (_character.adventureController.currentEnemy == null)
             {
+                if (!precastBuffs && bossOnly)
+                {
+                    if (!ChargeActive())
+                    {
+                        if (CastCharge())
+                        {
+                            return;
+                        }
+                    }
+
+                    if (!ParryActive())
+                    {
+                        if (CastParry())
+                        {
+                            return;
+                        }
+                    }
+
+                    if (GetHPPercentage() < .75)
+                    {
+                        if (CastHeal())
+                            return;
+                    }
+                }
+
                 if (isFighting)
                 {
                     isFighting = false;
@@ -353,26 +378,6 @@ namespace NGUInjector.Managers
                     }
                 }
                 return;
-            }
-
-            //Cast charge/parry while searching for bosses
-            if (!precastBuffs && bossOnly && _character.adventureController.currentEnemy == null)
-            {
-                if (!ChargeActive())
-                {
-                    if (CastCharge())
-                    {
-                        return;
-                    }
-                }
-
-                if (!ParryActive())
-                {
-                    if (CastParry())
-                    {
-                        return;
-                    }
-                }
             }
 
             //We have an enemy. Lets check if we're in bossOnly mode
