@@ -16,15 +16,15 @@ To upgrade to a new release, restart NGU idle and run the inject script again.
 
 After injecting the dll, a new folder will be created on your Desktop called NGUInjector. Settings files will be automatically written to this directory. The following files are of interest:
 
-- settings.json - Contains settings used by the application. Most settings can be configured from the in-game menu.
-- allocation.json - Breakpoints for assigning gear, magic, energy, wandoos OS, rebirth time, and diggers. See the allocation section for more information
+- **settings.json** - Contains settings used by the application. Most settings can be configured from the in-game menu.
+- **allocation.json** - Breakpoints for assigning gear, magic, energy, wandoos OS, rebirth time, and diggers. See the allocation section for more information
 
 A logs folder will also be created with the following files:
 
-- loot.log - Logs all the loot dropped by enemies. Also logs money pit and daily spin results.
-- inject.log - Logs general information about the injector
-- combat.log - Logs information from the combat algorithm
-- allocation.log - Logs information about allocating energy/magic/gear/diggers
+- **loot.log** - Logs all the loot dropped by enemies. Also logs money pit and daily spin results.
+- **inject.log** - Logs general information about the injector
+- **combat.log** - Logs information from the combat algorithm
+- **allocation.log** - Logs information about allocating energy/magic/gear/diggers
 
 Saving either file will automatically reload the settings in the configuration file. Reloading the game isn't necessary
 
