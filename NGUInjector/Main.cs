@@ -8,11 +8,13 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Windows.Forms;
 using NGUInjector.AllocationProfiles;
 using NGUInjector.Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Application = UnityEngine.Application;
 
 namespace NGUInjector
 {
@@ -31,18 +33,15 @@ namespace NGUInjector
         private QuestManager _questManager;
         private CustomAllocation _profile;
         private float _timeLeft = 10.0f;
+        private SettingsForm settingsForm;
 
         internal static bool Test { get; set; }
 
-        private Rect _windowRect = new Rect(20, 20, 500,500);
-
-        private bool _optionsVisible;
-
         private static string _dir;
 
-        private bool _active;
+        internal static bool Active;
         
-        private readonly Dictionary<int, string> _titanList = new Dictionary<int, string>();
+        
         internal static readonly int[] TitanZones = {6, 8, 11, 14, 16, 19, 23, 26, 30, 34, 38, 40, 42};
 
         internal static FileSystemWatcher ConfigWatcher;
@@ -78,7 +77,6 @@ namespace NGUInjector
 
         public void Start()
         {
-
             _dir = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%/Desktop"), "NGUInjector");
             if (!Directory.Exists(_dir))
             {
@@ -112,22 +110,8 @@ namespace NGUInjector
                 LoadoutManager.ReleaseLock();
                 DiggerManager.ReleaseLock();
 
-                _titanList.Add(0, "None");
-                _titanList.Add(1, "GRB");
-                _titanList.Add(2, "GCT");
-                _titanList.Add(3, "Jake");
-                _titanList.Add(4, "UUG");
-                _titanList.Add(5, "Walderp");
-                _titanList.Add(6, "Beast");
-                _titanList.Add(7, "Greasy Nerd");
-                _titanList.Add(8, "Godmother");
-                _titanList.Add(9, "Exile");
-                _titanList.Add(10, "IT HUNGERS");
-                _titanList.Add(11, "Rock Lobster");
-                _titanList.Add(12, "Amalgamate");
-
                 Settings = new SavedSettings(_dir);
-                _active = true;
+                Active = true;
 
                 if (!Settings.LoadSettings())
                 {
@@ -146,7 +130,7 @@ namespace NGUInjector
                         ManageInventory = true,
                         ManageGear = true,
                         AutoConvertBoosts = true,
-                        SnipeZone = -1,
+                        SnipeZone = 0,
                         FastCombat = false,
                         PrecastBuffs = true,
                         AutoFight = false,
@@ -163,13 +147,18 @@ namespace NGUInjector
                         MoneyPitThreshold = 1e5,
                         NextGoldSwap = false,
                         BoostBlacklist = new int[] {},
-                        GoldZone = -1
+                        GoldZone = 0,
+                        CombatMode = 0,
+                        RecoverHealth = false,
+                        SnipeBossOnly = true,
+                        AllowZoneFallback = false
                     };
 
                     Settings.MassUpdate(temp);
 
                     Log($"Created default settings");
                 }
+                settingsForm = new SettingsForm();
 
                 _profile = new CustomAllocation(_dir);
                 _profile.ReloadAllocation();
@@ -190,6 +179,7 @@ namespace NGUInjector
                         return;
                     }
                     Settings.LoadSettings();
+                    settingsForm.UpdateFromSettings(Settings);
                 };
 
                 AllocationWatcher = new FileSystemWatcher
@@ -204,6 +194,9 @@ namespace NGUInjector
 
                 Settings.SaveSettings();
                 Settings.LoadSettings();
+
+                settingsForm.UpdateFromSettings(Settings);
+                settingsForm.Show();
 
                 InvokeRepeating("AutomationRoutine", 0.0f, 10.0f);
                 InvokeRepeating("SnipeZone", 0.0f, .1f);
@@ -221,14 +214,21 @@ namespace NGUInjector
         {
             _timeLeft -= Time.deltaTime;
 
+            settingsForm.UpdateProgressBar((int)Math.Floor(_timeLeft / 10 * 100));
+
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                _optionsVisible = !_optionsVisible;
+                if (!settingsForm.Visible)
+                {
+                    settingsForm.Show();
+                }
+                settingsForm.BringToFront();
             }
 
             if (Input.GetKeyDown(KeyCode.F2))
             {
-                _active = !_active;
+                Active = !Active;
+                settingsForm.UpdateActive(Active);
             }
 
             if (Input.GetKeyDown(KeyCode.F3))
@@ -244,6 +244,7 @@ namespace NGUInjector
             if (Input.GetKeyDown(KeyCode.F4))
             {
                 Settings.AutoQuestITOPOD = !Settings.AutoQuestITOPOD;
+                settingsForm.UpdateITOPOD(Settings.AutoQuestITOPOD);
             }
 
             if (Input.GetKeyDown(KeyCode.F5))
@@ -352,7 +353,7 @@ namespace NGUInjector
         {
             try
             {
-                if (!_active)
+                if (!Active)
                 {
                     _timeLeft = 10f;
                     return;
@@ -386,7 +387,7 @@ namespace NGUInjector
                     DiggerManager.TryTitanSwap();
                 }
 
-                if (Settings.ManageYggdrasil && Character.buttons.yggdrasil.enabled)
+                if (Settings.ManageYggdrasil && Character.buttons.yggdrasil.interactable)
                 {
                     _yggManager.ManageYggHarvest();
                     _yggManager.CheckFruits();
@@ -396,18 +397,18 @@ namespace NGUInjector
                     _profile.EquipGear();
                 if (Settings.ManageEnergy)
                     _profile.AllocateEnergy();
-                if (Settings.ManageMagic && Character.buttons.bloodMagic.enabled)
+                if (Settings.ManageMagic && Character.buttons.bloodMagic.interactable)
                     _profile.AllocateMagic();
-                if (Settings.ManageDiggers && Character.buttons.diggers.enabled)
+                if (Settings.ManageDiggers && Character.buttons.diggers.interactable)
                 {
                     _profile.EquipDiggers();
                     DiggerManager.RecapDiggers();
                 }
                     
-                if (Settings.ManageWandoos && Character.buttons.wandoos.enabled)
+                if (Settings.ManageWandoos && Character.buttons.wandoos.interactable)
                     _profile.SwapOS();
 
-                if (Character.buttons.beast.enabled)
+                if (Character.buttons.beast.interactable)
                 {
                     _questManager.CheckQuestTurnin();
                     _questManager.ManageQuests();
@@ -436,16 +437,16 @@ namespace NGUInjector
 
         private void SnipeZone()
         {
-            if (!_active)
+            if (!Active)
                 return;
 
             if (_questManager.IsQuesting())
                 return;
 
-            if (Character.machine.realBaseGold == 0.0 && Settings.InitialGoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 && Settings.InitialGoldZone >= 0)
+            if (Character.buttons.brokenTimeMachine.interactable && Character.machine.realBaseGold == 0.0 && Settings.InitialGoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 && Settings.InitialGoldZone >= 0)
             {
                 Settings.NextGoldSwap = true;
-                _combManager.IdleZone(Settings.InitialGoldZone, false, false);
+                _combManager.IdleZone(Settings.InitialGoldZone, false, false, false);
                 IsGettingInitialGold = true;
                 return;
             }
@@ -455,22 +456,42 @@ namespace NGUInjector
                 !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone >= 0 && LoadoutManager.TryGoldDropSwap() )
             {
                 SetGoldDropped = true;
-                _combManager.IdleZone(Settings.GoldZone, true, false);
+                _combManager.IdleZone(Settings.GoldZone, true, false, false);
                 return;
             }
 
             if (!SnipeActive)
                 return;
             
-            if (Settings.SnipeZone > Character.adventureController.zoneDropdown.options.Count - 2)
+            if (!Settings.AllowZoneFallback && Settings.SnipeZone > Character.adventureController.zoneDropdown.options.Count - 2)
                 return;
 
-            _combManager.SnipeZone(Settings.SnipeZone);
+            var tempZone = Settings.SnipeZone;
+            if (Settings.AllowZoneFallback)
+            {
+                for (var i = Character.adventureController.zoneDropdown.options.Count - 2; i>=0; i --)
+                {
+                    if (!ZoneIsTitan(i))
+                    {
+                        tempZone = i + 1;
+                        break;
+                    }
+                }
+            }
+
+            if (Settings.CombatMode == 0)
+            {
+                _combManager.IdleZone(tempZone, Settings.SnipeBossOnly, Settings.RecoverHealth, Settings.AllowZoneFallback);
+            }
+            else
+            {
+                _combManager.ManualZone(tempZone, Settings.SnipeBossOnly, Settings.RecoverHealth, Settings.PrecastBuffs, Settings.AllowZoneFallback);
+            }
         }
 
         private void MoveToITOPOD()
         {
-            if (!_active)
+            if (!Active)
                 return;
 
             if (_questManager.IsQuesting())
@@ -479,7 +500,7 @@ namespace NGUInjector
             if (SnipeActive)
                 return;
 
-            if (Character.machine.realBaseGold == 0 && Settings.InitialGoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 && Settings.InitialGoldZone >= 0)
+            if (Character.buttons.brokenTimeMachine.interactable && Character.machine.realBaseGold == 0 && Settings.InitialGoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 && Settings.InitialGoldZone >= 0)
                 return;
 
             if (Settings.NextGoldSwap &&
@@ -524,197 +545,11 @@ namespace NGUInjector
             return TitanZones.Contains(zone);
         }
 
-        private void AkBack()
-        {
-            if (Settings.HighestAKZone == 0)
-                return;
-            Settings.HighestAKZone -= 1;
-            Settings.SaveSettings();
-        }
-
-        private void AkForward()
-        {
-            if (Settings.HighestAKZone == 11)
-                return;
-            Settings.HighestAKZone += 1;
-            Settings.SaveSettings();
-        }
-
-        private void ZoneBack()
-        {
-            if (Settings.SnipeZone == -1)
-                return;
-            Settings.SnipeZone -= 1;
-            Settings.SaveSettings();
-        }
-
-        private void ZoneForward()
-        {
-            if (Settings.SnipeZone == 44)
-                return;
-            Settings.SnipeZone += 1;
-            Settings.SaveSettings();
-        }
-
-        private void InitialGoldZoneBack()
-        {
-            if (Settings.InitialGoldZone == -1)
-                return;
-            Settings.InitialGoldZone -= 1;
-            Settings.SaveSettings();
-        }
-
-        private void InitialGoldZoneForward()
-        {
-            if (Settings.InitialGoldZone == 44)
-                return;
-            Settings.InitialGoldZone += 1;
-            Settings.SaveSettings();
-        }
-
-        private void GoldZoneBack()
-        {
-            if (Settings.GoldZone == -1)
-                return;
-            Settings.GoldZone-= 1;
-            Settings.SaveSettings();
-        }
-
-        private void GoldZoneForward()
-        {
-            if (Settings.GoldZone == 44)
-                return;
-            Settings.GoldZone += 1;
-            Settings.SaveSettings();
-        }
-
         public void OnGUI()
         {
-            if (_optionsVisible)
-            {
-                var temp = GUI.color;
-                GUI.color = Color.black;
-                _windowRect = GUI.Window(0, _windowRect, DoGui, "Injector Settings");
-                GUI.color = temp;
-            }
-                
-
             GUI.Label(new Rect(10, 10, 200, 40), $"Injected");
-            GUI.Label(new Rect(10, 20, 200, 40), $"Automation - {(_active ? "Active" : "Inactive")}");
+            GUI.Label(new Rect(10, 20, 200, 40), $"Automation - {(Active ? "Active" : "Inactive")}");
             GUI.Label(new Rect(10, 30, 200, 40), $"Next Loop - {_timeLeft:00.0}s");
-        }
-
-        void DoGui(int windowId)
-        {
-            var centered = new GUIStyle("label") {alignment = TextAnchor.MiddleCenter};
-
-            _active = GUILayout.Toggle(_active, "Global Enable");
-
-            GUILayout.BeginHorizontal();
-            Settings.ManageYggdrasil = GUILayout.Toggle(Settings.ManageYggdrasil, "Manage Yggdrasil");
-            Settings.AutoFight = GUILayout.Toggle(Settings.AutoFight, "Auto Fight Bosses");
-            GUILayout.EndHorizontal();
-            
-            GUILayout.BeginHorizontal();
-            SnipeActive = GUILayout.Toggle(SnipeActive, "Zone Boss Sniping");
-            Settings.PrecastBuffs = GUILayout.Toggle(Settings.PrecastBuffs, "Precast Buffs");
-            Settings.FastCombat = GUILayout.Toggle(Settings.FastCombat, "Fast Combat");
-            GUILayout.EndHorizontal();
-
-
-            GUILayout.Label("Zone to Snipe");
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("<"))
-            {
-                ZoneBack();
-            }
-            GUILayout.Label(Character.adventureController.zoneName(Settings.SnipeZone), centered);
-            if (GUILayout.Button(">"))
-            {
-                ZoneForward();
-            }
-            GUILayout.EndHorizontal();
-
-            GUILayout.Label("Highest Titan AK (For gear swap)");
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("<"))
-            {
-                AkBack();
-            }
-            GUILayout.Label(_titanList[Settings.HighestAKZone], centered);
-            if (GUILayout.Button(">"))
-            {
-                AkForward();
-            }
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginHorizontal();
-            Settings.ManageInventory = GUILayout.Toggle(Settings.ManageInventory, "Manage Inventory");
-            Settings.ManageEnergy = GUILayout.Toggle(Settings.ManageEnergy, "Manage Energy");
-            Settings.ManageMagic = GUILayout.Toggle(Settings.ManageMagic, "Manage Magic");
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginHorizontal();
-            Settings.ManageGear = GUILayout.Toggle(Settings.ManageGear, "Manage Gear");
-            Settings.ManageDiggers = GUILayout.Toggle(Settings.ManageDiggers, "Manage Diggers");
-            Settings.AutoConvertBoosts = GUILayout.Toggle(Settings.AutoConvertBoosts, "Manage Boost Conversion");
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginHorizontal();
-            Settings.ManageWandoos = GUILayout.Toggle(Settings.ManageWandoos, "Auto Swap Wandoos");
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginHorizontal();
-            Settings.SwapTitanLoadouts = GUILayout.Toggle(Settings.SwapTitanLoadouts, "Use Titan Loadout");
-            Settings.SwapYggdrasilLoadouts = GUILayout.Toggle(Settings.SwapYggdrasilLoadouts, "Use Ygg Loadout");
-            Settings.NextGoldSwap = GUILayout.Toggle(Settings.NextGoldSwap, "Use Gold Loadout");
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginHorizontal();
-            Settings.AutoQuest = GUILayout.Toggle(Settings.AutoQuest, "Auto Quest");
-            Settings.AllowMajorQuests = GUILayout.Toggle(Settings.AllowMajorQuests, "Allow Major Quests");
-            Settings.AutoQuestITOPOD = GUILayout.Toggle(Settings.AutoQuestITOPOD, "Auto-Move to ITOPOD");
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginHorizontal();
-            Settings.AutoMoneyPit = GUILayout.Toggle(Settings.AutoMoneyPit, "Auto Money Pit");
-            Settings.AutoSpin = GUILayout.Toggle(Settings.AutoSpin, "Auto Daily Spin");
-            Settings.AutoRebirth = GUILayout.Toggle(Settings.AutoRebirth, "Auto Rebirth");
-            GUILayout.EndHorizontal();
-
-            GUILayout.Label("Initial Gold Zone");
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("<"))
-            {
-                InitialGoldZoneBack();
-            }
-            GUILayout.Label(Character.adventureController.zoneName(Settings.InitialGoldZone), centered);
-            if (GUILayout.Button(">"))
-            {
-                InitialGoldZoneForward();
-            }
-            GUILayout.EndHorizontal();
-
-            GUILayout.Label("Gold Loadout Zone");
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("<"))
-            {
-                GoldZoneBack();
-            }
-            GUILayout.Label(Character.adventureController.zoneName(Settings.GoldZone), centered);
-            if (GUILayout.Button(">"))
-            {
-                GoldZoneForward();
-            }
-            GUILayout.EndHorizontal();
-
-
-            //if (GUILayout.Button("Test"))
-            //{
-            //    Log(Character.machine.realBaseGold.ToString());
-            //}
-
-            GUI.DragWindow(new Rect(0,0, 10000,10000));
         }
 
         void MonitorLog()

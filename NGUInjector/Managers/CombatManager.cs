@@ -363,10 +363,14 @@ namespace NGUInjector.Managers
             _character.adventureController.zoneSelector.changeZone(zone);
         }
 
-        internal void IdleZone(int zone, bool bossOnly, bool recoverHealth)
+        internal void IdleZone(int zone, bool bossOnly, bool recoverHealth, bool fallThrough)
         {
+            zone -= 1;
             //Enable idle attack if its not on
-            if (!_character.adventure.autoattacking) _character.adventure.autoattacking = true;
+            if (!_character.adventure.autoattacking)
+            {
+                _character.adventureController.idleAttackMove.setToggle();
+            }
 
             if (_character.adventure.zone == -1 && !HasFullHP() && recoverHealth)
                 return;
@@ -395,11 +399,24 @@ namespace NGUInjector.Managers
             }
         }
 
-        internal void ManualZone(int zone, bool bossOnly, bool recoverHealth, bool precastBuffs)
+        internal void ManualZone(int zone, bool bossOnly, bool recoverHealth, bool precastBuffs, bool fallThrough)
         {
+            zone -= 1;
             //Start by turning off auto attack if its on unless we can only idle attack
-            _character.adventure.autoattacking = _character.training.attackTraining[1] == 0;
-
+            if (_character.adventure.autoattacking)
+            {
+                if (_character.training.attackTraining[1] > 0)
+                {
+                    _character.adventureController.idleAttackMove.setToggle();
+                }
+            }
+            else
+            {
+                if (_character.training.attackTraining[1] == 0)
+                {
+                    _character.adventureController.idleAttackMove.setToggle();
+                }
+            }
 
             //Move back to safe zone if we're in the wrong zone
             if (_character.adventure.zone != zone && _character.adventure.zone != -1)

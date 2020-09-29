@@ -43,6 +43,8 @@ namespace NGUInjector
         [SerializeField] private int[] _boostBlacklist;
         [SerializeField] private bool _snipeBossOnly;
         [SerializeField] private bool _recoverHealth;
+        [SerializeField] private int _combatMode;
+        [SerializeField] private bool _allowZoneFallback;
 
         private readonly string _savePath;
         
@@ -133,6 +135,11 @@ namespace NGUInjector
             _initialGoldZone = other.InitialGoldZone;
             _nextGoldSwap = other.NextGoldSwap;
             _goldZone = other.GoldZone;
+
+            _combatMode = other.CombatMode;
+            _recoverHealth = other.RecoverHealth;
+            _snipeBossOnly = other.SnipeBossOnly;
+            _allowZoneFallback = other.AllowZoneFallback;
         }
 
         public int HighestAKZone
@@ -473,6 +480,28 @@ namespace NGUInjector
             {
                 if (value == _recoverHealth) return;
                 _recoverHealth = value;
+                SaveSettings();
+            }
+        }
+
+        public int CombatMode
+        {
+            get => _combatMode;
+            set
+            {
+                if (value == _combatMode) return;
+                _combatMode = value;
+                SaveSettings();
+            }
+        }
+
+        public bool AllowZoneFallback
+        {
+            get => _allowZoneFallback;
+            set
+            {
+                if (value == _allowZoneFallback) return;
+                _allowZoneFallback = value;
                 SaveSettings();
             }
         }
