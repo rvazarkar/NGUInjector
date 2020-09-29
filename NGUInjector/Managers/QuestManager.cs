@@ -65,6 +65,13 @@ namespace NGUInjector.Managers
                             return;
                         }
                     }
+
+                    if (!_character.beastQuest.idleMode)
+                    {
+                        _character.beastQuest.idleMode = true;
+                        _character.beastQuestController.updateButtons();
+                        _character.beastQuestController.updateButtonText();
+                    }
                 }
 
                 //We have nothing else to do here
