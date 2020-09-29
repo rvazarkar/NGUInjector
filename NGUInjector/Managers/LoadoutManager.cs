@@ -75,12 +75,12 @@ namespace NGUInjector.Managers
                 {
                     ChangeGear(Settings.GoldDropLoadout);
                     Settings.NextGoldSwap = false;
+                    settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
                 }
                 else
                 {
                     ChangeGear(Settings.TitanLoadout);
                 }
-
             }
         }
 

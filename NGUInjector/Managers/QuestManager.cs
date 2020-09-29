@@ -79,10 +79,6 @@ namespace NGUInjector.Managers
                 _character.beastQuestController.updateButtons();
                 _character.beastQuestController.updateButtonText();
                 _character.beastQuestController.startQuest();
-                var zone = _character.beastQuestController.curQuestZone();
-                if (_character.adventureController.zone == zone) return;
-                Log($"Moving to zone {zone} for quest.");
-                _character.adventureController.zoneSelector.changeZone(zone);
             }
             else
             {

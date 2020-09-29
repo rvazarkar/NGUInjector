@@ -237,7 +237,7 @@ namespace NGUInjector.Managers
 
         internal bool IsZoneUnlocked(int zone)
         {
-            return zone <= _character.adventureController.zoneDropdown.options.Count - 2;
+            return zone <= _character.adventureController.zoneDropdown.options.Count - 2 && zone > 0;
         }
 
         internal void MoveToZone(int zone)
@@ -330,7 +330,19 @@ namespace NGUInjector.Managers
                     if (ParryUnlocked() && !ParryReady()) return;
                 }
 
-                if (recoverHealth && !HasFullHP()) return;
+                if (recoverHealth && !HasFullHP())
+                {
+                    if (ChargeUnlocked() && !ChargeActive())
+                    {
+                        if (CastCharge()) return;
+                    }
+
+                    if (ParryUnlocked() && !ParryActive())
+                    {
+                        if (CastParry()) return;
+                    }
+                    return;
+                }
             }
             
             //Move to the zone
@@ -371,10 +383,19 @@ namespace NGUInjector.Managers
                 if (isFighting)
                 {
                     isFighting = false;
-                    if (precastBuffs || IsGettingInitialGold)
+                    if (precastBuffs)
                     {
                         MoveToZone(-1);
                         return;
+                    }
+
+                    if (LoadoutManager.CurrentLock == LockType.Gold)
+                    {
+                        Settings.NextGoldSwap = false;
+                        settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
+                        LoadoutManager.RestoreGear();
+                        LoadoutManager.ReleaseLock();
+                        MoveToZone(-1);
                     }
                 }
                 return;
@@ -386,8 +407,8 @@ namespace NGUInjector.Managers
                 var ec = _character.adventureController.currentEnemy.enemyType;
                 if (ec != enemyType.boss && !ec.ToString().Contains("bigBoss"))
                 {
-                    _character.adventureController.zoneSelector.changeZone(-1);
-                    _character.adventureController.zoneSelector.changeZone(zone);
+                    MoveToZone(-1);
+                    MoveToZone(zone);
                     return;
                 }
             }

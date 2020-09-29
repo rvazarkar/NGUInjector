@@ -33,7 +33,7 @@ namespace NGUInjector
         private QuestManager _questManager;
         private CustomAllocation _profile;
         private float _timeLeft = 10.0f;
-        private SettingsForm settingsForm;
+        internal static SettingsForm settingsForm;
 
         internal static bool Test { get; set; }
 
@@ -41,9 +41,6 @@ namespace NGUInjector
 
         internal static bool Active;
 
-        internal static bool LoopActive { get; set; }
-        
-        
         internal static readonly int[] TitanZones = {6, 8, 11, 14, 16, 19, 23, 26, 30, 34, 38, 40, 42};
 
         internal static FileSystemWatcher ConfigWatcher;
@@ -54,8 +51,6 @@ namespace NGUInjector
         internal static bool IgnoreNextChange { get; set; }
 
         internal static SavedSettings Settings;
-        internal static bool SetGoldDropped = false;
-        internal static bool IsGettingInitialGold = false;
 
         internal static void Log(string msg)
         {
@@ -353,6 +348,11 @@ namespace NGUInjector
             {
                 MoneyPitManager.DoDailySpin();
             }
+
+            if (Settings.AutoQuestITOPOD)
+            {
+                MoveToITOPOD();
+            }
         }
 
         void AutomationRoutine()
@@ -420,8 +420,6 @@ namespace NGUInjector
                     _questManager.ManageQuests();
                 }
 
-                if (Settings.AutoQuestITOPOD) MoveToITOPOD();
-
                 if (Settings.AutoRebirth)
                 {
                     _profile.DoRebirth();
@@ -461,21 +459,36 @@ namespace NGUInjector
                 return;
             }
 
-            if (Character.buttons.brokenTimeMachine.interactable && Character.machine.realBaseGold == 0.0 && Settings.InitialGoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 && Settings.InitialGoldZone >= 0)
+            //If tm ever drops to 0, reset our gold loadout stuff
+            if (Character.machine.realBaseGold == 0.0 && !Settings.NextGoldSwap)
             {
+                Log("Resetting Gold Loadout");
                 Settings.NextGoldSwap = true;
-                _combManager.ManualZone(Settings.InitialGoldZone, false, false, false, true);
-                IsGettingInitialGold = true;
-                return;
+                settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
             }
 
-            if (Settings.NextGoldSwap &&
-                Settings.GoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 &&
-                !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone >= 0 && LoadoutManager.TryGoldDropSwap() )
+            //This logic should trigger only if Time Machine is ready
+            if (Character.buttons.brokenTimeMachine.interactable)
             {
-                SetGoldDropped = true;
-                _combManager.IdleZone(Settings.GoldZone, true, false, false);
-                return;
+                //Hit our initial gold zone first to get TM started
+                if (Character.machine.realBaseGold == 0.0 && _combManager.IsZoneUnlocked(Settings.InitialGoldZone))
+                {
+                    _combManager.ManualZone(Settings.InitialGoldZone, false, false, false, true);
+                    return;
+                }
+
+                //Go to our gold loadout zone next to get a high gold drop
+                if (Settings.NextGoldSwap)
+                {
+                    if (_combManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneIsTitan(Settings.GoldZone))
+                    {
+                        if (LoadoutManager.TryGoldDropSwap())
+                        {
+                            _combManager.ManualZone(Settings.GoldZone, true, false, false, true);
+                            return;
+                        }
+                    }
+                }
             }
 
             if (!SnipeActive)
@@ -521,18 +534,26 @@ namespace NGUInjector
             if (SnipeActive)
                 return;
 
-            if (Character.buttons.brokenTimeMachine.interactable && Character.machine.realBaseGold == 0 && Settings.InitialGoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 && Settings.InitialGoldZone >= 0)
-                return;
+            if (Character.buttons.brokenTimeMachine.interactable)
+            {
+                if (Character.machine.realBaseGold == 0.0 && _combManager.IsZoneUnlocked(Settings.InitialGoldZone))
+                {
+                    return;
+                }
 
-            if (Settings.NextGoldSwap &&
-                Settings.GoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 &&
-                !ZoneIsTitan(Settings.GoldZone) && LoadoutManager.TryGoldDropSwap())
-                return;
+                if (Settings.NextGoldSwap)
+                {
+                    if (_combManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneIsTitan(Settings.GoldZone))
+                    {
+                        return;
+                    }
+                }
+            }
 
             //If we're not in ITOPOD, move there if its set
             if (Character.adventureController.zone >= 1000 || !Settings.AutoQuestITOPOD) return;
             Log($"Moving to ITOPOD to idle.");
-            Character.adventureController.zoneSelector.changeZone(1000);
+            _combManager.MoveToZone(1000);
         }
 
         private void DumpEquipped()

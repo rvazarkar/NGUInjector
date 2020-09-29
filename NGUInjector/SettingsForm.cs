@@ -183,6 +183,7 @@ namespace NGUInjector
             AbandonMinors.Checked = newSettings.AbandonMinors;
             AbandonMinorThreshold.Value = newSettings.MinorAbandonThreshold;
             QuestFastCombat.Checked = newSettings.QuestFastCombat;
+            UseGoldLoadout.Checked = newSettings.NextGoldSwap;
 
             _initializing = false;
         }
@@ -192,14 +193,25 @@ namespace NGUInjector
             progressBar1.Value = progress;
         }
 
+        internal void UpdateGoldLoadout(bool active)
+        {
+            _initializing = true;
+            UseGoldLoadout.Checked = active;
+            _initializing = false;
+        }
+
         internal void UpdateActive(bool active)
         {
+            _initializing = true;
             MasterEnable.Checked = active;
+            _initializing = false;
         }
 
         internal void UpdateITOPOD(bool active)
         {
+            _initializing = true;
             AutoITOPOD.Checked = active;
+            _initializing = false;
         }
 
         private void MasterEnable_CheckedChanged(object sender, EventArgs e)
