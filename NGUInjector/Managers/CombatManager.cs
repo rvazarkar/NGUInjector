@@ -237,7 +237,7 @@ namespace NGUInjector.Managers
 
         internal bool IsZoneUnlocked(int zone)
         {
-            return zone <= _character.adventureController.zoneDropdown.options.Count - 2 && zone > 0;
+            return zone <= _character.adventureController.zoneDropdown.options.Count - 2;
         }
 
         internal void MoveToZone(int zone)
@@ -245,7 +245,7 @@ namespace NGUInjector.Managers
             _character.adventureController.zoneSelector.changeZone(zone);
         }
 
-        internal void IdleZone(int zone, bool bossOnly, bool recoverHealth, bool fallThrough)
+        internal void IdleZone(int zone, bool bossOnly, bool recoverHealth)
         {
             //Enable idle attack if its not on
             if (!_character.adventure.autoattacking)

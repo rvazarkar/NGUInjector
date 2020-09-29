@@ -478,7 +478,7 @@ namespace NGUInjector
             if (Character.buttons.brokenTimeMachine.interactable)
             {
                 //Hit our initial gold zone first to get TM started
-                if (Character.machine.realBaseGold == 0.0 && _combManager.IsZoneUnlocked(Settings.InitialGoldZone))
+                if (Character.machine.realBaseGold == 0.0 && _combManager.IsZoneUnlocked(Settings.InitialGoldZone) && Settings.InitialGoldZone > 0)
                 {
                     _combManager.ManualZone(Settings.InitialGoldZone, false, false, false, true);
                     return;
@@ -487,7 +487,7 @@ namespace NGUInjector
                 //Go to our gold loadout zone next to get a high gold drop
                 if (Settings.NextGoldSwap)
                 {
-                    if (_combManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneIsTitan(Settings.GoldZone))
+                    if (_combManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone > 0)
                     {
                         if (LoadoutManager.TryGoldDropSwap())
                         {
@@ -507,7 +507,7 @@ namespace NGUInjector
                 }
                 else
                 {
-                    _combManager.IdleZone(questZone, false, false, false);
+                    _combManager.IdleZone(questZone, false, false);
                 }
 
                 return;
@@ -516,14 +516,16 @@ namespace NGUInjector
             if (!SnipeActive)
                 return;
 
+            if (Settings.SnipeZone < 0)
+                return;
+
             var tempZone = Settings.SnipeZone;
             if (Settings.SnipeZone < 1000)
             {
-                if (!Settings.AllowZoneFallback && Settings.SnipeZone > Character.adventureController.zoneDropdown.options.Count - 2)
-                    return;
-
-                if (Settings.AllowZoneFallback)
+                if (!_combManager.IsZoneUnlocked(Settings.SnipeZone))
                 {
+                    if (!Settings.AllowZoneFallback) return;
+
                     for (var i = Character.adventureController.zoneDropdown.options.Count - 2; i >= 0; i--)
                     {
                         if (!ZoneIsTitan(i))
@@ -541,7 +543,7 @@ namespace NGUInjector
             }
             else
             {
-                _combManager.IdleZone(tempZone, Settings.SnipeBossOnly, Settings.RecoverHealth, Settings.AllowZoneFallback);
+                _combManager.IdleZone(tempZone, Settings.SnipeBossOnly, Settings.RecoverHealth);
             }
         }
 
@@ -558,14 +560,14 @@ namespace NGUInjector
 
             if (Character.buttons.brokenTimeMachine.interactable)
             {
-                if (Character.machine.realBaseGold == 0.0 && _combManager.IsZoneUnlocked(Settings.InitialGoldZone))
+                if (Character.machine.realBaseGold == 0.0 && _combManager.IsZoneUnlocked(Settings.InitialGoldZone) && Settings.InitialGoldZone > 0)
                 {
                     return;
                 }
 
                 if (Settings.NextGoldSwap)
                 {
-                    if (_combManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneIsTitan(Settings.GoldZone))
+                    if (_combManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone > 0)
                     {
                         return;
                     }
