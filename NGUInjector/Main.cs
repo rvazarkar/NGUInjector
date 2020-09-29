@@ -466,21 +466,6 @@ namespace NGUInjector
             if (!Active)
                 return;
 
-            var questZone = _questManager.IsQuesting();
-            if (questZone > 0)
-            {
-                if (Settings.QuestCombatMode == 0)
-                {
-                    _combManager.ManualZone(questZone, false, false, false, Settings.QuestFastCombat);
-                }
-                else
-                {
-                    _combManager.IdleZone(questZone, false, false, false);
-                }
-
-                return;
-            }
-
             //If tm ever drops to 0, reset our gold loadout stuff
             if (Character.machine.realBaseGold == 0.0 && !Settings.NextGoldSwap)
             {
@@ -511,6 +496,21 @@ namespace NGUInjector
                         }
                     }
                 }
+            }
+
+            var questZone = _questManager.IsQuesting();
+            if (questZone > 0)
+            {
+                if (Settings.QuestCombatMode == 0)
+                {
+                    _combManager.ManualZone(questZone, false, false, false, Settings.QuestFastCombat);
+                }
+                else
+                {
+                    _combManager.IdleZone(questZone, false, false, false);
+                }
+
+                return;
             }
 
             if (!SnipeActive)
