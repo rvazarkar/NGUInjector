@@ -879,6 +879,16 @@ namespace NGUInjector.AllocationProfiles
 
             return baseTime * (_character.advancedTraining.level[index] + 500 + 1f);
         }
+
+        //private int ParseIndex(string prio)
+        //{
+
+        //}
+
+        //private int ParseAugIndex(string prio)
+        //{
+
+        //}
     }
 
     [Serializable]

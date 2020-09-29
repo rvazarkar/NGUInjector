@@ -840,5 +840,34 @@ namespace NGUInjector
                 GoldLoadout.DataSource = new BindingSource(Main.Settings.GoldDropLoadout, null);
             }
         }
+
+        //private void ListBoxOnMouseHover(object sender, MouseEventArgs eventArgs)
+        //{
+        //    if (!(sender is ListBox listbox)) return;
+
+        //    string str;
+        //    var index = listbox.IndexFromPoint(eventArgs.Location);
+
+        //    if ((index >= 0) && (index < listbox.Items.Count))
+        //    {
+        //        str = Main.Character.itemInfo.itemName[(int)listbox.Items[index]];
+
+        //        if (str != string.Empty && toolTip1.GetToolTip(listbox) != str)
+        //        {
+        //            toolTip1.SetToolTip(listbox, str);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        toolTip1.Hide(listbox);
+        //    }
+
+            
+        //}
+
+        //private void yggdrasilLoadoutBox_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    ListBoxOnMouseHover(sender, e);
+        //}
     }
 }

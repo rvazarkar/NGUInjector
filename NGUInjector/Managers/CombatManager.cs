@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reflection;
 using static NGUInjector.Main;
 using static NGUInjector.Managers.CombatHelpers;
