@@ -100,6 +100,7 @@ namespace NGUInjector
             CombatTargetZone.ValueMember = "Key";
             CombatTargetZone.DisplayMember = "Value";
 
+            //Remove ITOPOD for non combat zones
             ZoneList.Remove(1000);
 
             GoldLoadoutZone.DataSource = new BindingSource(ZoneList, null);
@@ -109,21 +110,6 @@ namespace NGUInjector
             InitialGoldTarget.DataSource = new BindingSource(ZoneList, null);
             InitialGoldTarget.ValueMember = "Key";
             InitialGoldTarget.DisplayMember = "Value";
-
-            yggdrasilLoadoutBox.Items.Clear();
-            yggdrasilLoadoutBox.DataSource = new BindingSource(Main.Settings.YggdrasilLoadout, null);
-
-            priorityBoostBox.Items.Clear();
-            priorityBoostBox.DataSource = new BindingSource(Main.Settings.PriorityBoosts, null);
-
-            blacklistBox.Items.Clear();
-            blacklistBox.DataSource = new BindingSource(Main.Settings.BoostBlacklist, null);
-
-            titanLoadout.Items.Clear();
-            titanLoadout.DataSource = new BindingSource(Main.Settings.TitanLoadout, null);
-
-            GoldLoadout.Items.Clear();
-            GoldLoadout.DataSource = new BindingSource(Main.Settings.GoldDropLoadout, null);
             MasterEnable.Checked = Main.Active;
 
             blacklistLabel.Text = "";
@@ -131,6 +117,12 @@ namespace NGUInjector
             priorityBoostLabel.Text = "";
             titanLabel.Text = "";
             GoldItemLabel.Text = "";
+
+            priorityBoostItemAdd.TextChanged += priorityBoostItemAdd_TextChanged;
+            blacklistAddItem.TextChanged += blacklistAddItem_TextChanged;
+            yggLoadoutItem.TextChanged += yggLoadoutItem_TextChanged;
+            titanAddItem.TextChanged += titanAddItem_TextChanged;
+            GoldItemBox.TextChanged += GoldItemBox_TextChanged;
 
             prioUpButton.Text = char.ConvertFromUtf32(8593);
             prioDownButton.Text = char.ConvertFromUtf32(8595);
@@ -147,7 +139,7 @@ namespace NGUInjector
         {
             control.SelectedIndex = setting + 1;
         }
-
+        
         internal void UpdateFromSettings(SavedSettings newSettings)
         {
             _initializing = true;
@@ -185,6 +177,21 @@ namespace NGUInjector
             QuestFastCombat.Checked = newSettings.QuestFastCombat;
             UseGoldLoadout.Checked = newSettings.NextGoldSwap;
 
+            yggdrasilLoadoutBox.DataSource = null;
+            yggdrasilLoadoutBox.DataSource = new BindingSource(Main.Settings.YggdrasilLoadout, null);
+
+            priorityBoostBox.DataSource = null;
+            priorityBoostBox.DataSource = new BindingSource(Main.Settings.PriorityBoosts, null);
+
+            blacklistBox.DataSource = null;
+            blacklistBox.DataSource = new BindingSource(Main.Settings.BoostBlacklist, null);
+
+            titanLoadout.DataSource = null;
+            titanLoadout.DataSource = new BindingSource(Main.Settings.TitanLoadout, null);
+
+            GoldLoadout.DataSource = null;
+            GoldLoadout.DataSource = new BindingSource(Main.Settings.GoldDropLoadout, null);
+            Refresh();
             _initializing = false;
         }
 
@@ -197,6 +204,7 @@ namespace NGUInjector
         {
             _initializing = true;
             UseGoldLoadout.Checked = active;
+            Refresh();
             _initializing = false;
         }
 
@@ -204,6 +212,7 @@ namespace NGUInjector
         {
             _initializing = true;
             MasterEnable.Checked = active;
+            Refresh();
             _initializing = false;
         }
 
@@ -211,6 +220,7 @@ namespace NGUInjector
         {
             _initializing = true;
             AutoITOPOD.Checked = active;
+            Refresh();
             _initializing = false;
         }
 
@@ -315,7 +325,7 @@ namespace NGUInjector
             Main.Settings.SwapYggdrasilLoadouts = YggdrasilSwap.Checked;
         }
 
-        private void yggLoadoutItem_ValueChanged(object sender, EventArgs e)
+        private void yggLoadoutItem_TextChanged(object sender, EventArgs e)
         {
             yggErrorProvider.SetError(yggLoadoutItem, "");
             var val = decimal.ToInt32(yggLoadoutItem.Value);
@@ -335,6 +345,8 @@ namespace NGUInjector
                 return;
             }
 
+            if (Main.Settings.YggdrasilLoadout.Contains(val))
+                return;
             var temp = Main.Settings.YggdrasilLoadout.ToList();
             temp.Add(val);
             Main.Settings.YggdrasilLoadout = temp.ToArray();
@@ -370,16 +382,6 @@ namespace NGUInjector
             Main.Settings.AutoConvertBoosts = ManageBoostConvert.Checked;
         }
 
-        private void priorityBoostItemAdd_ValueChanged(object sender, EventArgs e)
-        {
-            invPrioErrorProvider.SetError(priorityBoostItemAdd, "");
-            var val = decimal.ToInt32(priorityBoostItemAdd.Value);
-            if (val < 40 || val > 505)
-                return;
-            var itemName = Main.Character.itemInfo.itemName[val];
-            priorityBoostLabel.Text = itemName;
-        }
-
         private void priorityBoostAdd_Click(object sender, EventArgs e)
         {
             invPrioErrorProvider.SetError(priorityBoostItemAdd, "");
@@ -390,7 +392,8 @@ namespace NGUInjector
                 return;
             }
 
-            var temp = Main.Settings.YggdrasilLoadout.ToList();
+            if (Main.Settings.PriorityBoosts.Contains(val)) return;
+            var temp = Main.Settings.PriorityBoosts.ToList();
             temp.Add(val);
             Main.Settings.PriorityBoosts = temp.ToArray();
             priorityBoostBox.DataSource = null;
@@ -427,6 +430,7 @@ namespace NGUInjector
             Main.Settings.PriorityBoosts = temp.ToArray();
             priorityBoostBox.DataSource = null;
             priorityBoostBox.DataSource = new BindingSource(Main.Settings.PriorityBoosts, null);
+            priorityBoostBox.SelectedIndex = index - 1;
         }
 
         private void prioDownButton_Click(object sender, EventArgs e)
@@ -446,16 +450,7 @@ namespace NGUInjector
             Main.Settings.PriorityBoosts = temp.ToArray();
             priorityBoostBox.DataSource = null;
             priorityBoostBox.DataSource = new BindingSource(Main.Settings.PriorityBoosts, null);
-        }
-
-        private void blacklistAddItem_ValueChanged(object sender, EventArgs e)
-        {
-            invBlacklistErrProvider.SetError(blacklistAddItem, "");
-            var val = decimal.ToInt32(blacklistAddItem.Value);
-            if (val < 40 || val > 505)
-                return;
-            var itemName = Main.Character.itemInfo.itemName[val];
-            blacklistLabel.Text = itemName;
+            priorityBoostBox.SelectedIndex = index + 1;
         }
 
         private void blacklistAdd_Click(object sender, EventArgs e)
@@ -468,6 +463,7 @@ namespace NGUInjector
                 return;
             }
 
+            if (Main.Settings.BoostBlacklist.Contains(val)) return;
             var temp = Main.Settings.BoostBlacklist.ToList();
             temp.Add(val);
             Main.Settings.BoostBlacklist = temp.ToArray();
@@ -504,7 +500,7 @@ namespace NGUInjector
             Main.Settings.HighestAKZone = selected;
         }
 
-        private void titanAddItem_ValueChanged(object sender, EventArgs e)
+        private void titanAddItem_TextChanged(object sender, EventArgs e)
         {
             titanErrProvider.SetError(titanAddItem, "");
             var val = decimal.ToInt32(titanAddItem.Value);
@@ -524,6 +520,7 @@ namespace NGUInjector
                 return;
             }
 
+            if (Main.Settings.TitanLoadout.Contains(val)) return;
             var temp = Main.Settings.TitanLoadout.ToList();
             temp.Add(val);
             Main.Settings.TitanLoadout = temp.ToArray();
@@ -617,7 +614,7 @@ namespace NGUInjector
             Main.Settings.InitialGoldZone = item.Key;
         }
 
-        private void GoldItemBox_ValueChanged(object sender, EventArgs e)
+        private void GoldItemBox_TextChanged(object sender, EventArgs e)
         {
             goldErrorProvider.SetError(GoldItemBox, "");
             var val = decimal.ToInt32(GoldItemBox.Value);
@@ -637,6 +634,7 @@ namespace NGUInjector
                 return;
             }
 
+            if (Main.Settings.GoldDropLoadout.Contains(val)) return;
             var temp = Main.Settings.GoldDropLoadout.ToList();
             temp.Add(val);
             Main.Settings.GoldDropLoadout = temp.ToArray();
@@ -700,6 +698,147 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.QuestFastCombat = QuestFastCombat.Checked;
+        }
+
+        private void priorityBoostItemAdd_TextChanged(object sender, EventArgs e)
+        {
+            invPrioErrorProvider.SetError(priorityBoostItemAdd, "");
+            var val = decimal.ToInt32(priorityBoostItemAdd.Value);
+            if (val < 40 || val > 505)
+                return;
+            var itemName = Main.Character.itemInfo.itemName[val];
+            priorityBoostLabel.Text = itemName;
+        }
+
+        private void priorityBoostItemAdd_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                invPrioErrorProvider.SetError(priorityBoostItemAdd, "");
+                var val = decimal.ToInt32(priorityBoostItemAdd.Value);
+                if (val < 40 || val > 505)
+                {
+                    invPrioErrorProvider.SetError(priorityBoostItemAdd, "Not a valid item id");
+                    return;
+                }
+
+                ActiveControl = priorityBoostLabel;
+
+                if (Main.Settings.PriorityBoosts.Contains(val))
+                    return;
+                var temp = Main.Settings.PriorityBoosts.ToList();
+                temp.Add(val);
+                Main.Settings.PriorityBoosts = temp.ToArray();
+                priorityBoostBox.DataSource = null;
+                priorityBoostBox.DataSource = new BindingSource(Main.Settings.PriorityBoosts, null);
+            }
+        }
+
+        private void blacklistAddItem_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                invBlacklistErrProvider.SetError(blacklistAddItem, "");
+                var val = decimal.ToInt32(blacklistAddItem.Value);
+                if (val < 40 || val > 505)
+                {
+                    invBlacklistErrProvider.SetError(blacklistAddItem, "Not a valid item id");
+                    return;
+                }
+
+                ActiveControl = blacklistLabel;
+
+                if (Main.Settings.BoostBlacklist.Contains(val))
+                    return;
+                var temp = Main.Settings.BoostBlacklist.ToList();
+                temp.Add(val);
+                Main.Settings.BoostBlacklist = temp.ToArray();
+                blacklistBox.DataSource = null;
+                blacklistBox.DataSource = new BindingSource(Main.Settings.BoostBlacklist, null);
+            }
+        }
+
+        private void blacklistAddItem_TextChanged(object sender, EventArgs e)
+        {
+            invBlacklistErrProvider.SetError(blacklistAddItem, "");
+            var val = decimal.ToInt32(blacklistAddItem.Value);
+            if (val < 40 || val > 505)
+                return;
+            var itemName = Main.Character.itemInfo.itemName[val];
+            blacklistLabel.Text = itemName;
+        }
+
+        private void yggLoadoutItem_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                yggErrorProvider.SetError(yggLoadoutItem, "");
+                var val = decimal.ToInt32(yggLoadoutItem.Value);
+                if (val < 40 || val > 505)
+                {
+                    yggErrorProvider.SetError(yggLoadoutItem, "Not a valid item id");
+                    return;
+                }
+
+                ActiveControl = yggItemLabel;
+
+                if (Main.Settings.YggdrasilLoadout.Contains(val))
+                    return;
+                var temp = Main.Settings.YggdrasilLoadout.ToList();
+                temp.Add(val);
+                Main.Settings.YggdrasilLoadout = temp.ToArray();
+                yggdrasilLoadoutBox.DataSource = null;
+                yggdrasilLoadoutBox.DataSource = new BindingSource(Main.Settings.YggdrasilLoadout, null);
+            }
+            
+        }
+
+        private void titanAddItem_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                titanErrProvider.SetError(titanAddItem, "");
+                var val = decimal.ToInt32(titanAddItem.Value);
+                if (val < 40 || val > 505)
+                {
+                    invBlacklistErrProvider.SetError(titanAddItem, "Not a valid item id");
+                    return;
+                }
+
+                ActiveControl = titanLabel;
+
+                if (Main.Settings.TitanLoadout.Contains(val))
+                    return;
+                var temp = Main.Settings.TitanLoadout.ToList();
+                temp.Add(val);
+                Main.Settings.TitanLoadout = temp.ToArray();
+                titanLoadout.DataSource = null;
+                titanLoadout.DataSource = new BindingSource(Main.Settings.TitanLoadout, null);
+            }
+        }
+
+        private void GoldItemBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                goldErrorProvider.SetError(GoldItemBox, "");
+                var val = decimal.ToInt32(GoldItemBox.Value);
+                if (val < 40 || val > 505)
+                {
+                    goldErrorProvider.SetError(GoldItemBox, "Invalid item id");
+                    return;
+                }
+
+                ActiveControl = GoldItemLabel;
+
+                if (Main.Settings.GoldDropLoadout.Contains(val))
+                    return;
+                var temp = Main.Settings.GoldDropLoadout.ToList();
+                temp.Add(val);
+                Main.Settings.GoldDropLoadout = temp.ToArray();
+                GoldLoadout.DataSource = null;
+                GoldLoadout.DataSource = new BindingSource(Main.Settings.GoldDropLoadout, null);
+            }
         }
     }
 }

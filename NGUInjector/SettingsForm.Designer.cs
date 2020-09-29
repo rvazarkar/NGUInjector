@@ -337,7 +337,7 @@
             0,
             0});
             this.yggLoadoutItem.Name = "yggLoadoutItem";
-            this.yggLoadoutItem.ValueChanged += new System.EventHandler(this.yggLoadoutItem_ValueChanged);
+            this.yggLoadoutItem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.yggLoadoutItem_KeyDown);
             // 
             // yggItemLabel
             // 
@@ -436,7 +436,7 @@
             0,
             0});
             this.blacklistAddItem.Name = "blacklistAddItem";
-            this.blacklistAddItem.ValueChanged += new System.EventHandler(this.blacklistAddItem_ValueChanged);
+            this.blacklistAddItem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.blacklistAddItem_KeyDown);
             // 
             // blacklistLabel
             // 
@@ -485,7 +485,7 @@
             0,
             0});
             this.priorityBoostItemAdd.Name = "priorityBoostItemAdd";
-            this.priorityBoostItemAdd.ValueChanged += new System.EventHandler(this.priorityBoostItemAdd_ValueChanged);
+            this.priorityBoostItemAdd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.priorityBoostItemAdd_KeyDown);
             // 
             // priorityBoostLabel
             // 
@@ -575,7 +575,7 @@
             0,
             0});
             this.titanAddItem.Name = "titanAddItem";
-            this.titanAddItem.ValueChanged += new System.EventHandler(this.titanAddItem_ValueChanged);
+            this.titanAddItem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.titanAddItem_KeyDown);
             // 
             // titanLabel
             // 
@@ -743,7 +743,7 @@
             0,
             0});
             this.GoldItemBox.Name = "GoldItemBox";
-            this.GoldItemBox.ValueChanged += new System.EventHandler(this.GoldItemBox_ValueChanged);
+            this.GoldItemBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GoldItemBox_KeyDown);
             // 
             // GoldItemLabel
             // 
