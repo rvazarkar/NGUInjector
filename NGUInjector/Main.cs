@@ -321,6 +321,12 @@ namespace NGUInjector
 
         void QuickStuff()
         {
+            //Turn on autoattack if we're in ITOPOD and its not on
+            if (Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking && !SnipeActive)
+            {
+                Character.adventureController.idleAttackMove.setToggle();
+            }
+
             if (Settings.AutoFight)
             {
                 var bc = Character.bossController;
@@ -363,12 +369,6 @@ namespace NGUInjector
                 {
                     _timeLeft = 10f;
                     return;
-                }
-
-                //Turn on autoattack if we're in ITOPOD and its not on
-                if (Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking && !SnipeActive)
-                {
-                    Character.adventureController.idleAttackMove.setToggle();
                 }
 
                 if (Settings.ManageInventory)
