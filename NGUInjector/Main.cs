@@ -447,7 +447,8 @@ namespace NGUInjector
             var questZone = _questManager.IsQuesting();
             if (questZone > 0)
             {
-                if (Settings.QuestCombatMode== 0)
+                questZone++;
+                if (Settings.QuestCombatMode == 0)
                 {
                     _combManager.ManualZone(questZone, false, false, false, Settings.QuestFastCombat);
                 }
