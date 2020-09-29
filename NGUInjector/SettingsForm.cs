@@ -35,51 +35,51 @@ namespace NGUInjector
             TitanList.Add(11, "Rock Lobster");
             TitanList.Add(12, "Amalgamate");
 
-            ZoneList.Add(0, "Safe Zone: Awakening Site");
-            ZoneList.Add(1, "Tutorial Zone");
-            ZoneList.Add(2, "Sewers");
-            ZoneList.Add(3, "Forest");
-            ZoneList.Add(4, "Cave of Many Things");
-            ZoneList.Add(5, "The Sky");
-            ZoneList.Add(6, "High Security Base");
-            ZoneList.Add(7, "Gordon Ramsay Bolton");
-            ZoneList.Add(8, "Clock Dimension");
-            ZoneList.Add(9, "Grand Corrupted Tree");
-            ZoneList.Add(10, "The 2D Universe");
-            ZoneList.Add(11, "Ancient Battlefield");
-            ZoneList.Add(12, "Jake From Accounting");
-            ZoneList.Add(13, "A Very Strange Place");
-            ZoneList.Add(14, "Mega Lands");
-            ZoneList.Add(15, "UUG THE UNMENTIONABLE");
-            ZoneList.Add(16, "The Beardverse");
-            ZoneList.Add(17, "WALDERP");
-            ZoneList.Add(18, "Badly Drawn World");
-            ZoneList.Add(19, "Boring-Ass Earth");
-            ZoneList.Add(20, "THE BEAST");
-            ZoneList.Add(21, "Chocolate World");
-            ZoneList.Add(22, "The Evilverse");
-            ZoneList.Add(23, "Pretty Pink Princess Land");
-            ZoneList.Add(24, "GREASY NERD");
-            ZoneList.Add(25, "Meta Land");
-            ZoneList.Add(26, "Interdimensional Party");
-            ZoneList.Add(27, "THE GODMOTHER");
-            ZoneList.Add(28, "Typo Zonw");
-            ZoneList.Add(29, "The Fad-Lands");
-            ZoneList.Add(30, "JRPGVille");
-            ZoneList.Add(31, "THE EXILE");
-            ZoneList.Add(32, "The Rad-lands");
-            ZoneList.Add(33, "Back To School");
-            ZoneList.Add(34, "The West World");
-            ZoneList.Add(35, "IT HUNGERS");
-            ZoneList.Add(36, "The Breadverse");
-            ZoneList.Add(37, "That 70's Zone");
-            ZoneList.Add(38, "The Halloweenies");
-            ZoneList.Add(39, "ROCK LOBSTER");
-            ZoneList.Add(40, "Construction Zone");
-            ZoneList.Add(41, "DUCK DUCK ZONE");
-            ZoneList.Add(42, "The Nether Regions");
-            ZoneList.Add(43, "AMALGAMATE");
-            ZoneList.Add(1001, "ITOPOD");
+            ZoneList.Add(-1, "Safe Zone: Awakening Site");
+            ZoneList.Add(0, "Tutorial Zone");
+            ZoneList.Add(1, "Sewers");
+            ZoneList.Add(2, "Forest");
+            ZoneList.Add(3, "Cave of Many Things");
+            ZoneList.Add(4, "The Sky");
+            ZoneList.Add(5, "High Security Base");
+            ZoneList.Add(6, "Gordon Ramsay Bolton");
+            ZoneList.Add(7, "Clock Dimension");
+            ZoneList.Add(8, "Grand Corrupted Tree");
+            ZoneList.Add(9, "The 2D Universe");
+            ZoneList.Add(10, "Ancient Battlefield");
+            ZoneList.Add(11, "Jake From Accounting");
+            ZoneList.Add(12, "A Very Strange Place");
+            ZoneList.Add(13, "Mega Lands");
+            ZoneList.Add(14, "UUG THE UNMENTIONABLE");
+            ZoneList.Add(15, "The Beardverse");
+            ZoneList.Add(16, "WALDERP");
+            ZoneList.Add(17, "Badly Drawn World");
+            ZoneList.Add(18, "Boring-Ass Earth");
+            ZoneList.Add(19, "THE BEAST");
+            ZoneList.Add(20, "Chocolate World");
+            ZoneList.Add(21, "The Evilverse");
+            ZoneList.Add(22, "Pretty Pink Princess Land");
+            ZoneList.Add(23, "GREASY NERD");
+            ZoneList.Add(24, "Meta Land");
+            ZoneList.Add(25, "Interdimensional Party");
+            ZoneList.Add(26, "THE GODMOTHER");
+            ZoneList.Add(27, "Typo Zonw");
+            ZoneList.Add(28, "The Fad-Lands");
+            ZoneList.Add(29, "JRPGVille");
+            ZoneList.Add(30, "THE EXILE");
+            ZoneList.Add(31, "The Rad-lands");
+            ZoneList.Add(32, "Back To School");
+            ZoneList.Add(33, "The West World");
+            ZoneList.Add(34, "IT HUNGERS");
+            ZoneList.Add(35, "The Breadverse");
+            ZoneList.Add(36, "That 70's Zone");
+            ZoneList.Add(37, "The Halloweenies");
+            ZoneList.Add(38, "ROCK LOBSTER");
+            ZoneList.Add(39, "Construction Zone");
+            ZoneList.Add(40, "DUCK DUCK ZONE");
+            ZoneList.Add(41, "The Nether Regions");
+            ZoneList.Add(42, "AMALGAMATE");
+            ZoneList.Add(1000, "ITOPOD");
 
             CombatModeList.Add(0, "Manual");
             CombatModeList.Add(1, "Idle");
@@ -99,6 +99,8 @@ namespace NGUInjector
             CombatTargetZone.DataSource = new BindingSource(ZoneList, null);
             CombatTargetZone.ValueMember = "Key";
             CombatTargetZone.DisplayMember = "Value";
+
+            ZoneList.Remove(1000);
 
             GoldLoadoutZone.DataSource = new BindingSource(ZoneList, null);
             GoldLoadoutZone.ValueMember = "Key";
@@ -133,12 +135,17 @@ namespace NGUInjector
             prioUpButton.Text = char.ConvertFromUtf32(8593);
             prioDownButton.Text = char.ConvertFromUtf32(8595);
 
-            //TestButton.Visible = false;
+            TestButton.Visible = false;
         }
 
-        internal void SetZone(ComboBox control, int setting)
+        internal void SetSnipeZone(ComboBox control, int setting)
         {
-            control.SelectedIndex = setting > 1000 ? 43 : setting;
+            control.SelectedIndex = setting >= 1000 ? 44 : setting + 1;
+        }
+
+        internal void SetOtherZone(ComboBox control, int setting)
+        {
+            control.SelectedIndex = setting + 1;
         }
 
         internal void UpdateFromSettings(SavedSettings newSettings)
@@ -166,10 +173,10 @@ namespace NGUInjector
             RecoverHealth.Checked = newSettings.RecoverHealth;
             FastCombat.Checked = newSettings.FastCombat;
             CombatMode.SelectedIndex = newSettings.CombatMode;
-            SetZone(CombatTargetZone, newSettings.SnipeZone);
+            SetSnipeZone(CombatTargetZone, newSettings.SnipeZone);
             AllowFallthrough.Checked = newSettings.AllowZoneFallback;
-            SetZone(GoldLoadoutZone, newSettings.GoldZone);
-            SetZone(InitialGoldTarget, newSettings.InitialGoldZone);
+            SetOtherZone(GoldLoadoutZone, newSettings.GoldZone);
+            SetOtherZone(InitialGoldTarget, newSettings.InitialGoldZone);
             QuestCombatMode.SelectedIndex = newSettings.QuestCombatMode;
             ManageQuests.Checked = newSettings.AutoQuest;
             AllowMajor.Checked = newSettings.AllowMajorQuests;
@@ -579,7 +586,9 @@ namespace NGUInjector
         private void GoldLoadoutZone_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_initializing) return;
-            Main.Settings.GoldZone = GoldLoadoutZone.SelectedIndex;
+            var selected = GoldLoadoutZone.SelectedItem;
+            var item = (KeyValuePair<int, string>)selected;
+            Main.Settings.GoldZone = item.Key;
         }
 
         private void UseGoldLoadout_CheckedChanged(object sender, EventArgs e)
@@ -591,7 +600,9 @@ namespace NGUInjector
         private void InitialGoldTarget_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_initializing) return;
-            Main.Settings.InitialGoldZone = InitialGoldTarget.SelectedIndex;
+            var selected = InitialGoldTarget.SelectedItem;
+            var item = (KeyValuePair<int, string>)selected;
+            Main.Settings.InitialGoldZone = item.Key;
         }
 
         private void GoldItemBox_ValueChanged(object sender, EventArgs e)

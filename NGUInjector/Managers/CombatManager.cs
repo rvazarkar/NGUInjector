@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using static NGUInjector.Main;
+using static NGUInjector.Managers.CombatHelpers;
 
 namespace NGUInjector.Managers
 {
@@ -26,118 +27,13 @@ namespace NGUInjector.Managers
             return _character.adventure.curHP / _character.totalAdvHP();
         }
 
-        bool ChargeActive()
-        {
-            return _pc.chargeFactor > 1.05;
-        }
-
-        void PrepCombat(bool needsBuff, bool recoverHP)
-        {
-            if (!needsBuff && (HasFullHP() || !recoverHP))
-            {
-                LogCombat("Skipping buffs, moving to stage 3");
-                _snipeStage = 3;
-                return;
-            }
-
-            if (_character.adventure.autoattacking && _character.training.attackTraining[1] != 0)
-            {
-                LogCombat("Toggling off autoattack");
-                _character.adventureController.idleAttackMove.setToggle();
-            }
-
-            if (_character.adventureController.zone != -1)
-            {
-                LogCombat("Moving to safe zone to prep and wait for full HP");
-                _character.adventureController.zoneSelector.changeZone(-1);
-            }
-
-            _snipeStage = 1;
-            LogCombat("In safe zone, moving to stage 1");
-        }
-
-        void DoBuffs()
-        {
-            if (!Settings.PrecastBuffs && HasFullHP())
-            {
-                LogCombat("Buffs disabled, moving to stage 3");
-                _snipeStage = 3;
-                return;
-            }
-            if (ChargeActive())
-            {
-                LogCombat("Charge active, moving to stage 2");
-                _snipeStage = 2;
-                return;
-            }
-
-            if (_character.adventureController.chargeMove.button.IsInteractable())
-            {
-                LogCombat("Using charge, moving to stage 2");
-                _character.adventureController.chargeMove.doMove();
-                _snipeStage = 2;
-            }
-        }
-
-        void WaitForChargeCooldown()
-        {
-            if (!HasFullHP())
-            {
-                return;
-            }
-
-            if (!Settings.PrecastBuffs)
-            {
-                LogCombat("Buffs disabled, moving to stage 3");
-                _snipeStage = 3;
-                return;
-            }
-
-            if (_character.adventureController.chargeMove.button.IsInteractable() && ChargeActive() && (Math.Abs(_character.totalAdvHP() - _character.adventure.curHP) < 5))
-            {
-                LogCombat("Charge ready, moving to stage 4");
-                _snipeStage = 3;
-            }
-        }
-
-        void FindBoss(int zone)
-        {
-            if (_character.adventureController.chargeMove.button.IsInteractable() && !ChargeActive())
-            {
-                _character.adventureController.chargeMove.doMove();
-            }
-
-            if (_character.adventureController.zone == -1)
-            {
-                _character.adventureController.zoneSelector.changeZone(zone);
-            }
-
-            if (_character.adventureController.currentEnemy == null)
-                return;
-
-            var ec = _character.adventureController.currentEnemy.enemyType;
-            if (ec != enemyType.boss && !ec.ToString().Contains("bigBoss"))
-            {
-                _character.adventureController.zoneSelector.changeZone(-1);
-                return;
-            }
-
-            _snipeStage = 4;
-        }
-
-        private bool UltimateBuffActive()
-        {
-            return _pc.ultimateBuffTime > 0 && _pc.ultimateBuffTime < _character.ultimateBuffDuration();
-        }
-
-        private bool DefenseBuffActive()
-        {
-            return _pc.defenseBuffTime > 0 && _pc.defenseBuffTime < _character.defenseBuffDuration();
-        }
-
+        
         private void DoCombat(bool fastCombat)
         {
             if (!_pc.moveCheck())
+                return;
+
+            if (Main.PlayerController.moveTimer > 0)
                 return;
 
             if (!fastCombat)
@@ -145,23 +41,8 @@ namespace NGUInjector.Managers
                 if (CombatBuffs())
                     return;
             }
-            
 
             CombatAttacks(fastCombat);
-        }
-
-        private float GetUACooldown()
-        {
-            var ua = _character.adventureController.ultimateAttackMove;
-            var type = ua.GetType().GetField("ultimateAttackTimer",
-                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            var val = type?.GetValue(ua);
-            if (val == null)
-            {
-                return 0;
-            }
-
-            return (float) val / _character.ultimateAttackCooldown();
         }
 
         private bool CombatBuffs()
@@ -194,52 +75,60 @@ namespace NGUInjector.Managers
                 }
             }
 
-            if (ac.healMove.button.IsInteractable() && GetHPPercentage() < .8)
-            {
-                ac.healMove.doMove();
-                return true;
-            }
-
-            if (ac.hyperRegenMove.button.IsInteractable() && GetHPPercentage() < .6)
-            {
-                ac.hyperRegenMove.doMove();
-                return true;
-            }
-
             if (ac.currentEnemy.curHP / ac.currentEnemy.maxHP < .2)
             {
                 return false;
             }
 
-            if (ac.ultimateBuffMove.button.IsInteractable() && !DefenseBuffActive())
+            if (GetHPPercentage() < .5)
             {
-                ac.ultimateBuffMove.doMove();
-                return true;
+                if (CastHeal())
+                {
+                    return true;
+                }
             }
 
-            if (ac.offenseBuffMove.button.IsInteractable() && UltimateBuffActive())
+            if (GetHPPercentage() < .5 && !HealReady())
             {
-                ac.offenseBuffMove.doMove();
-                return true;
+                if (CastHyperRegen())
+                {
+                    return true;
+                }
             }
 
-            if (ai != AI.charger && ai != AI.rapid && ac.blockMove.button.IsInteractable() && !UltimateBuffActive() &&
-                !DefenseBuffActive())
+            if (!DefenseBuffActive())
             {
-                ac.blockMove.doMove();
-                return true;
+                if (CastUltimateBuff())
+                {
+                    return true;
+                }
             }
 
-            if (ai != AI.charger && ac.parryMove.button.IsInteractable() && !ChargeActive())
+            if (UltimateBuffActive())
             {
-                ac.parryMove.doMove();
-                return true;
+                if (CastOffensiveBuff())
+                    return true;
             }
 
-            if (ac.defenseBuffMove.button.IsInteractable() && !UltimateBuffActive() && !_pc.isBlocking)
+            if (GetHPPercentage() < .75 && !UltimateBuffActive() && !BlockActive())
             {
-                ac.defenseBuffMove.doMove();
-                return true;
+                if (CastDefensiveBuff())
+                    return true;
+            }
+
+            if (ai != AI.charger && ai != AI.rapid && !UltimateBuffActive() && !DefenseBuffActive())
+            {
+                if (!BlockActive())
+                {
+                    if (CastParry())
+                        return true;
+                }
+
+                if (!ParryActive())
+                {
+                    if (CastBlock())
+                        return true;
+                }
             }
 
             if (_pc.isBlocking || _pc.isParrying)
@@ -247,73 +136,69 @@ namespace NGUInjector.Managers
                 return false;
             }
 
-            if (ac.chargeMove.button.IsInteractable())
+            if (CastParalyze(ai, eai))
+                return true;
+
+
+            if (ChargeReady())
             {
-                if (ac.ultimateAttackMove.button.IsInteractable())
+                if (UltimateAttackReady())
                 {
-                    ac.chargeMove.doMove();
-                    return true;
+                    if (CastCharge())
+                        return true;
                 }
 
-                if (GetUACooldown() > .5 && ac.chargeMove.button.IsInteractable() && ac.pierceMove.button.IsInteractable())
+                if (GetUltimateAttackCooldown() > .45 && PierceReady())
                 {
-                    ac.chargeMove.doMove();
-                    return true;
+                    if (CastCharge())
+                        return true;
                 }
             }
 
             return false;
         }
 
-        private bool ParalyzeBoss()
-        {
-            var ac = _character.adventureController;
-            var ai = ac.currentEnemy.AI;
-            var eai = ac.enemyAI;
+        //private bool ParalyzeBoss()
+        //{
+        //    var ac = _character.adventureController;
+        //    var ai = ac.currentEnemy.AI;
+        //    var eai = ac.enemyAI;
 
-            if (!ac.paralyzeMove.button.IsInteractable())
-                return false;
+        //    if (!ac.paralyzeMove.button.IsInteractable())
+        //        return false;
 
-            if (GetHPPercentage() < .2)
-                return false;
+        //    if (GetHPPercentage() < .2)
+        //        return false;
 
-            if (UltimateBuffActive())
-                return false;
+        //    if (UltimateBuffActive())
+        //        return false;
 
-            if (ai == AI.charger && eai.GetPV<int>("chargeCooldown") == 0)
-            {
-                ac.paralyzeMove.doMove();
-                return true;
-            }
+        //    if (ai == AI.charger && eai.GetPV<int>("chargeCooldown") == 0)
+        //    {
+        //        ac.paralyzeMove.doMove();
+        //        return true;
+        //    }
 
-            if (ai == AI.rapid && eai.GetPV<int>("rapidEffect") < 5)
-            {
-                ac.paralyzeMove.doMove();
-                return true;
-            }
+        //    if (ai == AI.rapid && eai.GetPV<int>("rapidEffect") < 5)
+        //    {
+        //        ac.paralyzeMove.doMove();
+        //        return true;
+        //    }
 
-            if (ai != AI.rapid && ai != AI.charger)
-            {
-                ac.paralyzeMove.doMove();
-                return true;
-            }
+        //    if (ai != AI.rapid && ai != AI.charger)
+        //    {
+        //        ac.paralyzeMove.doMove();
+        //        return true;
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
 
         private void CombatAttacks(bool fastCombat)
         {
             var ac = _character.adventureController;
 
-            if (!fastCombat)
-            {
-                if (ParalyzeBoss())
-                {
-                    return;
-                }
-            }
-
-            if (ac.ultimateAttackMove.button.interactable)
+            if (ac.ultimateAttackMove.button.IsInteractable())
             {
                 if (fastCombat)
                 {
@@ -325,7 +210,7 @@ namespace NGUInjector.Managers
                     ac.ultimateAttackMove.doMove();
                 }
 
-                if (CombatHelpers.GetChargeCooldown() > .45)
+                if (GetChargeCooldown() > .45)
                 {
                     ac.ultimateAttackMove.doMove();
                 }
@@ -362,7 +247,6 @@ namespace NGUInjector.Managers
 
         internal void IdleZone(int zone, bool bossOnly, bool recoverHealth, bool fallThrough)
         {
-            zone -= 1;
             //Enable idle attack if its not on
             if (!_character.adventure.autoattacking)
             {
@@ -398,7 +282,6 @@ namespace NGUInjector.Managers
 
         internal void ManualZone(int zone, bool bossOnly, bool recoverHealth, bool precastBuffs, bool fastCombat)
         {
-            zone -= 1;
             //Start by turning off auto attack if its on unless we can only idle attack
             if (!_character.adventure.autoattacking)
             {
@@ -432,13 +315,19 @@ namespace NGUInjector.Managers
             {
                 if (precastBuffs)
                 {
-                    if (!ChargeActive())
+                    if (ChargeUnlocked() && !ChargeActive())
                     {
-                        if (CombatHelpers.CastCharge()) return;
+                        if (CastCharge()) return;
+                    }
+
+                    if (ParryUnlocked() && !ParryActive())
+                    {
+                        if (CastParry()) return;
                     }
 
                     //Wait for Charge to be ready again
-                    if (!CombatHelpers.ChargeReady()) return;
+                    if (ChargeUnlocked() && !ChargeReady()) return;
+                    if (ParryUnlocked() && !ParryReady()) return;
                 }
 
                 if (recoverHealth && !HasFullHP()) return;
@@ -457,13 +346,33 @@ namespace NGUInjector.Managers
                 if (isFighting)
                 {
                     isFighting = false;
-                    if (precastBuffs)
+                    if (precastBuffs || IsGettingInitialGold)
                     {
                         MoveToZone(-1);
                         return;
                     }
                 }
                 return;
+            }
+
+            //Cast charge/parry while searching for bosses
+            if (!precastBuffs && bossOnly && _character.adventureController.currentEnemy == null)
+            {
+                if (!ChargeActive())
+                {
+                    if (CastCharge())
+                    {
+                        return;
+                    }
+                }
+
+                if (!ParryActive())
+                {
+                    if (CastParry())
+                    {
+                        return;
+                    }
+                }
             }
 
             //We have an enemy. Lets check if we're in bossOnly mode

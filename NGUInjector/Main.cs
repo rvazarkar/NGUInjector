@@ -40,6 +40,8 @@ namespace NGUInjector
         private static string _dir;
 
         internal static bool Active;
+
+        internal static bool LoopActive { get; set; }
         
         
         internal static readonly int[] TitanZones = {6, 8, 11, 14, 16, 19, 23, 26, 30, 34, 38, 40, 42};
@@ -418,12 +420,12 @@ namespace NGUInjector
                     _questManager.ManageQuests();
                 }
 
+                if (Settings.AutoQuestITOPOD) MoveToITOPOD();
+
                 if (Settings.AutoRebirth)
                 {
                     _profile.DoRebirth();
                 }
-
-                if (Settings.AutoQuestITOPOD) MoveToITOPOD();
 
             }
             catch (Exception e)
@@ -447,7 +449,6 @@ namespace NGUInjector
             var questZone = _questManager.IsQuesting();
             if (questZone > 0)
             {
-                questZone++;
                 if (Settings.QuestCombatMode == 0)
                 {
                     _combManager.ManualZone(questZone, false, false, false, Settings.QuestFastCombat);
@@ -463,7 +464,7 @@ namespace NGUInjector
             if (Character.buttons.brokenTimeMachine.interactable && Character.machine.realBaseGold == 0.0 && Settings.InitialGoldZone <= Character.adventureController.zoneDropdown.options.Count - 2 && Settings.InitialGoldZone >= 0)
             {
                 Settings.NextGoldSwap = true;
-                _combManager.IdleZone(Settings.InitialGoldZone, false, false, false);
+                _combManager.ManualZone(Settings.InitialGoldZone, false, false, false, true);
                 IsGettingInitialGold = true;
                 return;
             }
@@ -492,7 +493,7 @@ namespace NGUInjector
                     {
                         if (!ZoneIsTitan(i))
                         {
-                            tempZone = i + 1;
+                            tempZone = i;
                             break;
                         }
                     }
