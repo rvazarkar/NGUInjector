@@ -73,12 +73,14 @@ namespace NGUInjector.Managers
 
                 if (Settings.NextGoldSwap && ts.IsHighest)
                 {
+                    Log("Equipping Gold Drop Loadout");
                     ChangeGear(Settings.GoldDropLoadout);
                     Settings.NextGoldSwap = false;
                     settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
                 }
                 else
                 {
+                    Log("Equipping Titan Loadout");
                     ChangeGear(Settings.TitanLoadout);
                 }
             }
@@ -89,6 +91,7 @@ namespace NGUInjector.Managers
             if (!CanAcquireOrHasLock(LockType.Yggdrasil))
                 return false;
 
+            Log("Equipping Yggdrasil Loadout");
             AcquireLock(LockType.Yggdrasil);
             SaveCurrentLoadout();
             ChangeGear(Settings.YggdrasilLoadout);
@@ -100,6 +103,7 @@ namespace NGUInjector.Managers
             if (!CanAcquireOrHasLock(LockType.MoneyPit))
                 return false;
 
+            Log("Equipping Money Pit");
             AcquireLock(LockType.MoneyPit);
             SaveCurrentLoadout();
             ChangeGear(Settings.MoneyPitLoadout);
@@ -117,6 +121,7 @@ namespace NGUInjector.Managers
                 return true;
             }
 
+            Log("Equipping Gold Loadout");
             AcquireLock(LockType.Gold);
             SaveCurrentLoadout();
             ChangeGear(Settings.GoldDropLoadout);
