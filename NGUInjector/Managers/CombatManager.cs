@@ -8,7 +8,6 @@ namespace NGUInjector.Managers
     {
         private readonly Character _character;
         private readonly PlayerController _pc;
-        private int _snipeStage;
         private bool isFighting = false;
 
         public CombatManager()
@@ -287,7 +286,6 @@ namespace NGUInjector.Managers
                 return true;
             }
 
-
             if (ai == AI.rapid && eai.GetPV<int>("rapidEffect") < 5)
             {
                 ac.paralyzeMove.doMove();
@@ -314,17 +312,23 @@ namespace NGUInjector.Managers
                     return;
                 }
             }
-            
-            if (ChargeActive() && ac.ultimateAttackMove.button.IsInteractable())
-            {
-                ac.ultimateAttackMove.doMove();
-                return;
-            }
 
-            if (ac.pierceMove.button.IsInteractable())
+            if (ac.ultimateAttackMove.button.interactable)
             {
-                ac.pierceMove.doMove();
-                return;
+                if (fastCombat)
+                {
+                    ac.ultimateAttackMove.doMove();
+                }
+
+                if (ChargeActive())
+                {
+                    ac.ultimateAttackMove.doMove();
+                }
+
+                if (CombatHelpers.GetChargeCooldown() > .45)
+                {
+                    ac.ultimateAttackMove.doMove();
+                }
             }
 
             if (ac.pierceMove.button.IsInteractable())
