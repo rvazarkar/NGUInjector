@@ -141,6 +141,7 @@ Available cap priorities for Energy are as follows:
 - CAPWAN - Use the cap button for wandoos energy
 - CAPTM - Calculate a cap for energy time machine and attempt to BB it.
 - CAPBT-X (0-11) - Use the cap button for basic training
+- CAPAUG-X (0-13) - Calculate a cap for augments and attempt to BB it
 
 Available non-cap priorities for Energy are as follows:
 

@@ -899,11 +899,11 @@ namespace NGUInjector.AllocationProfiles
                 {
                     formula *= _character.augmentsController.normalAugSpeedDividers[augIndex];
                 }
-                else if (_character.settings.rebirthDifficulty == difficulty.normal)
+                else if (_character.settings.rebirthDifficulty == difficulty.evil)
                 {
                     formula *= _character.augmentsController.evilAugSpeedDividers[augIndex];
                 }
-                else if (_character.settings.rebirthDifficulty == difficulty.normal)
+                else if (_character.settings.rebirthDifficulty == difficulty.sadistic)
                 {
                     formula *= _character.augmentsController.sadisticAugSpeedDividers[augIndex];
                 }
@@ -936,12 +936,12 @@ namespace NGUInjector.AllocationProfiles
                     formula *= _character.augmentsController.normalUpgradeSpeedDividers[augIndex];
 
                 }
-                else if (_character.settings.rebirthDifficulty == difficulty.normal)
+                else if (_character.settings.rebirthDifficulty == difficulty.evil)
                 {
                     formula *= _character.augmentsController.evilUpgradeSpeedDividers[augIndex];
 
                 }
-                else if (_character.settings.rebirthDifficulty == difficulty.normal)
+                else if (_character.settings.rebirthDifficulty == difficulty.sadistic)
                 {
                     formula *= _character.augmentsController.sadisticUpgradeSpeedDividers[augIndex];
                 }
