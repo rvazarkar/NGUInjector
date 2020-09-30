@@ -252,6 +252,14 @@ namespace NGUInjector
             {
                 DumpEquipped();
             }
+
+            //if (Input.GetKeyDown(KeyCode.F8))
+            //{
+            //    for (var i = 0; i <= 13; i++)
+            //    {
+            //        Log($"Aug {i} - {_profile.CalculateAugCap(i)}");
+            //    }
+            //}
         }
 
         private void QuickSave()

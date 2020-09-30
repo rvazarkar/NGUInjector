@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using NGUInjector.AllocationProfiles;
 
 namespace NGUInjector
 {
@@ -667,13 +668,6 @@ namespace NGUInjector
             e.Cancel = true;
         }
 
-        private void TestButton_Click(object sender, EventArgs e)
-        {
-            var c = Main.Character;
-            Main.Log($"Spaghetti: {c.bloodMagicController.lootBonus()}");
-            Main.Log($"Counterfeit: {c.bloodMagicController.goldBonus()}");
-        }
-
         private void ManageQuests_CheckedChanged(object sender, EventArgs e)
         {
             if (_initializing) return;
@@ -856,6 +850,15 @@ namespace NGUInjector
             if (_initializing) return;
             Main.Settings.SpaghettiThreshold = decimal.ToInt32(SpaghettiCap.Value);
             Main.Settings.CounterfeitThreshold = decimal.ToInt32(CounterfeitCap.Value);
+        }
+
+        private void TestButton_Click(object sender, EventArgs e)
+        {
+            //var c = Main.Character;
+            //for (var i = 0; i <= 13; i++)
+            //{
+            //    CustomAllocation.
+            //}
         }
     }
 }

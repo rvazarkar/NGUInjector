@@ -22,7 +22,7 @@ namespace NGUInjector.AllocationProfiles
         private bool _hasDiggerSwapped;
         private bool _hasWandoosSwapped;
         private readonly string _allocationPath;
-        private string[] _validEnergyPriorities = { "WAN", "CAPWAN", "TM", "CAPTM", "CAPAT", "AT", "NGU", "CAPNGU", "AUG", "BT", "CAPBT" };
+        private string[] _validEnergyPriorities = { "WAN", "CAPWAN", "TM", "CAPTM", "CAPAT", "AT", "NGU", "CAPNGU", "AUG", "BT", "CAPBT", "CAPAUG" };
         private string[] _validMagicPriorities = { "WAN", "CAPWAN", "BR", "TM", "CAPTM", "NGU", "CAPNGU" };
 
         public CustomAllocation(string dir)
@@ -751,6 +751,42 @@ namespace NGUInjector.AllocationProfiles
                 {
                     _character.augmentsController.augments[augIndex].addEnergyUpgrade();
                 }
+
+                return;
+            }
+
+            if (breakpoint.StartsWith("CAPAUG"))
+            {
+                var success = int.TryParse(breakpoint.Split('-')[1], out var index);
+                if (!success || index < 0 || index > 13)
+                {
+                    return;
+                }
+
+                var augIndex = (int)Math.Floor((double)(index / 2));
+
+                var cap = CalculateAugCap(index);
+
+                if (cap < _character.idleEnergy)
+                {
+                    Main.LogAllocation($"Allocating {cap} to Aug {index} ({_character.idleEnergy} idle)");
+                    _character.input.energyRequested.text = cap.ToString();
+                }
+                else
+                {
+                    Main.LogAllocation($"Allocating {_character.idleEnergy} to EnergyTM ({cap} cap)");
+                    _character.input.energyRequested.text = _character.idleEnergy.ToString();
+                }
+                _character.input.validateInput();
+
+                if (index % 2 == 0)
+                {
+                    _character.augmentsController.augments[augIndex].addEnergyAug();
+                }
+                else
+                {
+                    _character.augmentsController.augments[augIndex].addEnergyUpgrade();
+                }
             }
         }
 
@@ -830,6 +866,87 @@ namespace NGUInjector.AllocationProfiles
             double num = (double)_character.totalEnergyPower() / (double)_character.timeMachineController.baseSpeedDivider() * ((double)energy / 50000) * (double)_character.hacksController.totalTMSpeedBonus() * (double)_character.allChallenges.timeMachineChallenge.TMSpeedBonus() * (double)_character.cardsController.getBonus(cardBonus.TMSpeed) / (double)(_character.machine.levelSpeed + 1L);
             Main.LogAllocation($"Calculated Energy: {energy}");
             Main.LogAllocation($"Deviation from game formula: {num}");
+        }
+
+        internal float CalculateAugCap(int index)
+        {
+            var augIndex = (int)Math.Floor((double)(index / 2));
+            double formula = 0;
+            if (index % 2 == 0)
+            {
+                formula = 50000 * (1f + _character.augments.augs[augIndex].augLevel + 500) /
+                    (_character.totalEnergyPower() *
+                    (1 + _character.inventoryController.bonuses[specType.Augs]) *
+                    _character.inventory.macguffinBonuses[12] *
+                    _character.hacksController.totalAugSpeedBonus() *
+                    _character.cardsController.getBonus(cardBonus.augSpeed) *
+                    _character.adventureController.itopod.totalAugSpeedBonus() *
+                    (1.0 + (double)_character.allChallenges.noAugsChallenge.evilCompletions() * 0.0500000007450581));
+
+                if (_character.allChallenges.noAugsChallenge.completions() >= 1)
+                {
+                    formula /= 1.10000002384186;
+                }
+                if (_character.allChallenges.noAugsChallenge.evilCompletions() >= _character.allChallenges.noAugsChallenge.maxCompletions)
+                {
+                    formula /= 1.25;
+                }
+                if (_character.settings.rebirthDifficulty >= difficulty.sadistic)
+                {
+                    formula *= (double)_character.augmentsController.augments[index].sadisticDivider();
+                }
+                if (_character.settings.rebirthDifficulty == difficulty.normal)
+                {
+                    formula *= _character.augmentsController.normalAugSpeedDividers[augIndex];
+                }
+                else if (_character.settings.rebirthDifficulty == difficulty.normal)
+                {
+                    formula *= _character.augmentsController.evilAugSpeedDividers[augIndex];
+                }
+                else if (_character.settings.rebirthDifficulty == difficulty.normal)
+                {
+                    formula *= _character.augmentsController.sadisticAugSpeedDividers[augIndex];
+                }
+            }
+            else
+            {
+                formula = 50000 * (1f + _character.augments.augs[augIndex].upgradeLevel + 500) /
+                    (_character.totalEnergyPower() *
+                    (1 + _character.inventoryController.bonuses[specType.Augs]) *
+                    _character.inventory.macguffinBonuses[12] *
+                    _character.hacksController.totalAugSpeedBonus() *
+                    _character.cardsController.getBonus(cardBonus.augSpeed) *
+                    _character.adventureController.itopod.totalAugSpeedBonus() *
+                    (1.0 + (double)_character.allChallenges.noAugsChallenge.evilCompletions() * 0.0500000007450581));
+
+                if (_character.allChallenges.noAugsChallenge.completions() >= 1)
+                {
+                    formula /= 1.10000002384186;
+                }
+                if (_character.allChallenges.noAugsChallenge.evilCompletions() >= _character.allChallenges.noAugsChallenge.maxCompletions)
+                {
+                    formula /= 1.25;
+                }
+                if (_character.settings.rebirthDifficulty >= difficulty.sadistic)
+                {
+                    formula *= (double)_character.augmentsController.augments[index].sadisticDivider();
+                }
+                if (_character.settings.rebirthDifficulty == difficulty.normal)
+                {
+                    formula *= _character.augmentsController.normalUpgradeSpeedDividers[augIndex];
+
+                }
+                else if (_character.settings.rebirthDifficulty == difficulty.normal)
+                {
+                    formula *= _character.augmentsController.evilUpgradeSpeedDividers[augIndex];
+
+                }
+                else if (_character.settings.rebirthDifficulty == difficulty.normal)
+                {
+                    formula *= _character.augmentsController.sadisticUpgradeSpeedDividers[augIndex];
+                }
+            }
+            return (float)formula;
         }
 
         private bool IsBTUnlocked(int index)
