@@ -475,6 +475,7 @@ namespace NGUInjector
                         var ePurchase = Character.energyPurchases;
                         var total = ePurchase.customAllCost();
                         var numPurchases = Math.Floor((double)(Character.realExp / total));
+                        Log($"Buying {numPurchases} exp purchases");
                         var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
                             BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                         if (ePurchaseMethod != null)
@@ -495,6 +496,7 @@ namespace NGUInjector
                             BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                         var mPurchaseMethod = mPurchase.GetType().GetMethod("buyCustomAll",
                             BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                        Log($"Buying {numPurchases} e/m purchases");
                         if (ePurchaseMethod != null && mPurchaseMethod != null)
                         {
                             for (var i = 0; i < numPurchases; i++)
