@@ -152,7 +152,11 @@ namespace NGUInjector
                         QuestFastCombat = true,
                         AbandonMinors = false,
                         MinorAbandonThreshold = 30,
-                        QuestCombatMode = 0
+                        QuestCombatMode = 0,
+                        AutoBuyEM = false,
+                        AutoSpellSwap = false,
+                        CounterfeitThreshold = 30,
+                        SpaghettiThreshold = 400
                     };
 
                     Settings.MassUpdate(temp);
@@ -459,6 +463,47 @@ namespace NGUInjector
                 {
                     _yggManager.ManageYggHarvest();
                     _yggManager.CheckFruits();
+                }
+
+                if (Settings.AutoBuyEM)
+                {
+                    //We haven't unlocked custom purchases yet
+                    if (Character.highestBoss < 17) return;
+                    //Magic isn't unlocked yet
+                    if (Character.highestBoss < 37)
+                    {
+                        var ePurchase = Character.energyPurchases;
+                        var total = ePurchase.customAllCost();
+                        var numPurchases = Math.Floor((double)(Character.realExp / total));
+                        var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
+                            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                        if (ePurchaseMethod != null)
+                        {
+                            for (var i = 0; i < numPurchases; i++)
+                            {
+                                ePurchaseMethod.Invoke(ePurchase, null);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var ePurchase = Character.energyPurchases;
+                        var mPurchase = Character.magicPurchases;
+                        var total = ePurchase.customAllCost() + mPurchase.customAllCost();
+                        var numPurchases = Math.Floor((double)(Character.realExp / total));
+                        var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
+                            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                        var mPurchaseMethod = mPurchase.GetType().GetMethod("buyCustomAll",
+                            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                        if (ePurchaseMethod != null && mPurchaseMethod != null)
+                        {
+                            for (var i = 0; i < numPurchases; i++)
+                            {
+                                ePurchaseMethod.Invoke(ePurchase, null);
+                                mPurchaseMethod.Invoke(mPurchase, null);
+                            }
+                        }
+                    }
                 }
 
                 if (Settings.ManageGear)

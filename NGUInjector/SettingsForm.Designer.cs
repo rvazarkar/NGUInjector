@@ -34,7 +34,6 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.TestButton = new System.Windows.Forms.Button();
             this.MoneyPitThresholdSave = new System.Windows.Forms.Button();
             this.MoneyPitThreshold = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -133,6 +132,7 @@
             this.goldErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SaveSpellCapButton = new System.Windows.Forms.Button();
+            this.AutoBuyEM = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -188,7 +188,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.TestButton);
+            this.tabPage1.Controls.Add(this.AutoBuyEM);
             this.tabPage1.Controls.Add(this.MoneyPitThresholdSave);
             this.tabPage1.Controls.Add(this.MoneyPitThreshold);
             this.tabPage1.Controls.Add(this.label7);
@@ -200,13 +200,6 @@
             resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // TestButton
-            // 
-            resources.ApplyResources(this.TestButton, "TestButton");
-            this.TestButton.Name = "TestButton";
-            this.TestButton.UseVisualStyleBackColor = true;
-            this.TestButton.Click += new System.EventHandler(this.TestButton_Click);
             // 
             // MoneyPitThresholdSave
             // 
@@ -973,6 +966,13 @@
             this.SaveSpellCapButton.UseVisualStyleBackColor = true;
             this.SaveSpellCapButton.Click += new System.EventHandler(this.SaveSpellCapButton_Click);
             // 
+            // AutoBuyEM
+            // 
+            resources.ApplyResources(this.AutoBuyEM, "AutoBuyEM");
+            this.AutoBuyEM.Name = "AutoBuyEM";
+            this.AutoBuyEM.UseVisualStyleBackColor = true;
+            this.AutoBuyEM.CheckedChanged += new System.EventHandler(this.AutoBuyEM_CheckedChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1102,7 +1102,6 @@
         private System.Windows.Forms.CheckBox AllowFallthrough;
         private System.Windows.Forms.CheckBox UseGoldLoadout;
         private System.Windows.Forms.ErrorProvider goldErrorProvider;
-        private System.Windows.Forms.Button TestButton;
         private System.Windows.Forms.TabPage tabPage8;
         private System.Windows.Forms.CheckBox AllowMajor;
         private System.Windows.Forms.CheckBox ManageQuests;
@@ -1121,5 +1120,6 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.CheckBox AutoSpellSwap;
         private System.Windows.Forms.Button SaveSpellCapButton;
+        private System.Windows.Forms.CheckBox AutoBuyEM;
     }
 }

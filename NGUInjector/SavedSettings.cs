@@ -52,9 +52,11 @@ namespace NGUInjector
         [SerializeField] private bool _autoSpellSwap;
         [SerializeField] private int _spaghettiThreshold;
         [SerializeField] private int _counterfeitThreshold;
+        [SerializeField] private bool _autoBuyEm;
 
         private readonly string _savePath;
         
+
         public SavedSettings(string dir)
         {
             if (dir != null)
@@ -152,6 +154,7 @@ namespace NGUInjector
             _autoSpellSwap = other.AutoSpellSwap;
             _counterfeitThreshold = other.CounterfeitThreshold;
             _spaghettiThreshold = other.SpaghettiThreshold;
+            _autoBuyEm = other.AutoBuyEM;
         }
 
         public int HighestAKZone
@@ -592,6 +595,18 @@ namespace NGUInjector
                 if (value == _counterfeitThreshold) return;
                 _counterfeitThreshold = value;
                 SaveSettings();
+            }
+        }
+
+        public bool AutoBuyEM
+        {
+            get => _autoBuyEm;
+            set
+            {
+                if (value == _autoBuyEm) return;
+                _autoBuyEm = value;
+                SaveSettings();
+                ;
             }
         }
     }

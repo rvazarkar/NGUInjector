@@ -147,32 +147,35 @@
   <data name="&gt;&gt;progressBar1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="TestButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 190</value>
+  <data name="AutoBuyEM.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="TestButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+  <data name="AutoBuyEM.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 120</value>
   </data>
-  <data name="TestButton.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+  <data name="AutoBuyEM.Size" type="System.Drawing.Size, System.Drawing">
+    <value>139, 17</value>
   </data>
-  <data name="TestButton.Text" xml:space="preserve">
-    <value>Test</value>
+  <data name="AutoBuyEM.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
   </data>
-  <data name="&gt;&gt;TestButton.Name" xml:space="preserve">
-    <value>TestButton</value>
+  <data name="AutoBuyEM.Text" xml:space="preserve">
+    <value>Auto Buy Energy/Magic</value>
   </data>
-  <data name="&gt;&gt;TestButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;AutoBuyEM.Name" xml:space="preserve">
+    <value>AutoBuyEM</value>
   </data>
-  <data name="&gt;&gt;TestButton.Parent" xml:space="preserve">
+  <data name="&gt;&gt;AutoBuyEM.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AutoBuyEM.Parent" xml:space="preserve">
     <value>tabPage1</value>
   </data>
-  <data name="&gt;&gt;TestButton.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;AutoBuyEM.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="MoneyPitThresholdSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>243, 124</value>
+    <value>243, 147</value>
   </data>
   <data name="MoneyPitThresholdSave.Size" type="System.Drawing.Size, System.Drawing">
     <value>76, 20</value>
@@ -196,7 +199,7 @@
     <value>1</value>
   </data>
   <data name="MoneyPitThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>113, 124</value>
+    <value>113, 147</value>
   </data>
   <data name="MoneyPitThreshold.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 20</value>
@@ -220,7 +223,7 @@
     <value>True</value>
   </data>
   <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 127</value>
+    <value>3, 150</value>
   </data>
   <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 13</value>

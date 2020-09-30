@@ -127,8 +127,6 @@ namespace NGUInjector
 
             prioUpButton.Text = char.ConvertFromUtf32(8593);
             prioDownButton.Text = char.ConvertFromUtf32(8595);
-
-            //TestButton.Visible = false;
         }
 
         internal void SetSnipeZone(ComboBox control, int setting)
@@ -180,6 +178,7 @@ namespace NGUInjector
             AutoSpellSwap.Checked = newSettings.AutoSpellSwap;
             SpaghettiCap.Value = newSettings.SpaghettiThreshold;
             CounterfeitCap.Value = newSettings.CounterfeitThreshold;
+            AutoBuyEM.Checked = newSettings.AutoBuyEM;
 
             yggdrasilLoadoutBox.DataSource = null;
             yggdrasilLoadoutBox.DataSource = new BindingSource(Main.Settings.YggdrasilLoadout, null);
@@ -859,6 +858,12 @@ namespace NGUInjector
             //{
             //    CustomAllocation.
             //}
+        }
+
+        private void AutoBuyEM_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.AutoBuyEM = AutoBuyEM.Checked;
         }
     }
 }
