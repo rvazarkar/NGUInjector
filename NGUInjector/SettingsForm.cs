@@ -128,7 +128,7 @@ namespace NGUInjector
             prioUpButton.Text = char.ConvertFromUtf32(8593);
             prioDownButton.Text = char.ConvertFromUtf32(8595);
 
-            VersionLabel.Text = $"Version: {Main.version}";
+            VersionLabel.Text = $"Version: {Main.Version}";
         }
 
         internal void SetSnipeZone(ComboBox control, int setting)
@@ -181,6 +181,7 @@ namespace NGUInjector
             SpaghettiCap.Value = newSettings.SpaghettiThreshold;
             CounterfeitCap.Value = newSettings.CounterfeitThreshold;
             AutoBuyEM.Checked = newSettings.AutoBuyEM;
+            BloodNumberThreshold.Text = newSettings.BloodNumberThreshold.ToString(CultureInfo.InvariantCulture);
 
             yggdrasilLoadoutBox.DataSource = null;
             yggdrasilLoadoutBox.DataSource = new BindingSource(Main.Settings.YggdrasilLoadout, null);
@@ -851,6 +852,21 @@ namespace NGUInjector
             if (_initializing) return;
             Main.Settings.SpaghettiThreshold = decimal.ToInt32(SpaghettiCap.Value);
             Main.Settings.CounterfeitThreshold = decimal.ToInt32(CounterfeitCap.Value);
+
+            var newVal = BloodNumberThreshold.Text;
+            if (double.TryParse(newVal, out var saved))
+            {
+                if (saved < 0)
+                {
+                    numberErrProvider.SetError(BloodNumberThreshold, "Not a valid value");
+                    return;
+                }
+                Main.Settings.BloodNumberThreshold = saved;
+            }
+            else
+            {
+                numberErrProvider.SetError(BloodNumberThreshold, "Not a valid value");
+            }
         }
 
         private void TestButton_Click(object sender, EventArgs e)

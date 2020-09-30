@@ -130,10 +130,12 @@
             this.invBlacklistErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.titanErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.goldErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SaveSpellCapButton = new System.Windows.Forms.Button();
             this.AutoBuyEM = new System.Windows.Forms.CheckBox();
             this.VersionLabel = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.BloodNumberThreshold = new System.Windows.Forms.TextBox();
+            this.numberErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -158,6 +160,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.invBlacklistErrProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.titanErrProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.goldErrorProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numberErrProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -258,6 +261,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.BloodNumberThreshold);
+            this.tabPage2.Controls.Add(this.label18);
             this.tabPage2.Controls.Add(this.SaveSpellCapButton);
             this.tabPage2.Controls.Add(this.AutoSpellSwap);
             this.tabPage2.Controls.Add(this.label17);
@@ -980,6 +985,20 @@
             resources.ApplyResources(this.VersionLabel, "VersionLabel");
             this.VersionLabel.Name = "VersionLabel";
             // 
+            // label18
+            // 
+            resources.ApplyResources(this.label18, "label18");
+            this.label18.Name = "label18";
+            // 
+            // BloodNumberThreshold
+            // 
+            resources.ApplyResources(this.BloodNumberThreshold, "BloodNumberThreshold");
+            this.BloodNumberThreshold.Name = "BloodNumberThreshold";
+            // 
+            // numberErrProvider
+            // 
+            this.numberErrProvider.ContainerControl = this;
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1019,6 +1038,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.invBlacklistErrProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.titanErrProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.goldErrorProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numberErrProvider)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1118,7 +1138,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox QuestCombatMode;
         private System.Windows.Forms.CheckBox QuestFastCombat;
-        private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.NumericUpDown CounterfeitCap;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.NumericUpDown SpaghettiCap;
@@ -1129,5 +1148,8 @@
         private System.Windows.Forms.Button SaveSpellCapButton;
         private System.Windows.Forms.CheckBox AutoBuyEM;
         private System.Windows.Forms.Label VersionLabel;
+        private System.Windows.Forms.TextBox BloodNumberThreshold;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ErrorProvider numberErrProvider;
     }
 }

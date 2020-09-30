@@ -34,7 +34,7 @@ namespace NGUInjector
         private CustomAllocation _profile;
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
-        internal const string version = "2.2.0";
+        internal const string Version = "2.2.1";
 
         internal static bool Test { get; set; }
 
@@ -157,7 +157,8 @@ namespace NGUInjector
                         AutoBuyEM = false,
                         AutoSpellSwap = false,
                         CounterfeitThreshold = 30,
-                        SpaghettiThreshold = 400
+                        SpaghettiThreshold = 400,
+                        BloodNumberThreshold = 1e10
                     };
 
                     Settings.MassUpdate(temp);
@@ -399,32 +400,13 @@ namespace NGUInjector
             {
                 var spaghetti = (Character.bloodMagicController.lootBonus() - 1) * 100;
                 var counterfeit = ((Character.bloodMagicController.goldBonus() - 1)) * 100;
-                if (Settings.SpaghettiThreshold > spaghetti)
-                {
-                    Character.bloodMagic.rebirthAutoSpell = false;
-                    Character.bloodMagic.goldAutoSpell = false;
-                    Character.bloodMagic.lootAutoSpell = true;
-                    Character.bloodSpells.updateGoldToggleState();
-                    Character.bloodSpells.updateLootToggleState();
-                    Character.bloodSpells.updateRebirthToggleState();
-                }else if (Settings.CounterfeitThreshold > counterfeit)
-                {
-                    Character.bloodMagic.rebirthAutoSpell = false;
-                    Character.bloodMagic.goldAutoSpell = true;
-                    Character.bloodMagic.lootAutoSpell = false;
-                    Character.bloodSpells.updateGoldToggleState();
-                    Character.bloodSpells.updateLootToggleState();
-                    Character.bloodSpells.updateRebirthToggleState();
-                }
-                else
-                {
-                    Character.bloodMagic.rebirthAutoSpell = true;
-                    Character.bloodMagic.goldAutoSpell = false;
-                    Character.bloodMagic.lootAutoSpell = false;
-                    Character.bloodSpells.updateGoldToggleState();
-                    Character.bloodSpells.updateLootToggleState();
-                    Character.bloodSpells.updateRebirthToggleState();
-                }
+                var number = Character.bloodMagic.rebirthPower;
+                Character.bloodMagic.rebirthAutoSpell = Settings.BloodNumberThreshold > number;
+                Character.bloodMagic.goldAutoSpell = Settings.CounterfeitThreshold > counterfeit;
+                Character.bloodMagic.lootAutoSpell = Settings.SpaghettiThreshold > spaghetti;
+                Character.bloodSpells.updateGoldToggleState();
+                Character.bloodSpells.updateLootToggleState();
+                Character.bloodSpells.updateRebirthToggleState();
             }
         }
 
@@ -476,16 +458,20 @@ namespace NGUInjector
                         var ePurchase = Character.energyPurchases;
                         var total = ePurchase.customAllCost();
                         var numPurchases = Math.Floor((double)(Character.realExp / total));
-                        Log($"Buying {numPurchases} exp purchases");
-                        var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
-                            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                        if (ePurchaseMethod != null)
+                        if (numPurchases > 0)
                         {
-                            for (var i = 0; i < numPurchases; i++)
+                            var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
+                                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                            if (ePurchaseMethod != null)
                             {
-                                ePurchaseMethod.Invoke(ePurchase, null);
+                                Log($"Buying {numPurchases} exp purchases");
+                                for (var i = 0; i < numPurchases; i++)
+                                {
+                                    ePurchaseMethod.Invoke(ePurchase, null);
+                                }
                             }
                         }
+                        
                     }
                     else
                     {
@@ -493,19 +479,23 @@ namespace NGUInjector
                         var mPurchase = Character.magicPurchases;
                         var total = ePurchase.customAllCost() + mPurchase.customAllCost();
                         var numPurchases = Math.Floor((double)(Character.realExp / total));
-                        var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
-                            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                        var mPurchaseMethod = mPurchase.GetType().GetMethod("buyCustomAll",
-                            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                        Log($"Buying {numPurchases} e/m purchases");
-                        if (ePurchaseMethod != null && mPurchaseMethod != null)
+                        if (numPurchases > 0)
                         {
-                            for (var i = 0; i < numPurchases; i++)
+                            var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
+                                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                            var mPurchaseMethod = mPurchase.GetType().GetMethod("buyCustomAll",
+                                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                            if (ePurchaseMethod != null && mPurchaseMethod != null)
                             {
-                                ePurchaseMethod.Invoke(ePurchase, null);
-                                mPurchaseMethod.Invoke(mPurchase, null);
+                                Log($"Buying {numPurchases} e/m purchases");
+                                for (var i = 0; i < numPurchases; i++)
+                                {
+                                    ePurchaseMethod.Invoke(ePurchase, null);
+                                    mPurchaseMethod.Invoke(mPurchase, null);
+                                }
                             }
                         }
+                        
                     }
                 }
 

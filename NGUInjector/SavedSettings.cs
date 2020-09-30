@@ -53,9 +53,11 @@ namespace NGUInjector
         [SerializeField] private int _spaghettiThreshold;
         [SerializeField] private int _counterfeitThreshold;
         [SerializeField] private bool _autoBuyEm;
+        [SerializeField] private double _bloodNumberThreshold;
 
         private readonly string _savePath;
         
+
 
         public SavedSettings(string dir)
         {
@@ -155,6 +157,7 @@ namespace NGUInjector
             _counterfeitThreshold = other.CounterfeitThreshold;
             _spaghettiThreshold = other.SpaghettiThreshold;
             _autoBuyEm = other.AutoBuyEM;
+            _bloodNumberThreshold = other.BloodNumberThreshold;
         }
 
         public int HighestAKZone
@@ -606,7 +609,17 @@ namespace NGUInjector
                 if (value == _autoBuyEm) return;
                 _autoBuyEm = value;
                 SaveSettings();
-                ;
+            }
+        }
+
+        public double BloodNumberThreshold
+        {
+            get => _bloodNumberThreshold;
+            set
+            {
+                if (value == _bloodNumberThreshold) return;
+                _bloodNumberThreshold = value;
+                SaveSettings();
             }
         }
     }
