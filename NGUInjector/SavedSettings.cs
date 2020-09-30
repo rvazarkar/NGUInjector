@@ -49,11 +49,12 @@ namespace NGUInjector
         [SerializeField] private int _minorAbandonThreshold;
         [SerializeField] private int _questCombatMode;
         [SerializeField] private bool _questFastCombat;
+        [SerializeField] private bool _autoSpellSwap;
+        [SerializeField] private int _spaghettiThreshold;
+        [SerializeField] private int _counterfeitThreshold;
 
         private readonly string _savePath;
         
-
-
         public SavedSettings(string dir)
         {
             if (dir != null)
@@ -148,6 +149,9 @@ namespace NGUInjector
             _minorAbandonThreshold = other.MinorAbandonThreshold;
             _questCombatMode = other.QuestCombatMode;
             _questFastCombat = other.QuestFastCombat;
+            _autoSpellSwap = other.AutoSpellSwap;
+            _counterfeitThreshold = other.CounterfeitThreshold;
+            _spaghettiThreshold = other.SpaghettiThreshold;
         }
 
         public int HighestAKZone
@@ -554,6 +558,39 @@ namespace NGUInjector
             {
                 if (value == _questFastCombat) return;
                 _questFastCombat = value;
+                SaveSettings();
+            }
+        }
+
+        public bool AutoSpellSwap
+        {
+            get => _autoSpellSwap;
+            set
+            {
+                if (value == _autoSpellSwap) return;
+                _autoSpellSwap = value;
+                SaveSettings();
+            }
+        }
+
+        public int SpaghettiThreshold
+        {
+            get => _spaghettiThreshold;
+            set
+            {
+                if (value == _spaghettiThreshold) return;
+                _spaghettiThreshold = value;
+                SaveSettings();
+            }
+        }
+
+        public int CounterfeitThreshold
+        {
+            get => _counterfeitThreshold;
+            set
+            {
+                if (value == _counterfeitThreshold) return;
+                _counterfeitThreshold = value;
                 SaveSettings();
             }
         }

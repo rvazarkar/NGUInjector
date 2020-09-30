@@ -322,10 +322,10 @@ namespace NGUInjector
         void QuickStuff()
         {
             //Turn on autoattack if we're in ITOPOD and its not on
-                if (Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking && !SnipeActive)
-                {
-                    Character.adventureController.idleAttackMove.setToggle();
-                }
+            if (Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking && !SnipeActive)
+            {
+                Character.adventureController.idleAttackMove.setToggle();
+            }
 
             if (Settings.AutoFight)
             {
@@ -380,6 +380,38 @@ namespace NGUInjector
             if (Settings.AutoQuestITOPOD)
             {
                 MoveToITOPOD();
+            }
+
+            if (Settings.AutoSpellSwap)
+            {
+                var spaghetti = (Character.bloodMagicController.lootBonus() - 1) * 100;
+                var counterfeit = ((Character.bloodMagicController.goldBonus() - 1)) * 100;
+                if (Settings.SpaghettiThreshold > spaghetti)
+                {
+                    Character.bloodMagic.rebirthAutoSpell = false;
+                    Character.bloodMagic.goldAutoSpell = false;
+                    Character.bloodMagic.lootAutoSpell = true;
+                    Character.bloodSpells.updateGoldToggleState();
+                    Character.bloodSpells.updateLootToggleState();
+                    Character.bloodSpells.updateRebirthToggleState();
+                }else if (Settings.CounterfeitThreshold > counterfeit)
+                {
+                    Character.bloodMagic.rebirthAutoSpell = false;
+                    Character.bloodMagic.goldAutoSpell = true;
+                    Character.bloodMagic.lootAutoSpell = false;
+                    Character.bloodSpells.updateGoldToggleState();
+                    Character.bloodSpells.updateLootToggleState();
+                    Character.bloodSpells.updateRebirthToggleState();
+                }
+                else
+                {
+                    Character.bloodMagic.rebirthAutoSpell = true;
+                    Character.bloodMagic.goldAutoSpell = false;
+                    Character.bloodMagic.lootAutoSpell = false;
+                    Character.bloodSpells.updateGoldToggleState();
+                    Character.bloodSpells.updateLootToggleState();
+                    Character.bloodSpells.updateRebirthToggleState();
+                }
             }
         }
 

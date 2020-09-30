@@ -127,7 +127,7 @@ namespace NGUInjector
             prioUpButton.Text = char.ConvertFromUtf32(8593);
             prioDownButton.Text = char.ConvertFromUtf32(8595);
 
-            TestButton.Visible = false;
+            //TestButton.Visible = false;
         }
 
         internal void SetSnipeZone(ComboBox control, int setting)
@@ -176,6 +176,9 @@ namespace NGUInjector
             AbandonMinorThreshold.Value = newSettings.MinorAbandonThreshold;
             QuestFastCombat.Checked = newSettings.QuestFastCombat;
             UseGoldLoadout.Checked = newSettings.NextGoldSwap;
+            AutoSpellSwap.Checked = newSettings.AutoSpellSwap;
+            SpaghettiCap.Value = newSettings.SpaghettiThreshold;
+            CounterfeitCap.Value = newSettings.CounterfeitThreshold;
 
             yggdrasilLoadoutBox.DataSource = null;
             yggdrasilLoadoutBox.DataSource = new BindingSource(Main.Settings.YggdrasilLoadout, null);
@@ -667,7 +670,8 @@ namespace NGUInjector
         private void TestButton_Click(object sender, EventArgs e)
         {
             var c = Main.Character;
-            Main.Log($"Interactable: {c.buttons.brokenTimeMachine.interactable}\nBaseGold: {c.machine.realBaseGold}\n Zone:{Main.Settings.InitialGoldZone}\n Total: {c.adventureController.zoneDropdown.options.Count}");
+            Main.Log($"Spaghetti: {c.bloodMagicController.lootBonus()}");
+            Main.Log($"Counterfeit: {c.bloodMagicController.goldBonus()}");
         }
 
         private void ManageQuests_CheckedChanged(object sender, EventArgs e)
@@ -841,33 +845,17 @@ namespace NGUInjector
             }
         }
 
-        //private void ListBoxOnMouseHover(object sender, MouseEventArgs eventArgs)
-        //{
-        //    if (!(sender is ListBox listbox)) return;
+        private void AutoSpellSwap_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.AutoSpellSwap = AutoSpellSwap.Checked;
+        }
 
-        //    string str;
-        //    var index = listbox.IndexFromPoint(eventArgs.Location);
-
-        //    if ((index >= 0) && (index < listbox.Items.Count))
-        //    {
-        //        str = Main.Character.itemInfo.itemName[(int)listbox.Items[index]];
-
-        //        if (str != string.Empty && toolTip1.GetToolTip(listbox) != str)
-        //        {
-        //            toolTip1.SetToolTip(listbox, str);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        toolTip1.Hide(listbox);
-        //    }
-
-            
-        //}
-
-        //private void yggdrasilLoadoutBox_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    ListBoxOnMouseHover(sender, e);
-        //}
+        private void SaveSpellCapButton_Click(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.SpaghettiThreshold = decimal.ToInt32(SpaghettiCap.Value);
+            Main.Settings.CounterfeitThreshold = decimal.ToInt32(CounterfeitCap.Value);
+        }
     }
 }

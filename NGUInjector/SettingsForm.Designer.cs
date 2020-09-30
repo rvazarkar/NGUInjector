@@ -44,6 +44,13 @@
             this.AutoFightBosses = new System.Windows.Forms.CheckBox();
             this.AutoITOPOD = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.AutoSpellSwap = new System.Windows.Forms.CheckBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.CounterfeitCap = new System.Windows.Forms.NumericUpDown();
+            this.label16 = new System.Windows.Forms.Label();
+            this.SpaghettiCap = new System.Windows.Forms.NumericUpDown();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.AutoRebirth = new System.Windows.Forms.CheckBox();
             this.ManageWandoos = new System.Windows.Forms.CheckBox();
             this.ManageDiggers = new System.Windows.Forms.CheckBox();
@@ -125,10 +132,13 @@
             this.titanErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.goldErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.SaveSpellCapButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CounterfeitCap)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpaghettiCap)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.yggLoadoutItem)).BeginInit();
             this.tabPage4.SuspendLayout();
@@ -253,6 +263,14 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.SaveSpellCapButton);
+            this.tabPage2.Controls.Add(this.AutoSpellSwap);
+            this.tabPage2.Controls.Add(this.label17);
+            this.tabPage2.Controls.Add(this.CounterfeitCap);
+            this.tabPage2.Controls.Add(this.label16);
+            this.tabPage2.Controls.Add(this.SpaghettiCap);
+            this.tabPage2.Controls.Add(this.label15);
+            this.tabPage2.Controls.Add(this.label14);
             this.tabPage2.Controls.Add(this.AutoRebirth);
             this.tabPage2.Controls.Add(this.ManageWandoos);
             this.tabPage2.Controls.Add(this.ManageDiggers);
@@ -262,6 +280,54 @@
             resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // AutoSpellSwap
+            // 
+            resources.ApplyResources(this.AutoSpellSwap, "AutoSpellSwap");
+            this.AutoSpellSwap.Name = "AutoSpellSwap";
+            this.AutoSpellSwap.UseVisualStyleBackColor = true;
+            this.AutoSpellSwap.CheckedChanged += new System.EventHandler(this.AutoSpellSwap_CheckedChanged);
+            // 
+            // label17
+            // 
+            this.label17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.label17, "label17");
+            this.label17.Name = "label17";
+            // 
+            // CounterfeitCap
+            // 
+            resources.ApplyResources(this.CounterfeitCap, "CounterfeitCap");
+            this.CounterfeitCap.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.CounterfeitCap.Name = "CounterfeitCap";
+            // 
+            // label16
+            // 
+            resources.ApplyResources(this.label16, "label16");
+            this.label16.Name = "label16";
+            // 
+            // SpaghettiCap
+            // 
+            resources.ApplyResources(this.SpaghettiCap, "SpaghettiCap");
+            this.SpaghettiCap.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.SpaghettiCap.Name = "SpaghettiCap";
+            // 
+            // label15
+            // 
+            resources.ApplyResources(this.label15, "label15");
+            this.label15.Name = "label15";
+            // 
+            // label14
+            // 
+            resources.ApplyResources(this.label14, "label14");
+            this.label14.Name = "label14";
             // 
             // AutoRebirth
             // 
@@ -900,6 +966,13 @@
             // 
             this.goldErrorProvider.ContainerControl = this;
             // 
+            // SaveSpellCapButton
+            // 
+            resources.ApplyResources(this.SaveSpellCapButton, "SaveSpellCapButton");
+            this.SaveSpellCapButton.Name = "SaveSpellCapButton";
+            this.SaveSpellCapButton.UseVisualStyleBackColor = true;
+            this.SaveSpellCapButton.Click += new System.EventHandler(this.SaveSpellCapButton_Click);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -913,6 +986,8 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CounterfeitCap)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpaghettiCap)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.yggLoadoutItem)).EndInit();
@@ -1038,5 +1113,13 @@
         private System.Windows.Forms.ComboBox QuestCombatMode;
         private System.Windows.Forms.CheckBox QuestFastCombat;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.NumericUpDown CounterfeitCap;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.NumericUpDown SpaghettiCap;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.CheckBox AutoSpellSwap;
+        private System.Windows.Forms.Button SaveSpellCapButton;
     }
 }
