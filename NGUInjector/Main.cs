@@ -334,7 +334,7 @@ namespace NGUInjector
         void QuickStuff()
         {
             //Turn on autoattack if we're in ITOPOD and its not on
-            if (Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking && !SnipeActive)
+            if (Settings.AutoQuestITOPOD && Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking && !SnipeActive)
             {
                 Character.adventureController.idleAttackMove.setToggle();
             }
