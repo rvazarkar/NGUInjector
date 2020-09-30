@@ -109,7 +109,7 @@ An in game menu can be opened using the F1 button.
 
 # Allocation
 
-The allocation.json file is a JSON file that contains time breakpoints for configuring your gear, diggers, energy allocation and magic allocation. A sample allocation file can be found in the sampleprofile folder or on the repo [here](https://github.com/rvazarkar/NGUInjector/blob/master/NGUInjector/SampleProfiles/24hr.json).
+The allocation.json file is a JSON file that contains time breakpoints for configuring your gear, diggers, energy allocation and magic allocation. A sample allocation file can be found in the sampleprofile folder or on the repo [here](https://github.com/rvazarkar/NGUInjector/blob/master/NGUInjector/SampleProfiles/24hr_with_gear.json).
 
 The time portion of every breakpoint refers to rebirth time in seconds.
 
