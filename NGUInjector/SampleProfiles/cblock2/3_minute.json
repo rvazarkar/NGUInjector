@@ -1,0 +1,58 @@
+{
+  "Breakpoints": {
+    "Magic": [
+      {
+        "Time": 0,
+        "Priorities": ["CAPTM", "WAN"]
+      },
+      {
+        "Time": 60,
+        "Priorities": ["BR", "WAN"]
+      }
+    ],
+    "Energy": [
+      {
+        "Time": 0,
+        "Priorities": ["CAPTM", "AUG-0", "WAN"]
+      },
+      {
+        "Time": 60,
+        "Priorities": ["CAPWAN", "AUG-8", "AUG-9"]
+      }
+    ],
+    "Gear": [
+      {
+        "Time": 0,
+        "ID": [],
+        "Comment": "Time Machine"
+      },
+      {
+        "Time": 60,
+        "ID": [],
+        "Comment": "Augments"
+      },
+      {
+        "Time": 180,
+        "ID": [],
+        "Comment": "Max P/T"
+      }
+    ],
+    "Wandoos": [
+      {
+        "Time": 0,
+        "OS": 1
+      }
+    ],
+    "Diggers": [
+      {
+        "Time": 60,
+        "List": [1, 2]
+      },
+      {
+        "Time": 120,
+        "List": [1, 2]
+      }
+    ],
+    "RebirthTime": 191
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "Breakpoints": {
+    "Magic": [
+      {
+        "Time": 0,
+        "Priorities": ["WAN"]
+      },
+      {
+        "Time": 60,
+        "Priorities": ["BR", "WAN"]
+      },
+      {
+        "Time": 240,
+        "Priorities": ["CAPWAN"]
+      }
+    ],
+    "Energy": [
+      {
+        "Time": 0,
+        "Priorities": ["WAN"]
+      },
+      {
+        "Time": 60,
+        "Priorities": ["CAPWAN"]
+      },
+      {
+        "Time": 240,
+        "Priorities": ["CAPWAN", "AUG-8", "AUG-9"]
+      }
+    ],
+    "Gear": [
+      {
+        "Time": 0,
+        "ID": [],
+        "Comment": "Gold Drop"
+      },
+      {
+        "Time": 420,
+        "ID": [],
+        "Comment": "Max P/T"
+      }
+    ],
+    "Wandoos": [
+      {
+        "Time": 0,
+        "OS": 1
+      }
+    ],
+    "Diggers": [],
+    "RebirthTime": 431
+  }
+}
