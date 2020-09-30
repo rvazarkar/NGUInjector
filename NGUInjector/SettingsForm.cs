@@ -127,6 +127,8 @@ namespace NGUInjector
 
             prioUpButton.Text = char.ConvertFromUtf32(8593);
             prioDownButton.Text = char.ConvertFromUtf32(8595);
+
+            VersionLabel.Text = $"Version: {Main.version}";
         }
 
         internal void SetSnipeZone(ComboBox control, int setting)

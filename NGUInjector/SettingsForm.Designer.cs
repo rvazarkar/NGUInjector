@@ -133,6 +133,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SaveSpellCapButton = new System.Windows.Forms.Button();
             this.AutoBuyEM = new System.Windows.Forms.CheckBox();
+            this.VersionLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -188,6 +189,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.VersionLabel);
             this.tabPage1.Controls.Add(this.AutoBuyEM);
             this.tabPage1.Controls.Add(this.MoneyPitThresholdSave);
             this.tabPage1.Controls.Add(this.MoneyPitThreshold);
@@ -973,6 +975,11 @@
             this.AutoBuyEM.UseVisualStyleBackColor = true;
             this.AutoBuyEM.CheckedChanged += new System.EventHandler(this.AutoBuyEM_CheckedChanged);
             // 
+            // VersionLabel
+            // 
+            resources.ApplyResources(this.VersionLabel, "VersionLabel");
+            this.VersionLabel.Name = "VersionLabel";
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1121,5 +1128,6 @@
         private System.Windows.Forms.CheckBox AutoSpellSwap;
         private System.Windows.Forms.Button SaveSpellCapButton;
         private System.Windows.Forms.CheckBox AutoBuyEM;
+        private System.Windows.Forms.Label VersionLabel;
     }
 }
