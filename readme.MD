@@ -4,7 +4,7 @@ NGUInjector is an automation platform for the steam version of NGU Idle.
 
 # Instructions
 
-Releases can be found in the releases section of the github page [here](https://github.com/rvazarkar/NGUInjector/releases). The latest release can be found [here](https://github.com/rvazarkar/NGUInjector/releases/latest). Extract the downloaded archive to a directory of your choice. To start automation, run inject.bat as an administrator in the extracted folder when NGU Idle is open.
+Releases can be found in the releases section of the github page [here](https://github.com/rvazarkar/NGUInjector/releases). The latest release can be found [here](https://github.com/rvazarkar/NGUInjector/releases/latest). Do not download the source code archive, instead download the zip file with the release version in the name. Extract the downloaded archive to a directory of your choice. To start automation, run inject.bat as an administrator in the extracted folder when NGU Idle is open.
 
 You'll know the injection has worked if you see the following in the upper left portion of NGU.
 
@@ -32,7 +32,7 @@ Saving either file will automatically reload the settings in the configuration f
 
 An in game menu can be opened using the F1 button.
 
-![General Settings](https://i.imgur.com/pCyVNGW.png)
+![General Settings](https://i.imgur.com/eceDl71.png)
 
 - **Master Switch** - If turned off, will disable all automation
 
@@ -40,6 +40,7 @@ An in game menu can be opened using the F1 button.
 - **Auto Money Pit** - Automatically throw money into the money pit if the Money Pit Threshold is met. Logs the result to the loot.log file
 - **Auto Move to ITOPOD** - Automatically move to ITOPOD when nothing else is happening in automation.
 - **Auto Fight Bosses** - Automatically nuke/fight bosses.
+- **Auto Buy Energy/Magic** - Automatically spend EXP on energy/magic. Will use the custom caps set by the user in the spend exp page. Will always buy energy and magic in pairs.
 - **Money Pit Threshold** - The amount of gold to wait for to throw gold into the money pit. Accepts scientific notation (ex: 1E+28)
 
 ![Allocation Settings](https://i.imgur.com/2KBRwAH.png)
