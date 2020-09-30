@@ -68,6 +68,9 @@ namespace NGUInjector.AllocationProfiles
                 priorities.RemoveAll(x => x.Contains("BR"));
             }
 
+            priorities.RemoveAll(x => x.Contains("AUG") && !IsAUGUnlocked(ParseIndex(x)));
+            priorities.RemoveAll(x => x.Contains("BT") && !IsBTUnlocked(ParseIndex(x)));
+
             return priorities;
         }
 
@@ -577,9 +580,6 @@ namespace NGUInjector.AllocationProfiles
                 if (!success || index < 0 || index > 11)
                     return;
 
-                if (!IsBTUnlocked(index))
-                    return;
-
                 if (index <= 5)
                     _character.allOffenseController.trains[index].cap();
                 else
@@ -593,9 +593,6 @@ namespace NGUInjector.AllocationProfiles
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 11)
-                    return;
-
-                if (!IsBTUnlocked(index))
                     return;
 
                 if (index <= 5)
@@ -744,9 +741,6 @@ namespace NGUInjector.AllocationProfiles
                     return;
                 }
 
-                if (!IsAUGUnlocked(index))
-                    return;
-
                 var augIndex = (int)Math.Floor((double)(index / 2));
 
                 if (index % 2 == 0)
@@ -840,6 +834,16 @@ namespace NGUInjector.AllocationProfiles
 
         private bool IsBTUnlocked(int index)
         {
+            if (index < 0)
+            {
+                return false;
+            }
+
+            if (index > 11)
+            {
+                return false;
+            }
+
             if (index <= 5)
             {
                 if (index == 0)
@@ -855,6 +859,16 @@ namespace NGUInjector.AllocationProfiles
 
         private bool IsAUGUnlocked(int index)
         {
+            if (index < 0)
+            {
+                return false;
+            }
+
+            if (index > 13)
+            {
+                return false;
+            }
+
             var augIndex = (int)Math.Floor((double)(index / 2));
 
             if (index % 2 == 0)
@@ -893,15 +907,12 @@ namespace NGUInjector.AllocationProfiles
             return baseTime * (_character.advancedTraining.level[index] + 500 + 1f);
         }
 
-        //private int ParseIndex(string prio)
-        //{
-
-        //}
-
-        //private int ParseAugIndex(string prio)
-        //{
-
-        //}
+        private int ParseIndex(string prio)
+        {
+            var success = int.TryParse(prio.Split('-')[1], out var index);
+            if (success) return index;
+            return -1;
+        }
     }
 
     [Serializable]
