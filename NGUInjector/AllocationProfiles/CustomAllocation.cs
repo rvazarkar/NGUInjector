@@ -774,7 +774,7 @@ namespace NGUInjector.AllocationProfiles
                 }
                 else
                 {
-                    Main.LogAllocation($"Allocating {_character.idleEnergy} to EnergyTM ({cap} cap)");
+                    Main.LogAllocation($"Allocating {_character.idleEnergy} to Aug {index} ({cap} cap)");
                     _character.input.energyRequested.text = _character.idleEnergy.ToString();
                 }
                 _character.input.validateInput();
