@@ -81,7 +81,7 @@ namespace NGUInjector.Managers
             result = result.Concat(equipped).ToList();
 
             //Finally, find locked items in inventory that aren't blacklisted
-            var invItems = ci.Where(x => x.locked && !Settings.BoostBlacklist.Contains(x.id) && !Settings.PriorityBoosts.Contains(x.id));
+            var invItems = ci.Where(x => x.locked && x.equipment.isEquipment() && !Settings.BoostBlacklist.Contains(x.id) && !Settings.PriorityBoosts.Contains(x.id));
             result = result.Concat(invItems).ToList();
 
             return result.ToArray();
@@ -231,7 +231,7 @@ namespace NGUInjector.Managers
         internal void MergeBoosts(ih[] ci)
         {
             var grouped = ci.Where(x =>
-                x.id <= 40 && !_character.inventory.inventory[x.slot].removable &&
+                x.id <= 39 && !_character.inventory.inventory[x.slot].removable &&
                 !_character.inventory.itemList.itemMaxxed[x.id]);
 
             foreach (var target in grouped)
@@ -450,7 +450,6 @@ namespace NGUInjector.Managers
             //Dont filter quest items
             if (id >= 278 && id <= 287)
                 return;
-
 
             _character.inventory.itemList.itemFiltered[id] = true;
         }
