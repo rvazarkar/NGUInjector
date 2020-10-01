@@ -466,7 +466,6 @@ namespace NGUInjector
                     _invManager.MergeEquipped();
                     _invManager.MergeInventory(converted);
                     _invManager.MergeBoosts(converted);
-                    _invManager.ManageQuestItems(converted);
                     _invManager.MergeGuffs(converted);
                     _invManager.BoostInventory(boostSlots);
                     _invManager.BoostInfinityCube();
@@ -551,8 +550,10 @@ namespace NGUInjector
                 if (Settings.ManageWandoos && Character.buttons.wandoos.interactable)
                     _profile.SwapOS();
 
-                if (Character.buttons.beast.interactable)
+                if (Settings.AutoQuest && Character.buttons.beast.interactable)
                 {
+                    var converted = Character.inventory.GetConvertedInventory().ToArray();
+                    _invManager.ManageQuestItems(converted);
                     _questManager.CheckQuestTurnin();
                     _questManager.ManageQuests();
                 }

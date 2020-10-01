@@ -38,9 +38,6 @@ namespace NGUInjector.Managers
 
         internal void ManageQuests()
         {
-            if (!Settings.AutoQuest)
-                return;
-
             //We're in a quest already.
             if (_character.beastQuest.inQuest)
             {
