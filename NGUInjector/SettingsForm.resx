@@ -1104,6 +1104,33 @@
   <data name="&gt;&gt;tabPage3.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="BalanceCube.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="BalanceCube.Location" type="System.Drawing.Point, System.Drawing">
+    <value>161, 29</value>
+  </data>
+  <data name="BalanceCube.Size" type="System.Drawing.Size, System.Drawing">
+    <value>115, 17</value>
+  </data>
+  <data name="BalanceCube.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="BalanceCube.Text" xml:space="preserve">
+    <value>Balance Cube P/T</value>
+  </data>
+  <data name="&gt;&gt;BalanceCube.Name" xml:space="preserve">
+    <value>BalanceCube</value>
+  </data>
+  <data name="&gt;&gt;BalanceCube.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BalanceCube.Parent" xml:space="preserve">
+    <value>tabPage4</value>
+  </data>
+  <data name="&gt;&gt;BalanceCube.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="prioDownButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1132,7 +1159,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;prioDownButton.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="prioUpButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1159,7 +1186,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;prioUpButton.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="label5.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1189,7 +1216,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="blacklistRemove.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1216,7 +1243,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;blacklistRemove.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="blacklistAddItem.Location" type="System.Drawing.Point, System.Drawing">
     <value>235, 255</value>
@@ -1237,7 +1264,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;blacklistAddItem.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="blacklistLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1264,7 +1291,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;blacklistLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="blacklistAdd.Location" type="System.Drawing.Point, System.Drawing">
     <value>361, 255</value>
@@ -1288,7 +1315,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;blacklistAdd.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="blacklistBox.Items" xml:space="preserve">
     <value>test</value>
@@ -1315,7 +1342,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;blacklistBox.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1345,7 +1372,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="priorityBoostRemove.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1372,7 +1399,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;priorityBoostRemove.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="priorityBoostItemAdd.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 255</value>
@@ -1393,7 +1420,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;priorityBoostItemAdd.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="priorityBoostLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1420,7 +1447,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;priorityBoostLabel.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="priorityBoostAdd.Location" type="System.Drawing.Point, System.Drawing">
     <value>136, 255</value>
@@ -1444,7 +1471,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;priorityBoostAdd.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="priorityBoostBox.Items" xml:space="preserve">
     <value>test</value>
@@ -1471,7 +1498,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;priorityBoostBox.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="ManageInventory.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1498,7 +1525,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;ManageInventory.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>15</value>
   </data>
   <data name="ManageBoostConvert.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1525,7 +1552,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;ManageBoostConvert.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>16</value>
   </data>
   <data name="tabPage4.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>

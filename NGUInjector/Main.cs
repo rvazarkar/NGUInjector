@@ -158,7 +158,8 @@ namespace NGUInjector
                         AutoSpellSwap = false,
                         CounterfeitThreshold = 30,
                         SpaghettiThreshold = 400,
-                        BloodNumberThreshold = 1e10
+                        BloodNumberThreshold = 1e10,
+                        BalanceCube = true
                     };
 
                     Settings.MassUpdate(temp);

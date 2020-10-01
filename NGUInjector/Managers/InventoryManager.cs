@@ -312,7 +312,7 @@ namespace NGUInjector.Managers
             }
         }
 
-        internal void ChangeBoostConversion(ih[] boostSlots)
+        internal void ManageBoostConversion(ih[] boostSlots)
         {
             if (_character.challenges.levelChallenge10k.curCompletions <
                 _character.allChallenges.level100Challenge.maxCompletions)
@@ -409,6 +409,22 @@ namespace NGUInjector.Managers
             if (needed.Special > 0)
             {
                 _controller.selectAutoSpecialTransform();
+                return;
+            }
+
+            if (Settings.BalanceCube)
+            {
+                if (_controller.cubePower() > _controller.cubeToughness())
+                {
+                    _controller.selectAutoToughTransform();
+                }else if (_controller.cubeToughness() > _controller.cubePower())
+                {
+                    _controller.selectAutoPowerTransform();
+                }
+                else
+                {
+                    _controller.selectAutoPowerTransform();
+                }
                 return;
             }
 

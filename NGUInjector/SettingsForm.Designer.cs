@@ -136,6 +136,7 @@
             this.label18 = new System.Windows.Forms.Label();
             this.BloodNumberThreshold = new System.Windows.Forms.TextBox();
             this.numberErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.BalanceCube = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -450,6 +451,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.BalanceCube);
             this.tabPage4.Controls.Add(this.prioDownButton);
             this.tabPage4.Controls.Add(this.prioUpButton);
             this.tabPage4.Controls.Add(this.label5);
@@ -999,6 +1001,13 @@
             // 
             this.numberErrProvider.ContainerControl = this;
             // 
+            // BalanceCube
+            // 
+            resources.ApplyResources(this.BalanceCube, "BalanceCube");
+            this.BalanceCube.Name = "BalanceCube";
+            this.BalanceCube.UseVisualStyleBackColor = true;
+            this.BalanceCube.CheckedChanged += new System.EventHandler(this.BalanceCube_CheckedChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1151,5 +1160,6 @@
         private System.Windows.Forms.TextBox BloodNumberThreshold;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ErrorProvider numberErrProvider;
+        private System.Windows.Forms.CheckBox BalanceCube;
     }
 }

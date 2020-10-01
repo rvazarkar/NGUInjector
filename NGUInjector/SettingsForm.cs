@@ -181,6 +181,7 @@ namespace NGUInjector
             SpaghettiCap.Value = newSettings.SpaghettiThreshold;
             CounterfeitCap.Value = newSettings.CounterfeitThreshold;
             AutoBuyEM.Checked = newSettings.AutoBuyEM;
+            BalanceCube.Checked = newSettings.BalanceCube;
             BloodNumberThreshold.Text = newSettings.BloodNumberThreshold.ToString(CultureInfo.InvariantCulture);
 
             yggdrasilLoadoutBox.DataSource = null;
@@ -882,6 +883,12 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.AutoBuyEM = AutoBuyEM.Checked;
+        }
+
+        private void BalanceCube_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.BalanceCube = BalanceCube.Checked;
         }
     }
 }
