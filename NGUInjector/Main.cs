@@ -41,6 +41,7 @@ namespace NGUInjector
         private static string _dir;
 
         internal static bool Active;
+        private static bool _tempSwapped = false;
 
         internal static readonly int[] TitanZones = {6, 8, 11, 14, 16, 19, 23, 26, 30, 34, 38, 40, 42};
 
@@ -260,7 +261,38 @@ namespace NGUInjector
                 DumpEquipped();
             }
 
-            //if (Input.GetKeyDown(KeyCode.F8))
+            if (Input.GetKeyDown(KeyCode.F8))
+            {
+                if (Settings.QuickLoadout.Length > 0)
+                {
+                    if (_tempSwapped)
+                    {
+                        LoadoutManager.RestoreTempLoadout();
+                    }
+                    else
+                    {
+                        LoadoutManager.SaveTempLoadout();
+                        LoadoutManager.ChangeGear(Settings.QuickLoadout);
+                    }
+                }
+
+                if (Settings.QuickDiggers.Length > 0)
+                {
+                    if (_tempSwapped)
+                    {
+                        DiggerManager.RestoreTempDiggers();
+                    }
+                    else
+                    {
+                        DiggerManager.SaveTempDiggers();
+                        DiggerManager.EquipDiggers(Settings.QuickDiggers);
+                    }
+                }
+
+                _tempSwapped = !_tempSwapped;
+            }
+
+            //if (Input.GetKeyDown(KeyCode.F12))
             //{
             //    for (var i = 0; i <= 13; i++)
             //    {
@@ -434,7 +466,7 @@ namespace NGUInjector
                     _invManager.MergeGuffs(converted);
                     _invManager.BoostInventory(boostSlots);
                     _invManager.BoostInfinityCube();
-                    _invManager.ChangeBoostConversion(boostSlots);
+                    _invManager.ManageBoostConversion(boostSlots);
                 }
 
                 if (Settings.SwapTitanLoadouts)

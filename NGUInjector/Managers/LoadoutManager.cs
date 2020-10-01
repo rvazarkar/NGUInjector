@@ -17,6 +17,7 @@ namespace NGUInjector.Managers
     internal static class LoadoutManager
     {
         private static int[] _savedLoadout;
+        private static int[] _tempLoadout;
         internal static LockType CurrentLock { get; set; }
 
         internal static bool CanSwap()
@@ -320,6 +321,38 @@ namespace NGUInjector.Managers
             }
             _savedLoadout = loadout.ToArray();
             Log($"Saved Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
+        }
+
+        internal static void SaveTempLoadout()
+        {
+            var inv = Main.Character.inventory;
+            var loadout = new List<int>
+            {
+                inv.head.id,
+                inv.boots.id,
+                inv.chest.id,
+                inv.legs.id,
+                inv.weapon.id
+            };
+
+
+            if (Main.Character.inventoryController.weapon2Unlocked())
+            {
+                loadout.Add(inv.weapon2.id);
+            }
+
+            for (var id = 10000; Controller.accessoryID(id) < Main.Character.inventory.accs.Count; ++id)
+            {
+                var index = Controller.accessoryID(id);
+                loadout.Add(Main.Character.inventory.accs[index].id);
+            }
+            _tempLoadout = loadout.ToArray();
+            Log($"Saved Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
+        }
+
+        internal static void RestoreTempLoadout()
+        {
+            ChangeGear(_tempLoadout);
         }
 
         internal static TitanSpawn TitansSpawningSoon()

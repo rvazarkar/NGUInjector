@@ -7,6 +7,7 @@ namespace NGUInjector.Managers
     internal static class DiggerManager
     {
         private static int[] _savedDiggers;
+        private static int[] _tempDiggers;
         internal static LockType CurrentLock { get; set; }
         private static readonly int[] TitanDiggers = { 0, 3, 8, 11 };
         private static readonly int[] YggDiggers = {8, 11};
@@ -66,6 +67,25 @@ namespace NGUInjector.Managers
             }
 
             _savedDiggers = temp.ToArray();
+        }
+
+        internal static void SaveTempDiggers()
+        {
+            var temp = new List<int>();
+            for (var i = 0; i < Main.Character.diggers.diggers.Count; i++)
+            {
+                if (Main.Character.diggers.diggers[i].active)
+                {
+                    temp.Add(i);
+                }
+            }
+
+            _tempDiggers = temp.ToArray();
+        }
+
+        internal static void RestoreTempDiggers()
+        {
+            EquipDiggers(_tempDiggers);
         }
 
         internal static void EquipDiggers(int[] diggers)

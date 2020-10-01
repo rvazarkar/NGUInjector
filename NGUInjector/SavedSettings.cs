@@ -55,6 +55,8 @@ namespace NGUInjector
         [SerializeField] private bool _autoBuyEm;
         [SerializeField] private double _bloodNumberThreshold;
         [SerializeField] private bool _balanceCube;
+        [SerializeField] private int[] _tempLoadout;
+        [SerializeField] private int[] _tempDiggers;
 
         private readonly string _savePath;
         
@@ -634,6 +636,18 @@ namespace NGUInjector
                 _balanceCube = value;
                 SaveSettings();
             }
+        }
+
+        public int[] TempLoadout
+        {
+            get => _tempLoadout;
+            set => _tempLoadout = value;
+        }
+
+        public int[] TempDiggers
+        {
+            get => _tempDiggers;
+            set => _tempDiggers = value;
         }
     }
 }
