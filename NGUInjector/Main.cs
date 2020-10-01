@@ -267,10 +267,12 @@ namespace NGUInjector
                 {
                     if (_tempSwapped)
                     {
+                        Log("Restoring Previous Loadout");
                         LoadoutManager.RestoreTempLoadout();
                     }
                     else
                     {
+                        Log("Equipping Quick Loadout");
                         LoadoutManager.SaveTempLoadout();
                         LoadoutManager.ChangeGear(Settings.QuickLoadout);
                     }
@@ -280,10 +282,12 @@ namespace NGUInjector
                 {
                     if (_tempSwapped)
                     {
+                        Log("Equipping Previous Diggers");
                         DiggerManager.RestoreTempDiggers();
                     }
                     else
                     {
+                        Log("Equipping Quick Diggers");
                         DiggerManager.SaveTempDiggers();
                         DiggerManager.EquipDiggers(Settings.QuickDiggers);
                     }
