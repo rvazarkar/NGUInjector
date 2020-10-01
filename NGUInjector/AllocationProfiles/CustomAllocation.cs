@@ -290,7 +290,10 @@ namespace NGUInjector.AllocationProfiles
             var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
             temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
 
-            if (_character.idleEnergy <= 0 && capPrios.Length == 0)
+            if (_character.idleEnergy < 0)
+                _character.removeMostEnergy();
+
+            if (_character.idleEnergy == 0 && capPrios.Length == 0)
                 return;
 
             if (capPrios.Length > 0) _character.removeMostEnergy();
@@ -331,7 +334,10 @@ namespace NGUInjector.AllocationProfiles
             var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
             temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
 
-            if (_character.magic.idleMagic <= 0 && capPrios.Length ==  0)
+            if (_character.magic.idleMagic < 0)
+                _character.removeMostMagic();
+
+            if (_character.magic.idleMagic == 0 && capPrios.Length ==  0)
                 return;
 
             if (capPrios.Length > 0) _character.removeMostMagic();
