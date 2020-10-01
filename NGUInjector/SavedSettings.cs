@@ -55,8 +55,8 @@ namespace NGUInjector
         [SerializeField] private bool _autoBuyEm;
         [SerializeField] private double _bloodNumberThreshold;
         [SerializeField] private bool _balanceCube;
-        [SerializeField] private int[] _tempLoadout;
-        [SerializeField] private int[] _tempDiggers;
+        [SerializeField] private int[] _quickLoadout;
+        [SerializeField] private int[] _quickDiggers;
 
         private readonly string _savePath;
         
@@ -162,6 +162,8 @@ namespace NGUInjector
             _autoBuyEm = other.AutoBuyEM;
             _bloodNumberThreshold = other.BloodNumberThreshold;
             _balanceCube = other.BalanceCube;
+            _quickDiggers = other.QuickDiggers;
+            _quickLoadout = other.QuickLoadout;
         }
 
         public int HighestAKZone
@@ -638,16 +640,16 @@ namespace NGUInjector
             }
         }
 
-        public int[] TempLoadout
+        public int[] QuickLoadout
         {
-            get => _tempLoadout;
-            set => _tempLoadout = value;
+            get => _quickLoadout;
+            set => _quickLoadout = value;
         }
 
-        public int[] TempDiggers
+        public int[] QuickDiggers
         {
-            get => _tempDiggers;
-            set => _tempDiggers = value;
+            get => _quickDiggers;
+            set => _quickDiggers = value;
         }
     }
 }
