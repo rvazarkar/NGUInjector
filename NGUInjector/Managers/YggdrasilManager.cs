@@ -82,6 +82,7 @@ namespace NGUInjector.Managers
 
         internal void CheckFruits()
         {
+            var curPage = _character.yggdrasilController.curPage;
             for (var i = 0; i < _character.yggdrasil.fruits.Count; i++)
             {
                 var fruit = _character.yggdrasil.fruits[i];
@@ -115,6 +116,7 @@ namespace NGUInjector.Managers
                     _character.yggdrasilController.fruits[slot].activate(i);
                 }
             }
+            _character.yggdrasilController.changePage(curPage);
         }
 
         private int ChangePage(int slot)
