@@ -105,11 +105,12 @@ namespace NGUInjector.AllocationProfiles
                     {
                         Main.Log($"Loaded custom allocation:\n{_wrapper.Breakpoints.Energy.Length} energy breakpoints\n{_wrapper.Breakpoints.Magic.Length} magic breakpoints\n{_wrapper.Breakpoints.Gear.Length} gear breakpoints\n{_wrapper.Breakpoints.Diggers.Length} digger breakpoints.\n{_wrapper.Breakpoints.Wandoos.Length} wandoos OS breakpoints. \nNo rebirth time specified");
                     }
-                    
-                    _currentEnergyBreakpoint = null;
-                    _currentMagicBreakpoint = null;
-                    _currentGearBreakpoint = null;
+
                     _currentDiggerBreakpoint = null;
+                    _currentEnergyBreakpoint = null;
+                    _currentGearBreakpoint = null;
+                    _currentWandoosBreakpoint = null;
+                    _currentMagicBreakpoint = null;
 
                     if (Main.Settings.ManageEnergy || Main.Settings.ManageMagic)
                     {
@@ -258,6 +259,12 @@ namespace NGUInjector.AllocationProfiles
             if (_character.rebirthTime.totalseconds < _wrapper.Breakpoints.RebirthTime)
                 return;
 
+            _currentDiggerBreakpoint = null;
+            _currentEnergyBreakpoint = null;
+            _currentGearBreakpoint = null;
+            _currentWandoosBreakpoint = null;
+            _currentMagicBreakpoint = null;
+
             Main.Log("Rebirth time hit, performing rebirth");
             var controller = Main.Character.rebirth;
             typeof(Rebirth).GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
@@ -279,39 +286,30 @@ namespace NGUInjector.AllocationProfiles
                 _currentEnergyBreakpoint = bp;
             }
 
-            try
+            var temp = ValidatePriorities(bp.Priorities.ToList());
+            var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
+            temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
+
+            if (_character.idleEnergy <= 0 && capPrios.Length == 0)
+                return;
+
+            if (capPrios.Length > 0) _character.removeMostEnergy();
+            if (bp.Priorities.Any(x => x.Contains("BT"))) _character.removeAllEnergy();
+
+            foreach (var prio in capPrios)
             {
-                var temp = ValidatePriorities(bp.Priorities.ToList());
-                var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
-                temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
-
-                if (_character.idleEnergy == 0 && capPrios.Length == 0)
-                    return;
-
-                if (capPrios.Length > 0) _character.removeMostEnergy();
-                if (bp.Priorities.Any(x => x.Contains("BT"))) _character.removeAllEnergy();
-
-                foreach (var prio in capPrios)
-                {
-                    ReadEnergyBreakpoint(prio);
-                }
-
-                var prioCount = temp.Count;
-                var toAdd = (long) Math.Floor((double) _character.idleEnergy / prioCount);
-                _character.input.energyRequested.text = toAdd.ToString();
-                _character.input.validateInput();
-
-                foreach (var prio in temp)
-                {
-                    ReadEnergyBreakpoint(prio);
-                }
+                ReadEnergyBreakpoint(prio);
             }
-            catch (Exception e)
+
+            var prioCount = temp.Count;
+            var toAdd = (long) Math.Floor((double) _character.idleEnergy / prioCount);
+            _character.input.energyRequested.text = toAdd.ToString();
+            _character.input.validateInput();
+
+            foreach (var prio in temp)
             {
-                Main.Log(e.Message);
-                Main.Log(e.StackTrace);
+                ReadEnergyBreakpoint(prio);
             }
-            
         }
 
         public override void AllocateMagic()
@@ -333,7 +331,7 @@ namespace NGUInjector.AllocationProfiles
             var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
             temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
 
-            if (_character.magic.idleMagic == 0 && capPrios.Length ==  0)
+            if (_character.magic.idleMagic <= 0 && capPrios.Length ==  0)
                 return;
 
             if (capPrios.Length > 0) _character.removeMostMagic();
@@ -420,6 +418,14 @@ namespace NGUInjector.AllocationProfiles
                 }
             }
 
+            if (energy)
+            {
+                _currentEnergyBreakpoint = null;
+            }
+            else
+            {
+                _currentMagicBreakpoint = null;
+            }
             return null;
         }
 
@@ -438,6 +444,7 @@ namespace NGUInjector.AllocationProfiles
                 }
             }
 
+            _currentGearBreakpoint = null;
             return null;
         }
 
@@ -456,6 +463,7 @@ namespace NGUInjector.AllocationProfiles
                 }
             }
 
+            _currentDiggerBreakpoint = null;
             return null;
         }
 
@@ -474,6 +482,7 @@ namespace NGUInjector.AllocationProfiles
                 }
             }
 
+            _currentWandoosBreakpoint = null;
             return null;
         }
 
