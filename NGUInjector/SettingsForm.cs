@@ -111,7 +111,6 @@ namespace NGUInjector
             InitialGoldTarget.DataSource = new BindingSource(ZoneList, null);
             InitialGoldTarget.ValueMember = "Key";
             InitialGoldTarget.DisplayMember = "Value";
-            MasterEnable.Checked = Main.Active;
 
             blacklistLabel.Text = "";
             yggItemLabel.Text = "";
@@ -182,6 +181,8 @@ namespace NGUInjector
             CounterfeitCap.Value = newSettings.CounterfeitThreshold;
             AutoBuyEM.Checked = newSettings.AutoBuyEM;
             BalanceCube.Checked = newSettings.BalanceCube;
+            MasterEnable.Checked = newSettings.GlobalEnabled;
+            CombatActive.Checked = newSettings.CombatEnabled;
             BloodNumberThreshold.Text = newSettings.BloodNumberThreshold.ToString(CultureInfo.InvariantCulture);
 
             yggdrasilLoadoutBox.DataSource = null;
@@ -234,7 +235,7 @@ namespace NGUInjector
         private void MasterEnable_CheckedChanged(object sender, EventArgs e)
         {
             if (_initializing) return;
-            Main.Active = MasterEnable.Checked;
+            Main.Settings.GlobalEnabled = MasterEnable.Checked;
         }
 
         private void AutoDailySpin_CheckedChanged(object sender, EventArgs e)
@@ -551,7 +552,8 @@ namespace NGUInjector
 
         private void CombatActive_CheckedChanged(object sender, EventArgs e)
         {
-            Main.SnipeActive = CombatActive.Checked;
+            if (_initializing) return;
+            Main.Settings.CombatEnabled = CombatActive.Checked;
         }
 
         private void BossesOnly_CheckedChanged(object sender, EventArgs e)

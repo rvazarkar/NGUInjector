@@ -40,15 +40,12 @@ namespace NGUInjector
 
         private static string _dir;
 
-        internal static bool Active;
         private static bool _tempSwapped = false;
 
         internal static readonly int[] TitanZones = {6, 8, 11, 14, 16, 19, 23, 26, 30, 34, 38, 40, 42};
 
         internal static FileSystemWatcher ConfigWatcher;
         internal static FileSystemWatcher AllocationWatcher;
-
-        internal static bool SnipeActive { get; set; }
 
         internal static bool IgnoreNextChange { get; set; }
 
@@ -110,7 +107,6 @@ namespace NGUInjector
                 DiggerManager.ReleaseLock();
 
                 Settings = new SavedSettings(_dir);
-                Active = true;
 
                 if (!Settings.LoadSettings())
                 {
@@ -160,7 +156,11 @@ namespace NGUInjector
                         CounterfeitThreshold = 30,
                         SpaghettiThreshold = 400,
                         BloodNumberThreshold = 1e10,
-                        BalanceCube = true
+                        BalanceCube = true,
+                        CombatEnabled = false,
+                        GlobalEnabled = true,
+                        QuickDiggers = new int[] {},
+                        QuickLoadout = new int[] {}
                     };
 
                     Settings.MassUpdate(temp);
@@ -236,8 +236,8 @@ namespace NGUInjector
 
             if (Input.GetKeyDown(KeyCode.F2))
             {
-                Active = !Active;
-                settingsForm.UpdateActive(Active);
+                Settings.GlobalEnabled = !Settings.GlobalEnabled;
+                settingsForm.UpdateActive(Settings.GlobalEnabled);
             }
 
             if (Input.GetKeyDown(KeyCode.F3))
@@ -373,7 +373,7 @@ namespace NGUInjector
         void QuickStuff()
         {
             //Turn on autoattack if we're in ITOPOD and its not on
-            if (Settings.AutoQuestITOPOD && Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking && !SnipeActive)
+            if (Settings.AutoQuestITOPOD && Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking && !Settings.CombatEnabled)
             {
                 Character.adventureController.idleAttackMove.setToggle();
             }
@@ -451,7 +451,7 @@ namespace NGUInjector
         {
             try
             {
-                if (!Active)
+                if (!Settings.GlobalEnabled)
                 {
                     _timeLeft = 10f;
                     return;
@@ -578,7 +578,7 @@ namespace NGUInjector
 
         private void SnipeZone()
         {
-            if (!Active)
+            if (!Settings.GlobalEnabled)
                 return;
 
             //If tm ever drops to 0, reset our gold loadout stuff
@@ -628,7 +628,7 @@ namespace NGUInjector
                 return;
             }
 
-            if (!SnipeActive)
+            if (!Settings.CombatEnabled)
                 return;
 
             if (Settings.SnipeZone < 0)
@@ -664,13 +664,13 @@ namespace NGUInjector
 
         private void MoveToITOPOD()
         {
-            if (!Active)
+            if (!Settings.GlobalEnabled)
                 return;
 
             if (_questManager.IsQuesting() >= 0)
                 return;
 
-            if (SnipeActive)
+            if (Settings.CombatEnabled)
                 return;
 
             if (Character.buttons.brokenTimeMachine.interactable)
@@ -729,7 +729,7 @@ namespace NGUInjector
         public void OnGUI()
         {
             GUI.Label(new Rect(10, 10, 200, 40), $"Injected");
-            GUI.Label(new Rect(10, 20, 200, 40), $"Automation - {(Active ? "Active" : "Inactive")}");
+            GUI.Label(new Rect(10, 20, 200, 40), $"Automation - {(Settings.GlobalEnabled ? "Active" : "Inactive")}");
             GUI.Label(new Rect(10, 30, 200, 40), $"Next Loop - {_timeLeft:00.0}s");
         }
 

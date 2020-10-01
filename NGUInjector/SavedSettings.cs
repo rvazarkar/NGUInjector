@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using UnityEngine;
 
 namespace NGUInjector
@@ -57,6 +58,8 @@ namespace NGUInjector
         [SerializeField] private bool _balanceCube;
         [SerializeField] private int[] _quickLoadout;
         [SerializeField] private int[] _quickDiggers;
+        [SerializeField] private bool _masterSwitch;
+        [SerializeField] private bool _combatEnabled;
 
         private readonly string _savePath;
         
@@ -164,6 +167,8 @@ namespace NGUInjector
             _balanceCube = other.BalanceCube;
             _quickDiggers = other.QuickDiggers;
             _quickLoadout = other.QuickLoadout;
+            _combatEnabled = other.CombatEnabled;
+            _masterSwitch = other.MasterSwitch;
         }
 
         public int HighestAKZone
@@ -650,6 +655,28 @@ namespace NGUInjector
         {
             get => _quickDiggers;
             set => _quickDiggers = value;
+        }
+
+        public bool MasterSwitch
+        {
+            get => _masterSwitch;
+            set
+            {
+                if (value == _masterSwitch) return;
+                _masterSwitch = value;
+                SaveSettings();
+            }
+        }
+
+        public bool CombatEnabled
+        {
+            get => _combatEnabled;
+            set
+            {
+                if (value == _combatEnabled) return;
+                _combatEnabled = value;
+                SaveSettings();
+            }
         }
     }
 }
