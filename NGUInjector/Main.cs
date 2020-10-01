@@ -438,9 +438,9 @@ namespace NGUInjector
                 var spaghetti = (Character.bloodMagicController.lootBonus() - 1) * 100;
                 var counterfeit = ((Character.bloodMagicController.goldBonus() - 1)) * 100;
                 var number = Character.bloodMagic.rebirthPower;
-                Character.bloodMagic.rebirthAutoSpell = Settings.BloodNumberThreshold > number;
-                Character.bloodMagic.goldAutoSpell = Settings.CounterfeitThreshold > counterfeit;
-                Character.bloodMagic.lootAutoSpell = Settings.SpaghettiThreshold > spaghetti;
+                Character.bloodMagic.rebirthAutoSpell = Settings.BloodNumberThreshold >= number;
+                Character.bloodMagic.goldAutoSpell = Settings.CounterfeitThreshold >= counterfeit;
+                Character.bloodMagic.lootAutoSpell = Settings.SpaghettiThreshold >= spaghetti;
                 Character.bloodSpells.updateGoldToggleState();
                 Character.bloodSpells.updateLootToggleState();
                 Character.bloodSpells.updateRebirthToggleState();
