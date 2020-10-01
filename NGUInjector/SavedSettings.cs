@@ -58,7 +58,7 @@ namespace NGUInjector
         [SerializeField] private bool _balanceCube;
         [SerializeField] private int[] _quickLoadout;
         [SerializeField] private int[] _quickDiggers;
-        [SerializeField] private bool _masterSwitch;
+        [SerializeField] private bool _globalEnabled;
         [SerializeField] private bool _combatEnabled;
 
         private readonly string _savePath;
@@ -168,7 +168,7 @@ namespace NGUInjector
             _quickDiggers = other.QuickDiggers;
             _quickLoadout = other.QuickLoadout;
             _combatEnabled = other.CombatEnabled;
-            _masterSwitch = other.MasterSwitch;
+            _globalEnabled = other.GlobalEnabled;
         }
 
         public int HighestAKZone
@@ -657,13 +657,13 @@ namespace NGUInjector
             set => _quickDiggers = value;
         }
 
-        public bool MasterSwitch
+        public bool GlobalEnabled
         {
-            get => _masterSwitch;
+            get => _globalEnabled;
             set
             {
-                if (value == _masterSwitch) return;
-                _masterSwitch = value;
+                if (value == _globalEnabled) return;
+                _globalEnabled = value;
                 SaveSettings();
             }
         }
