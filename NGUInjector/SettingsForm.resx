@@ -460,7 +460,7 @@
     <value>0</value>
   </data>
   <data name="BloodNumberThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>295, 219</value>
+    <value>295, 196</value>
   </data>
   <data name="BloodNumberThreshold.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 20</value>
@@ -484,7 +484,7 @@
     <value>True</value>
   </data>
   <data name="label18.Location" type="System.Drawing.Point, System.Drawing">
-    <value>212, 222</value>
+    <value>212, 199</value>
   </data>
   <data name="label18.Size" type="System.Drawing.Size, System.Drawing">
     <value>77, 13</value>
@@ -508,7 +508,7 @@
     <value>2</value>
   </data>
   <data name="SaveSpellCapButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 275</value>
+    <value>7, 252</value>
   </data>
   <data name="SaveSpellCapButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -535,7 +535,7 @@
     <value>True</value>
   </data>
   <data name="AutoSpellSwap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 191</value>
+    <value>7, 168</value>
   </data>
   <data name="AutoSpellSwap.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 17</value>
@@ -559,7 +559,7 @@
     <value>4</value>
   </data>
   <data name="label17.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 176</value>
+    <value>7, 153</value>
   </data>
   <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
     <value>525, 1</value>
@@ -580,7 +580,7 @@
     <value>5</value>
   </data>
   <data name="CounterfeitCap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>86, 250</value>
+    <value>86, 227</value>
   </data>
   <data name="CounterfeitCap.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 20</value>
@@ -607,7 +607,7 @@
     <value>NoControl</value>
   </data>
   <data name="label16.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 252</value>
+    <value>6, 229</value>
   </data>
   <data name="label16.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 13</value>
@@ -631,7 +631,7 @@
     <value>7</value>
   </data>
   <data name="SpaghettiCap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>86, 220</value>
+    <value>86, 197</value>
   </data>
   <data name="SpaghettiCap.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 20</value>
@@ -655,7 +655,7 @@
     <value>True</value>
   </data>
   <data name="label15.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 222</value>
+    <value>6, 199</value>
   </data>
   <data name="label15.Size" type="System.Drawing.Size, System.Drawing">
     <value>63, 13</value>
@@ -682,7 +682,7 @@
     <value>True</value>
   </data>
   <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 158</value>
+    <value>4, 135</value>
   </data>
   <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
     <value>57, 13</value>
