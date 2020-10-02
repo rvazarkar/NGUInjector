@@ -138,6 +138,7 @@ In the above example the following actions will be taken:
 Available cap priorities for Energy are as follows:
 
 - CAPNGU-X (0-8) - Use the cap button for the NGU
+- CAPALLNGU - Use the cap button for every NGU starting from 0
 - CAPAT-X (0-4) - Calculate a cap for the AT and attempt to BB it.
 - CAPWAN - Use the cap button for wandoos energy
 - CAPTM - Calculate a cap for energy time machine and attempt to BB it.

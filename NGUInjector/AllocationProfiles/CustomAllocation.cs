@@ -22,8 +22,8 @@ namespace NGUInjector.AllocationProfiles
         private bool _hasDiggerSwapped;
         private bool _hasWandoosSwapped;
         private readonly string _allocationPath;
-        private string[] _validEnergyPriorities = { "WAN", "CAPWAN", "TM", "CAPTM", "CAPAT", "AT", "NGU", "CAPNGU", "AUG", "BT", "CAPBT", "CAPAUG" };
-        private string[] _validMagicPriorities = { "WAN", "CAPWAN", "BR", "TM", "CAPTM", "NGU", "CAPNGU" };
+        private string[] _validEnergyPriorities = { "WAN", "CAPWAN", "TM", "CAPTM", "CAPAT", "AT", "NGU", "CAPNGU", "AUG", "BT", "CAPBT", "CAPAUG", "CAPALLNGU" };
+        private string[] _validMagicPriorities = { "WAN", "CAPWAN", "BR", "TM", "CAPTM", "NGU", "CAPNGU", "CAPALLNGU" };
 
         public CustomAllocation(string dir)
         {
@@ -584,6 +584,16 @@ namespace NGUInjector.AllocationProfiles
                 }
                 _character.NGUController.NGUMagic[index].cap();
             }
+
+            if (breakpoint.StartsWith("CAPALLNGU"))
+            {
+                for (var i = 0; i < 6; i++)
+                {
+                    _character.NGUController.NGUMagic[i].cap();
+                }
+
+                return;
+            }
         }
 
         private void ReadEnergyBreakpoint(string breakpoint)
@@ -663,6 +673,16 @@ namespace NGUInjector.AllocationProfiles
                     return;
                 }
                 _character.NGUController.NGU[index].add();
+                return;
+            }
+
+            if (breakpoint.StartsWith("CAPALLNGU"))
+            {
+                for (var i = 0; i < 8; i++)
+                {
+                    _character.NGUController.NGU[i].cap();
+                }
+
                 return;
             }
 
