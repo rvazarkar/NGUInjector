@@ -2593,7 +2593,7 @@
     <value>True</value>
   </data>
   <data name="QuestFastCombat.Location" type="System.Drawing.Point, System.Drawing">
-    <value>316, 134</value>
+    <value>328, 134</value>
   </data>
   <data name="QuestFastCombat.Size" type="System.Drawing.Size, System.Drawing">
     <value>85, 17</value>
@@ -2644,7 +2644,7 @@
     <value>4</value>
   </data>
   <data name="AbandonMinorThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>189, 99</value>
+    <value>201, 99</value>
   </data>
   <data name="AbandonMinorThreshold.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 20</value>
@@ -2728,7 +2728,7 @@
     <value>Manual</value>
   </data>
   <data name="QuestCombatMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>189, 132</value>
+    <value>201, 132</value>
   </data>
   <data name="QuestCombatMode.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 21</value>

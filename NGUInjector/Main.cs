@@ -162,7 +162,8 @@ namespace NGUInjector
                         QuickDiggers = new int[] {},
                         QuickLoadout = new int[] {},
                         UseButterMajor = false,
-                        ManualMinors =  false
+                        ManualMinors =  false,
+                        UseButterMinor = false
                     };
 
                     Settings.MassUpdate(temp);
