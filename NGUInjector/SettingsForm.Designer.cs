@@ -400,18 +400,23 @@
             // 
             // yggLoadoutItem
             // 
-            this.yggLoadoutItem.Increment = new decimal(new int[] {
-            40,
-            0,
-            0,
-            0});
             resources.ApplyResources(this.yggLoadoutItem, "yggLoadoutItem");
             this.yggLoadoutItem.Maximum = new decimal(new int[] {
             505,
             0,
             0,
             0});
+            this.yggLoadoutItem.Minimum = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
             this.yggLoadoutItem.Name = "yggLoadoutItem";
+            this.yggLoadoutItem.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
             this.yggLoadoutItem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.yggLoadoutItem_KeyDown);
             // 
             // yggItemLabel
@@ -500,18 +505,23 @@
             // 
             // blacklistAddItem
             // 
-            this.blacklistAddItem.Increment = new decimal(new int[] {
-            40,
-            0,
-            0,
-            0});
             resources.ApplyResources(this.blacklistAddItem, "blacklistAddItem");
             this.blacklistAddItem.Maximum = new decimal(new int[] {
             503,
             0,
             0,
             0});
+            this.blacklistAddItem.Minimum = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
             this.blacklistAddItem.Name = "blacklistAddItem";
+            this.blacklistAddItem.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             this.blacklistAddItem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.blacklistAddItem_KeyDown);
             // 
             // blacklistLabel
@@ -549,18 +559,23 @@
             // 
             // priorityBoostItemAdd
             // 
-            this.priorityBoostItemAdd.Increment = new decimal(new int[] {
-            40,
-            0,
-            0,
-            0});
             resources.ApplyResources(this.priorityBoostItemAdd, "priorityBoostItemAdd");
             this.priorityBoostItemAdd.Maximum = new decimal(new int[] {
             503,
             0,
             0,
             0});
+            this.priorityBoostItemAdd.Minimum = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
             this.priorityBoostItemAdd.Name = "priorityBoostItemAdd";
+            this.priorityBoostItemAdd.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
             this.priorityBoostItemAdd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.priorityBoostItemAdd_KeyDown);
             // 
             // priorityBoostLabel
@@ -639,18 +654,23 @@
             // 
             // titanAddItem
             // 
-            this.titanAddItem.Increment = new decimal(new int[] {
-            40,
-            0,
-            0,
-            0});
             resources.ApplyResources(this.titanAddItem, "titanAddItem");
             this.titanAddItem.Maximum = new decimal(new int[] {
             503,
             0,
             0,
             0});
+            this.titanAddItem.Minimum = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
             this.titanAddItem.Name = "titanAddItem";
+            this.titanAddItem.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
             this.titanAddItem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.titanAddItem_KeyDown);
             // 
             // titanLabel
@@ -807,18 +827,23 @@
             // 
             // GoldItemBox
             // 
-            this.GoldItemBox.Increment = new decimal(new int[] {
-            40,
-            0,
-            0,
-            0});
             resources.ApplyResources(this.GoldItemBox, "GoldItemBox");
             this.GoldItemBox.Maximum = new decimal(new int[] {
             505,
             0,
             0,
             0});
+            this.GoldItemBox.Minimum = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
             this.GoldItemBox.Name = "GoldItemBox";
+            this.GoldItemBox.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
             this.GoldItemBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GoldItemBox_KeyDown);
             // 
             // GoldItemLabel
