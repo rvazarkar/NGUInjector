@@ -60,11 +60,11 @@ namespace NGUInjector
         [SerializeField] private int[] _quickDiggers;
         [SerializeField] private bool _globalEnabled;
         [SerializeField] private bool _combatEnabled;
+        [SerializeField] private bool _useButter;
+        [SerializeField] private bool _idleMinors;
 
         private readonly string _savePath;
         
-
-
         public SavedSettings(string dir)
         {
             if (dir != null)
@@ -169,6 +169,8 @@ namespace NGUInjector
             _quickLoadout = other.QuickLoadout;
             _combatEnabled = other.CombatEnabled;
             _globalEnabled = other.GlobalEnabled;
+            _useButter = other.UseButter;
+            _idleMinors = other.IdleMinors;
         }
 
         public int HighestAKZone
@@ -675,6 +677,28 @@ namespace NGUInjector
             {
                 if (value == _combatEnabled) return;
                 _combatEnabled = value;
+                SaveSettings();
+            }
+        }
+
+        public bool IdleMinors
+        {
+            get => _idleMinors;
+            set
+            {
+                if (value == _idleMinors) return;
+                _idleMinors = value;
+                SaveSettings();
+            }
+        }
+
+        public bool UseButter
+        {
+            get => _useButter;
+            set
+            {
+                if (value == _useButter) return;
+                _useButter = value;
                 SaveSettings();
             }
         }

@@ -160,7 +160,9 @@ namespace NGUInjector
                         CombatEnabled = false,
                         GlobalEnabled = true,
                         QuickDiggers = new int[] {},
-                        QuickLoadout = new int[] {}
+                        QuickLoadout = new int[] {},
+                        UseButter = false,
+                        IdleMinors =  false
                     };
 
                     Settings.MassUpdate(temp);

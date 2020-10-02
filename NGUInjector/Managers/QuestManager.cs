@@ -15,6 +15,10 @@ namespace NGUInjector.Managers
         {
             if (_character.beastQuestController.readyToHandIn())
             {
+                if (Settings.UseButter)
+                {
+                    _character.beastQuestController.tryUseButter();
+                }
                 _character.beastQuestController.completeQuest();
             }
         }
@@ -27,11 +31,21 @@ namespace NGUInjector.Managers
             if (!_character.beastQuest.inQuest)
                 return -1;
 
-            if (_character.beastQuest.reducedRewards)
+
+            var questZone = _character.beastQuestController.curQuestZone();
+
+            if (!CombatManager.IsZoneUnlocked(questZone))
                 return -1;
 
-            if (_character.beastQuestController.curQuestZone() > _character.adventureController.zoneDropdown.options.Count - 2) 
+            if (_character.beastQuest.reducedRewards)
+            {
+                if (Settings.IdleMinors)
+                {
+                    return questZone;
+                }
+
                 return -1;
+            }
 
             return _character.beastQuestController.curQuestZone();
         }

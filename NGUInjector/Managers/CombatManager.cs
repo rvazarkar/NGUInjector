@@ -28,7 +28,6 @@ namespace NGUInjector.Managers
             return _character.adventure.curHP / _character.totalAdvHP();
         }
 
-        
         private void DoCombat(bool fastCombat)
         {
             if (!_pc.moveCheck())
@@ -236,9 +235,9 @@ namespace NGUInjector.Managers
             }
         }
 
-        internal bool IsZoneUnlocked(int zone)
+        internal static bool IsZoneUnlocked(int zone)
         {
-            return zone <= _character.adventureController.zoneDropdown.options.Count - 2;
+            return zone <= Main.Character.adventureController.zoneDropdown.options.Count - 2;
         }
 
         internal void MoveToZone(int zone)
