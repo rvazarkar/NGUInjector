@@ -183,8 +183,10 @@ namespace NGUInjector
             BalanceCube.Checked = newSettings.BalanceCube;
             MasterEnable.Checked = newSettings.GlobalEnabled;
             CombatActive.Checked = newSettings.CombatEnabled;
-            IdleMinor.Checked = newSettings.IdleMinors;
-            UseButter.Checked = newSettings.UseButter;
+            ManualMinor.Checked = newSettings.ManualMinors;
+            ButterMajors.Checked = newSettings.UseButterMajor;
+            ManageR3.Checked = newSettings.ManageR3;
+            ButterMinors.Checked = newSettings.UseButterMinor;
             BloodNumberThreshold.Text = newSettings.BloodNumberThreshold.ToString(CultureInfo.InvariantCulture);
 
             yggdrasilLoadoutBox.DataSource = null;
@@ -898,13 +900,25 @@ namespace NGUInjector
         private void IdleMinor_CheckedChanged(object sender, EventArgs e)
         {
             if (_initializing) return;
-            Main.Settings.IdleMinors = IdleMinor.Checked;
+            Main.Settings.ManualMinors = ManualMinor.Checked;
         }
 
         private void UseButter_CheckedChanged(object sender, EventArgs e)
         {
             if (_initializing) return;
-            Main.Settings.UseButter = UseButter.Checked;
+            Main.Settings.UseButterMajor = ButterMajors.Checked;
+        }
+
+        private void ManageR3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.ManageR3 = ManageR3.Checked;
+        }
+
+        private void ButterMinors_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.UseButterMinor = ButterMinors.Checked;
         }
     }
 }

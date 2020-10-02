@@ -161,8 +161,8 @@ namespace NGUInjector
                         GlobalEnabled = true,
                         QuickDiggers = new int[] {},
                         QuickLoadout = new int[] {},
-                        UseButter = false,
-                        IdleMinors =  false
+                        UseButterMajor = false,
+                        ManualMinors =  false
                     };
 
                     Settings.MassUpdate(temp);
@@ -415,6 +415,9 @@ namespace NGUInjector
                         DiggerManager.RecapDiggers();
                     }
 
+                    if (Settings.ManageR3 && Character.buttons.hacks.interactable) 
+                        _profile.AllocateR3();
+
                     if (Settings.ManageWandoos && Character.buttons.wandoos.interactable)
                         _profile.SwapOS();
                 }
@@ -543,6 +546,9 @@ namespace NGUInjector
                     _profile.AllocateEnergy();
                 if (Settings.ManageMagic)
                     _profile.AllocateMagic();
+                if (Settings.ManageR3)
+                    _profile.AllocateR3();
+                
                 if (Settings.ManageDiggers && Character.buttons.diggers.interactable)
                 {
                     _profile.EquipDiggers();

@@ -15,6 +15,7 @@ namespace NGUInjector.AllocationProfiles
         private BreakpointWrapper _wrapper;
         private AllocationBreakPoint _currentMagicBreakpoint;
         private AllocationBreakPoint _currentEnergyBreakpoint;
+        private AllocationBreakPoint _currentR3Breakpoint;
         private GearBreakpoint _currentGearBreakpoint;
         private DiggerBreakpoint _currentDiggerBreakpoint;
         private WandoosBreakpoint _currentWandoosBreakpoint;
@@ -24,6 +25,7 @@ namespace NGUInjector.AllocationProfiles
         private readonly string _allocationPath;
         private string[] _validEnergyPriorities = { "WAN", "CAPWAN", "TM", "CAPTM", "CAPAT", "AT", "NGU", "CAPNGU", "AUG", "BT", "CAPBT", "CAPAUG", "CAPALLNGU" };
         private string[] _validMagicPriorities = { "WAN", "CAPWAN", "BR", "TM", "CAPTM", "NGU", "CAPNGU", "CAPALLNGU" };
+        private string[] _validR3Priorities = {"HACK"};
 
         public CustomAllocation(string dir)
         {
@@ -68,6 +70,11 @@ namespace NGUInjector.AllocationProfiles
                 priorities.RemoveAll(x => x.Contains("BR"));
             }
 
+            if (!_character.buttons.hacks.interactable)
+            {
+                priorities.RemoveAll(x => x.Contains("HACK"));
+            }
+
             priorities.RemoveAll(x => x.Contains("AUG") && !IsAUGUnlocked(ParseIndex(x)));
             priorities.RemoveAll(x => x.Contains("BT") && !IsBTUnlocked(ParseIndex(x)));
 
@@ -86,6 +93,7 @@ namespace NGUInjector.AllocationProfiles
                     _wrapper = new BreakpointWrapper { Breakpoints = new Breakpoints() };
                     _wrapper.Breakpoints.Magic = breakpoints["Magic"].Children.Select(bp => new AllocationBreakPoint { Time = bp["Time"].AsInt, Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value.ToUpper()).Where(x => _validMagicPriorities.Any(x.StartsWith)).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Energy = breakpoints["Energy"].Children.Select(bp => new AllocationBreakPoint { Time = bp["Time"].AsInt, Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value.ToUpper()).Where(x => _validEnergyPriorities.Any(x.StartsWith)).ToArray() }).OrderByDescending(x => x.Time).ToArray();
+                    _wrapper.Breakpoints.R3 = breakpoints["R3"].Children.Select(bp => new AllocationBreakPoint { Time = bp["Time"].AsInt, Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value.ToUpper()).Where(x => _validEnergyPriorities.Any(x.StartsWith)).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Gear = breakpoints["Gear"].Children.Select(bp => new GearBreakpoint { Time = bp["Time"].AsInt, Gear = bp["ID"].AsArray.Children.Select(x => x.AsInt).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Diggers = breakpoints["Diggers"].Children.Select(bp => new DiggerBreakpoint { Time = bp["Time"].AsInt, Diggers = bp["List"].AsArray.Children.Select(x => x.AsInt).ToArray() }).OrderByDescending(x => x.Time).ToArray();
                     _wrapper.Breakpoints.Wandoos = breakpoints["Wandoos"].Children.Select(bp => new WandoosBreakpoint { Time = bp["Time"].AsInt, OS = bp["OS"].AsInt }).OrderByDescending(x => x.Time).ToArray();
@@ -111,12 +119,13 @@ namespace NGUInjector.AllocationProfiles
                     _currentGearBreakpoint = null;
                     _currentWandoosBreakpoint = null;
                     _currentMagicBreakpoint = null;
+                    _currentR3Breakpoint = null;
 
-                    if (Main.Settings.ManageEnergy || Main.Settings.ManageMagic)
-                    {
-                        _character.removeMostEnergy();
-                        _character.removeMostMagic();
-                    }
+                    if (Main.Settings.ManageEnergy) _character.removeMostEnergy();
+
+                    if (Main.Settings.ManageR3) _character.removeAllRes3();
+
+                    if (Main.Settings.ManageMagic) _character.removeMostMagic();
 
                     if (Main.Settings.ManageGear)
                         EquipGear();
@@ -124,10 +133,10 @@ namespace NGUInjector.AllocationProfiles
                         AllocateEnergy();
                     if (Main.Settings.ManageMagic && Main.Character.buttons.bloodMagic.interactable)
                         AllocateMagic();
-                    if (Main.Settings.ManageDiggers && Main.Character.buttons.diggers.interactable)
-                    {
+                    if (Main.Settings.ManageDiggers && Main.Character.buttons.diggers.interactable) 
                         EquipDiggers();
-                    }
+                    if (Main.Settings.ManageR3 && Main.Character.buttons.hacks.interactable)
+                        AllocateR3();
                 }
                 catch (Exception e)
                 {
@@ -137,19 +146,6 @@ namespace NGUInjector.AllocationProfiles
             }
             else
             {
-                var w = new BreakpointWrapper
-                {
-                    Breakpoints = new Breakpoints
-                    {
-                        Energy = new AllocationBreakPoint[] { },
-                        Magic = new AllocationBreakPoint[] { },
-                        Gear = new GearBreakpoint[] { },
-                        Diggers = new DiggerBreakpoint[] {},
-                        Wandoos = new WandoosBreakpoint[] {},
-                        RebirthTime = -1
-                    }
-                };
-
                 var emptyAllocation = @"{
     ""Breakpoints"": {
       ""Magic"": [
@@ -159,6 +155,12 @@ namespace NGUInjector.AllocationProfiles
         }
       ],
       ""Energy"": [
+        {
+          ""Time"": 0,
+          ""Priorities"": []
+        }
+      ],
+    ""R3"": [
         {
           ""Time"": 0,
           ""Priorities"": []
@@ -264,6 +266,7 @@ namespace NGUInjector.AllocationProfiles
             _currentGearBreakpoint = null;
             _currentWandoosBreakpoint = null;
             _currentMagicBreakpoint = null;
+            _currentR3Breakpoint = null;
 
             Main.Log("Rebirth time hit, performing rebirth");
             var controller = Main.Character.rebirth;
@@ -357,6 +360,37 @@ namespace NGUInjector.AllocationProfiles
             }
         }
 
+        public override void AllocateR3()
+        {
+            if (_wrapper == null)
+                return;
+
+            var bp = GetCurrentR3Breakpoint();
+            if (bp == null)
+                return;
+
+            if (bp.Time != _currentR3Breakpoint.Time)
+            {
+                _character.removeAllRes3();
+                _currentR3Breakpoint = bp;
+            }
+
+            var temp = ValidatePriorities(bp.Priorities.ToList());
+            
+            if (_character.res3.idleRes3 == 0)
+                return;
+
+            var prioCount = temp.Count;
+            var toAdd = (long)Math.Floor((double)_character.res3.idleRes3 / prioCount);
+            _character.input.energyRequested.text = toAdd.ToString();
+            _character.input.validateInput();
+
+            foreach (var prio in temp)
+            {
+                ReadR3Breakpoint(prio);
+            }
+        }
+
         public override void EquipGear()
         {
             if (_wrapper == null)
@@ -432,6 +466,27 @@ namespace NGUInjector.AllocationProfiles
             {
                 _currentMagicBreakpoint = null;
             }
+            return null;
+        }
+
+        private AllocationBreakPoint GetCurrentR3Breakpoint()
+        {
+            foreach (var b in _wrapper.Breakpoints.R3)
+            {
+                var rbTime = _character.rebirthTime.totalseconds;
+                if (rbTime > b.Time)
+                {
+                    if (_currentR3Breakpoint == null)
+                    {
+                        _character.removeAllRes3();
+                        _currentR3Breakpoint = b;
+                    }
+
+                    return b;
+                }
+            }
+
+            _currentR3Breakpoint = null;
             return null;
         }
 
@@ -518,6 +573,20 @@ namespace NGUInjector.AllocationProfiles
                 }
 
                 _character.bloodMagicController.bloodMagics[i].cap();
+            }
+        }
+
+        private void ReadR3Breakpoint(string breakpoint)
+        {
+            if (breakpoint.Equals("HACK"))
+            {
+                var success = int.TryParse(breakpoint.Split('-')[1], out var index);
+                if (!success || index < 0 || index > 14)
+                {
+                    return;
+                }
+
+                _character.hacksController.addR3(index, _character.input.energyMagicInput);
             }
         }
 
@@ -1078,6 +1147,7 @@ namespace NGUInjector.AllocationProfiles
     {
         [SerializeField] public AllocationBreakPoint[] Magic;
         [SerializeField] public AllocationBreakPoint[] Energy;
+        [SerializeField] public AllocationBreakPoint[] R3;
         [SerializeField] public GearBreakpoint[] Gear;
         [SerializeField] public DiggerBreakpoint[] Diggers;
         [SerializeField] public WandoosBreakpoint[] Wandoos;

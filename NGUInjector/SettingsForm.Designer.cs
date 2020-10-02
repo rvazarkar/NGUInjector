@@ -137,8 +137,10 @@
             this.BloodNumberThreshold = new System.Windows.Forms.TextBox();
             this.numberErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.BalanceCube = new System.Windows.Forms.CheckBox();
-            this.IdleMinor = new System.Windows.Forms.CheckBox();
-            this.UseButter = new System.Windows.Forms.CheckBox();
+            this.ManualMinor = new System.Windows.Forms.CheckBox();
+            this.ButterMajors = new System.Windows.Forms.CheckBox();
+            this.ManageR3 = new System.Windows.Forms.CheckBox();
+            this.ButterMinors = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -264,6 +266,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.ManageR3);
             this.tabPage2.Controls.Add(this.BloodNumberThreshold);
             this.tabPage2.Controls.Add(this.label18);
             this.tabPage2.Controls.Add(this.SaveSpellCapButton);
@@ -901,8 +904,9 @@
             // 
             // tabPage8
             // 
-            this.tabPage8.Controls.Add(this.UseButter);
-            this.tabPage8.Controls.Add(this.IdleMinor);
+            this.tabPage8.Controls.Add(this.ButterMinors);
+            this.tabPage8.Controls.Add(this.ButterMajors);
+            this.tabPage8.Controls.Add(this.ManualMinor);
             this.tabPage8.Controls.Add(this.QuestFastCombat);
             this.tabPage8.Controls.Add(this.AbandonMinors);
             this.tabPage8.Controls.Add(this.AbandonMinorThreshold);
@@ -1037,19 +1041,33 @@
             this.BalanceCube.UseVisualStyleBackColor = true;
             this.BalanceCube.CheckedChanged += new System.EventHandler(this.BalanceCube_CheckedChanged);
             // 
-            // IdleMinor
+            // ManualMinor
             // 
-            resources.ApplyResources(this.IdleMinor, "IdleMinor");
-            this.IdleMinor.Name = "IdleMinor";
-            this.IdleMinor.UseVisualStyleBackColor = true;
-            this.IdleMinor.CheckedChanged += new System.EventHandler(this.IdleMinor_CheckedChanged);
+            resources.ApplyResources(this.ManualMinor, "ManualMinor");
+            this.ManualMinor.Name = "ManualMinor";
+            this.ManualMinor.UseVisualStyleBackColor = true;
+            this.ManualMinor.CheckedChanged += new System.EventHandler(this.IdleMinor_CheckedChanged);
             // 
-            // UseButter
+            // ButterMajors
             // 
-            resources.ApplyResources(this.UseButter, "UseButter");
-            this.UseButter.Name = "UseButter";
-            this.UseButter.UseVisualStyleBackColor = true;
-            this.UseButter.CheckedChanged += new System.EventHandler(this.UseButter_CheckedChanged);
+            resources.ApplyResources(this.ButterMajors, "ButterMajors");
+            this.ButterMajors.Name = "ButterMajors";
+            this.ButterMajors.UseVisualStyleBackColor = true;
+            this.ButterMajors.CheckedChanged += new System.EventHandler(this.UseButter_CheckedChanged);
+            // 
+            // ManageR3
+            // 
+            resources.ApplyResources(this.ManageR3, "ManageR3");
+            this.ManageR3.Name = "ManageR3";
+            this.ManageR3.UseVisualStyleBackColor = true;
+            this.ManageR3.CheckedChanged += new System.EventHandler(this.ManageR3_CheckedChanged);
+            // 
+            // ButterMinors
+            // 
+            resources.ApplyResources(this.ButterMinors, "ButterMinors");
+            this.ButterMinors.Name = "ButterMinors";
+            this.ButterMinors.UseVisualStyleBackColor = true;
+            this.ButterMinors.CheckedChanged += new System.EventHandler(this.ButterMinors_CheckedChanged);
             // 
             // SettingsForm
             // 
@@ -1204,7 +1222,9 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ErrorProvider numberErrProvider;
         private System.Windows.Forms.CheckBox BalanceCube;
-        private System.Windows.Forms.CheckBox UseButter;
-        private System.Windows.Forms.CheckBox IdleMinor;
+        private System.Windows.Forms.CheckBox ButterMajors;
+        private System.Windows.Forms.CheckBox ManualMinor;
+        private System.Windows.Forms.CheckBox ManageR3;
+        private System.Windows.Forms.CheckBox ButterMinors;
     }
 }

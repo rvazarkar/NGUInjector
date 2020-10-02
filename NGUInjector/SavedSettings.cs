@@ -60,11 +60,15 @@ namespace NGUInjector
         [SerializeField] private int[] _quickDiggers;
         [SerializeField] private bool _globalEnabled;
         [SerializeField] private bool _combatEnabled;
-        [SerializeField] private bool _useButter;
-        [SerializeField] private bool _idleMinors;
+        [SerializeField] private bool _useButterMajor;
+        [SerializeField] private bool _useButterMinor;
+        [SerializeField] private bool _manualMinors;
+        [SerializeField] private bool _manageR3;
 
         private readonly string _savePath;
         
+
+
         public SavedSettings(string dir)
         {
             if (dir != null)
@@ -169,8 +173,10 @@ namespace NGUInjector
             _quickLoadout = other.QuickLoadout;
             _combatEnabled = other.CombatEnabled;
             _globalEnabled = other.GlobalEnabled;
-            _useButter = other.UseButter;
-            _idleMinors = other.IdleMinors;
+            _useButterMajor = other.UseButterMajor;
+            _useButterMinor = other.UseButterMinor;
+            _manualMinors = other.ManualMinors;
+            _manageR3 = other.ManageR3;
         }
 
         public int HighestAKZone
@@ -681,25 +687,48 @@ namespace NGUInjector
             }
         }
 
-        public bool IdleMinors
+        public bool ManualMinors
         {
-            get => _idleMinors;
+            get => _manualMinors;
             set
             {
-                if (value == _idleMinors) return;
-                _idleMinors = value;
+                if (value == _manualMinors) return;
+                _manualMinors = value;
                 SaveSettings();
             }
         }
 
-        public bool UseButter
+        public bool UseButterMajor
         {
-            get => _useButter;
+            get => _useButterMajor;
             set
             {
-                if (value == _useButter) return;
-                _useButter = value;
+                if (value == _useButterMajor) return;
+                _useButterMajor = value;
                 SaveSettings();
+            }
+        }
+
+        public bool ManageR3
+        {
+            get => _manageR3;
+            set
+            {
+                if (value == _manageR3) return;
+                _manageR3 = value;
+                SaveSettings();
+            }
+        }
+
+        public bool UseButterMinor
+        {
+            get => _useButterMinor;
+            set
+            {
+                if (value == _useButterMajor) return;
+                _useButterMinor = value;
+                SaveSettings();
+                _useButterMinor = value;
             }
         }
     }

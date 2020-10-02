@@ -17,6 +17,7 @@ namespace NGUInjector.AllocationProfiles
 
         public abstract void AllocateEnergy();
         public abstract void AllocateMagic();
+        public abstract void AllocateR3();
         public abstract void EquipGear();
         public abstract void EquipDiggers();
     }

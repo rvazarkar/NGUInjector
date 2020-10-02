@@ -432,6 +432,33 @@
   <data name="&gt;&gt;tabPage1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="ManageR3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ManageR3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>218, 7</value>
+  </data>
+  <data name="ManageR3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 17</value>
+  </data>
+  <data name="ManageR3.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="ManageR3.Text" xml:space="preserve">
+    <value>Manage R3</value>
+  </data>
+  <data name="&gt;&gt;ManageR3.Name" xml:space="preserve">
+    <value>ManageR3</value>
+  </data>
+  <data name="&gt;&gt;ManageR3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ManageR3.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;ManageR3.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="BloodNumberThreshold.Location" type="System.Drawing.Point, System.Drawing">
     <value>295, 219</value>
   </data>
@@ -451,7 +478,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;BloodNumberThreshold.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="label18.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -478,7 +505,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label18.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="SaveSpellCapButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 275</value>
@@ -502,7 +529,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;SaveSpellCapButton.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="AutoSpellSwap.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -529,7 +556,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;AutoSpellSwap.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="label17.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 176</value>
@@ -550,7 +577,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label17.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="CounterfeitCap.Location" type="System.Drawing.Point, System.Drawing">
     <value>86, 250</value>
@@ -571,7 +598,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;CounterfeitCap.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="label16.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -601,7 +628,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label16.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="SpaghettiCap.Location" type="System.Drawing.Point, System.Drawing">
     <value>86, 220</value>
@@ -622,7 +649,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;SpaghettiCap.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="label15.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -649,7 +676,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label15.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="label14.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -676,13 +703,13 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="AutoRebirth.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="AutoRebirth.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 127</value>
+    <value>7, 102</value>
   </data>
   <data name="AutoRebirth.Size" type="System.Drawing.Size, System.Drawing">
     <value>85, 17</value>
@@ -703,13 +730,13 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;AutoRebirth.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="ManageWandoos.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="ManageWandoos.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 103</value>
+    <value>7, 78</value>
   </data>
   <data name="ManageWandoos.Size" type="System.Drawing.Size, System.Drawing">
     <value>132, 17</value>
@@ -730,13 +757,13 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageWandoos.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="ManageDiggers.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="ManageDiggers.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 79</value>
+    <value>7, 54</value>
   </data>
   <data name="ManageDiggers.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 17</value>
@@ -757,13 +784,13 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageDiggers.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="ManageGear.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="ManageGear.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 55</value>
+    <value>7, 30</value>
   </data>
   <data name="ManageGear.Size" type="System.Drawing.Size, System.Drawing">
     <value>91, 17</value>
@@ -784,13 +811,13 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageGear.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="ManageMagic.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="ManageMagic.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 31</value>
+    <value>114, 7</value>
   </data>
   <data name="ManageMagic.Size" type="System.Drawing.Size, System.Drawing">
     <value>97, 17</value>
@@ -811,7 +838,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageMagic.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>15</value>
   </data>
   <data name="ManageEnergy.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -838,7 +865,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageEnergy.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>16</value>
   </data>
   <data name="tabPage2.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -2478,65 +2505,95 @@
   <data name="&gt;&gt;tabPage7.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="UseButter.AutoSize" type="System.Boolean, mscorlib">
+  <data name="ButterMinors.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="UseButter.Location" type="System.Drawing.Point, System.Drawing">
-    <value>355, 31</value>
+  <data name="ButterMinors.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="UseButter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 17</value>
+  <data name="ButterMinors.Location" type="System.Drawing.Point, System.Drawing">
+    <value>140, 54</value>
   </data>
-  <data name="UseButter.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+  <data name="ButterMinors.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 17</value>
   </data>
-  <data name="UseButter.Text" xml:space="preserve">
-    <value>Use Butter</value>
+  <data name="ButterMinors.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
   </data>
-  <data name="&gt;&gt;UseButter.Name" xml:space="preserve">
-    <value>UseButter</value>
+  <data name="ButterMinors.Text" xml:space="preserve">
+    <value>Use Butter on Minors</value>
   </data>
-  <data name="&gt;&gt;UseButter.Type" xml:space="preserve">
+  <data name="&gt;&gt;ButterMinors.Name" xml:space="preserve">
+    <value>ButterMinors</value>
+  </data>
+  <data name="&gt;&gt;ButterMinors.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;UseButter.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ButterMinors.Parent" xml:space="preserve">
     <value>tabPage8</value>
   </data>
-  <data name="&gt;&gt;UseButter.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ButterMinors.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="IdleMinor.AutoSize" type="System.Boolean, mscorlib">
+  <data name="ButterMajors.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="IdleMinor.Location" type="System.Drawing.Point, System.Drawing">
-    <value>271, 31</value>
+  <data name="ButterMajors.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 54</value>
   </data>
-  <data name="IdleMinor.Size" type="System.Drawing.Size, System.Drawing">
-    <value>77, 17</value>
+  <data name="ButterMajors.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 17</value>
   </data>
-  <data name="IdleMinor.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+  <data name="ButterMajors.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
   </data>
-  <data name="IdleMinor.Text" xml:space="preserve">
-    <value>Idle Minors</value>
+  <data name="ButterMajors.Text" xml:space="preserve">
+    <value>Use Butter on Majors</value>
   </data>
-  <data name="&gt;&gt;IdleMinor.Name" xml:space="preserve">
-    <value>IdleMinor</value>
+  <data name="&gt;&gt;ButterMajors.Name" xml:space="preserve">
+    <value>ButterMajors</value>
   </data>
-  <data name="&gt;&gt;IdleMinor.Type" xml:space="preserve">
+  <data name="&gt;&gt;ButterMajors.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;IdleMinor.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ButterMajors.Parent" xml:space="preserve">
     <value>tabPage8</value>
   </data>
-  <data name="&gt;&gt;IdleMinor.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ButterMajors.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="ManualMinor.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ManualMinor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>271, 31</value>
+  </data>
+  <data name="ManualMinor.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 17</value>
+  </data>
+  <data name="ManualMinor.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="ManualMinor.Text" xml:space="preserve">
+    <value>Manual Minors</value>
+  </data>
+  <data name="&gt;&gt;ManualMinor.Name" xml:space="preserve">
+    <value>ManualMinor</value>
+  </data>
+  <data name="&gt;&gt;ManualMinor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ManualMinor.Parent" xml:space="preserve">
+    <value>tabPage8</value>
+  </data>
+  <data name="&gt;&gt;ManualMinor.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="QuestFastCombat.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="QuestFastCombat.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 90</value>
+    <value>316, 134</value>
   </data>
   <data name="QuestFastCombat.Size" type="System.Drawing.Size, System.Drawing">
     <value>85, 17</value>
@@ -2557,7 +2614,7 @@
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;QuestFastCombat.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="AbandonMinors.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2584,10 +2641,10 @@
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;AbandonMinors.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="AbandonMinorThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>190, 55</value>
+    <value>189, 99</value>
   </data>
   <data name="AbandonMinorThreshold.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 20</value>
@@ -2605,13 +2662,13 @@
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;AbandonMinorThreshold.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="label13.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="label13.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 57</value>
+    <value>6, 101</value>
   </data>
   <data name="label13.Size" type="System.Drawing.Size, System.Drawing">
     <value>177, 13</value>
@@ -2632,7 +2689,7 @@
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;label13.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="label12.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2641,7 +2698,7 @@
     <value>NoControl</value>
   </data>
   <data name="label12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 90</value>
+    <value>6, 134</value>
   </data>
   <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
     <value>73, 13</value>
@@ -2662,7 +2719,7 @@
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="QuestCombatMode.Items" xml:space="preserve">
     <value>Idle</value>
@@ -2671,7 +2728,7 @@
     <value>Manual</value>
   </data>
   <data name="QuestCombatMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>190, 88</value>
+    <value>189, 132</value>
   </data>
   <data name="QuestCombatMode.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 21</value>
@@ -2689,7 +2746,7 @@
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;QuestCombatMode.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="AllowMajor.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2716,7 +2773,7 @@
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;AllowMajor.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="ManageQuests.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2743,7 +2800,7 @@
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;ManageQuests.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="tabPage8.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>

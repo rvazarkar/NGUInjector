@@ -182,6 +182,7 @@ In the above example the following actions will be taken:
 Available cap priorities for Magic are as follows:
 
 - CAPNGU-X (0-6) - Use the cap button for the NGU
+- CAPALLNGU - Use the cap button for every NGU starting from 0
 - CAPWAN - Use the cap button for wandoos magic
 - CAPTM - Calculate a cap for magic time machine and attempt to BB it.
 - BR - Cast rituals from highest to lowest ignoring rituals you cant afford or will take more than an hour
