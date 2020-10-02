@@ -96,6 +96,11 @@ namespace NGUInjector.Managers
                 }
             }
 
+            if (CastMegaBuff())
+            {
+                return true;
+            }
+
             if (!DefenseBuffActive())
             {
                 if (CastUltimateBuff())

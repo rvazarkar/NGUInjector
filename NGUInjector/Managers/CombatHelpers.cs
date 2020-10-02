@@ -126,6 +126,17 @@ namespace NGUInjector.Managers
             return false;
         }
 
+        internal static bool CastMegaBuff()
+        {
+            if (Main.Character.adventureController.megaBuffMove.button.IsInteractable())
+            {
+                Main.Character.adventureController.megaBuffMove.doMove();
+                return true;
+            }
+
+            return false;
+        }
+
         internal static bool CastOffensiveBuff()
         {
             if (Main.Character.adventureController.offenseBuffMove.button.IsInteractable())
