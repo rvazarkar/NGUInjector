@@ -31,7 +31,6 @@ namespace NGUInjector.Managers
             if (!_character.beastQuest.inQuest)
                 return -1;
 
-
             var questZone = _character.beastQuestController.curQuestZone();
 
             if (!CombatManager.IsZoneUnlocked(questZone))

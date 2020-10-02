@@ -596,7 +596,7 @@ namespace NGUInjector
             if (Character.buttons.brokenTimeMachine.interactable)
             {
                 //Hit our initial gold zone first to get TM started
-                if (Character.machine.realBaseGold == 0.0 && _combManager.IsZoneUnlocked(Settings.InitialGoldZone) && Settings.InitialGoldZone > 0)
+                if (Character.machine.realBaseGold == 0.0 && CombatManager.IsZoneUnlocked(Settings.InitialGoldZone) && Settings.InitialGoldZone > 0)
                 {
                     _combManager.ManualZone(Settings.InitialGoldZone, false, false, false, true);
                     return;
@@ -605,7 +605,7 @@ namespace NGUInjector
                 //Go to our gold loadout zone next to get a high gold drop
                 if (Settings.NextGoldSwap)
                 {
-                    if (_combManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone > 0)
+                    if (CombatManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone > 0)
                     {
                         if (LoadoutManager.TryGoldDropSwap())
                         {
@@ -640,7 +640,7 @@ namespace NGUInjector
             var tempZone = Settings.SnipeZone;
             if (Settings.SnipeZone < 1000)
             {
-                if (!_combManager.IsZoneUnlocked(Settings.SnipeZone))
+                if (!CombatManager.IsZoneUnlocked(Settings.SnipeZone))
                 {
                     if (!Settings.AllowZoneFallback) return;
 
@@ -678,14 +678,14 @@ namespace NGUInjector
 
             if (Character.buttons.brokenTimeMachine.interactable)
             {
-                if (Character.machine.realBaseGold == 0.0 && _combManager.IsZoneUnlocked(Settings.InitialGoldZone) && Settings.InitialGoldZone > 0)
+                if (Character.machine.realBaseGold == 0.0 && CombatManager.IsZoneUnlocked(Settings.InitialGoldZone) && Settings.InitialGoldZone > 0)
                 {
                     return;
                 }
 
                 if (Settings.NextGoldSwap)
                 {
-                    if (_combManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone > 0)
+                    if (CombatManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone > 0)
                     {
                         return;
                     }
