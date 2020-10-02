@@ -347,7 +347,7 @@ namespace NGUInjector.Managers
                 loadout.Add(Main.Character.inventory.accs[index].id);
             }
             _tempLoadout = loadout.ToArray();
-            Log($"Saved Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
+            Log($"Saved Loadout {string.Join(",", _tempLoadout.Select(x => x.ToString()).ToArray())}");
         }
 
         internal static void RestoreTempLoadout()
