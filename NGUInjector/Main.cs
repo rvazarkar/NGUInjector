@@ -299,12 +299,9 @@ namespace NGUInjector
                 _tempSwapped = !_tempSwapped;
             }
 
-            //if (Input.GetKeyDown(KeyCode.F12))
+            //if (Input.GetKeyDown(KeyCode.F11))
             //{
-            //    for (var i = 0; i <= 13; i++)
-            //    {
-            //        Log($"Aug {i} - {_profile.CalculateAugCap(i)}");
-            //    }
+            //    
             //}
         }
 
