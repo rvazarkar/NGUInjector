@@ -195,6 +195,19 @@ Available non-cap priorities for Magic are as follows:
 
 More information on allocation indexes can be found on the [wiki](https://github.com/rvazarkar/NGUInjector/wiki/Allocation-Indexes)
 
+## R3
+
+An R3 breakpoint is structured as follows:
+
+```
+{
+"Time": 0,
+"Priorities": ["HACK-1"]
+}
+```
+
+The only priority available currently is HACK-X.
+
 ## Gear
 
 A gear breakpoint is structured as follows:
