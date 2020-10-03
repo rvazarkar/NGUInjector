@@ -82,6 +82,8 @@ namespace NGUInjector.Managers
 
         internal void CheckFruits()
         {
+            if (!Settings.ActivateFruits)
+                return;
             var curPage = _character.yggdrasilController.curPage;
             for (var i = 0; i < _character.yggdrasil.fruits.Count; i++)
             {

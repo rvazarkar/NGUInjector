@@ -141,6 +141,7 @@
             this.ButterMajors = new System.Windows.Forms.CheckBox();
             this.ManageR3 = new System.Windows.Forms.CheckBox();
             this.ButterMinors = new System.Windows.Forms.CheckBox();
+            this.ActivateFruits = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -379,6 +380,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.ActivateFruits);
             this.tabPage3.Controls.Add(this.label3);
             this.tabPage3.Controls.Add(this.yggRemoveButton);
             this.tabPage3.Controls.Add(this.yggLoadoutItem);
@@ -1069,6 +1071,13 @@
             this.ButterMinors.UseVisualStyleBackColor = true;
             this.ButterMinors.CheckedChanged += new System.EventHandler(this.ButterMinors_CheckedChanged);
             // 
+            // ActivateFruits
+            // 
+            resources.ApplyResources(this.ActivateFruits, "ActivateFruits");
+            this.ActivateFruits.Name = "ActivateFruits";
+            this.ActivateFruits.UseVisualStyleBackColor = true;
+            this.ActivateFruits.CheckedChanged += new System.EventHandler(this.ActivateFruits_CheckedChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1226,5 +1235,6 @@
         private System.Windows.Forms.CheckBox ManualMinor;
         private System.Windows.Forms.CheckBox ManageR3;
         private System.Windows.Forms.CheckBox ButterMinors;
+        private System.Windows.Forms.CheckBox ActivateFruits;
     }
 }

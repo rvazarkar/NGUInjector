@@ -64,6 +64,7 @@ namespace NGUInjector
         [SerializeField] private bool _useButterMinor;
         [SerializeField] private bool _manualMinors;
         [SerializeField] private bool _manageR3;
+        [SerializeField] private bool _activateFruits;
 
         private readonly string _savePath;
         
@@ -177,6 +178,7 @@ namespace NGUInjector
             _useButterMinor = other.UseButterMinor;
             _manualMinors = other.ManualMinors;
             _manageR3 = other.ManageR3;
+            _activateFruits = other.ActivateFruits;
         }
 
         public int HighestAKZone
@@ -727,6 +729,17 @@ namespace NGUInjector
             {
                 if (value == _useButterMinor) return;
                 _useButterMinor = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ActivateFruits
+        {
+            get => _activateFruits;
+            set
+            {
+                if (value == _activateFruits) return;
+                _activateFruits = value;
                 SaveSettings();
             }
         }

@@ -187,6 +187,7 @@ namespace NGUInjector
             ButterMajors.Checked = newSettings.UseButterMajor;
             ManageR3.Checked = newSettings.ManageR3;
             ButterMinors.Checked = newSettings.UseButterMinor;
+            ActivateFruits.Checked = newSettings.ActivateFruits;
             BloodNumberThreshold.Text = newSettings.BloodNumberThreshold.ToString(CultureInfo.InvariantCulture);
 
             yggdrasilLoadoutBox.DataSource = null;
@@ -919,6 +920,12 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.UseButterMinor = ButterMinors.Checked;
+        }
+
+        private void ActivateFruits_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.ActivateFruits = ActivateFruits.Checked;
         }
     }
 }
