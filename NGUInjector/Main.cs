@@ -34,7 +34,7 @@ namespace NGUInjector
         private CustomAllocation _profile;
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
-        internal const string Version = "2.3.0";
+        internal const string Version = "2.3.1";
 
         internal static bool Test { get; set; }
 
@@ -153,8 +153,8 @@ namespace NGUInjector
                         QuestCombatMode = 0,
                         AutoBuyEM = false,
                         AutoSpellSwap = false,
-                        CounterfeitThreshold = 30,
-                        SpaghettiThreshold = 400,
+                        CounterfeitThreshold = 400,
+                        SpaghettiThreshold = 30,
                         BloodNumberThreshold = 1e10,
                         BalanceCube = true,
                         CombatEnabled = false,
