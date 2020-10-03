@@ -725,10 +725,9 @@ namespace NGUInjector
             get => _useButterMinor;
             set
             {
-                if (value == _useButterMajor) return;
+                if (value == _useButterMinor) return;
                 _useButterMinor = value;
                 SaveSettings();
-                _useButterMinor = value;
             }
         }
     }
