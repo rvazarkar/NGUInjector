@@ -58,6 +58,7 @@ namespace NGUInjector.Managers
             _controller = Controller;
             var temp = _pendants.Concat(_lootys).ToList();
             temp.Add(154);
+            temp.Add(120);
             _convertibles = temp.ToArray();
         }
 
