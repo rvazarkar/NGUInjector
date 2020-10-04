@@ -656,7 +656,7 @@ namespace NGUInjector.AllocationProfiles
 
             if (breakpoint.StartsWith("CAPALLNGU"))
             {
-                for (var i = 0; i < 6; i++)
+                for (var i = 0; i < 7; i++)
                 {
                     _character.NGUController.NGUMagic[i].cap();
                 }
@@ -747,7 +747,7 @@ namespace NGUInjector.AllocationProfiles
 
             if (breakpoint.StartsWith("CAPALLNGU"))
             {
-                for (var i = 0; i < 8; i++)
+                for (var i = 0; i < 9; i++)
                 {
                     _character.NGUController.NGU[i].cap();
                 }
