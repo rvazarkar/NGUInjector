@@ -599,7 +599,7 @@ namespace NGUInjector.AllocationProfiles
             if (breakpoint.StartsWith("WISH"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
-                if (!success || index < 0 || index > _character.wishesController.curWishSlots())
+                if (!success || index < 0)
                 {
                     return;
                 }
@@ -689,7 +689,7 @@ namespace NGUInjector.AllocationProfiles
             if (breakpoint.StartsWith("WISH"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
-                if (!success || index < 0 || index > _character.wishesController.curWishSlots())
+                if (!success || index < 0)
                 {
                     return;
                 }
@@ -933,7 +933,7 @@ namespace NGUInjector.AllocationProfiles
             if (breakpoint.StartsWith("WISH"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
-                if (!success || index < 0 || index > _character.wishesController.curWishSlots())
+                if (!success || index < 0)
                 {
                     return;
                 }

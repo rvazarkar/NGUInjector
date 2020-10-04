@@ -85,7 +85,7 @@ An in game menu can be opened using the F1 button.
 - **Recover HP** - If enabled, will recover HP in safe zone between kills
 - **Fast Combat** - If enabled, will just quickly attack and skip buffs altogether.
 - **Combat Mode** - If set to manual, will execute a custom combat routine. If set to idle, will just idle the zone.
-- **Target Zone** - The target zone to snipe/do combat in.
+- **Target Zone** - The target zone to snipe/do combat in. ITOPOD is at the bottom of the list.
 - **Allow Fallthrough** - If set to true, combat will use the highest unlocked zone you have until the target zone is unlocked.
 
 ![Gold](https://i.imgur.com/bnUSR1l.png)
@@ -221,6 +221,8 @@ A gear breakpoint is structured as follows:
 
 The list of IDs is the IDs of the gear desired.
 
+You can dump your loadouts from Gear Optimizer using the method found on [this wiki page](https://github.com/rvazarkar/NGUInjector/wiki/Dump-Equipment-from-GO)
+
 ## Diggers
 
 A digger breakpoint is structured as follows:
@@ -285,8 +287,9 @@ Have you forgotten to turn on auto attack before and left yourself AFK in ITOPOD
 
 ## Auto Merge Boost to 100
 
-Lock a boost in your inventory and the script will automaticaly merge boosts on to that boost until it hits level 100!
+Lock a boost in your inventory and the script will automatically merge boosts on to that boost until it hits level 100!
 
 # Acknowledgements
 
 SharpMonoInjector can be found [here](https://github.com/warbler/SharpMonoInjector). This wouldn't be possible without the excellent work done there.
+Obviously 4G for making NGU Idle.
