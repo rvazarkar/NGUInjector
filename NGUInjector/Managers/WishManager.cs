@@ -28,19 +28,18 @@ namespace NGUInjector.Managers
         public void BuildWishList()
         {
             var dictDouble = new Dictionary<int, double>();
-            var wishPriorities = new List<int>();
-            
+
+            _curValidUpgradesList.Clear();
             for (var i = 0; i < Settings.WishPriorities.Count(); i++)
             {
                 if (isValidWish(Settings.WishPriorities[i]))
                 {
-                    wishPriorities.Add(Settings.WishPriorities[i]);
+                    _curValidUpgradesList.Add(Settings.WishPriorities[i]);
                 }
             }
-
             for (var i = 0; i < _character.wishes.wishes.Count; i++)
             {
-                if (wishPriorities.Contains(i))
+                if (_curValidUpgradesList.Contains(i))
                 {
                     continue;
                 }
@@ -52,12 +51,6 @@ namespace NGUInjector.Managers
             dictDouble = (from x in dictDouble
                                orderby x.Value
                                select x).ToDictionary(x => x.Key, x => x.Value);
-
-            _curValidUpgradesList.Clear();
-            for (var i = 0; i < wishPriorities.Count; i++)
-            {
-                _curValidUpgradesList.Add(wishPriorities[i]);
-            }
             for (var j = 0; j < dictDouble.Count; j++)
             {
                 _curValidUpgradesList.Add(dictDouble.ElementAt(j).Key);
@@ -66,18 +59,22 @@ namespace NGUInjector.Managers
 
         public bool isValidWish(int wishId)
         {
-                if (_character.wishesController.properties[wishId].difficultyRequirement > _character.wishesController.character.settings.rebirthDifficulty)
-                {
+            if (wishId < 0 || wishId > _character.wishes.wishSize())
+            {
                 return false;
-                }
-                if (_character.wishesController.progressPerTickMax(wishId) <= 0f)
-                {
+            }
+            if (_character.wishesController.properties[wishId].difficultyRequirement > _character.wishesController.character.settings.rebirthDifficulty)
+            {
                 return false;
-                }
-                if (_character.wishesController.character.wishes.wishes[wishId].level >= _character.wishesController.properties[wishId].maxLevel)
-                {
+            }
+            if (_character.wishesController.progressPerTickMax(wishId) <= 0f)
+            {
                 return false;
-                }
+            }
+            if (_character.wishesController.character.wishes.wishes[wishId].level >= _character.wishesController.properties[wishId].maxLevel)
+            {
+                return false;
+            }
             return true;          
         }
     }
