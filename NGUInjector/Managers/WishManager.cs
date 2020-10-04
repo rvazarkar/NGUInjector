@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using static NGUInjector.Main;
 
 namespace NGUInjector.Managers
 {
     internal class WishManager
     {
         private readonly Character _character;
-        private Dictionary<int, double> dictDouble = new Dictionary<int, double>();
+        private Dictionary<int, double> _dictDouble = new Dictionary<int, double>();
         public List<int> curValidUpgradesList = new List<int>();
 
         public WishManager()
@@ -15,54 +14,56 @@ namespace NGUInjector.Managers
             _character = Main.Character;
         }
 
-        public int getSlot(int slotID)
+        public int GetSlot(int slotId)
         {
-            buildWishList();
-            if (slotID > this.curValidUpgradesList.Count())
+            BuildWishList();
+            if (slotId > curValidUpgradesList.Count())
             {
                 return -1;
             }
-            return this.curValidUpgradesList[slotID];
+            return curValidUpgradesList[slotId];
         }
 
-        public void buildWishList()
+        public void BuildWishList()
         {
-            for (int i = 0; i < this._character.wishes.wishes.Count; i++)
+            for (var i = 0; i < _character.wishes.wishes.Count; i++)
             {
-                this.curValidUpgradesList.Add(i);
+                curValidUpgradesList.Add(i);
             }
-            for (int i = 0; i < this.curValidUpgradesList.Count; i++)
+
+            for (var i = 0; i < curValidUpgradesList.Count; i++)
             {
-                if (_character.wishesController.properties[this.curValidUpgradesList[i]].difficultyRequirement > _character.wishesController.character.settings.rebirthDifficulty)
+                if (_character.wishesController.properties[curValidUpgradesList[i]].difficultyRequirement > _character.wishesController.character.settings.rebirthDifficulty)
                 {
-                    this.curValidUpgradesList.RemoveAt(i);
+                    curValidUpgradesList.RemoveAt(i);
                     i--;
                     continue;
                 }
-                if (_character.wishesController.progressPerTickMax(this.curValidUpgradesList[i]) <= 0f)
+                if (_character.wishesController.progressPerTickMax(curValidUpgradesList[i]) <= 0f)
                 {
-                    this.curValidUpgradesList.RemoveAt(i);
+                    curValidUpgradesList.RemoveAt(i);
                     i--;
                     continue;
                 }
-                if ((long)_character.wishesController.character.wishes.wishes[this.curValidUpgradesList[i]].level >= _character.wishesController.properties[this.curValidUpgradesList[i]].maxLevel)
+                if (_character.wishesController.character.wishes.wishes[curValidUpgradesList[i]].level >= _character.wishesController.properties[curValidUpgradesList[i]].maxLevel)
                 {
-                    this.curValidUpgradesList.RemoveAt(i);
+                    curValidUpgradesList.RemoveAt(i);
                     i--;
-                    continue;
                 }
             }
-            for (int i = 0; i < this.curValidUpgradesList.Count; i++)
+
+            for (var i = 0; i < curValidUpgradesList.Count; i++)
             {
-                this.dictDouble.Add(this.curValidUpgradesList[i], (double)_character.wishesController.properties[this.curValidUpgradesList[i]].wishSpeedDivider);
+                _dictDouble.Add(i, _character.wishesController.properties[i].wishSpeedDivider);
             }
-            this.dictDouble = (from x in this.dictDouble
+
+            _dictDouble = (from x in _dictDouble
                                orderby x.Value
-                               select x).ToDictionary((KeyValuePair<int, double> x) => x.Key, (KeyValuePair<int, double> x) => x.Value);
-            this.curValidUpgradesList.Clear();
-            for (int j = 0; j < this.dictDouble.Count; j++)
+                               select x).ToDictionary(x => x.Key, x => x.Value);
+            curValidUpgradesList.Clear();
+            for (var j = 0; j < _dictDouble.Count; j++)
             {
-                this.curValidUpgradesList.Add(this.dictDouble.ElementAt(j).Key);
+                curValidUpgradesList.Add(_dictDouble.ElementAt(j).Key);
             }
         }
     }

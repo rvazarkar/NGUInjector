@@ -19,6 +19,7 @@ namespace NGUInjector.AllocationProfiles
         private GearBreakpoint _currentGearBreakpoint;
         private DiggerBreakpoint _currentDiggerBreakpoint;
         private WandoosBreakpoint _currentWandoosBreakpoint;
+        private WishManager _wishManager;
         private bool _hasGearSwapped;
         private bool _hasDiggerSwapped;
         private bool _hasWandoosSwapped;
@@ -31,6 +32,7 @@ namespace NGUInjector.AllocationProfiles
         {
             var path = Path.Combine(dir, "allocation.json");
             _allocationPath = path;
+            _wishManager = new WishManager();
         }
 
         private List<string> ValidatePriorities(List<string> priorities)
@@ -601,8 +603,7 @@ namespace NGUInjector.AllocationProfiles
                 {
                     return;
                 }
-                WishManager wish = new WishManager();
-                int wishID = wish.getSlot(index);
+                var wishID = _wishManager.GetSlot(index);
                 if (wishID == -1)
                 {
                     return;
@@ -692,8 +693,7 @@ namespace NGUInjector.AllocationProfiles
                 {
                     return;
                 }
-                WishManager wish = new WishManager();
-                int wishID = wish.getSlot(index);
+                var wishID = _wishManager.GetSlot(index);
                 if (wishID == -1)
                 {
                     return;
@@ -937,8 +937,8 @@ namespace NGUInjector.AllocationProfiles
                 {
                     return;
                 }
-                WishManager wish = new WishManager();
-                int wishID = wish.getSlot(index);
+
+                var wishID = _wishManager.GetSlot(index);
                 if (wishID == -1)
                 {
                     return;
@@ -1020,7 +1020,7 @@ namespace NGUInjector.AllocationProfiles
         internal void DebugTMCap()
         {
             var energy = CalculateTMEnergyCap();
-            double num = (double)_character.totalEnergyPower() / (double)_character.timeMachineController.baseSpeedDivider() * ((double)energy / 50000) * (double)_character.hacksController.totalTMSpeedBonus() * (double)_character.allChallenges.timeMachineChallenge.TMSpeedBonus() * (double)_character.cardsController.getBonus(cardBonus.TMSpeed) / (double)(_character.machine.levelSpeed + 1L);
+            var num = (double)_character.totalEnergyPower() / (double)_character.timeMachineController.baseSpeedDivider() * ((double)energy / 50000) * (double)_character.hacksController.totalTMSpeedBonus() * (double)_character.allChallenges.timeMachineChallenge.TMSpeedBonus() * (double)_character.cardsController.getBonus(cardBonus.TMSpeed) / (double)(_character.machine.levelSpeed + 1L);
             Main.LogAllocation($"Calculated Energy: {energy}");
             Main.LogAllocation($"Deviation from game formula: {num}");
         }

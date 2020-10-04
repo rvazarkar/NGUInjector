@@ -66,6 +66,7 @@
     <Compile Include="Managers\LoadoutManager.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Managers\MoneyPitManager.cs" />
+    <Compile Include="Managers\WishManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Managers\QuestManager.cs" />
     <Compile Include="SavedSettings.cs" />
