@@ -164,7 +164,9 @@ namespace NGUInjector
                         UseButterMajor = false,
                         ManualMinors =  false,
                         UseButterMinor = false,
-                        ActivateFruits = true
+                        ActivateFruits = true,
+                        ManageR3 = true,
+                        WishPriorities = new int[] {}
                     };
 
                     Settings.MassUpdate(temp);
@@ -601,7 +603,7 @@ namespace NGUInjector
             if (Character.buttons.brokenTimeMachine.interactable)
             {
                 //Hit our initial gold zone first to get TM started
-                if (Character.machine.realBaseGold == 0.0 && CombatManager.IsZoneUnlocked(Settings.InitialGoldZone) && Settings.InitialGoldZone > 0)
+                if (Character.machine.realBaseGold == 0.0 && CombatManager.IsZoneUnlocked(Settings.InitialGoldZone) && Settings.InitialGoldZone >= 0)
                 {
                     _combManager.ManualZone(Settings.InitialGoldZone, false, false, false, true);
                     return;
@@ -610,7 +612,7 @@ namespace NGUInjector
                 //Go to our gold loadout zone next to get a high gold drop
                 if (Settings.NextGoldSwap)
                 {
-                    if (CombatManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone > 0)
+                    if (CombatManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone >= 0)
                     {
                         if (LoadoutManager.TryGoldDropSwap())
                         {
