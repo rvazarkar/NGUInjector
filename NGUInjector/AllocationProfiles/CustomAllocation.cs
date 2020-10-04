@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,9 +23,9 @@ namespace NGUInjector.AllocationProfiles
         private bool _hasDiggerSwapped;
         private bool _hasWandoosSwapped;
         private readonly string _allocationPath;
-        private string[] _validEnergyPriorities = { "WAN", "CAPWAN", "TM", "CAPTM", "CAPAT", "AT", "NGU", "CAPNGU", "AUG", "BT", "CAPBT", "CAPAUG", "CAPALLNGU", "BLANK" };
-        private string[] _validMagicPriorities = { "WAN", "CAPWAN", "BR", "TM", "CAPTM", "NGU", "CAPNGU", "CAPALLNGU", "BLANK" };
-        private string[] _validR3Priorities = {"HACK"};
+        private string[] _validEnergyPriorities = { "WAN", "CAPWAN", "TM", "CAPTM", "CAPAT", "AT", "NGU", "CAPNGU", "AUG", "BT", "CAPBT", "CAPAUG", "CAPALLNGU", "BLANK", "WISH" };
+        private string[] _validMagicPriorities = { "WAN", "CAPWAN", "BR", "TM", "CAPTM", "NGU", "CAPNGU", "CAPALLNGU", "BLANK", "WISH" };
+        private string[] _validR3Priorities = {"HACK", "WISH"};
 
         public CustomAllocation(string dir)
         {
@@ -73,6 +73,11 @@ namespace NGUInjector.AllocationProfiles
             if (!_character.buttons.hacks.interactable)
             {
                 priorities.RemoveAll(x => x.Contains("HACK"));
+            }
+
+            if (!_character.buttons.wishes.interactable)
+            {
+                priorities.RemoveAll(x => x.Contains("WISH"));
             }
 
             priorities.RemoveAll(x => x.Contains("AUG") && !IsAUGUnlocked(ParseIndex(x)));
@@ -588,6 +593,22 @@ namespace NGUInjector.AllocationProfiles
 
                 _character.hacksController.addR3(index, _character.input.energyMagicInput);
             }
+
+            if (breakpoint.StartsWith("WISH"))
+            {
+                var success = int.TryParse(breakpoint.Split('-')[1], out var index);
+                if (!success || index < 0 || index > _character.wishesController.curWishSlots())
+                {
+                    return;
+                }
+                WishManager wish = new WishManager();
+                int wishID = wish.getSlot(index);
+                if (wishID == -1)
+                {
+                    return;
+                }
+                _character.wishesController.addRes3(wishID);
+            }
         }
 
         private void ReadMagicBreakpoint(string breakpoint)
@@ -662,6 +683,22 @@ namespace NGUInjector.AllocationProfiles
                 }
 
                 return;
+            }
+
+            if (breakpoint.StartsWith("WISH"))
+            {
+                var success = int.TryParse(breakpoint.Split('-')[1], out var index);
+                if (!success || index < 0 || index > _character.wishesController.curWishSlots())
+                {
+                    return;
+                }
+                WishManager wish = new WishManager();
+                int wishID = wish.getSlot(index);
+                if (wishID == -1)
+                {
+                    return;
+                }
+                _character.wishesController.addMagic(wishID);
             }
         }
 
@@ -891,6 +928,22 @@ namespace NGUInjector.AllocationProfiles
                 {
                     _character.augmentsController.augments[augIndex].addEnergyUpgrade();
                 }
+            }
+
+            if (breakpoint.StartsWith("WISH"))
+            {
+                var success = int.TryParse(breakpoint.Split('-')[1], out var index);
+                if (!success || index < 0 || index > _character.wishesController.curWishSlots())
+                {
+                    return;
+                }
+                WishManager wish = new WishManager();
+                int wishID = wish.getSlot(index);
+                if (wishID == -1)
+                {
+                    return;
+                }
+                _character.wishesController.addEnergy(wishID);
             }
         }
 
