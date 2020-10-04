@@ -56,7 +56,7 @@ namespace NGUInjector.Managers
 
             for (var i = 0; i < _curValidUpgradesList.Count; i++)
             {
-                dictDouble.Add(i, _character.wishesController.properties[i].wishSpeedDivider);
+                dictDouble.Add(_curValidUpgradesList[i], _character.wishesController.properties[i].wishSpeedDivider);
             }
 
             dictDouble = (from x in dictDouble
