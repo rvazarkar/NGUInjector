@@ -34,7 +34,7 @@ namespace NGUInjector
         private CustomAllocation _profile;
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
-        internal const string Version = "2.4.0";
+        internal const string Version = "2.4.1";
 
         internal static bool Test { get; set; }
 
