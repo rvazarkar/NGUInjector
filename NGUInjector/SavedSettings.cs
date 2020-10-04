@@ -65,6 +65,7 @@ namespace NGUInjector
         [SerializeField] private bool _manualMinors;
         [SerializeField] private bool _manageR3;
         [SerializeField] private bool _activateFruits;
+        [SerializeField] private int[] _wishPriorities;
 
         private readonly string _savePath;
         
@@ -179,6 +180,7 @@ namespace NGUInjector
             _manualMinors = other.ManualMinors;
             _manageR3 = other.ManageR3;
             _activateFruits = other.ActivateFruits;
+            _wishPriorities = other.WishPriorities;
         }
 
         public int HighestAKZone
@@ -742,6 +744,11 @@ namespace NGUInjector
                 _activateFruits = value;
                 SaveSettings();
             }
+        }
+        public int[] WishPriorities
+        {
+            get => _wishPriorities;
+            set => _wishPriorities = value;
         }
     }
 }
