@@ -959,7 +959,7 @@ namespace NGUInjector.AllocationProfiles
             {
                 formula *= _character.timeMachineController.sadisticDivider();
             }
-            return Mathf.Ceil(formula);
+            return Mathf.Min(Mathf.Ceil((float)formula), (float)9e18);
         }
 
         internal float CalculateATCap(int index)
@@ -974,7 +974,7 @@ namespace NGUInjector.AllocationProfiles
             var formula = 50f * divisor /
                 (Mathf.Sqrt(_character.totalEnergyPower()) * _character.totalAdvancedTrainingSpeedBonus());
 
-            return Mathf.Ceil(formula);
+            return Mathf.Min(Mathf.Ceil((float)formula), (float)9e18);
         }
 
         //internal float CalculateAugCap(int index)
@@ -1089,7 +1089,7 @@ namespace NGUInjector.AllocationProfiles
                     formula *= _character.augmentsController.sadisticUpgradeSpeedDividers[augIndex];
                 }
             }
-            return Mathf.Ceil((float)formula);
+            return Mathf.Min(Mathf.Ceil((float)formula), (float)9e18);
         }
 
         private bool IsBTUnlocked(int index)
