@@ -94,8 +94,8 @@ namespace NGUInjector.Managers
             {
                 if (Settings.AllowMajorQuests && Settings.AbandonMinors && _character.beastQuest.curBankedQuests > 0)
                 {
-                    if (_character.beastQuest.curDrops / _character.beastQuest.targetDrops * 100 <=
-                        Settings.MinorAbandonThreshold)
+                    var progress = (_character.beastQuest.curDrops / (float) _character.beastQuest.targetDrops) * 100;
+                    if ( progress <= Settings.MinorAbandonThreshold)
                     {
                         //If all this is true get rid of this minor quest and pick up a new one.
                         _character.settings.useMajorQuests = true;
