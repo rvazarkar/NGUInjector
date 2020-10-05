@@ -112,6 +112,10 @@ namespace NGUInjector.Managers
 
                 SetIdleMode(!Settings.ManualMinors);
             }
+            else
+            {
+                SetIdleMode(false);
+            }
         }
     }
 }
