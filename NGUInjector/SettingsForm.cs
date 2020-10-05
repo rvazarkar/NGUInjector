@@ -192,6 +192,7 @@ namespace NGUInjector
             ManageR3.Checked = newSettings.ManageR3;
             ButterMinors.Checked = newSettings.UseButterMinor;
             ActivateFruits.Checked = newSettings.ActivateFruits;
+            BeastMode.Checked = newSettings.BeastMode;
             BloodNumberThreshold.Text = newSettings.BloodNumberThreshold.ToString(CultureInfo.InvariantCulture);
 
             yggdrasilLoadoutBox.DataSource = null;
@@ -950,6 +951,7 @@ namespace NGUInjector
             WishPriority.DataSource = null;
             WishPriority.DataSource = new BindingSource(Main.Settings.WishPriorities, null);
             WishPriority.SelectedIndex = index - 1;
+            Main.Character.removeAllRes3();
         }
 
         private void WishDownButton_Click(object sender, EventArgs e)
@@ -969,7 +971,8 @@ namespace NGUInjector
             Main.Settings.WishPriorities = temp.ToArray();
             WishPriority.DataSource = null;
             WishPriority.DataSource = new BindingSource(Main.Settings.WishPriorities, null);
-            WishPriority.SelectedIndex = index - 1;
+            WishPriority.SelectedIndex = index + 1;
+            Main.Character.removeAllRes3();
         }
 
         private void AddWishButton_Click(object sender, EventArgs e)
@@ -988,6 +991,7 @@ namespace NGUInjector
             Main.Settings.WishPriorities = temp.ToArray();
             WishPriority.DataSource = null;
             WishPriority.DataSource = new BindingSource(Main.Settings.WishPriorities, null);
+            Main.Character.removeAllRes3();
         }
 
         private void RemoveWishButton_Click(object sender, EventArgs e)
@@ -1005,6 +1009,7 @@ namespace NGUInjector
             Main.Settings.WishPriorities = temp.ToArray();
             WishPriority.DataSource = null;
             WishPriority.DataSource = new BindingSource(Main.Settings.WishPriorities, null);
+            Main.Character.removeAllRes3();
         }
 
         private void WishAddInput_TextChanged(object sender, EventArgs e)
@@ -1036,6 +1041,12 @@ namespace NGUInjector
                 WishPriority.DataSource = null;
                 WishPriority.DataSource = new BindingSource(Main.Settings.WishPriorities, null);
             }
+        }
+
+        private void BeastMode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.BeastMode = BeastMode.Checked;
         }
     }
 }

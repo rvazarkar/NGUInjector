@@ -152,6 +152,7 @@
             this.WishUpButton = new System.Windows.Forms.Button();
             this.RemoveWishButton = new System.Windows.Forms.Button();
             this.wishErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.BeastMode = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -760,6 +761,7 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.BeastMode);
             this.tabPage6.Controls.Add(this.AllowFallthrough);
             this.tabPage6.Controls.Add(this.RecoverHealth);
             this.tabPage6.Controls.Add(this.FastCombat);
@@ -1154,6 +1156,13 @@
             // 
             this.wishErrorProvider.ContainerControl = this;
             // 
+            // BeastMode
+            // 
+            resources.ApplyResources(this.BeastMode, "BeastMode");
+            this.BeastMode.Name = "BeastMode";
+            this.BeastMode.UseVisualStyleBackColor = true;
+            this.BeastMode.CheckedChanged += new System.EventHandler(this.BeastMode_CheckedChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1326,5 +1335,6 @@
         private System.Windows.Forms.Button WishUpButton;
         private System.Windows.Forms.Button RemoveWishButton;
         private System.Windows.Forms.ErrorProvider wishErrorProvider;
+        private System.Windows.Forms.CheckBox BeastMode;
     }
 }

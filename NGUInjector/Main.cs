@@ -166,7 +166,8 @@ namespace NGUInjector
                         UseButterMinor = false,
                         ActivateFruits = true,
                         ManageR3 = true,
-                        WishPriorities = new int[] {}
+                        WishPriorities = new int[] {},
+                        BeastMode = true
                     };
 
                     Settings.MassUpdate(temp);
@@ -541,7 +542,7 @@ namespace NGUInjector
                     }
                 }
 
-                if (Settings.ManageGear)
+                if (Settings.ManageGear) 
                     _profile.EquipGear();
                 if (Settings.ManageEnergy)
                     _profile.AllocateEnergy();

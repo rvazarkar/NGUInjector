@@ -66,6 +66,7 @@ namespace NGUInjector
         [SerializeField] private bool _manageR3;
         [SerializeField] private bool _activateFruits;
         [SerializeField] private int[] _wishPriorities;
+        [SerializeField] private bool _beastMode;
 
         private readonly string _savePath;
         
@@ -181,6 +182,7 @@ namespace NGUInjector
             _manageR3 = other.ManageR3;
             _activateFruits = other.ActivateFruits;
             _wishPriorities = other.WishPriorities;
+            _beastMode = other.BeastMode;
         }
 
         public int HighestAKZone
@@ -752,6 +754,17 @@ namespace NGUInjector
             {
                 if (value == _wishPriorities) return;
                 _wishPriorities = value;
+                SaveSettings();
+            }
+        }
+
+        public bool BeastMode
+        {
+            get => _beastMode;
+            set
+            {
+                if (value == _beastMode) return;
+                _beastMode = value;
                 SaveSettings();
             }
         }

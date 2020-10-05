@@ -258,6 +258,19 @@ namespace NGUInjector.Managers
                 _character.adventureController.idleAttackMove.setToggle();
             }
 
+            if (_character.adventure.beastModeOn && !Settings.BeastMode && _character.adventureController.beastModeMove.button.interactable)
+            {
+                _character.adventureController.beastModeMove.doMove();
+                return;
+            }
+
+            if (!_character.adventure.beastModeOn && Settings.BeastMode &&
+                _character.adventureController.beastModeMove.button.interactable)
+            {
+                _character.adventureController.beastModeMove.doMove();
+                return;
+            }
+
             if (_character.adventure.zone == -1 && !HasFullHP() && recoverHealth)
                 return;
 
@@ -301,6 +314,19 @@ namespace NGUInjector.Managers
                 {
                     _character.adventureController.idleAttackMove.setToggle();
                 }
+            }
+
+            if (_character.adventure.beastModeOn && !Settings.BeastMode && _character.adventureController.beastModeMove.button.interactable)
+            {
+                _character.adventureController.beastModeMove.doMove();
+                return;
+            }
+
+            if (!_character.adventure.beastModeOn && Settings.BeastMode &&
+                _character.adventureController.beastModeMove.button.interactable)
+            {
+                _character.adventureController.beastModeMove.doMove();
+                return;
             }
 
             //Move back to safe zone if we're in the wrong zone
