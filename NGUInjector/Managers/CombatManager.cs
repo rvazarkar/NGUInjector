@@ -358,9 +358,12 @@ namespace NGUInjector.Managers
                         if (CastParry()) return;
                     }
 
-                    //Wait for Charge to be ready again
+                    //Wait for Charge to be ready again, as well as other buffs
                     if (ChargeUnlocked() && !ChargeReady()) return;
                     if (ParryUnlocked() && !ParryReady()) return;
+                    if (UltimateBuffUnlocked() && !UltimateBuffReady()) return;
+                    if (MegaBuffUnlocked() && !MegaBuffReady()) return;
+                    if (DefensiveBuffUnlocked() && !DefensiveBuffReady()) return;
                 }
 
                 if (recoverHealth && !HasFullHP())
