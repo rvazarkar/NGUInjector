@@ -27,6 +27,7 @@ namespace NGUInjector
         internal static StreamWriter LootWriter;
         internal static StreamWriter CombatWriter;
         internal static StreamWriter AllocationWriter;
+        internal static StreamWriter PitSpinWriter;
         private YggdrasilManager _yggManager;
         private InventoryManager _invManager;
         private CombatManager _combManager;
@@ -66,6 +67,11 @@ namespace NGUInjector
             CombatWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
         }
 
+        internal static void LogPitSpin(string msg)
+        {
+            PitSpinWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
+        }
+
         internal static void LogAllocation(string msg)
         {
             AllocationWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
@@ -88,6 +94,7 @@ namespace NGUInjector
             LootWriter = new StreamWriter(Path.Combine(logDir, "loot.log")) { AutoFlush = true };
             CombatWriter = new StreamWriter(Path.Combine(logDir, "combat.log")) { AutoFlush = true };
             AllocationWriter = new StreamWriter(Path.Combine(logDir, "allocation.log")) { AutoFlush = true};
+            PitSpinWriter = new StreamWriter(Path.Combine(logDir, "pitspin.log"), true) {AutoFlush = true};
 
             try
             {
@@ -572,6 +579,8 @@ namespace NGUInjector
                 {
                     _profile.DoRebirth();
                 }
+
+                Character.refreshMenus();
 
             }
             catch (Exception e)

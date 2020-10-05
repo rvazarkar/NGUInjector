@@ -22,7 +22,7 @@ namespace NGUInjector.Managers
             typeof(PitController).GetMethod("engage", BindingFlags.NonPublic | BindingFlags.Instance)
                 ?.Invoke(controller, null);
 
-            Main.LogLoot($"Money Pit Reward: {controller.pitText.text}");
+            Main.LogPitSpin($"Money Pit Reward: {controller.pitText.text}");
 
             if (Main.Settings.MoneyPitLoadout.Length > 0)
             {
@@ -37,7 +37,7 @@ namespace NGUInjector.Managers
 
             Main.Character.dailyController.startNoBullshitSpin();
             var result = Main.Character.dailyController.outcomeText.text;
-            Main.LogLoot($"Daily Spin Reward: {result}");
+            Main.LogPitSpin($"Daily Spin Reward: {result}");
         }
     }
 }
