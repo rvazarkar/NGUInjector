@@ -85,7 +85,8 @@ namespace NGUInjector.Managers
             var invItems = ci.Where(x => x.locked && x.equipment.isEquipment() && !Settings.BoostBlacklist.Contains(x.id) && !Settings.PriorityBoosts.Contains(x.id));
             result = result.Concat(invItems).ToList();
 
-            return result.ToArray();
+            //Make sure we filter out non-equips again, just in case one snuck into priorityboosts
+            return result.Where(x => x.equipment.isEquipment()).ToArray();
         }
 
         internal void BoostInventory(ih[] boostSlots)
