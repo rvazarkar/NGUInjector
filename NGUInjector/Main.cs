@@ -156,7 +156,7 @@ namespace NGUInjector
                         CounterfeitThreshold = 400,
                         SpaghettiThreshold = 30,
                         BloodNumberThreshold = 1e10,
-                        BalanceCube = true,
+                        CubePriority = 0,
                         CombatEnabled = false,
                         GlobalEnabled = true,
                         QuickDiggers = new int[] {},

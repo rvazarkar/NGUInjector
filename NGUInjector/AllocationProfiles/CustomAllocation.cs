@@ -292,21 +292,17 @@ namespace NGUInjector.AllocationProfiles
 
             if (bp.Time != _currentEnergyBreakpoint.Time)
             {
-                _character.removeMostEnergy();
                 _currentEnergyBreakpoint = bp;
             }
 
             var temp = ValidatePriorities(bp.Priorities.ToList());
+            if (temp.Count > 0) _character.removeMostEnergy();
+            else
+                return;
+
             var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
             temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
 
-            if (_character.idleEnergy < 0)
-                _character.removeMostEnergy();
-
-            if (_character.idleEnergy == 0 && capPrios.Length == 0)
-                return;
-
-            if (capPrios.Length > 0) _character.removeMostEnergy();
             if (bp.Priorities.Any(x => x.Contains("BT"))) _character.removeAllEnergy();
 
             foreach (var prio in capPrios)
@@ -336,21 +332,17 @@ namespace NGUInjector.AllocationProfiles
 
             if (bp.Time != _currentMagicBreakpoint.Time)
             {
-                _character.removeMostMagic();
                 _currentMagicBreakpoint = bp;
             }
 
             var temp = ValidatePriorities(bp.Priorities.ToList());
+
+            if (temp.Count > 0) _character.removeMostMagic();
+            else return;
+
             var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
             temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
 
-            if (_character.magic.idleMagic < 0)
-                _character.removeMostMagic();
-
-            if (_character.magic.idleMagic == 0 && capPrios.Length ==  0)
-                return;
-
-            if (capPrios.Length > 0) _character.removeMostMagic();
             foreach (var prio in capPrios)
             {
                 ReadMagicBreakpoint(prio);
@@ -378,14 +370,12 @@ namespace NGUInjector.AllocationProfiles
 
             if (bp.Time != _currentR3Breakpoint.Time)
             {
-                _character.removeAllRes3();
                 _currentR3Breakpoint = bp;
             }
 
             var temp = ValidatePriorities(bp.Priorities.ToList());
-            
-            if (_character.res3.idleRes3 == 0)
-                return;
+            if (temp.Count > 0) _character.removeAllRes3();
+            else return;
 
             var prioCount = temp.Count;
             var toAdd = (long)Math.Floor((double)_character.res3.idleRes3 / prioCount);
@@ -450,13 +440,11 @@ namespace NGUInjector.AllocationProfiles
                 {
                     if (energy && _currentEnergyBreakpoint == null)
                     {
-                        _character.removeMostEnergy();
                         _currentEnergyBreakpoint = b;
                     }
 
                     if (!energy && _currentMagicBreakpoint == null)
                     {
-                        _character.removeMostMagic();
                         _currentMagicBreakpoint = b;
                     }
                     return b;

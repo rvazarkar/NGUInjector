@@ -16,6 +16,7 @@ namespace NGUInjector
         internal static readonly Dictionary<int, string> TitanList = new Dictionary<int, string>();
         internal static readonly Dictionary<int, string> ZoneList = new Dictionary<int, string>();
         internal static readonly Dictionary<int, string> CombatModeList = new Dictionary<int, string>();
+        internal static readonly Dictionary<int, string> CubePriorityList = new Dictionary<int, string>();
         private bool _initializing = true;
         public SettingsForm()
         {
@@ -84,6 +85,15 @@ namespace NGUInjector
 
             CombatModeList.Add(0, "Manual");
             CombatModeList.Add(1, "Idle");
+
+            CubePriorityList.Add(0, "None");
+            CubePriorityList.Add(1, "Balanced");
+            CubePriorityList.Add(2, "Power");
+            CubePriorityList.Add(3, "Toughness");
+
+            CubePriority.DataSource = new BindingSource(CubePriorityList, null);
+            CubePriority.ValueMember = "Key";
+            CubePriority.DisplayMember = "Value";
 
             HighestTitanDropdown.DataSource = new BindingSource(TitanList, null);
             HighestTitanDropdown.ValueMember = "Key";
@@ -184,7 +194,6 @@ namespace NGUInjector
             SpaghettiCap.Value = newSettings.SpaghettiThreshold;
             CounterfeitCap.Value = newSettings.CounterfeitThreshold;
             AutoBuyEM.Checked = newSettings.AutoBuyEM;
-            BalanceCube.Checked = newSettings.BalanceCube;
             MasterEnable.Checked = newSettings.GlobalEnabled;
             CombatActive.Checked = newSettings.CombatEnabled;
             ManualMinor.Checked = newSettings.ManualMinors;
@@ -193,6 +202,7 @@ namespace NGUInjector
             ButterMinors.Checked = newSettings.UseButterMinor;
             ActivateFruits.Checked = newSettings.ActivateFruits;
             BeastMode.Checked = newSettings.BeastMode;
+            CubePriority.SelectedIndex = newSettings.CubePriority;
             BloodNumberThreshold.Text = newSettings.BloodNumberThreshold.ToString(CultureInfo.InvariantCulture);
 
             yggdrasilLoadoutBox.DataSource = null;
@@ -900,12 +910,6 @@ namespace NGUInjector
             Main.Settings.AutoBuyEM = AutoBuyEM.Checked;
         }
 
-        private void BalanceCube_CheckedChanged(object sender, EventArgs e)
-        {
-            if (_initializing) return;
-            Main.Settings.BalanceCube = BalanceCube.Checked;
-        }
-
         private void IdleMinor_CheckedChanged(object sender, EventArgs e)
         {
             if (_initializing) return;
@@ -1047,6 +1051,12 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.BeastMode = BeastMode.Checked;
+        }
+
+        private void CubePriority_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.CubePriority = CubePriority.SelectedIndex;
         }
     }
 }

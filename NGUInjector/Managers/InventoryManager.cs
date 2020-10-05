@@ -413,19 +413,31 @@ namespace NGUInjector.Managers
                 return;
             }
 
-            if (Settings.BalanceCube)
+            if (Settings.CubePriority > 0)
             {
-                if (_controller.cubePower() > _controller.cubeToughness())
+                if (Settings.CubePriority == 1)
                 {
-                    _controller.selectAutoToughTransform();
-                }else if (_controller.cubeToughness() > _controller.cubePower())
+                    if (_controller.cubePower() > _controller.cubeToughness())
+                    {
+                        _controller.selectAutoToughTransform();
+                    }
+                    else if (_controller.cubeToughness() > _controller.cubePower())
+                    {
+                        _controller.selectAutoPowerTransform();
+                    }
+                    else
+                    {
+                        _controller.selectAutoPowerTransform();
+                    }
+                }else if (Settings.CubePriority == 2)
                 {
                     _controller.selectAutoPowerTransform();
                 }
                 else
                 {
-                    _controller.selectAutoPowerTransform();
+                    _controller.selectAutoToughTransform();
                 }
+                
                 return;
             }
 

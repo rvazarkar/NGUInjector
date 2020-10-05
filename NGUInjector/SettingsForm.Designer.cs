@@ -73,7 +73,6 @@
             this.YggdrasilSwap = new System.Windows.Forms.CheckBox();
             this.ManageYggdrasil = new System.Windows.Forms.CheckBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.BalanceCube = new System.Windows.Forms.CheckBox();
             this.prioDownButton = new System.Windows.Forms.Button();
             this.prioUpButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -153,6 +152,8 @@
             this.RemoveWishButton = new System.Windows.Forms.Button();
             this.wishErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.BeastMode = new System.Windows.Forms.CheckBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.CubePriority = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -522,7 +523,8 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.BalanceCube);
+            this.tabPage4.Controls.Add(this.CubePriority);
+            this.tabPage4.Controls.Add(this.label20);
             this.tabPage4.Controls.Add(this.prioDownButton);
             this.tabPage4.Controls.Add(this.prioUpButton);
             this.tabPage4.Controls.Add(this.label5);
@@ -542,13 +544,6 @@
             resources.ApplyResources(this.tabPage4, "tabPage4");
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // BalanceCube
-            // 
-            resources.ApplyResources(this.BalanceCube, "BalanceCube");
-            this.BalanceCube.Name = "BalanceCube";
-            this.BalanceCube.UseVisualStyleBackColor = true;
-            this.BalanceCube.CheckedChanged += new System.EventHandler(this.BalanceCube_CheckedChanged);
             // 
             // prioDownButton
             // 
@@ -1163,6 +1158,18 @@
             this.BeastMode.UseVisualStyleBackColor = true;
             this.BeastMode.CheckedChanged += new System.EventHandler(this.BeastMode_CheckedChanged);
             // 
+            // label20
+            // 
+            resources.ApplyResources(this.label20, "label20");
+            this.label20.Name = "label20";
+            // 
+            // CubePriority
+            // 
+            this.CubePriority.FormattingEnabled = true;
+            resources.ApplyResources(this.CubePriority, "CubePriority");
+            this.CubePriority.Name = "CubePriority";
+            this.CubePriority.SelectedIndexChanged += new System.EventHandler(this.CubePriority_SelectedIndexChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1319,7 +1326,6 @@
         private System.Windows.Forms.TextBox BloodNumberThreshold;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ErrorProvider numberErrProvider;
-        private System.Windows.Forms.CheckBox BalanceCube;
         private System.Windows.Forms.CheckBox ButterMajors;
         private System.Windows.Forms.CheckBox ManualMinor;
         private System.Windows.Forms.CheckBox ManageR3;
@@ -1336,5 +1342,7 @@
         private System.Windows.Forms.Button RemoveWishButton;
         private System.Windows.Forms.ErrorProvider wishErrorProvider;
         private System.Windows.Forms.CheckBox BeastMode;
+        private System.Windows.Forms.ComboBox CubePriority;
+        private System.Windows.Forms.Label label20;
     }
 }
