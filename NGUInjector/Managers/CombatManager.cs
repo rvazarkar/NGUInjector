@@ -256,6 +256,7 @@ namespace NGUInjector.Managers
             if (!_character.adventure.autoattacking)
             {
                 _character.adventureController.idleAttackMove.setToggle();
+                return;
             }
 
             if (_character.adventure.beastModeOn && !Settings.BeastMode && _character.adventureController.beastModeMove.button.interactable)
@@ -306,6 +307,7 @@ namespace NGUInjector.Managers
                 if (_character.training.attackTraining[1] == 0)
                 {
                     _character.adventureController.idleAttackMove.setToggle();
+                    return;
                 }
             }
             else
