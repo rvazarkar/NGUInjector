@@ -13,9 +13,8 @@ namespace NGUInjector.Managers
 
         internal void CheckQuestTurnin()
         {
-            if (_character.beastQuestController.readyToHandIn())
+            if (_character.beastQuest.curDrops >= _character.beastQuest.targetDrops - 2)
             {
-                Log("Turning in quest");
                 if (!_character.beastQuest.usedButter)
                 {
                     if (_character.beastQuest.reducedRewards && Settings.UseButterMinor)
@@ -30,7 +29,11 @@ namespace NGUInjector.Managers
                         _character.beastQuestController.tryUseButter();
                     }
                 }
-                
+            }
+
+            if (_character.beastQuestController.readyToHandIn())
+            {
+                Log("Turning in quest");
                 _character.beastQuestController.completeQuest();
             }
         }
