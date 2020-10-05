@@ -27,6 +27,7 @@ namespace NGUInjector
         internal static StreamWriter LootWriter;
         internal static StreamWriter CombatWriter;
         internal static StreamWriter AllocationWriter;
+        internal static StreamWriter PitSpinWriter;
         private YggdrasilManager _yggManager;
         private InventoryManager _invManager;
         private CombatManager _combManager;
@@ -66,6 +67,11 @@ namespace NGUInjector
             CombatWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
         }
 
+        internal static void LogPitSpin(string msg)
+        {
+            PitSpinWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
+        }
+
         internal static void LogAllocation(string msg)
         {
             AllocationWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
@@ -88,6 +94,7 @@ namespace NGUInjector
             LootWriter = new StreamWriter(Path.Combine(logDir, "loot.log")) { AutoFlush = true };
             CombatWriter = new StreamWriter(Path.Combine(logDir, "combat.log")) { AutoFlush = true };
             AllocationWriter = new StreamWriter(Path.Combine(logDir, "allocation.log")) { AutoFlush = true};
+            PitSpinWriter = new StreamWriter(Path.Combine(logDir, "pitspin.log"), true) {AutoFlush = true};
 
             try
             {
@@ -156,7 +163,7 @@ namespace NGUInjector
                         CounterfeitThreshold = 400,
                         SpaghettiThreshold = 30,
                         BloodNumberThreshold = 1e10,
-                        BalanceCube = true,
+                        CubePriority = 0,
                         CombatEnabled = false,
                         GlobalEnabled = true,
                         QuickDiggers = new int[] {},
@@ -164,7 +171,10 @@ namespace NGUInjector
                         UseButterMajor = false,
                         ManualMinors =  false,
                         UseButterMinor = false,
-                        ActivateFruits = true
+                        ActivateFruits = true,
+                        ManageR3 = true,
+                        WishPriorities = new int[] {},
+                        BeastMode = true
                     };
 
                     Settings.MassUpdate(temp);
@@ -539,7 +549,7 @@ namespace NGUInjector
                     }
                 }
 
-                if (Settings.ManageGear)
+                if (Settings.ManageGear) 
                     _profile.EquipGear();
                 if (Settings.ManageEnergy)
                     _profile.AllocateEnergy();
@@ -569,6 +579,8 @@ namespace NGUInjector
                 {
                     _profile.DoRebirth();
                 }
+
+                Character.refreshMenus();
 
             }
             catch (Exception e)
@@ -601,7 +613,7 @@ namespace NGUInjector
             if (Character.buttons.brokenTimeMachine.interactable)
             {
                 //Hit our initial gold zone first to get TM started
-                if (Character.machine.realBaseGold == 0.0 && CombatManager.IsZoneUnlocked(Settings.InitialGoldZone) && Settings.InitialGoldZone > 0)
+                if (Character.machine.realBaseGold == 0.0 && CombatManager.IsZoneUnlocked(Settings.InitialGoldZone) && Settings.InitialGoldZone >= 0)
                 {
                     _combManager.ManualZone(Settings.InitialGoldZone, false, false, false, true);
                     return;
@@ -610,7 +622,7 @@ namespace NGUInjector
                 //Go to our gold loadout zone next to get a high gold drop
                 if (Settings.NextGoldSwap)
                 {
-                    if (CombatManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone > 0)
+                    if (CombatManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone >= 0)
                     {
                         if (LoadoutManager.TryGoldDropSwap())
                         {

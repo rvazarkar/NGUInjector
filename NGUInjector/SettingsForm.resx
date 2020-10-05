@@ -130,7 +130,7 @@
     <value>3, 3</value>
   </data>
   <data name="progressBar1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>546, 11</value>
+    <value>598, 13</value>
   </data>
   <data name="progressBar1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1138,7 +1138,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>538, 304</value>
+    <value>590, 307</value>
   </data>
   <data name="tabPage3.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1158,32 +1158,53 @@
   <data name="&gt;&gt;tabPage3.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="BalanceCube.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="CubePriority.Location" type="System.Drawing.Point, System.Drawing">
+    <value>76, 50</value>
   </data>
-  <data name="BalanceCube.Location" type="System.Drawing.Point, System.Drawing">
-    <value>161, 29</value>
+  <data name="CubePriority.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 21</value>
   </data>
-  <data name="BalanceCube.Size" type="System.Drawing.Size, System.Drawing">
-    <value>115, 17</value>
+  <data name="CubePriority.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
   </data>
-  <data name="BalanceCube.TabIndex" type="System.Int32, mscorlib">
-    <value>33</value>
+  <data name="&gt;&gt;CubePriority.Name" xml:space="preserve">
+    <value>CubePriority</value>
   </data>
-  <data name="BalanceCube.Text" xml:space="preserve">
-    <value>Balance Cube P/T</value>
+  <data name="&gt;&gt;CubePriority.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;BalanceCube.Name" xml:space="preserve">
-    <value>BalanceCube</value>
-  </data>
-  <data name="&gt;&gt;BalanceCube.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BalanceCube.Parent" xml:space="preserve">
+  <data name="&gt;&gt;CubePriority.Parent" xml:space="preserve">
     <value>tabPage4</value>
   </data>
-  <data name="&gt;&gt;BalanceCube.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;CubePriority.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="label20.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label20.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 53</value>
+  </data>
+  <data name="label20.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 13</value>
+  </data>
+  <data name="label20.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="label20.Text" xml:space="preserve">
+    <value>Cube Priority</value>
+  </data>
+  <data name="&gt;&gt;label20.Name" xml:space="preserve">
+    <value>label20</value>
+  </data>
+  <data name="&gt;&gt;label20.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label20.Parent" xml:space="preserve">
+    <value>tabPage4</value>
+  </data>
+  <data name="&gt;&gt;label20.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="prioDownButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1192,7 +1213,7 @@
     <value>NoControl</value>
   </data>
   <data name="prioDownButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>163, 181</value>
+    <value>163, 206</value>
   </data>
   <data name="prioDownButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
@@ -1213,13 +1234,13 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;prioDownButton.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="prioUpButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="prioUpButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>163, 123</value>
+    <value>163, 148</value>
   </data>
   <data name="prioUpButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
@@ -1240,7 +1261,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;prioUpButton.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="label5.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1249,7 +1270,7 @@
     <value>Microsoft Sans Serif, 9.75pt</value>
   </data>
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>231, 60</value>
+    <value>231, 85</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>109, 16</value>
@@ -1270,13 +1291,13 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="blacklistRemove.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="blacklistRemove.Location" type="System.Drawing.Point, System.Drawing">
-    <value>361, 152</value>
+    <value>361, 177</value>
   </data>
   <data name="blacklistRemove.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 23</value>
@@ -1297,10 +1318,10 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;blacklistRemove.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="blacklistAddItem.Location" type="System.Drawing.Point, System.Drawing">
-    <value>235, 255</value>
+    <value>235, 280</value>
   </data>
   <data name="blacklistAddItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 20</value>
@@ -1318,13 +1339,13 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;blacklistAddItem.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="blacklistLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="blacklistLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>232, 278</value>
+    <value>232, 303</value>
   </data>
   <data name="blacklistLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
@@ -1345,10 +1366,10 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;blacklistLabel.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="blacklistAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>361, 255</value>
+    <value>361, 280</value>
   </data>
   <data name="blacklistAdd.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 20</value>
@@ -1369,7 +1390,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;blacklistAdd.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="blacklistBox.Items" xml:space="preserve">
     <value>test</value>
@@ -1378,7 +1399,7 @@
     <value>test2</value>
   </data>
   <data name="blacklistBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>234, 88</value>
+    <value>234, 113</value>
   </data>
   <data name="blacklistBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 160</value>
@@ -1396,7 +1417,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;blacklistBox.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1405,7 +1426,7 @@
     <value>Microsoft Sans Serif, 9.75pt</value>
   </data>
   <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 60</value>
+    <value>6, 85</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>94, 16</value>
@@ -1426,13 +1447,13 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="priorityBoostRemove.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="priorityBoostRemove.Location" type="System.Drawing.Point, System.Drawing">
-    <value>136, 152</value>
+    <value>136, 177</value>
   </data>
   <data name="priorityBoostRemove.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 23</value>
@@ -1453,10 +1474,10 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;priorityBoostRemove.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="priorityBoostItemAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 255</value>
+    <value>10, 280</value>
   </data>
   <data name="priorityBoostItemAdd.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 20</value>
@@ -1474,13 +1495,13 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;priorityBoostItemAdd.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="priorityBoostLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="priorityBoostLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 278</value>
+    <value>7, 303</value>
   </data>
   <data name="priorityBoostLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
@@ -1501,10 +1522,10 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;priorityBoostLabel.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="priorityBoostAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>136, 255</value>
+    <value>136, 280</value>
   </data>
   <data name="priorityBoostAdd.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 20</value>
@@ -1525,7 +1546,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;priorityBoostAdd.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="priorityBoostBox.Items" xml:space="preserve">
     <value>test</value>
@@ -1534,7 +1555,7 @@
     <value>test2</value>
   </data>
   <data name="priorityBoostBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 88</value>
+    <value>9, 113</value>
   </data>
   <data name="priorityBoostBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 160</value>
@@ -1552,7 +1573,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;priorityBoostBox.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>15</value>
   </data>
   <data name="ManageInventory.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1579,7 +1600,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;ManageInventory.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>16</value>
   </data>
   <data name="ManageBoostConvert.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1606,7 +1627,7 @@
     <value>tabPage4</value>
   </data>
   <data name="&gt;&gt;ManageBoostConvert.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>17</value>
   </data>
   <data name="tabPage4.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -1615,7 +1636,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>538, 304</value>
+    <value>590, 334</value>
   </data>
   <data name="tabPage4.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1893,6 +1914,33 @@
   <data name="&gt;&gt;tabPage5.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="BeastMode.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="BeastMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>291, 30</value>
+  </data>
+  <data name="BeastMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 17</value>
+  </data>
+  <data name="BeastMode.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="BeastMode.Text" xml:space="preserve">
+    <value>Beast Mode</value>
+  </data>
+  <data name="&gt;&gt;BeastMode.Name" xml:space="preserve">
+    <value>BeastMode</value>
+  </data>
+  <data name="&gt;&gt;BeastMode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BeastMode.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;BeastMode.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="AllowFallthrough.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1918,7 +1966,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;AllowFallthrough.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="RecoverHealth.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1948,7 +1996,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;RecoverHealth.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="FastCombat.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1975,7 +2023,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;FastCombat.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="PrecastBuffs.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2002,7 +2050,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;PrecastBuffs.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="label6.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2032,7 +2080,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="CombatTargetZone.Items" xml:space="preserve">
     <value>Idle</value>
@@ -2059,7 +2107,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;CombatTargetZone.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2086,7 +2134,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="CombatMode.Items" xml:space="preserve">
     <value>Idle</value>
@@ -2113,7 +2161,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;CombatMode.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="BossesOnly.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2140,7 +2188,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;BossesOnly.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="CombatActive.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2167,7 +2215,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;CombatActive.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="tabPage6.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -2176,7 +2224,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>538, 304</value>
+    <value>590, 307</value>
   </data>
   <data name="tabPage6.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -2512,7 +2560,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>538, 304</value>
+    <value>590, 307</value>
   </data>
   <data name="tabPage7.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -2856,14 +2904,269 @@
   <data name="&gt;&gt;tabPage8.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
+  <data name="WishDownButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="WishDownButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="WishDownButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>162, 131</value>
+  </data>
+  <data name="WishDownButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="WishDownButton.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="WishDownButton.Text" xml:space="preserve">
+    <value>^</value>
+  </data>
+  <data name="&gt;&gt;WishDownButton.Name" xml:space="preserve">
+    <value>WishDownButton</value>
+  </data>
+  <data name="&gt;&gt;WishDownButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;WishDownButton.Parent" xml:space="preserve">
+    <value>tabPage9</value>
+  </data>
+  <data name="&gt;&gt;WishDownButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="WishUpButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="WishUpButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="WishUpButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>162, 73</value>
+  </data>
+  <data name="WishUpButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="WishUpButton.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="WishUpButton.Text" xml:space="preserve">
+    <value>^</value>
+  </data>
+  <data name="&gt;&gt;WishUpButton.Name" xml:space="preserve">
+    <value>WishUpButton</value>
+  </data>
+  <data name="&gt;&gt;WishUpButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;WishUpButton.Parent" xml:space="preserve">
+    <value>tabPage9</value>
+  </data>
+  <data name="&gt;&gt;WishUpButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="RemoveWishButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RemoveWishButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RemoveWishButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>135, 102</value>
+  </data>
+  <data name="RemoveWishButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>84, 23</value>
+  </data>
+  <data name="RemoveWishButton.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="RemoveWishButton.Text" xml:space="preserve">
+    <value>Remove Wish</value>
+  </data>
+  <data name="&gt;&gt;RemoveWishButton.Name" xml:space="preserve">
+    <value>RemoveWishButton</value>
+  </data>
+  <data name="&gt;&gt;RemoveWishButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RemoveWishButton.Parent" xml:space="preserve">
+    <value>tabPage9</value>
+  </data>
+  <data name="&gt;&gt;RemoveWishButton.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label19.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label19.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="label19.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label19.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="label19.Size" type="System.Drawing.Size, System.Drawing">
+    <value>97, 16</value>
+  </data>
+  <data name="label19.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="label19.Text" xml:space="preserve">
+    <value>Priority Wishes</value>
+  </data>
+  <data name="&gt;&gt;label19.Name" xml:space="preserve">
+    <value>label19</value>
+  </data>
+  <data name="&gt;&gt;label19.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label19.Parent" xml:space="preserve">
+    <value>tabPage9</value>
+  </data>
+  <data name="&gt;&gt;label19.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="WishAddInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 207</value>
+  </data>
+  <data name="WishAddInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 20</value>
+  </data>
+  <data name="WishAddInput.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="&gt;&gt;WishAddInput.Name" xml:space="preserve">
+    <value>WishAddInput</value>
+  </data>
+  <data name="&gt;&gt;WishAddInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;WishAddInput.Parent" xml:space="preserve">
+    <value>tabPage9</value>
+  </data>
+  <data name="&gt;&gt;WishAddInput.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="AddWishLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="AddWishLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="AddWishLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 230</value>
+  </data>
+  <data name="AddWishLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>14, 13</value>
+  </data>
+  <data name="AddWishLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="AddWishLabel.Text" xml:space="preserve">
+    <value>A</value>
+  </data>
+  <data name="&gt;&gt;AddWishLabel.Name" xml:space="preserve">
+    <value>AddWishLabel</value>
+  </data>
+  <data name="&gt;&gt;AddWishLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AddWishLabel.Parent" xml:space="preserve">
+    <value>tabPage9</value>
+  </data>
+  <data name="&gt;&gt;AddWishLabel.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="AddWishButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="AddWishButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>135, 207</value>
+  </data>
+  <data name="AddWishButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="AddWishButton.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="AddWishButton.Text" xml:space="preserve">
+    <value>Add Wish</value>
+  </data>
+  <data name="&gt;&gt;AddWishButton.Name" xml:space="preserve">
+    <value>AddWishButton</value>
+  </data>
+  <data name="&gt;&gt;AddWishButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AddWishButton.Parent" xml:space="preserve">
+    <value>tabPage9</value>
+  </data>
+  <data name="&gt;&gt;AddWishButton.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="WishPriority.Items" xml:space="preserve">
+    <value>test</value>
+  </data>
+  <data name="WishPriority.Items1" xml:space="preserve">
+    <value>test2</value>
+  </data>
+  <data name="WishPriority.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 41</value>
+  </data>
+  <data name="WishPriority.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 160</value>
+  </data>
+  <data name="WishPriority.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="&gt;&gt;WishPriority.Name" xml:space="preserve">
+    <value>WishPriority</value>
+  </data>
+  <data name="&gt;&gt;WishPriority.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;WishPriority.Parent" xml:space="preserve">
+    <value>tabPage9</value>
+  </data>
+  <data name="&gt;&gt;WishPriority.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="tabPage9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabPage9.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabPage9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>590, 307</value>
+  </data>
+  <data name="tabPage9.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="tabPage9.Text" xml:space="preserve">
+    <value>Wishes</value>
+  </data>
+  <data name="&gt;&gt;tabPage9.Name" xml:space="preserve">
+    <value>tabPage9</value>
+  </data>
+  <data name="&gt;&gt;tabPage9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPage9.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabPage9.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
   <data name="tabControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 20</value>
+    <value>3, 22</value>
   </data>
   <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>546, 330</value>
+    <value>598, 360</value>
   </data>
   <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2890,7 +3193,7 @@
     <value>2</value>
   </data>
   <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>552, 353</value>
+    <value>604, 385</value>
   </data>
   <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2920,7 +3223,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>552, 353</value>
+    <value>604, 385</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Injector Settings</value>
@@ -2967,6 +3270,12 @@
   <data name="&gt;&gt;numberErrProvider.Type" xml:space="preserve">
     <value>System.Windows.Forms.ErrorProvider, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;wishErrorProvider.Name" xml:space="preserve">
+    <value>wishErrorProvider</value>
+  </data>
+  <data name="&gt;&gt;wishErrorProvider.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ErrorProvider, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>SettingsForm</value>
   </data>
@@ -2990,5 +3299,8 @@
   </metadata>
   <metadata name="numberErrProvider.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>906, 17</value>
+  </metadata>
+  <metadata name="wishErrorProvider.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1060, 17</value>
   </metadata>
 </root>

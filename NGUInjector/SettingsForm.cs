@@ -16,6 +16,7 @@ namespace NGUInjector
         internal static readonly Dictionary<int, string> TitanList = new Dictionary<int, string>();
         internal static readonly Dictionary<int, string> ZoneList = new Dictionary<int, string>();
         internal static readonly Dictionary<int, string> CombatModeList = new Dictionary<int, string>();
+        internal static readonly Dictionary<int, string> CubePriorityList = new Dictionary<int, string>();
         private bool _initializing = true;
         public SettingsForm()
         {
@@ -85,6 +86,15 @@ namespace NGUInjector
             CombatModeList.Add(0, "Manual");
             CombatModeList.Add(1, "Idle");
 
+            CubePriorityList.Add(0, "None");
+            CubePriorityList.Add(1, "Balanced");
+            CubePriorityList.Add(2, "Power");
+            CubePriorityList.Add(3, "Toughness");
+
+            CubePriority.DataSource = new BindingSource(CubePriorityList, null);
+            CubePriority.ValueMember = "Key";
+            CubePriority.DisplayMember = "Value";
+
             HighestTitanDropdown.DataSource = new BindingSource(TitanList, null);
             HighestTitanDropdown.ValueMember = "Key";
             HighestTitanDropdown.DisplayMember = "Value";
@@ -123,9 +133,13 @@ namespace NGUInjector
             yggLoadoutItem.TextChanged += yggLoadoutItem_TextChanged;
             titanAddItem.TextChanged += titanAddItem_TextChanged;
             GoldItemBox.TextChanged += GoldItemBox_TextChanged;
+            WishAddInput.TextChanged += WishAddInput_TextChanged;
 
             prioUpButton.Text = char.ConvertFromUtf32(8593);
             prioDownButton.Text = char.ConvertFromUtf32(8595);
+
+            WishUpButton.Text = char.ConvertFromUtf32(8593);
+            WishDownButton.Text = char.ConvertFromUtf32(8595);
 
             VersionLabel.Text = $"Version: {Main.Version}";
         }
@@ -180,7 +194,6 @@ namespace NGUInjector
             SpaghettiCap.Value = newSettings.SpaghettiThreshold;
             CounterfeitCap.Value = newSettings.CounterfeitThreshold;
             AutoBuyEM.Checked = newSettings.AutoBuyEM;
-            BalanceCube.Checked = newSettings.BalanceCube;
             MasterEnable.Checked = newSettings.GlobalEnabled;
             CombatActive.Checked = newSettings.CombatEnabled;
             ManualMinor.Checked = newSettings.ManualMinors;
@@ -188,6 +201,8 @@ namespace NGUInjector
             ManageR3.Checked = newSettings.ManageR3;
             ButterMinors.Checked = newSettings.UseButterMinor;
             ActivateFruits.Checked = newSettings.ActivateFruits;
+            BeastMode.Checked = newSettings.BeastMode;
+            CubePriority.SelectedIndex = newSettings.CubePriority;
             BloodNumberThreshold.Text = newSettings.BloodNumberThreshold.ToString(CultureInfo.InvariantCulture);
 
             yggdrasilLoadoutBox.DataSource = null;
@@ -204,6 +219,9 @@ namespace NGUInjector
 
             GoldLoadout.DataSource = null;
             GoldLoadout.DataSource = new BindingSource(Main.Settings.GoldDropLoadout, null);
+
+            WishPriority.DataSource = null;
+            WishPriority.DataSource = new BindingSource(Main.Settings.WishPriorities, null);
             Refresh();
             _initializing = false;
         }
@@ -892,12 +910,6 @@ namespace NGUInjector
             Main.Settings.AutoBuyEM = AutoBuyEM.Checked;
         }
 
-        private void BalanceCube_CheckedChanged(object sender, EventArgs e)
-        {
-            if (_initializing) return;
-            Main.Settings.BalanceCube = BalanceCube.Checked;
-        }
-
         private void IdleMinor_CheckedChanged(object sender, EventArgs e)
         {
             if (_initializing) return;
@@ -926,6 +938,133 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.ActivateFruits = ActivateFruits.Checked;
+        }
+
+        private void WishUpButton_Click(object sender, EventArgs e)
+        {
+            wishErrorProvider.SetError(WishAddInput, "");
+            var index = WishPriority.SelectedIndex;
+            if (index == -1 || index == 0)
+                return;
+
+            var temp = Main.Settings.WishPriorities.ToList();
+            var item = temp[index];
+            temp.RemoveAt(index);
+            temp.Insert(index -1, item);
+            Main.Settings.WishPriorities = temp.ToArray();
+            WishPriority.DataSource = null;
+            WishPriority.DataSource = new BindingSource(Main.Settings.WishPriorities, null);
+            WishPriority.SelectedIndex = index - 1;
+            Main.Character.removeAllRes3();
+            Main.Character.removeMostEnergy();
+            Main.Character.removeMostMagic();
+        }
+
+        private void WishDownButton_Click(object sender, EventArgs e)
+        {
+            wishErrorProvider.SetError(WishAddInput, "");
+            var index = WishPriority.SelectedIndex;
+            if (index == -1)
+                return;
+
+            var temp = Main.Settings.WishPriorities.ToList();
+
+            if (index == temp.Count - 1)
+                return;
+            var item = temp[index];
+            temp.RemoveAt(index);
+            temp.Insert(index + 1, item);
+            Main.Settings.WishPriorities = temp.ToArray();
+            WishPriority.DataSource = null;
+            WishPriority.DataSource = new BindingSource(Main.Settings.WishPriorities, null);
+            WishPriority.SelectedIndex = index + 1;
+            Main.Character.removeAllRes3();
+            Main.Character.removeMostEnergy();
+            Main.Character.removeMostMagic();
+        }
+
+        private void AddWishButton_Click(object sender, EventArgs e)
+        {
+            wishErrorProvider.SetError(WishAddInput, "");
+            var val = decimal.ToInt32(WishAddInput.Value);
+            if (val < 0 || val > 224)
+            {
+                wishErrorProvider.SetError(WishAddInput, "Not a valid Wish ID");
+                return;
+            }
+
+            if (Main.Settings.WishPriorities.Contains(val)) return;
+            var temp = Main.Settings.WishPriorities.ToList();
+            temp.Add(val);
+            Main.Settings.WishPriorities = temp.ToArray();
+            WishPriority.DataSource = null;
+            WishPriority.DataSource = new BindingSource(Main.Settings.WishPriorities, null);
+            Main.Character.removeAllRes3();
+            Main.Character.removeMostEnergy();
+            Main.Character.removeMostMagic();
+        }
+
+        private void RemoveWishButton_Click(object sender, EventArgs e)
+        {
+            wishErrorProvider.SetError(WishAddInput, "");
+
+            var item = WishPriority.SelectedItem;
+            if (item == null)
+                return;
+
+            var id = (int)item;
+
+            var temp = Main.Settings.WishPriorities.ToList();
+            temp.RemoveAll(x => x == id);
+            Main.Settings.WishPriorities = temp.ToArray();
+            WishPriority.DataSource = null;
+            WishPriority.DataSource = new BindingSource(Main.Settings.WishPriorities, null);
+            Main.Character.removeAllRes3();
+            Main.Character.removeMostEnergy();
+            Main.Character.removeMostMagic();
+        }
+
+        private void WishAddInput_TextChanged(object sender, EventArgs e)
+        {
+            wishErrorProvider.SetError(WishAddInput, "");
+            var val = decimal.ToInt32(WishAddInput.Value);
+            if (val < 0 || val > 224)
+                return;
+            var wishName = Main.Character.wishesController.properties[val].wishName;
+            AddWishLabel.Text = wishName;
+        }
+
+        private void WishAddInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                wishErrorProvider.SetError(WishAddInput, "");
+                var val = decimal.ToInt32(WishAddInput.Value);
+                if (val < 0 || val > 224)
+                {
+                    wishErrorProvider.SetError(WishAddInput, "Not a valid Wish ID");
+                    return;
+                }
+
+                if (Main.Settings.WishPriorities.Contains(val)) return;
+                var temp = Main.Settings.WishPriorities.ToList();
+                temp.Add(val);
+                Main.Settings.WishPriorities = temp.ToArray();
+                WishPriority.DataSource = null;
+                WishPriority.DataSource = new BindingSource(Main.Settings.WishPriorities, null);
+            }
+        }
+
+        private void BeastMode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.BeastMode = BeastMode.Checked;
+        }
+
+        private void CubePriority_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.CubePriority = CubePriority.SelectedIndex;
         }
     }
 }

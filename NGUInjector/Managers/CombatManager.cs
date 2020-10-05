@@ -256,6 +256,20 @@ namespace NGUInjector.Managers
             if (!_character.adventure.autoattacking)
             {
                 _character.adventureController.idleAttackMove.setToggle();
+                return;
+            }
+
+            if (_character.adventure.beastModeOn && !Settings.BeastMode && _character.adventureController.beastModeMove.button.interactable)
+            {
+                _character.adventureController.beastModeMove.doMove();
+                return;
+            }
+
+            if (!_character.adventure.beastModeOn && Settings.BeastMode &&
+                _character.adventureController.beastModeMove.button.interactable)
+            {
+                _character.adventureController.beastModeMove.doMove();
+                return;
             }
 
             if (_character.adventure.zone == -1 && !HasFullHP() && recoverHealth)
@@ -293,6 +307,7 @@ namespace NGUInjector.Managers
                 if (_character.training.attackTraining[1] == 0)
                 {
                     _character.adventureController.idleAttackMove.setToggle();
+                    return;
                 }
             }
             else
@@ -301,6 +316,19 @@ namespace NGUInjector.Managers
                 {
                     _character.adventureController.idleAttackMove.setToggle();
                 }
+            }
+
+            if (_character.adventure.beastModeOn && !Settings.BeastMode && _character.adventureController.beastModeMove.button.interactable)
+            {
+                _character.adventureController.beastModeMove.doMove();
+                return;
+            }
+
+            if (!_character.adventure.beastModeOn && Settings.BeastMode &&
+                _character.adventureController.beastModeMove.button.interactable)
+            {
+                _character.adventureController.beastModeMove.doMove();
+                return;
             }
 
             //Move back to safe zone if we're in the wrong zone
@@ -330,9 +358,12 @@ namespace NGUInjector.Managers
                         if (CastParry()) return;
                     }
 
-                    //Wait for Charge to be ready again
+                    //Wait for Charge to be ready again, as well as other buffs
                     if (ChargeUnlocked() && !ChargeReady()) return;
                     if (ParryUnlocked() && !ParryReady()) return;
+                    if (UltimateBuffUnlocked() && !UltimateBuffReady()) return;
+                    if (MegaBuffUnlocked() && !MegaBuffReady()) return;
+                    if (DefensiveBuffUnlocked() && !DefensiveBuffReady()) return;
                 }
 
                 if (recoverHealth && !HasFullHP())

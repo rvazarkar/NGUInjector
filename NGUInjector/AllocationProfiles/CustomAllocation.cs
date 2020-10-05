@@ -19,6 +19,7 @@ namespace NGUInjector.AllocationProfiles
         private GearBreakpoint _currentGearBreakpoint;
         private DiggerBreakpoint _currentDiggerBreakpoint;
         private WandoosBreakpoint _currentWandoosBreakpoint;
+        private WishManager _wishManager;
         private bool _hasGearSwapped;
         private bool _hasDiggerSwapped;
         private bool _hasWandoosSwapped;
@@ -31,6 +32,7 @@ namespace NGUInjector.AllocationProfiles
         {
             var path = Path.Combine(dir, "allocation.json");
             _allocationPath = path;
+            _wishManager = new WishManager();
         }
 
         private List<string> ValidatePriorities(List<string> priorities)
@@ -290,21 +292,17 @@ namespace NGUInjector.AllocationProfiles
 
             if (bp.Time != _currentEnergyBreakpoint.Time)
             {
-                _character.removeMostEnergy();
                 _currentEnergyBreakpoint = bp;
             }
 
             var temp = ValidatePriorities(bp.Priorities.ToList());
+            if (temp.Count > 0) _character.removeMostEnergy();
+            else
+                return;
+
             var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
             temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
 
-            if (_character.idleEnergy < 0)
-                _character.removeMostEnergy();
-
-            if (_character.idleEnergy == 0 && capPrios.Length == 0)
-                return;
-
-            if (capPrios.Length > 0) _character.removeMostEnergy();
             if (bp.Priorities.Any(x => x.Contains("BT"))) _character.removeAllEnergy();
 
             foreach (var prio in capPrios)
@@ -313,7 +311,7 @@ namespace NGUInjector.AllocationProfiles
             }
 
             var prioCount = temp.Count;
-            var toAdd = (long) Math.Floor((double) _character.idleEnergy / prioCount);
+            var toAdd = (long) Math.Ceiling((double) _character.idleEnergy / prioCount);
             _character.input.energyRequested.text = toAdd.ToString();
             _character.input.validateInput();
 
@@ -334,28 +332,24 @@ namespace NGUInjector.AllocationProfiles
 
             if (bp.Time != _currentMagicBreakpoint.Time)
             {
-                _character.removeMostMagic();
                 _currentMagicBreakpoint = bp;
             }
 
             var temp = ValidatePriorities(bp.Priorities.ToList());
+
+            if (temp.Count > 0) _character.removeMostMagic();
+            else return;
+
             var capPrios = temp.Where(x => x.StartsWith("BR") || x.StartsWith("CAP")).ToArray();
             temp.RemoveAll(x => x.StartsWith("BR") || x.StartsWith("CAP"));
 
-            if (_character.magic.idleMagic < 0)
-                _character.removeMostMagic();
-
-            if (_character.magic.idleMagic == 0 && capPrios.Length ==  0)
-                return;
-
-            if (capPrios.Length > 0) _character.removeMostMagic();
             foreach (var prio in capPrios)
             {
                 ReadMagicBreakpoint(prio);
             }
 
             var prioCount = temp.Count;
-            var toAdd = (long)Math.Floor((double)_character.magic.idleMagic / prioCount);
+            var toAdd = (long)Math.Ceiling((double)_character.magic.idleMagic / prioCount);
             _character.input.energyRequested.text = toAdd.ToString();
             _character.input.validateInput();
 
@@ -376,17 +370,15 @@ namespace NGUInjector.AllocationProfiles
 
             if (bp.Time != _currentR3Breakpoint.Time)
             {
-                _character.removeAllRes3();
                 _currentR3Breakpoint = bp;
             }
 
             var temp = ValidatePriorities(bp.Priorities.ToList());
-            
-            if (_character.res3.idleRes3 == 0)
-                return;
+            if (temp.Count > 0) _character.removeAllRes3();
+            else return;
 
             var prioCount = temp.Count;
-            var toAdd = (long)Math.Floor((double)_character.res3.idleRes3 / prioCount);
+            var toAdd = (long)Math.Ceiling((double)_character.res3.idleRes3 / prioCount);
             _character.input.energyRequested.text = toAdd.ToString();
             _character.input.validateInput();
 
@@ -412,8 +404,6 @@ namespace NGUInjector.AllocationProfiles
             if (_hasGearSwapped) return;
 
             if (!LoadoutManager.CanSwap()) return;
-            Main.Character.removeMostEnergy();
-            Main.Character.removeMostMagic();
             _hasGearSwapped = true;
             _currentGearBreakpoint = bp;
             LoadoutManager.ChangeGear(bp.Gear);
@@ -450,13 +440,11 @@ namespace NGUInjector.AllocationProfiles
                 {
                     if (energy && _currentEnergyBreakpoint == null)
                     {
-                        _character.removeMostEnergy();
                         _currentEnergyBreakpoint = b;
                     }
 
                     if (!energy && _currentMagicBreakpoint == null)
                     {
-                        _character.removeMostMagic();
                         _currentMagicBreakpoint = b;
                     }
                     return b;
@@ -597,12 +585,11 @@ namespace NGUInjector.AllocationProfiles
             if (breakpoint.StartsWith("WISH"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
-                if (!success || index < 0 || index > _character.wishesController.curWishSlots())
+                if (!success || index < 0)
                 {
                     return;
                 }
-                WishManager wish = new WishManager();
-                int wishID = wish.getSlot(index);
+                var wishID = _wishManager.GetSlot(index);
                 if (wishID == -1)
                 {
                     return;
@@ -688,12 +675,11 @@ namespace NGUInjector.AllocationProfiles
             if (breakpoint.StartsWith("WISH"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
-                if (!success || index < 0 || index > _character.wishesController.curWishSlots())
+                if (!success || index < 0)
                 {
                     return;
                 }
-                WishManager wish = new WishManager();
-                int wishID = wish.getSlot(index);
+                var wishID = _wishManager.GetSlot(index);
                 if (wishID == -1)
                 {
                     return;
@@ -933,12 +919,12 @@ namespace NGUInjector.AllocationProfiles
             if (breakpoint.StartsWith("WISH"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
-                if (!success || index < 0 || index > _character.wishesController.curWishSlots())
+                if (!success || index < 0)
                 {
                     return;
                 }
-                WishManager wish = new WishManager();
-                int wishID = wish.getSlot(index);
+
+                var wishID = _wishManager.GetSlot(index);
                 if (wishID == -1)
                 {
                     return;
@@ -973,7 +959,7 @@ namespace NGUInjector.AllocationProfiles
             {
                 formula *= _character.timeMachineController.sadisticDivider();
             }
-            return Mathf.Ceil(formula);
+            return Mathf.Min(Mathf.Ceil((float)formula), (float)9e18);
         }
 
         internal float CalculateATCap(int index)
@@ -988,7 +974,7 @@ namespace NGUInjector.AllocationProfiles
             var formula = 50f * divisor /
                 (Mathf.Sqrt(_character.totalEnergyPower()) * _character.totalAdvancedTrainingSpeedBonus());
 
-            return Mathf.Ceil(formula);
+            return Mathf.Min(Mathf.Ceil((float)formula), (float)9e18);
         }
 
         //internal float CalculateAugCap(int index)
@@ -1020,7 +1006,7 @@ namespace NGUInjector.AllocationProfiles
         internal void DebugTMCap()
         {
             var energy = CalculateTMEnergyCap();
-            double num = (double)_character.totalEnergyPower() / (double)_character.timeMachineController.baseSpeedDivider() * ((double)energy / 50000) * (double)_character.hacksController.totalTMSpeedBonus() * (double)_character.allChallenges.timeMachineChallenge.TMSpeedBonus() * (double)_character.cardsController.getBonus(cardBonus.TMSpeed) / (double)(_character.machine.levelSpeed + 1L);
+            var num = (double)_character.totalEnergyPower() / (double)_character.timeMachineController.baseSpeedDivider() * ((double)energy / 50000) * (double)_character.hacksController.totalTMSpeedBonus() * (double)_character.allChallenges.timeMachineChallenge.TMSpeedBonus() * (double)_character.cardsController.getBonus(cardBonus.TMSpeed) / (double)(_character.machine.levelSpeed + 1L);
             Main.LogAllocation($"Calculated Energy: {energy}");
             Main.LogAllocation($"Deviation from game formula: {num}");
         }
@@ -1103,7 +1089,7 @@ namespace NGUInjector.AllocationProfiles
                     formula *= _character.augmentsController.sadisticUpgradeSpeedDividers[augIndex];
                 }
             }
-            return Mathf.Ceil((float)formula);
+            return Mathf.Min(Mathf.Ceil((float)formula), (float)9e18);
         }
 
         private bool IsBTUnlocked(int index)

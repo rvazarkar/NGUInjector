@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using static NGUInjector.Main;
 
 namespace NGUInjector.Managers
@@ -7,63 +8,74 @@ namespace NGUInjector.Managers
     internal class WishManager
     {
         private readonly Character _character;
-        private Dictionary<int, double> dictDouble = new Dictionary<int, double>();
-        public List<int> curValidUpgradesList = new List<int>();
+        private readonly List<int> _curValidUpgradesList = new List<int>();
 
         public WishManager()
         {
             _character = Main.Character;
         }
 
-        public int getSlot(int slotID)
+        public int GetSlot(int slotId)
         {
-            buildWishList();
-            if (slotID > this.curValidUpgradesList.Count())
+            BuildWishList();
+            if (slotId > _curValidUpgradesList.Count)
             {
                 return -1;
             }
-            return this.curValidUpgradesList[slotID];
+            return _curValidUpgradesList[slotId];
         }
 
-        public void buildWishList()
+        public void BuildWishList()
         {
-            for (int i = 0; i < this._character.wishes.wishes.Count; i++)
+            var dictDouble = new Dictionary<int, double>();
+
+            _curValidUpgradesList.Clear();
+            for (var i = 0; i < Settings.WishPriorities.Count(); i++)
             {
-                this.curValidUpgradesList.Add(i);
-            }
-            for (int i = 0; i < this.curValidUpgradesList.Count; i++)
-            {
-                if (_character.wishesController.properties[this.curValidUpgradesList[i]].difficultyRequirement > _character.wishesController.character.settings.rebirthDifficulty)
+                if (isValidWish(Settings.WishPriorities[i]))
                 {
-                    this.curValidUpgradesList.RemoveAt(i);
-                    i--;
-                    continue;
-                }
-                if (_character.wishesController.progressPerTickMax(this.curValidUpgradesList[i]) <= 0f)
-                {
-                    this.curValidUpgradesList.RemoveAt(i);
-                    i--;
-                    continue;
-                }
-                if ((long)_character.wishesController.character.wishes.wishes[this.curValidUpgradesList[i]].level >= _character.wishesController.properties[this.curValidUpgradesList[i]].maxLevel)
-                {
-                    this.curValidUpgradesList.RemoveAt(i);
-                    i--;
-                    continue;
+                    _curValidUpgradesList.Add(Settings.WishPriorities[i]);
                 }
             }
-            for (int i = 0; i < this.curValidUpgradesList.Count; i++)
+            for (var i = 0; i < _character.wishes.wishes.Count; i++)
             {
-                this.dictDouble.Add(this.curValidUpgradesList[i], (double)_character.wishesController.properties[this.curValidUpgradesList[i]].wishSpeedDivider);
-            }
-            this.dictDouble = (from x in this.dictDouble
+                if (_curValidUpgradesList.Contains(i))
+                {
+                    continue;
+                }
+                if (isValidWish(i))
+                {
+                    dictDouble.Add(i, _character.wishesController.properties[i].wishSpeedDivider);
+                }
+            }            
+            dictDouble = (from x in dictDouble
                                orderby x.Value
-                               select x).ToDictionary((KeyValuePair<int, double> x) => x.Key, (KeyValuePair<int, double> x) => x.Value);
-            this.curValidUpgradesList.Clear();
-            for (int j = 0; j < this.dictDouble.Count; j++)
+                               select x).ToDictionary(x => x.Key, x => x.Value);
+            for (var j = 0; j < dictDouble.Count; j++)
             {
-                this.curValidUpgradesList.Add(this.dictDouble.ElementAt(j).Key);
+                _curValidUpgradesList.Add(dictDouble.ElementAt(j).Key);
             }
+        }
+
+        public bool isValidWish(int wishId)
+        {
+            if (wishId < 0 || wishId > _character.wishes.wishSize())
+            {
+                return false;
+            }
+            if (_character.wishesController.properties[wishId].difficultyRequirement > _character.wishesController.character.settings.rebirthDifficulty)
+            {
+                return false;
+            }
+            if (_character.wishesController.progressPerTickMax(wishId) <= 0f)
+            {
+                return false;
+            }
+            if (_character.wishesController.character.wishes.wishes[wishId].level >= _character.wishesController.properties[wishId].maxLevel)
+            {
+                return false;
+            }
+            return true;          
         }
     }
 }

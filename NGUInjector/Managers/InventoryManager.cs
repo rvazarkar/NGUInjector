@@ -85,7 +85,8 @@ namespace NGUInjector.Managers
             var invItems = ci.Where(x => x.locked && x.equipment.isEquipment() && !Settings.BoostBlacklist.Contains(x.id) && !Settings.PriorityBoosts.Contains(x.id));
             result = result.Concat(invItems).ToList();
 
-            return result.ToArray();
+            //Make sure we filter out non-equips again, just in case one snuck into priorityboosts
+            return result.Where(x => x.equipment.isEquipment()).ToArray();
         }
 
         internal void BoostInventory(ih[] boostSlots)
@@ -413,19 +414,31 @@ namespace NGUInjector.Managers
                 return;
             }
 
-            if (Settings.BalanceCube)
+            if (Settings.CubePriority > 0)
             {
-                if (_controller.cubePower() > _controller.cubeToughness())
+                if (Settings.CubePriority == 1)
                 {
-                    _controller.selectAutoToughTransform();
-                }else if (_controller.cubeToughness() > _controller.cubePower())
+                    if (_controller.cubePower() > _controller.cubeToughness())
+                    {
+                        _controller.selectAutoToughTransform();
+                    }
+                    else if (_controller.cubeToughness() > _controller.cubePower())
+                    {
+                        _controller.selectAutoPowerTransform();
+                    }
+                    else
+                    {
+                        _controller.selectAutoPowerTransform();
+                    }
+                }else if (Settings.CubePriority == 2)
                 {
                     _controller.selectAutoPowerTransform();
                 }
                 else
                 {
-                    _controller.selectAutoPowerTransform();
+                    _controller.selectAutoToughTransform();
                 }
+                
                 return;
             }
 

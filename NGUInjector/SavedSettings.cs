@@ -55,7 +55,6 @@ namespace NGUInjector
         [SerializeField] private int _counterfeitThreshold;
         [SerializeField] private bool _autoBuyEm;
         [SerializeField] private double _bloodNumberThreshold;
-        [SerializeField] private bool _balanceCube;
         [SerializeField] private int[] _quickLoadout;
         [SerializeField] private int[] _quickDiggers;
         [SerializeField] private bool _globalEnabled;
@@ -65,10 +64,12 @@ namespace NGUInjector
         [SerializeField] private bool _manualMinors;
         [SerializeField] private bool _manageR3;
         [SerializeField] private bool _activateFruits;
+        [SerializeField] private int[] _wishPriorities;
+        [SerializeField] private bool _beastMode;
+        [SerializeField] private int _cubePriority;
 
         private readonly string _savePath;
         
-
 
         public SavedSettings(string dir)
         {
@@ -169,7 +170,6 @@ namespace NGUInjector
             _spaghettiThreshold = other.SpaghettiThreshold;
             _autoBuyEm = other.AutoBuyEM;
             _bloodNumberThreshold = other.BloodNumberThreshold;
-            _balanceCube = other.BalanceCube;
             _quickDiggers = other.QuickDiggers;
             _quickLoadout = other.QuickLoadout;
             _combatEnabled = other.CombatEnabled;
@@ -179,6 +179,9 @@ namespace NGUInjector
             _manualMinors = other.ManualMinors;
             _manageR3 = other.ManageR3;
             _activateFruits = other.ActivateFruits;
+            _wishPriorities = other.WishPriorities;
+            _beastMode = other.BeastMode;
+            _cubePriority = other.CubePriority;
         }
 
         public int HighestAKZone
@@ -644,17 +647,6 @@ namespace NGUInjector
             }
         }
 
-        public bool BalanceCube
-        {
-            get => _balanceCube;
-            set
-            {
-                if (value == _balanceCube) return;
-                _balanceCube = value;
-                SaveSettings();
-            }
-        }
-
         public int[] QuickLoadout
         {
             get => _quickLoadout;
@@ -740,6 +732,38 @@ namespace NGUInjector
             {
                 if (value == _activateFruits) return;
                 _activateFruits = value;
+                SaveSettings();
+            }
+        }
+        public int[] WishPriorities
+        {
+            get => _wishPriorities;
+            set
+            {
+                if (value == _wishPriorities) return;
+                _wishPriorities = value;
+                SaveSettings();
+            }
+        }
+
+        public bool BeastMode
+        {
+            get => _beastMode;
+            set
+            {
+                if (value == _beastMode) return;
+                _beastMode = value;
+                SaveSettings();
+            }
+        }
+
+        public int CubePriority
+        {
+            get => _cubePriority;
+            set
+            {
+                if (value == _cubePriority) return;
+                _cubePriority = value;
                 SaveSettings();
             }
         }

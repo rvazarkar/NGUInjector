@@ -34,6 +34,8 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.VersionLabel = new System.Windows.Forms.Label();
+            this.AutoBuyEM = new System.Windows.Forms.CheckBox();
             this.MoneyPitThresholdSave = new System.Windows.Forms.Button();
             this.MoneyPitThreshold = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -43,6 +45,10 @@
             this.AutoFightBosses = new System.Windows.Forms.CheckBox();
             this.AutoITOPOD = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ManageR3 = new System.Windows.Forms.CheckBox();
+            this.BloodNumberThreshold = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.SaveSpellCapButton = new System.Windows.Forms.Button();
             this.AutoSpellSwap = new System.Windows.Forms.CheckBox();
             this.label17 = new System.Windows.Forms.Label();
             this.CounterfeitCap = new System.Windows.Forms.NumericUpDown();
@@ -57,6 +63,7 @@
             this.ManageMagic = new System.Windows.Forms.CheckBox();
             this.ManageEnergy = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.ActivateFruits = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.yggRemoveButton = new System.Windows.Forms.Button();
             this.yggLoadoutItem = new System.Windows.Forms.NumericUpDown();
@@ -116,6 +123,9 @@
             this.label9 = new System.Windows.Forms.Label();
             this.GoldLoadoutZone = new System.Windows.Forms.ComboBox();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.ButterMinors = new System.Windows.Forms.CheckBox();
+            this.ButterMajors = new System.Windows.Forms.CheckBox();
+            this.ManualMinor = new System.Windows.Forms.CheckBox();
             this.QuestFastCombat = new System.Windows.Forms.CheckBox();
             this.AbandonMinors = new System.Windows.Forms.CheckBox();
             this.AbandonMinorThreshold = new System.Windows.Forms.NumericUpDown();
@@ -130,18 +140,20 @@
             this.invBlacklistErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.titanErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.goldErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.SaveSpellCapButton = new System.Windows.Forms.Button();
-            this.AutoBuyEM = new System.Windows.Forms.CheckBox();
-            this.VersionLabel = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.BloodNumberThreshold = new System.Windows.Forms.TextBox();
             this.numberErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.BalanceCube = new System.Windows.Forms.CheckBox();
-            this.ManualMinor = new System.Windows.Forms.CheckBox();
-            this.ButterMajors = new System.Windows.Forms.CheckBox();
-            this.ManageR3 = new System.Windows.Forms.CheckBox();
-            this.ButterMinors = new System.Windows.Forms.CheckBox();
-            this.ActivateFruits = new System.Windows.Forms.CheckBox();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.label19 = new System.Windows.Forms.Label();
+            this.WishAddInput = new System.Windows.Forms.NumericUpDown();
+            this.AddWishLabel = new System.Windows.Forms.Label();
+            this.AddWishButton = new System.Windows.Forms.Button();
+            this.WishPriority = new System.Windows.Forms.ListBox();
+            this.WishDownButton = new System.Windows.Forms.Button();
+            this.WishUpButton = new System.Windows.Forms.Button();
+            this.RemoveWishButton = new System.Windows.Forms.Button();
+            this.wishErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.BeastMode = new System.Windows.Forms.CheckBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.CubePriority = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -167,6 +179,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.titanErrProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.goldErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberErrProvider)).BeginInit();
+            this.tabPage9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.WishAddInput)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wishErrorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -192,6 +207,7 @@
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage8);
+            this.tabControl1.Controls.Add(this.tabPage9);
             resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -211,6 +227,18 @@
             resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // VersionLabel
+            // 
+            resources.ApplyResources(this.VersionLabel, "VersionLabel");
+            this.VersionLabel.Name = "VersionLabel";
+            // 
+            // AutoBuyEM
+            // 
+            resources.ApplyResources(this.AutoBuyEM, "AutoBuyEM");
+            this.AutoBuyEM.Name = "AutoBuyEM";
+            this.AutoBuyEM.UseVisualStyleBackColor = true;
+            this.AutoBuyEM.CheckedChanged += new System.EventHandler(this.AutoBuyEM_CheckedChanged);
             // 
             // MoneyPitThresholdSave
             // 
@@ -288,6 +316,30 @@
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // ManageR3
+            // 
+            resources.ApplyResources(this.ManageR3, "ManageR3");
+            this.ManageR3.Name = "ManageR3";
+            this.ManageR3.UseVisualStyleBackColor = true;
+            this.ManageR3.CheckedChanged += new System.EventHandler(this.ManageR3_CheckedChanged);
+            // 
+            // BloodNumberThreshold
+            // 
+            resources.ApplyResources(this.BloodNumberThreshold, "BloodNumberThreshold");
+            this.BloodNumberThreshold.Name = "BloodNumberThreshold";
+            // 
+            // label18
+            // 
+            resources.ApplyResources(this.label18, "label18");
+            this.label18.Name = "label18";
+            // 
+            // SaveSpellCapButton
+            // 
+            resources.ApplyResources(this.SaveSpellCapButton, "SaveSpellCapButton");
+            this.SaveSpellCapButton.Name = "SaveSpellCapButton";
+            this.SaveSpellCapButton.UseVisualStyleBackColor = true;
+            this.SaveSpellCapButton.Click += new System.EventHandler(this.SaveSpellCapButton_Click);
+            // 
             // AutoSpellSwap
             // 
             resources.ApplyResources(this.AutoSpellSwap, "AutoSpellSwap");
@@ -305,7 +357,7 @@
             // 
             resources.ApplyResources(this.CounterfeitCap, "CounterfeitCap");
             this.CounterfeitCap.Maximum = new decimal(new int[] {
-            10000,
+            9999999,
             0,
             0,
             0});
@@ -320,7 +372,7 @@
             // 
             resources.ApplyResources(this.SpaghettiCap, "SpaghettiCap");
             this.SpaghettiCap.Maximum = new decimal(new int[] {
-            10000,
+            9999999,
             0,
             0,
             0});
@@ -393,6 +445,13 @@
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // ActivateFruits
+            // 
+            resources.ApplyResources(this.ActivateFruits, "ActivateFruits");
+            this.ActivateFruits.Name = "ActivateFruits";
+            this.ActivateFruits.UseVisualStyleBackColor = true;
+            this.ActivateFruits.CheckedChanged += new System.EventHandler(this.ActivateFruits_CheckedChanged);
+            // 
             // label3
             // 
             resources.ApplyResources(this.label3, "label3");
@@ -407,14 +466,15 @@
             // 
             // yggLoadoutItem
             // 
+            this.yggLoadoutItem.CausesValidation = false;
             resources.ApplyResources(this.yggLoadoutItem, "yggLoadoutItem");
             this.yggLoadoutItem.Maximum = new decimal(new int[] {
-            505,
+            9999999,
             0,
             0,
             0});
             this.yggLoadoutItem.Minimum = new decimal(new int[] {
-            40,
+            1,
             0,
             0,
             0});
@@ -463,7 +523,8 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.BalanceCube);
+            this.tabPage4.Controls.Add(this.CubePriority);
+            this.tabPage4.Controls.Add(this.label20);
             this.tabPage4.Controls.Add(this.prioDownButton);
             this.tabPage4.Controls.Add(this.prioUpButton);
             this.tabPage4.Controls.Add(this.label5);
@@ -514,12 +575,7 @@
             // 
             resources.ApplyResources(this.blacklistAddItem, "blacklistAddItem");
             this.blacklistAddItem.Maximum = new decimal(new int[] {
-            503,
-            0,
-            0,
-            0});
-            this.blacklistAddItem.Minimum = new decimal(new int[] {
-            40,
+            99999999,
             0,
             0,
             0});
@@ -568,12 +624,7 @@
             // 
             resources.ApplyResources(this.priorityBoostItemAdd, "priorityBoostItemAdd");
             this.priorityBoostItemAdd.Maximum = new decimal(new int[] {
-            503,
-            0,
-            0,
-            0});
-            this.priorityBoostItemAdd.Minimum = new decimal(new int[] {
-            40,
+            9999999,
             0,
             0,
             0});
@@ -663,12 +714,7 @@
             // 
             resources.ApplyResources(this.titanAddItem, "titanAddItem");
             this.titanAddItem.Maximum = new decimal(new int[] {
-            503,
-            0,
-            0,
-            0});
-            this.titanAddItem.Minimum = new decimal(new int[] {
-            40,
+            999999999,
             0,
             0,
             0});
@@ -710,6 +756,7 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.BeastMode);
             this.tabPage6.Controls.Add(this.AllowFallthrough);
             this.tabPage6.Controls.Add(this.RecoverHealth);
             this.tabPage6.Controls.Add(this.FastCombat);
@@ -836,13 +883,8 @@
             // 
             resources.ApplyResources(this.GoldItemBox, "GoldItemBox");
             this.GoldItemBox.Maximum = new decimal(new int[] {
-            505,
-            0,
-            0,
-            0});
-            this.GoldItemBox.Minimum = new decimal(new int[] {
-            40,
-            0,
+            1410065407,
+            2,
             0,
             0});
             this.GoldItemBox.Name = "GoldItemBox";
@@ -920,6 +962,27 @@
             resources.ApplyResources(this.tabPage8, "tabPage8");
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // ButterMinors
+            // 
+            resources.ApplyResources(this.ButterMinors, "ButterMinors");
+            this.ButterMinors.Name = "ButterMinors";
+            this.ButterMinors.UseVisualStyleBackColor = true;
+            this.ButterMinors.CheckedChanged += new System.EventHandler(this.ButterMinors_CheckedChanged);
+            // 
+            // ButterMajors
+            // 
+            resources.ApplyResources(this.ButterMajors, "ButterMajors");
+            this.ButterMajors.Name = "ButterMajors";
+            this.ButterMajors.UseVisualStyleBackColor = true;
+            this.ButterMajors.CheckedChanged += new System.EventHandler(this.UseButter_CheckedChanged);
+            // 
+            // ManualMinor
+            // 
+            resources.ApplyResources(this.ManualMinor, "ManualMinor");
+            this.ManualMinor.Name = "ManualMinor";
+            this.ManualMinor.UseVisualStyleBackColor = true;
+            this.ManualMinor.CheckedChanged += new System.EventHandler(this.IdleMinor_CheckedChanged);
             // 
             // QuestFastCombat
             // 
@@ -1003,80 +1066,109 @@
             // 
             this.goldErrorProvider.ContainerControl = this;
             // 
-            // SaveSpellCapButton
-            // 
-            resources.ApplyResources(this.SaveSpellCapButton, "SaveSpellCapButton");
-            this.SaveSpellCapButton.Name = "SaveSpellCapButton";
-            this.SaveSpellCapButton.UseVisualStyleBackColor = true;
-            this.SaveSpellCapButton.Click += new System.EventHandler(this.SaveSpellCapButton_Click);
-            // 
-            // AutoBuyEM
-            // 
-            resources.ApplyResources(this.AutoBuyEM, "AutoBuyEM");
-            this.AutoBuyEM.Name = "AutoBuyEM";
-            this.AutoBuyEM.UseVisualStyleBackColor = true;
-            this.AutoBuyEM.CheckedChanged += new System.EventHandler(this.AutoBuyEM_CheckedChanged);
-            // 
-            // VersionLabel
-            // 
-            resources.ApplyResources(this.VersionLabel, "VersionLabel");
-            this.VersionLabel.Name = "VersionLabel";
-            // 
-            // label18
-            // 
-            resources.ApplyResources(this.label18, "label18");
-            this.label18.Name = "label18";
-            // 
-            // BloodNumberThreshold
-            // 
-            resources.ApplyResources(this.BloodNumberThreshold, "BloodNumberThreshold");
-            this.BloodNumberThreshold.Name = "BloodNumberThreshold";
-            // 
             // numberErrProvider
             // 
             this.numberErrProvider.ContainerControl = this;
             // 
-            // BalanceCube
+            // tabPage9
             // 
-            resources.ApplyResources(this.BalanceCube, "BalanceCube");
-            this.BalanceCube.Name = "BalanceCube";
-            this.BalanceCube.UseVisualStyleBackColor = true;
-            this.BalanceCube.CheckedChanged += new System.EventHandler(this.BalanceCube_CheckedChanged);
+            this.tabPage9.Controls.Add(this.WishDownButton);
+            this.tabPage9.Controls.Add(this.WishUpButton);
+            this.tabPage9.Controls.Add(this.RemoveWishButton);
+            this.tabPage9.Controls.Add(this.label19);
+            this.tabPage9.Controls.Add(this.WishAddInput);
+            this.tabPage9.Controls.Add(this.AddWishLabel);
+            this.tabPage9.Controls.Add(this.AddWishButton);
+            this.tabPage9.Controls.Add(this.WishPriority);
+            resources.ApplyResources(this.tabPage9, "tabPage9");
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.UseVisualStyleBackColor = true;
             // 
-            // ManualMinor
+            // label19
             // 
-            resources.ApplyResources(this.ManualMinor, "ManualMinor");
-            this.ManualMinor.Name = "ManualMinor";
-            this.ManualMinor.UseVisualStyleBackColor = true;
-            this.ManualMinor.CheckedChanged += new System.EventHandler(this.IdleMinor_CheckedChanged);
+            resources.ApplyResources(this.label19, "label19");
+            this.label19.Name = "label19";
             // 
-            // ButterMajors
+            // WishAddInput
             // 
-            resources.ApplyResources(this.ButterMajors, "ButterMajors");
-            this.ButterMajors.Name = "ButterMajors";
-            this.ButterMajors.UseVisualStyleBackColor = true;
-            this.ButterMajors.CheckedChanged += new System.EventHandler(this.UseButter_CheckedChanged);
+            resources.ApplyResources(this.WishAddInput, "WishAddInput");
+            this.WishAddInput.Maximum = new decimal(new int[] {
+            1410065407,
+            2,
+            0,
+            0});
+            this.WishAddInput.Name = "WishAddInput";
+            this.WishAddInput.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            this.WishAddInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.WishAddInput_KeyDown);
             // 
-            // ManageR3
+            // AddWishLabel
             // 
-            resources.ApplyResources(this.ManageR3, "ManageR3");
-            this.ManageR3.Name = "ManageR3";
-            this.ManageR3.UseVisualStyleBackColor = true;
-            this.ManageR3.CheckedChanged += new System.EventHandler(this.ManageR3_CheckedChanged);
+            resources.ApplyResources(this.AddWishLabel, "AddWishLabel");
+            this.AddWishLabel.Name = "AddWishLabel";
             // 
-            // ButterMinors
+            // AddWishButton
             // 
-            resources.ApplyResources(this.ButterMinors, "ButterMinors");
-            this.ButterMinors.Name = "ButterMinors";
-            this.ButterMinors.UseVisualStyleBackColor = true;
-            this.ButterMinors.CheckedChanged += new System.EventHandler(this.ButterMinors_CheckedChanged);
+            resources.ApplyResources(this.AddWishButton, "AddWishButton");
+            this.AddWishButton.Name = "AddWishButton";
+            this.AddWishButton.UseVisualStyleBackColor = true;
+            this.AddWishButton.Click += new System.EventHandler(this.AddWishButton_Click);
             // 
-            // ActivateFruits
+            // WishPriority
             // 
-            resources.ApplyResources(this.ActivateFruits, "ActivateFruits");
-            this.ActivateFruits.Name = "ActivateFruits";
-            this.ActivateFruits.UseVisualStyleBackColor = true;
-            this.ActivateFruits.CheckedChanged += new System.EventHandler(this.ActivateFruits_CheckedChanged);
+            this.WishPriority.FormattingEnabled = true;
+            this.WishPriority.Items.AddRange(new object[] {
+            resources.GetString("WishPriority.Items"),
+            resources.GetString("WishPriority.Items1")});
+            resources.ApplyResources(this.WishPriority, "WishPriority");
+            this.WishPriority.Name = "WishPriority";
+            // 
+            // WishDownButton
+            // 
+            resources.ApplyResources(this.WishDownButton, "WishDownButton");
+            this.WishDownButton.Name = "WishDownButton";
+            this.WishDownButton.UseVisualStyleBackColor = true;
+            this.WishDownButton.Click += new System.EventHandler(this.WishDownButton_Click);
+            // 
+            // WishUpButton
+            // 
+            resources.ApplyResources(this.WishUpButton, "WishUpButton");
+            this.WishUpButton.Name = "WishUpButton";
+            this.WishUpButton.UseVisualStyleBackColor = true;
+            this.WishUpButton.Click += new System.EventHandler(this.WishUpButton_Click);
+            // 
+            // RemoveWishButton
+            // 
+            resources.ApplyResources(this.RemoveWishButton, "RemoveWishButton");
+            this.RemoveWishButton.Name = "RemoveWishButton";
+            this.RemoveWishButton.UseVisualStyleBackColor = true;
+            this.RemoveWishButton.Click += new System.EventHandler(this.RemoveWishButton_Click);
+            // 
+            // wishErrorProvider
+            // 
+            this.wishErrorProvider.ContainerControl = this;
+            // 
+            // BeastMode
+            // 
+            resources.ApplyResources(this.BeastMode, "BeastMode");
+            this.BeastMode.Name = "BeastMode";
+            this.BeastMode.UseVisualStyleBackColor = true;
+            this.BeastMode.CheckedChanged += new System.EventHandler(this.BeastMode_CheckedChanged);
+            // 
+            // label20
+            // 
+            resources.ApplyResources(this.label20, "label20");
+            this.label20.Name = "label20";
+            // 
+            // CubePriority
+            // 
+            this.CubePriority.FormattingEnabled = true;
+            resources.ApplyResources(this.CubePriority, "CubePriority");
+            this.CubePriority.Name = "CubePriority";
+            this.CubePriority.SelectedIndexChanged += new System.EventHandler(this.CubePriority_SelectedIndexChanged);
             // 
             // SettingsForm
             // 
@@ -1118,6 +1210,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.titanErrProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.goldErrorProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numberErrProvider)).EndInit();
+            this.tabPage9.ResumeLayout(false);
+            this.tabPage9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.WishAddInput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wishErrorProvider)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1230,11 +1326,23 @@
         private System.Windows.Forms.TextBox BloodNumberThreshold;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ErrorProvider numberErrProvider;
-        private System.Windows.Forms.CheckBox BalanceCube;
         private System.Windows.Forms.CheckBox ButterMajors;
         private System.Windows.Forms.CheckBox ManualMinor;
         private System.Windows.Forms.CheckBox ManageR3;
         private System.Windows.Forms.CheckBox ButterMinors;
         private System.Windows.Forms.CheckBox ActivateFruits;
+        private System.Windows.Forms.TabPage tabPage9;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.NumericUpDown WishAddInput;
+        private System.Windows.Forms.Label AddWishLabel;
+        private System.Windows.Forms.Button AddWishButton;
+        private System.Windows.Forms.ListBox WishPriority;
+        private System.Windows.Forms.Button WishDownButton;
+        private System.Windows.Forms.Button WishUpButton;
+        private System.Windows.Forms.Button RemoveWishButton;
+        private System.Windows.Forms.ErrorProvider wishErrorProvider;
+        private System.Windows.Forms.CheckBox BeastMode;
+        private System.Windows.Forms.ComboBox CubePriority;
+        private System.Windows.Forms.Label label20;
     }
 }

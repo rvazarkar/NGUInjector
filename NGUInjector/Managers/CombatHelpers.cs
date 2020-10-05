@@ -221,5 +221,35 @@ namespace NGUInjector.Managers
         {
             return Main.Character.training.attackTraining[3] > 0;
         }
+
+        internal static bool UltimateBuffUnlocked()
+        {
+            return Main.Character.training.defenseTraining[5] > 0;
+        }
+
+        internal static bool UltimateBuffReady()
+        {
+            return Main.Character.adventureController.ultimateBuffMove.button.IsInteractable();
+        }
+
+        internal static bool DefensiveBuffUnlocked()
+        {
+            return Main.Character.training.defenseTraining[1] > 0;
+        }
+
+        internal static bool DefensiveBuffReady()
+        {
+            return Main.Character.adventureController.defenseBuffMove.button.IsInteractable();
+        }
+
+        internal static bool MegaBuffUnlocked()
+        {
+            return Main.Character.training.defenseTraining[4] >= 25000L && Main.Character.wishes.wishes[8].level >= 1;
+        }
+
+        internal static bool MegaBuffReady()
+        {
+            return Main.Character.adventureController.megaBuffMove.button.IsInteractable();
+        }
     }
 }

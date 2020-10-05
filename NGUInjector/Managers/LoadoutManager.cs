@@ -155,6 +155,7 @@ namespace NGUInjector.Managers
             var weaponSlot = -5;
             Main.Character.removeMostEnergy();
             Main.Character.removeMostMagic();
+            Main.Character.removeAllRes3();
             foreach (var itemId in gearIds)
             {
                 var slot = FindItemSlot(ci, itemId);
@@ -243,6 +244,9 @@ namespace NGUInjector.Managers
 
             controller.updateBonuses();
             controller.updateInventory();
+            Main.Character.removeMostEnergy();
+            Main.Character.removeMostMagic();
+            Main.Character.removeAllRes3();
             Log($"Done equipping new gear");
         }
 
