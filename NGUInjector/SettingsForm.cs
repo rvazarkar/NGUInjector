@@ -956,6 +956,8 @@ namespace NGUInjector
             WishPriority.DataSource = new BindingSource(Main.Settings.WishPriorities, null);
             WishPriority.SelectedIndex = index - 1;
             Main.Character.removeAllRes3();
+            Main.Character.removeMostEnergy();
+            Main.Character.removeMostMagic();
         }
 
         private void WishDownButton_Click(object sender, EventArgs e)
@@ -977,6 +979,8 @@ namespace NGUInjector
             WishPriority.DataSource = new BindingSource(Main.Settings.WishPriorities, null);
             WishPriority.SelectedIndex = index + 1;
             Main.Character.removeAllRes3();
+            Main.Character.removeMostEnergy();
+            Main.Character.removeMostMagic();
         }
 
         private void AddWishButton_Click(object sender, EventArgs e)
@@ -996,6 +1000,8 @@ namespace NGUInjector
             WishPriority.DataSource = null;
             WishPriority.DataSource = new BindingSource(Main.Settings.WishPriorities, null);
             Main.Character.removeAllRes3();
+            Main.Character.removeMostEnergy();
+            Main.Character.removeMostMagic();
         }
 
         private void RemoveWishButton_Click(object sender, EventArgs e)
@@ -1014,6 +1020,8 @@ namespace NGUInjector
             WishPriority.DataSource = null;
             WishPriority.DataSource = new BindingSource(Main.Settings.WishPriorities, null);
             Main.Character.removeAllRes3();
+            Main.Character.removeMostEnergy();
+            Main.Character.removeMostMagic();
         }
 
         private void WishAddInput_TextChanged(object sender, EventArgs e)

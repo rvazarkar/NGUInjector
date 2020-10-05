@@ -311,7 +311,7 @@ namespace NGUInjector.AllocationProfiles
             }
 
             var prioCount = temp.Count;
-            var toAdd = (long) Math.Floor((double) _character.idleEnergy / prioCount);
+            var toAdd = (long) Math.Ceiling((double) _character.idleEnergy / prioCount);
             _character.input.energyRequested.text = toAdd.ToString();
             _character.input.validateInput();
 
@@ -349,7 +349,7 @@ namespace NGUInjector.AllocationProfiles
             }
 
             var prioCount = temp.Count;
-            var toAdd = (long)Math.Floor((double)_character.magic.idleMagic / prioCount);
+            var toAdd = (long)Math.Ceiling((double)_character.magic.idleMagic / prioCount);
             _character.input.energyRequested.text = toAdd.ToString();
             _character.input.validateInput();
 
@@ -378,7 +378,7 @@ namespace NGUInjector.AllocationProfiles
             else return;
 
             var prioCount = temp.Count;
-            var toAdd = (long)Math.Floor((double)_character.res3.idleRes3 / prioCount);
+            var toAdd = (long)Math.Ceiling((double)_character.res3.idleRes3 / prioCount);
             _character.input.energyRequested.text = toAdd.ToString();
             _character.input.validateInput();
 
