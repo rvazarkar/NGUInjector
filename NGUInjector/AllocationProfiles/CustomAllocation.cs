@@ -414,8 +414,6 @@ namespace NGUInjector.AllocationProfiles
             if (_hasGearSwapped) return;
 
             if (!LoadoutManager.CanSwap()) return;
-            Main.Character.removeMostEnergy();
-            Main.Character.removeMostMagic();
             _hasGearSwapped = true;
             _currentGearBreakpoint = bp;
             LoadoutManager.ChangeGear(bp.Gear);

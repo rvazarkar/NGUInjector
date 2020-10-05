@@ -748,7 +748,12 @@ namespace NGUInjector
         public int[] WishPriorities
         {
             get => _wishPriorities;
-            set => _wishPriorities = value;
+            set
+            {
+                if (value == _wishPriorities) return;
+                _wishPriorities = value;
+                SaveSettings();
+            }
         }
     }
 }
