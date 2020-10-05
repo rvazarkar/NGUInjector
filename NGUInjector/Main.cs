@@ -774,5 +774,13 @@ namespace NGUInjector
                 log[i] = $"{line}<b></b>";
             }
         }
+
+        public void OnApplicationQuit()
+        {
+            CancelInvoke("AutomationRoutine");
+            CancelInvoke("SnipeZone");
+            CancelInvoke("MonitorLog");
+            CancelInvoke("QuickStuff");
+        }
     }
 }

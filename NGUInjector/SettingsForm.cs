@@ -228,6 +228,8 @@ namespace NGUInjector
 
         internal void UpdateProgressBar(int progress)
         {
+            if (progress < 0)
+                return;
             progressBar1.Value = progress;
         }
 
