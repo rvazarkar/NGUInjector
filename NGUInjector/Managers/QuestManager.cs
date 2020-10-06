@@ -76,7 +76,7 @@ namespace NGUInjector.Managers
             //First logic: not in a quest
             if (!_character.beastQuest.inQuest)
             {
-                //If we're allowing major quests and 
+                //If we're allowing major quests and we have a quest available
                 if (Settings.AllowMajorQuests && _character.beastQuest.curBankedQuests > 0)
                 {
                     _character.settings.useMajorQuests = true;
@@ -85,6 +85,7 @@ namespace NGUInjector.Managers
                 }
                 else
                 {
+                    _character.settings.useMajorQuests = false;
                     SetIdleMode(!Settings.ManualMinors);
                     _character.beastQuestController.startQuest();
                 }
@@ -108,6 +109,10 @@ namespace NGUInjector.Managers
                         //Combat logic will pick up from here
                         return;
                     }
+                }
+                else
+                {
+                    _character.settings.useMajorQuests = false;
                 }
 
                 SetIdleMode(!Settings.ManualMinors);
