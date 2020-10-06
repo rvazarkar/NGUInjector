@@ -416,6 +416,15 @@ namespace NGUInjector.Managers
                     }
                 }
 
+                if (fastCombat)
+                {
+                    if (GetHPPercentage() < .75)
+                    {
+                        if (CastHeal())
+                            return;
+                    }
+                }
+
                 if (isFighting)
                 {
                     isFighting = false;
