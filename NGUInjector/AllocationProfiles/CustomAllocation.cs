@@ -268,7 +268,7 @@ namespace NGUInjector.AllocationProfiles
             if (_character.rebirthTime.totalseconds < _wrapper.Breakpoints.RebirthTime)
                 return;
 
-            if (Main.Settings.SwapYggdrasilLoadouts)
+            if (Main.Settings.SwapYggdrasilLoadouts && Main.Settings.YggdrasilLoadout.Length > 0)
             {
                 if (!LoadoutManager.TryYggdrasilSwap() || !DiggerManager.TryYggSwap())
                 {
