@@ -9,7 +9,7 @@ namespace NGUInjector.Managers
 
     public class FixedSizedQueue
     {
-        private Queue<float> queue = new Queue<float>();
+        private Queue<decimal> queue = new Queue<decimal>();
 
         public int Size { get; private set; }
 
@@ -18,7 +18,7 @@ namespace NGUInjector.Managers
             Size = size;
         }
 
-        public void Enqueue(float obj)
+        public void Enqueue(decimal obj)
         {
             queue.Enqueue(obj);
 
@@ -28,7 +28,7 @@ namespace NGUInjector.Managers
             }
         }
 
-        public double Avg()
+        public decimal Avg()
         {
             return queue.Average(x => x);
         }
@@ -327,23 +327,23 @@ namespace NGUInjector.Managers
                 }
                 else
                 {
-
                     var old = _previousBoostsNeeded.Power + _previousBoostsNeeded.Toughness +
                               _previousBoostsNeeded.Special;
+
 
                     var diff = current - old;
 
                     //If diff is > 0, then we either added another item to boost or we levelled something. Don't add the diff to average
                     if (diff < 0)
                     {
-                        _invBoostAvg.Enqueue((int)diff);
+                        _invBoostAvg.Enqueue(diff);
                     }
 
                     var average = Math.Floor(_invBoostAvg.Avg());
                     var eta = Math.Ceiling(current / average);
 
                     Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
-                    Log($"Last Minute: {current - old}. Average over last hour: {average}. ETA: {eta} minutes.");
+                    Log($"Last Minute: {current - old}. Average Per Minute: {average}. ETA: {eta} minutes.");
                 }
             }
 
@@ -362,7 +362,7 @@ namespace NGUInjector.Managers
                     output = toughnessDiff > 0 ? $"{output} {toughnessDiff} Toughness." : output;
                     output = powerDiff > 0 ? $"{output} {powerDiff} Power." : output;
 
-                    _cubeBoostAvg.Enqueue(toughnessDiff + powerDiff);
+                    _cubeBoostAvg.Enqueue((decimal)(toughnessDiff + powerDiff));
                     output = $"{output} Average Per Minute: {_cubeBoostAvg.Avg()}";
                     Log(output);
                 }
@@ -527,9 +527,9 @@ namespace NGUInjector.Managers
 
     public class BoostsNeeded
     {
-        internal float Power { get; set; }
-        internal float Toughness { get; set; }
-        internal float Special { get; set; }
+        internal decimal Power { get; set; }
+        internal decimal Toughness { get; set; }
+        internal decimal Special { get; set; }
 
         public BoostsNeeded()
         {

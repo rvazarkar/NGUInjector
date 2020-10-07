@@ -790,7 +790,16 @@ namespace NGUInjector
         void ShowBoostProgress()
         {
             var boostSlots = _invManager.GetBoostSlots(Character.inventory.GetConvertedInventory().ToArray());
-            _invManager.ShowBoostProgress(boostSlots);
+            try
+            {
+                _invManager.ShowBoostProgress(boostSlots);
+            }
+            catch (Exception e)
+            {
+                Log(e.Message);
+                Log(e.StackTrace);
+            }
+            
         }
 
         public void OnApplicationQuit()

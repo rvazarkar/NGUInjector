@@ -75,26 +75,26 @@ namespace NGUInjector
             var n = new BoostsNeeded();
 
             if (eq.capAttack != 0.0)
-                n.Power += CalcCap(eq.capAttack, eq.level) - eq.curAttack;
+                n.Power += CalcCap(eq.capAttack, eq.level) - (decimal)eq.curAttack;
 
             if (eq.capDefense != 0.0)
-                n.Toughness += CalcCap(eq.capDefense, eq.level) - eq.curDefense;
+                n.Toughness += CalcCap(eq.capDefense, eq.level) - (decimal)eq.curDefense;
 
             if (eq.spec1Type != specType.None)
-                n.Special += CalcCap(eq.spec1Cap, eq.level) - eq.spec1Cur;
+                n.Special += CalcCap(eq.spec1Cap, eq.level) - (decimal)eq.spec1Cur;
 
             if (eq.spec2Type != specType.None)
-                n.Special += CalcCap(eq.spec2Cap, eq.level) - eq.spec2Cur;
+                n.Special += CalcCap(eq.spec2Cap, eq.level) - (decimal)eq.spec2Cur;
 
             if (eq.spec3Type != specType.None)
-                n.Special += CalcCap(eq.spec3Cap, eq.level) - eq.spec3Cur;
+                n.Special += CalcCap(eq.spec3Cap, eq.level) - (decimal)eq.spec3Cur;
 
             return n;
         }
 
-        private static float CalcCap(float cap, float level)
+        private static decimal CalcCap(float cap, float level)
         {
-            return Mathf.Floor(cap * (float)(1.0 + level / 100.0));
+            return (decimal)Mathf.Floor(cap * (float)(1.0 + level / 100.0));
         }
 
         public static void CopyPropertiesTo<T, TU>(this T source, TU dest)
