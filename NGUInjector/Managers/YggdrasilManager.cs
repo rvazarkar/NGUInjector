@@ -80,6 +80,19 @@ namespace NGUInjector.Managers
             _character.yggdrasilController.refreshMenu();
         }
 
+        internal static void HarvestAll()
+        {
+            var currentPage = Main.Character.yggdrasilController.curPage;
+            Main.Character.yggdrasilController.changePage(0);
+            Main.Character.yggdrasilController.consumeAll(true);
+            Main.Character.yggdrasilController.changePage(1);
+            Main.Character.yggdrasilController.consumeAll(true);
+            Main.Character.yggdrasilController.changePage(2);
+            Main.Character.yggdrasilController.consumeAll(true);
+            Main.Character.yggdrasilController.changePage(currentPage);
+            Main.Character.yggdrasilController.refreshMenu();
+        }
+
         internal void CheckFruits()
         {
             if (!Settings.ActivateFruits)

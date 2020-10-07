@@ -268,6 +268,14 @@ namespace NGUInjector.AllocationProfiles
             if (_character.rebirthTime.totalseconds < _wrapper.Breakpoints.RebirthTime)
                 return;
 
+            if (Main.Settings.SwapYggdrasilLoadouts)
+            {
+                if (!LoadoutManager.TryYggdrasilSwap())
+                    return;
+
+                YggdrasilManager.HarvestAll();
+            }
+
             _currentDiggerBreakpoint = null;
             _currentEnergyBreakpoint = null;
             _currentGearBreakpoint = null;
