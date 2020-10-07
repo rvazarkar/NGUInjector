@@ -770,8 +770,19 @@ namespace NGUInjector
                 if (!line.Contains("dropped")) continue;
                 if (line.Contains("gold")) continue;
                 if (line.EndsWith("<b></b>")) continue;
-                var result = Regex.Replace(line, @"\r\n?|\n", "");
-                LogLoot(result);
+                var result = line;
+                if (result.Contains("\n"))
+                {
+                    result = result.Split('\n').Last();
+                }
+
+                var sb = new StringBuilder(result);
+                sb.Replace("<color=blue>", "");
+                sb.Replace("<b>", "");
+                sb.Replace("</color>", "");
+                sb.Replace("</b>", "");
+
+                LogLoot(sb.ToString());
                 log[i] = $"{line}<b></b>";
             }
         }

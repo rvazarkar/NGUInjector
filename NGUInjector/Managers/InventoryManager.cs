@@ -9,7 +9,7 @@ namespace NGUInjector.Managers
 
     public class FixedSizedQueue
     {
-        private Queue<int> queue = new Queue<int>();
+        private Queue<float> queue = new Queue<float>();
 
         public int Size { get; private set; }
 
@@ -18,7 +18,7 @@ namespace NGUInjector.Managers
             Size = size;
         }
 
-        public void Enqueue(int obj)
+        public void Enqueue(float obj)
         {
             queue.Enqueue(obj);
 
@@ -72,7 +72,8 @@ namespace NGUInjector.Managers
         private readonly int[] _guffs = {198, 200, 199, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 228, 211, 250, 291, 289, 290, 298, 299, 300};
         private BoostsNeeded _previousBoostsNeeded = null;
         private Cube _lastCube = null;
-        private FixedSizedQueue avg = new FixedSizedQueue(60);
+        private FixedSizedQueue _invBoostAvg = new FixedSizedQueue(60);
+        private FixedSizedQueue _cubeBoostAvg = new FixedSizedQueue(60);
         private int lastNeededCount = 0;
 
 
@@ -221,6 +222,16 @@ namespace NGUInjector.Managers
             }
         }
 
+        private string SanitizeName(string name)
+        {
+            if (name.Contains("\n"))
+            {
+                name = name.Split('\n').Last();
+            }
+
+            return name;
+        }
+
         internal void ManageQuestItems(ih[] ci)
         {
             //Merge quest items first
@@ -231,7 +242,7 @@ namespace NGUInjector.Managers
             foreach (var target in toMerge)
             {
                 if (ci.Count(x => x.id == target.id) <= 1) continue;
-                Log($"Merging {target.name} in slot {target.slot}");
+                Log($"Merging {SanitizeName(target.name)} in slot {target.slot}");
                 _controller.mergeAll(target.slot);
             }
 
@@ -243,7 +254,7 @@ namespace NGUInjector.Managers
             {
                 var newSlot = ChangePage(target.slot);
                 var ic = _controller.inventory[newSlot];
-                Log($"Using quest item {target.name} in slot {target.slot}");
+                Log($"Using quest item {SanitizeName(target.name)} in slot {target.slot}");
                 typeof(ItemController).GetMethod("consumeItem", BindingFlags.NonPublic | BindingFlags.Instance)
                     ?.Invoke(ic, null);
             }
@@ -258,7 +269,7 @@ namespace NGUInjector.Managers
             {
                 var target = item.MaxItem();
 
-                Log($"Merging {target.name} in slot {target.slot}");
+                Log($"Merging {SanitizeName(target.name)} in slot {target.slot}");
                 _controller.mergeAll(target.slot);
             }
         }
@@ -325,14 +336,14 @@ namespace NGUInjector.Managers
                     //If diff is > 0, then we either added another item to boost or we levelled something. Don't add the diff to average
                     if (diff < 0)
                     {
-                        avg.Enqueue((int)diff);
+                        _invBoostAvg.Enqueue((int)diff);
                     }
 
-                    var average = Math.Floor(avg.Avg());
+                    var average = Math.Floor(_invBoostAvg.Avg());
                     var eta = Math.Ceiling(current / average);
 
                     Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
-                    Log($"Last Minute: {current - old}. Hourly Avg: {average}. ETA: {eta} minutes.");
+                    Log($"Last Minute: {current - old}. Average over last hour: {average}. ETA: {eta} minutes.");
                 }
             }
 
@@ -349,7 +360,10 @@ namespace NGUInjector.Managers
                     var powerDiff = cube.Power - _lastCube.Power;
 
                     output = toughnessDiff > 0 ? $"{output} {toughnessDiff} Toughness." : output;
-                    output = powerDiff > 0 ? $"{output} {powerDiff} Power" : output;
+                    output = powerDiff > 0 ? $"{output} {powerDiff} Power." : output;
+
+                    _cubeBoostAvg.Enqueue(toughnessDiff + powerDiff);
+                    output = $"{output} Average Per Minute: {_cubeBoostAvg.Avg()}";
                     Log(output);
                 }
 
