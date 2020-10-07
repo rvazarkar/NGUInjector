@@ -330,20 +330,25 @@ namespace NGUInjector.Managers
                     var old = _previousBoostsNeeded.Power + _previousBoostsNeeded.Toughness +
                               _previousBoostsNeeded.Special;
 
-
                     var diff = current - old;
 
                     //If diff is > 0, then we either added another item to boost or we levelled something. Don't add the diff to average
                     if (diff <= 0)
                     {
-                        _invBoostAvg.Enqueue(diff);
+                        _invBoostAvg.Enqueue(diff * -1);
                     }
 
-                    var average = _invBoostAvg.Avg();
-                    var eta = current / average;
-
                     Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
-                    Log($"Last Minute: {current - old}. Average Per Minute: {average:0}. ETA: {eta:0} minutes.");
+                    var average = _invBoostAvg.Avg();
+                    if (average > 0)
+                    {
+                        var eta = current / average;
+                        Log($"Last Minute: {diff}. Average Per Minute: {average:0}. ETA: {eta:0} minutes.");
+                    }
+                    else
+                    {
+                        Log($"Last Minute: {diff}.");
+                    }
                 }
             }
 
