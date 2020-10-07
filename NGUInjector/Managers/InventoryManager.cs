@@ -373,10 +373,6 @@ namespace NGUInjector.Managers
                     output = $"{output} Average Per Minute: {_cubeBoostAvg.Avg():0}";
                     Log(output);
                 }
-                else
-                {
-                    _cubeBoostAvg.Enqueue(0);
-                }
 
                 _lastCube = cube;
             }

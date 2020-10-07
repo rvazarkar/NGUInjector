@@ -43,22 +43,29 @@ An in game menu can be opened using the F1 button.
 - **Auto Buy Energy/Magic** - Automatically spend EXP on energy/magic. Will use the custom caps set by the user in the spend exp page. Will always buy energy and magic in pairs.
 - **Money Pit Threshold** - The amount of gold to wait for to throw gold into the money pit. Accepts scientific notation (ex: 1E+28)
 
-![Allocation Settings](https://i.imgur.com/2KBRwAH.png)
+![Allocation Settings](https://i.imgur.com/DdEsU4d.png)
 
 - **Manage Energy** - Manage energy based on breakpoints in allocation.json
 - **Manage Magic** - Manage magic based on breakpoints in allocation.json
+- **Manage R3** - Manage resource 3 based on breakpoints in allocation.json
 - **Manage Gear** - Manage gear based on breakpoints in allocation.json
 - **Manage Diggers** - Manage diggers based on breakpoints in allocation.json
 - **Manage Wandoos OS** - Manage wandoos OS based on breakpoints in allocation.json
 - **Auto Rebirth** - Automatically rebirth after the time in allocation.json is reached.
 
-![Yggdrasil](https://i.imgur.com/UVATSUn.png)
+- **Change Auto Spells** - Manage Spoopy Spell casting
+- **Spaghetti %** - Percent to cast Blood Spaghetti until
+- **Number Bonus** - Number to cast Blood NUMBER Boost until
+- **Counterfeit %** - Percent to cast Counterfeit Gold until
 
-- **Manage Yggdrasil** - Automatically harvest fruits and re-activate fruits you haven't bought the exp perk for.
+![Yggdrasil](https://i.imgur.com/QG1KiQi.png)
+
+- **Manage Yggdrasil** - Automatically harvest fruits.
+- **Activate Fruits** - Reactivate fruits you haven't bought the exp perk for
 - **Swap Loadout for Yggdrasil** - Equip the loadout specified in YggdrasilLoadout before harvesting
 - **Loadout** - Edit the loadout used for harvest yggdrasil. Add items using the box in the bottom.
 
-![Inventory](https://i.imgur.com/HU6Y7lG.png)
+![Inventory](https://i.imgur.com/TfCk3IO.png)
 
 - **Manage Inventory** - When enabled, the following features will be enabled
   - **Auto Boost Merging** - If a boost is locked, boosts will automatically be merged until the boost hits 100.
@@ -68,6 +75,11 @@ An in game menu can be opened using the F1 button.
   - **Auto Convertible Management** - Will automatically transform non-locked pendants/lootys and other items
   - **Quest Item Management** - Will try to merge a quest item to level 100 if a locked one is found. Otherwise will automatically turn in quest items
 - **Manage Boost Conversion** - If boost conversion is unlocked from 100 Level Challenge, will calculate needed boosts for items in boostIds and then switch auto conversion appropriately. Will prioritize power > toughness > special. Will also show you the hourly average of boost progress in the inject.log file.
+- **Cube Priority** - How to boost cube.
+  - **None** - Will turn off boost conversion
+  - **Balanced** - Will keep power and toughness on cube balanced
+  - **Power** - Will only put power into cube
+  - **Toughness** - Will only put toughness into the cube
 - **Priority Boosts** - Edit the items you wish to boost before others. Add items using the box in the bottom. Order is respected.
 - **Blacklisted Items** - Edit the items you wish to never be boosted. Add items using the box in the bottom.
 
@@ -77,13 +89,14 @@ An in game menu can be opened using the F1 button.
 - **Highest Autokillable Titan** - The highest titan you can autokill in your TitanLoadout. When this titan or any previous titan is spawning.
 - **Loadout** - The gear to equip when autokilling titans.
 
-![Adventure](https://i.imgur.com/WHUcSmu.png)
+![Adventure](https://i.imgur.com/e6urxA4.png)
 
 - **Combat Enabled** - Turns on auto combat to go to target zone and kill stuff.
 - **Bosses Only** - If enabled, will only fight bosses when doing combat. Good for zone sniping.
 - **Precast Buffs** - If enabled, will cast charge and parry in safe zone before each combat and wait for the cooldowns to recharge.
 - **Recover HP** - If enabled, will recover HP in safe zone between kills
-- **Fast Combat** - If enabled, will just quickly attack and skip buffs altogether.
+- **Fast Combat** - If enabled, will just quickly attack and skip buffs altogether
+- **Beast Mode** - Whether to use beast mode or not while in combat
 - **Combat Mode** - If set to manual, will execute a custom combat routine. If set to idle, will just idle the zone.
 - **Target Zone** - The target zone to snipe/do combat in. ITOPOD is at the bottom of the list.
 - **Allow Fallthrough** - If set to true, combat will use the highest unlocked zone you have until the target zone is unlocked.
@@ -95,7 +108,7 @@ An in game menu can be opened using the F1 button.
 - **Initial Gold Zone** - Automation will visit this zone to kill an enemy to jumpstart your time machine initially.
 - **Loadout** - Items to use when swapping for gold loadout.
 
-![Quests](https://i.imgur.com/aZOb3hi.png)
+![Quests](https://i.imgur.com/4AuAUhy.png)
 
 - **Auto Quest** - If enabled, quests will automatically be turned in. Behavior varies based on the Allow Major Quests option
 - **Allow Major Quests**
@@ -103,9 +116,16 @@ An in game menu can be opened using the F1 button.
   - If this option is disabled, major quests will not be accepted.
   - When no major quests are available, minor quests will be accepted and idled.
 - **Abandon Minor Quests** - If enabled and minor quest progress is below the minor quest threshold, the minor quest will be abandoned and a major quest will be picked up.
+- **Manual Minors** - If enabled will manual minor quests as well as majors
+- **Use Butter on Majors** - If enabled will attempt to butter major quests
+- **Use Butter on Minors** - If enabled will attempt to butter minor quests
 - **Abandon Minor Quest Threshold** - Quest progress before which its acceptable to abandon minor quests.
 - **Combat Mode** - If set to manual, will perform a combat routine to do your quest zone. Otherwise will idle the zone.
 - **Fast Combat** - If enabled will skip all buffs during combat.
+
+![Wishes](https://i.imgur.com/sXJuQQD.png)
+
+- **Priority Wishes** - The wishes to prioritize doing. Will switch to cheapest wish when all wish priorities are complete
 
 # Allocation
 
@@ -153,6 +173,7 @@ Available non-cap priorities for Energy are as follows:
 - WAN - Allocate energy to energy wandoos
 - TM - Allocate energy to energy time machine
 - BT-X (0-11) - Allocate energy to basic training
+- WISH-X (0-223) - Allocate energy to wish
 
 More information on allocation indexes can be found on the [wiki](https://github.com/rvazarkar/NGUInjector/wiki/Allocation-Indexes)
 
@@ -192,6 +213,7 @@ Available non-cap priorities for Magic are as follows:
 - NGU-X (0-6) - Allocate energy to NGU
 - WAN - Allocate energy to magic wandoos
 - TM - Allocate energy to magic time machine
+- WISH-X (0-223) - Allocate energy to wish
 
 More information on allocation indexes can be found on the [wiki](https://github.com/rvazarkar/NGUInjector/wiki/Allocation-Indexes)
 
@@ -206,7 +228,10 @@ An R3 breakpoint is structured as follows:
 }
 ```
 
-The only priority available currently is HACK-X.
+Available priorities for R3 are as follows:
+
+- HACK-X (0-13) - Allocate R3 to hacks
+- WISH-X (0-223) - Allocate R3 to wishes
 
 ## Gear
 
