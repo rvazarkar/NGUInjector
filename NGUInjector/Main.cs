@@ -225,6 +225,7 @@ namespace NGUInjector
                 InvokeRepeating("SnipeZone", 0.0f, .1f);
                 InvokeRepeating("MonitorLog", 0.0f, 1f);
                 InvokeRepeating("QuickStuff", 0.0f, .5f);
+                InvokeRepeating("ShowBoostProgress", 0.0f, 60.0f);
             }
             catch (Exception e)
             {
@@ -773,6 +774,12 @@ namespace NGUInjector
                 LogLoot(result);
                 log[i] = $"{line}<b></b>";
             }
+        }
+
+        void ShowBoostProgress()
+        {
+            var boostSlots = _invManager.GetBoostSlots(Character.inventory.GetConvertedInventory().ToArray());
+            _invManager.ShowBoostProgress(boostSlots);
         }
 
         public void OnApplicationQuit()

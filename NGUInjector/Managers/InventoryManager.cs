@@ -34,6 +34,32 @@ namespace NGUInjector.Managers
         }
     }
 
+    public class Cube
+    {
+        internal float Power { get; set; }
+        internal float Toughness { get; set; }
+        protected bool Equals(Cube other)
+        {
+            return Power.Equals(other.Power) && Toughness.Equals(other.Toughness);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Cube) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (Power.GetHashCode() * 397) ^ Toughness.GetHashCode();
+            }
+        }
+    }
+
     internal class InventoryManager
     {
         private readonly Character _character;
@@ -44,8 +70,8 @@ namespace NGUInjector.Managers
         private readonly int[] _convertibles;
         private readonly int[] _wandoos = {66, 169};
         private readonly int[] _guffs = {198, 200, 199, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 228, 211, 250, 291, 289, 290, 298, 299, 300};
-        private int counter = 0;
-        private BoostsNeeded _previousBoostsNeeded;
+        private BoostsNeeded _previousBoostsNeeded = null;
+        private Cube _lastCube = null;
         private FixedSizedQueue avg = new FixedSizedQueue(60);
         private int lastNeededCount = 0;
 
@@ -147,55 +173,6 @@ namespace NGUInjector.Managers
             return null;
         }
 
-        private static Equipment FindItemEquip(IEnumerable<ih> ci, int id)
-        {
-            var inv = Main.Character.inventory;
-            if (inv.head.id == id)
-            {
-                return inv.head;
-            }
-
-            if (inv.chest.id == id)
-            {
-                return inv.chest;
-            }
-
-            if (inv.legs.id == id)
-            {
-                return inv.legs;
-            }
-
-            if (inv.boots.id == id)
-            {
-                return inv.boots;
-            }
-
-            if (inv.weapon.id == id)
-            {
-                return inv.weapon;
-            }
-
-            if (Controller.weapon2Unlocked())
-            {
-                if (inv.weapon2.id == id)
-                {
-                    return inv.weapon2;
-                }
-            }
-
-            for (var i = 0; i < inv.accs.Count; i++)
-            {
-                if (inv.accs[i].id == id)
-                {
-                    return inv.accs[i];
-                }
-            }
-
-            var items = ci.Where(x => x.id == id).ToArray();
-            if (items.Length != 0) return items.MaxItem().equipment;
-
-            return null;
-        }
         private int ChangePage(int slot)
         {
             var page = (int)Math.Floor((double)slot / 60);
@@ -314,6 +291,72 @@ namespace NGUInjector.Managers
             }
         }
 
+        internal void ShowBoostProgress(ih[] boostSlots)
+        {
+            var needed = new BoostsNeeded();
+            var cube = new Cube
+            {
+                Power = _controller.cubePower(),
+                Toughness = _controller.cubeToughness()
+            };
+
+            foreach (var item in boostSlots)
+            {
+                needed.Add(item.equipment.GetNeededBoosts());
+            }
+
+            var current = needed.Power + needed.Toughness + needed.Special;
+
+            if (current > 0)
+            {
+                if (_previousBoostsNeeded == null)
+                {
+                    Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
+                    _previousBoostsNeeded = needed;
+                }
+                else
+                {
+
+                    var old = _previousBoostsNeeded.Power + _previousBoostsNeeded.Toughness +
+                              _previousBoostsNeeded.Special;
+
+                    var diff = current - old;
+
+                    //If diff is > 0, then we either added another item to boost or we levelled something. Don't add the diff to average
+                    if (diff < 0)
+                    {
+                        avg.Enqueue((int)diff);
+                    }
+
+                    var average = Math.Floor(avg.Avg());
+                    var eta = Math.Ceiling(current / average);
+
+                    Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
+                    Log($"Last Minute: {current - old}. Hourly Avg: {average}. ETA: {eta} minutes.");
+                }
+            }
+
+            if (_lastCube == null)
+            {
+                _lastCube = cube;
+            }
+            else
+            {
+                if (!_lastCube.Equals(cube))
+                {
+                    var output = $"Cube Progress:";
+                    var toughnessDiff = cube.Toughness - _lastCube.Toughness;
+                    var powerDiff = cube.Power - _lastCube.Power;
+
+                    output = toughnessDiff > 0 ? $"{output} {toughnessDiff} Toughness." : output;
+                    output = powerDiff > 0 ? $"{output} {powerDiff} Power" : output;
+                    Log(output);
+                }
+
+                _lastCube = cube;
+            }
+        }
+
         internal void ManageBoostConversion(ih[] boostSlots)
         {
             if (_character.challenges.levelChallenge10k.curCompletions <
@@ -358,43 +401,6 @@ namespace NGUInjector.Managers
             {
                 needed.Add(item.equipment.GetNeededBoosts());
             }
-
-            if (counter == 0)
-            {
-                if (_previousBoostsNeeded != null)
-                {
-                    var current = needed.Power + needed.Toughness + needed.Special;
-                    var old = _previousBoostsNeeded.Power + _previousBoostsNeeded.Toughness +
-                              _previousBoostsNeeded.Special;
-
-                    var diff = old - current;
-                    var total = needed.Power + needed.Toughness + needed.Special;
-                    //Throw out values where we've added or removed a piece of gear or we've lost boost progress (usually because of levelling gear)
-                    if (diff > 0 && lastNeededCount == boostSlots.Length)
-                    {
-                        avg.Enqueue((int)diff);
-
-                        var average = Math.Floor(avg.Avg());
-                        var eta = Math.Ceiling(total / avg.Avg());
-
-                        Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
-                        Log($"Last Minute: {current - old}. Hourly Avg: {average}. ETA: {eta} minutes.");
-                    }
-
-                    lastNeededCount = boostSlots.Length;
-                }
-                else
-                {
-                    lastNeededCount = boostSlots.Length;
-                    Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
-                }
-
-                _previousBoostsNeeded = needed;
-            }
-                
-
-            counter++;
-            if (counter == 6) counter = 0;
 
             if (needed.Power > 0)
             {

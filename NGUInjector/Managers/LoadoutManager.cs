@@ -300,6 +300,7 @@ namespace NGUInjector.Managers
                 var index = Controller.accessoryID(id);
                 loadout.Add(Main.Character.inventory.accs[index].id);
             }
+
             _savedLoadout = loadout.ToArray();
             Log($"Saved Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
         }
