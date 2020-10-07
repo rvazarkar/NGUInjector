@@ -349,6 +349,8 @@ namespace NGUInjector.Managers
                     {
                         Log($"Last Minute: {diff}.");
                     }
+
+                    _previousBoostsNeeded = needed;
                 }
             }
 
