@@ -148,141 +148,117 @@ namespace NGUInjector.Managers
         internal static void ChangeGear(int[] gearIds)
         {
             Log($"Received New Gear: {string.Join(",", gearIds.Select(x => x.ToString()).ToArray())}");
-            var accSlots = new List<int>();
-            var inv = Main.Character.inventory;
-            var controller = Controller;
-            var ci = inv.GetConvertedInventory().ToArray();
             var weaponSlot = -5;
+            var accSlot = 10000;
+            var controller = Controller;
+
             Main.Character.removeMostEnergy();
             Main.Character.removeMostMagic();
             Main.Character.removeAllRes3();
-            foreach (var itemId in gearIds)
+
+            try
             {
-                var slot = FindItemSlot(ci, itemId);
-                //We dont have the item. Dummy.
-                if (slot == -1000)
-                    continue;
-
-                //Item is already equipped
-                if (slot < 0)
-                    continue;
-
-                if (slot >= 10000)
+                foreach (var itemId in gearIds)
                 {
-                    accSlots.Add(slot);
-                    continue;
-                }
+                    var inv = Main.Character.inventory;
 
-                var type = inv.inventory[slot].type;
+                    var equip = FindItemSlot(itemId);
 
-                inv.item2 = slot;
-                switch (type)
-                {
-                    case part.Head:
-                        inv.item1 = -1;
-                        controller.swapHead();
-                        controller.updateBonuses();
-                        break;
-                    case part.Chest:
-                        inv.item1 = -2;
-                        controller.swapChest();
-                        controller.updateBonuses();
-                        break;
-                    case part.Legs:
-                        inv.item1 = -3;
-                        controller.swapLegs();
-                        controller.updateBonuses();
-                        break;
-                    case part.Boots:
-                        inv.item1 = -4;
-                        controller.swapBoots();
-                        controller.updateBonuses();
-                        break;
-                    case part.Weapon:
-                        inv.item1 = weaponSlot;
-                        if (weaponSlot == -5)
-                        {
-                            controller.swapWeapon();
-                        }
-                        else if (weaponSlot == -6)
-                        {
-                            if (controller.weapon2Unlocked())
-                            {
-                                controller.swapWeapon2();
-                            }
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        controller.updateBonuses();
-                        weaponSlot--;
-                        break;
-                    case part.Accessory:
-                        accSlots.Add(slot);
-                        break;
-                }
-            }
-
-            var usedSlots = accSlots.Where(x => x >= 10000).ToList();
-            accSlots = accSlots.Where(x => x < 10000).ToList();
-
-            foreach (var acc in accSlots)
-            {
-                for (var i = 10000; controller.accessoryID(i) < inv.accs.Count; i++)
-                {
-                    if (usedSlots.Contains(i))
+                    if (equip == null)
                         continue;
 
-                    inv.item1 = i;
-                    inv.item2 = acc;
-                    controller.swapAcc();
-                    usedSlots.Add(i);
-                    break;
+                    var type = equip.equipment.type;
+
+                    inv.item2 = equip.slot;
+                    switch (type)
+                    {
+                        case part.Head:
+                            inv.item1 = -1;
+                            controller.swapHead();
+                            break;
+                        case part.Chest:
+                            inv.item1 = -2;
+                            controller.swapChest();
+                            break;
+                        case part.Legs:
+                            inv.item1 = -3;
+                            controller.swapLegs();
+                            break;
+                        case part.Boots:
+                            inv.item1 = -4;
+                            controller.swapBoots();
+                            break;
+                        case part.Weapon:
+                            if (weaponSlot == -5)
+                            {
+                                inv.item1 = -5;
+                                controller.swapWeapon();
+                            }
+                            else if (weaponSlot == -6 && controller.weapon2Unlocked())
+                            {
+                                inv.item1 = -6;
+                                controller.swapWeapon2();
+                            }
+
+                            weaponSlot--;
+                            break;
+                        case part.Accessory:
+                            if (controller.accessoryID(accSlot) < controller.accessorySpaces() && accSlot != equip.slot)
+                            {
+                                inv.item1 = accSlot;
+                                controller.swapAcc();
+                                accSlot++;
+                            }
+
+                            break;
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                Log(e.Message);
+                Log(e.StackTrace);
+            }
+            
 
             controller.updateBonuses();
             controller.updateInventory();
-            Main.Character.removeMostEnergy();
-            Main.Character.removeMostMagic();
-            Main.Character.removeAllRes3();
-            Log($"Done equipping new gear");
+            Log("Finished equipping gear");
         }
 
-        private static int FindItemSlot(IEnumerable<ih> ci, int id)
+        private static ih FindItemSlot(int id)
         {
             var inv = Main.Character.inventory;
             if (inv.head.id == id)
             {
-                return -1;
+                return inv.head.GetInventoryHelper(-1);
             }
 
             if (inv.chest.id == id)
             {
-                return -2;
+                return inv.chest.GetInventoryHelper(-2);
             }
 
             if (inv.legs.id == id)
             {
-                return -3;
+                return inv.legs.GetInventoryHelper(-3);
             }
 
             if (inv.boots.id == id)
             {
-                return -4;
+                return inv.boots.GetInventoryHelper(-4);
             }
 
             if (inv.weapon.id == id)
             {
-                return -5;
+                return inv.weapon.GetInventoryHelper(-5);
             }
 
             if (Controller.weapon2Unlocked())
             {
                 if (inv.weapon2.id == id)
                 {
-                    return -6;
+                    return inv.weapon2.GetInventoryHelper(-6);
                 }
             }
 
@@ -290,14 +266,15 @@ namespace NGUInjector.Managers
             {
                 if (inv.accs[i].id == id)
                 {
-                    return i + 10000;
+                    return inv.accs[i].GetInventoryHelper(i + 10000);
                 }
             }
 
-            var items = ci.Where(x => x.equipment.isEquipment()).Where(x => x.id == id).ToArray();
-            if (items.Length != 0) return items.MaxItem().slot;
+            var items = Main.Character.inventory.GetConvertedInventory()
+                .Where(x => x.id == id && x.equipment.isEquipment()).ToArray();
+            if (items.Length != 0) return items.MaxItem();
 
-            return -1000;
+            return null;
         }
 
         private static void SaveCurrentLoadout()
