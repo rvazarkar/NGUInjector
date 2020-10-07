@@ -311,6 +311,7 @@ namespace NGUInjector
                 _tempSwapped = !_tempSwapped;
             }
 
+            // F11 reserved for testing
             //if (Input.GetKeyDown(KeyCode.F11))
             //{
             //    
@@ -382,6 +383,7 @@ namespace NGUInjector
             }
         }
 
+        // Stuff on a very short timer
         void QuickStuff()
         {
             //Turn on autoattack if we're in ITOPOD and its not on
@@ -462,6 +464,7 @@ namespace NGUInjector
             }
         }
 
+        // Runs every 10 seconds, our main loop
         void AutomationRoutine()
         {
             try

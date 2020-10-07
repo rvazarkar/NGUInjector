@@ -334,16 +334,16 @@ namespace NGUInjector.Managers
                     var diff = current - old;
 
                     //If diff is > 0, then we either added another item to boost or we levelled something. Don't add the diff to average
-                    if (diff < 0)
+                    if (diff <= 0)
                     {
                         _invBoostAvg.Enqueue(diff);
                     }
 
-                    var average = Math.Floor(_invBoostAvg.Avg());
-                    var eta = Math.Ceiling(current / average);
+                    var average = _invBoostAvg.Avg();
+                    var eta = current / average;
 
                     Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
-                    Log($"Last Minute: {current - old}. Average Per Minute: {average}. ETA: {eta} minutes.");
+                    Log($"Last Minute: {current - old}. Average Per Minute: {average:0}. ETA: {eta:0} minutes.");
                 }
             }
 
@@ -363,8 +363,12 @@ namespace NGUInjector.Managers
                     output = powerDiff > 0 ? $"{output} {powerDiff} Power." : output;
 
                     _cubeBoostAvg.Enqueue((decimal)(toughnessDiff + powerDiff));
-                    output = $"{output} Average Per Minute: {_cubeBoostAvg.Avg()}";
+                    output = $"{output} Average Per Minute: {_cubeBoostAvg.Avg():0}";
                     Log(output);
+                }
+                else
+                {
+                    _cubeBoostAvg.Enqueue(0);
                 }
 
                 _lastCube = cube;
