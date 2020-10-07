@@ -270,10 +270,17 @@ namespace NGUInjector.AllocationProfiles
 
             if (Main.Settings.SwapYggdrasilLoadouts)
             {
-                if (!LoadoutManager.TryYggdrasilSwap())
+                if (!LoadoutManager.TryYggdrasilSwap() || !DiggerManager.TryYggSwap())
+                {
+                    Main.Log("Delaying rebirth to wait for ygg loadout/diggers");
                     return;
+                }
 
                 YggdrasilManager.HarvestAll();
+                LoadoutManager.RestoreGear();
+                LoadoutManager.ReleaseLock();
+                DiggerManager.RestoreDiggers();
+                DiggerManager.ReleaseLock();
             }
 
             _currentDiggerBreakpoint = null;
