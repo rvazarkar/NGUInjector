@@ -161,7 +161,7 @@ namespace NGUInjector
             AutoFightBosses.Checked = newSettings.AutoFight;
             AutoITOPOD.Checked = newSettings.AutoQuestITOPOD;
             AutoMoneyPit.Checked = newSettings.AutoMoneyPit;
-            MoneyPitThreshold.Text = newSettings.MoneyPitThreshold.ToString(CultureInfo.InvariantCulture);
+            MoneyPitThreshold.Text = $"{newSettings.MoneyPitThreshold:#.##E+00}"; 
             ManageEnergy.Checked = newSettings.ManageEnergy;
             ManageMagic.Checked = newSettings.ManageMagic;
             ManageGear.Checked = newSettings.ManageGear;
@@ -203,7 +203,7 @@ namespace NGUInjector
             ActivateFruits.Checked = newSettings.ActivateFruits;
             BeastMode.Checked = newSettings.BeastMode;
             CubePriority.SelectedIndex = newSettings.CubePriority;
-            BloodNumberThreshold.Text = newSettings.BloodNumberThreshold.ToString(CultureInfo.InvariantCulture);
+            BloodNumberThreshold.Text = $"{newSettings.BloodNumberThreshold:#.##E+00}";
 
             yggdrasilLoadoutBox.DataSource = null;
             yggdrasilLoadoutBox.DataSource = new BindingSource(Main.Settings.YggdrasilLoadout, null);
