@@ -502,7 +502,7 @@ namespace NGUInjector.Managers
         void FilterItem(int id)
         {
             if (_pendants.Contains(id) || _lootys.Contains(id) || _wandoos.Contains(id) ||
-                _filterExcludes.Contains(id) || _guffs.Contains(id) || id < 40)
+                _filterExcludes.Contains(id) || _guffs.Contains(id) || id < 40 || _mergeBlacklist.Contains(id))
                 return;
 
             //Dont filter quest items
