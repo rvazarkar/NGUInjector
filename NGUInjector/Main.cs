@@ -314,7 +314,7 @@ namespace NGUInjector
             // F11 reserved for testing
             //if (Input.GetKeyDown(KeyCode.F11))
             //{
-            //    
+            //    Character.realExp += 10000;
             //}
         }
 
@@ -506,50 +506,61 @@ namespace NGUInjector
                 {
                     //We haven't unlocked custom purchases yet
                     if (Character.highestBoss < 17) return;
-                    //Magic isn't unlocked yet
-                    if (Character.highestBoss < 37)
+                    var r3 = Character.res3.res3On;
+                    var magic = Character.highestBoss >= 37;
+
+                    long total = 0;
+                    var ePurchase = Character.energyPurchases;
+                    var mPurchase = Character.magicPurchases;
+                    var r3Purchase = Character.res3Purchases;
+
+                    total += ePurchase.customAllCost();
+                    if (magic)
                     {
-                        var ePurchase = Character.energyPurchases;
-                        var total = ePurchase.customAllCost();
-                        var numPurchases = Math.Floor((double)(Character.realExp / total));
-                        if (numPurchases > 0)
-                        {
-                            var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
-                                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                            if (ePurchaseMethod != null)
-                            {
-                                Log($"Buying {numPurchases} exp purchases");
-                                for (var i = 0; i < numPurchases; i++)
-                                {
-                                    ePurchaseMethod.Invoke(ePurchase, null);
-                                }
-                            }
-                        }
-                        
+                        total += mPurchase.customAllCost();
                     }
-                    else
+
+                    if (r3)
                     {
-                        var ePurchase = Character.energyPurchases;
-                        var mPurchase = Character.magicPurchases;
-                        var total = ePurchase.customAllCost() + mPurchase.customAllCost();
-                        var numPurchases = Math.Floor((double)(Character.realExp / total));
-                        if (numPurchases > 0)
+                        total += r3Purchase.customAllCost();
+                    }
+
+                    var numPurchases = Math.Floor((double)(Character.realExp / total));
+
+                    if (numPurchases > 0)
+                    {
+                        var t = "exp";
+                        if (magic)
+                        {
+                            t += "/magic";
+                        }
+
+                        if (r3)
+                        {
+                            t += "/res3";
+                        }
+                        
+                        Log($"Buying {numPurchases} {t} purchases");
+                        for (var i = 0; i < numPurchases; i++)
                         {
                             var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
                                 BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                            var mPurchaseMethod = mPurchase.GetType().GetMethod("buyCustomAll",
-                                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                            if (ePurchaseMethod != null && mPurchaseMethod != null)
+                            ePurchaseMethod?.Invoke(ePurchase, null);
+
+                            if (magic)
                             {
-                                Log($"Buying {numPurchases} e/m purchases");
-                                for (var i = 0; i < numPurchases; i++)
-                                {
-                                    ePurchaseMethod.Invoke(ePurchase, null);
-                                    mPurchaseMethod.Invoke(mPurchase, null);
-                                }
+                                var mPurchaseMethod = mPurchase.GetType().GetMethod("buyCustomAll",
+                                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                mPurchaseMethod?.Invoke(mPurchase, null);
+                            }
+
+                            if (r3)
+                            {
+                                var r3PurchaseMethod = r3Purchase.GetType().GetMethod("buyCustomAll",
+                                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                r3PurchaseMethod?.Invoke(r3Purchase, null);
                             }
                         }
-                        
                     }
                 }
 

@@ -259,7 +259,7 @@ A digger breakpoint is structured as follows:
 }
 ```
 
-The list of diggers is 0 indexed. Drop chance digger is 0, PP digger is 11. More information can be found on the [wiki](https://github.com/rvazarkar/NGUInjector/wiki/Allocation-Indexes)
+The list of diggers is 0 indexed. Drop chance digger is 0, EXP digger is 11. More information can be found on the [wiki](https://github.com/rvazarkar/NGUInjector/wiki/Allocation-Indexes)
 
 ## Wandoos
 
