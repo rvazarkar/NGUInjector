@@ -70,6 +70,7 @@ namespace NGUInjector.Managers
         private readonly int[] _convertibles;
         private readonly int[] _wandoos = {66, 169};
         private readonly int[] _guffs = {198, 200, 199, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 228, 211, 250, 291, 289, 290, 298, 299, 300};
+        private readonly int[] _mergeBlacklist = { 372 };
         private BoostsNeeded _previousBoostsNeeded = null;
         private Cube _lastCube = null;
         private FixedSizedQueue _invBoostAvg = new FixedSizedQueue(60);
@@ -263,7 +264,7 @@ namespace NGUInjector.Managers
         internal void MergeInventory(ih[] ci)
         {
             var grouped =
-                ci.Where(x => x.id > 40 && x.level < 100 && !_guffs.Contains(x.id) && (x.id < 278 || x.id > 287)).GroupBy(x => x.id).Where(x => x.Count() > 1);
+                ci.Where(x => x.id > 40 && x.level < 100 && !_mergeBlacklist.Contains(x.id) && !_guffs.Contains(x.id) && (x.id < 278 || x.id > 287)).GroupBy(x => x.id).Where(x => x.Count() > 1);
 
             foreach (var item in grouped)
             {
