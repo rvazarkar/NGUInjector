@@ -70,7 +70,7 @@ namespace NGUInjector.Managers
         private readonly int[] _convertibles;
         private readonly int[] _wandoos = {66, 169};
         private readonly int[] _guffs = {198, 200, 199, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 228, 211, 250, 291, 289, 290, 298, 299, 300};
-        private readonly int[] _mergeBlacklist = { 372 };
+        private readonly int[] _mergeBlacklist = { 367, 368, 369, 370, 371, 372 };
         private BoostsNeeded _previousBoostsNeeded = null;
         private Cube _lastCube = null;
         private FixedSizedQueue _invBoostAvg = new FixedSizedQueue(60);
