@@ -207,8 +207,9 @@ namespace NGUInjector.Managers
                             {
                                 inv.item1 = accSlot;
                                 controller.swapAcc();
-                                accSlot++;
                             }
+
+                            accSlot++;
 
                             break;
                     }

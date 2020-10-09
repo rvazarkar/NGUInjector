@@ -138,7 +138,7 @@ namespace NGUInjector.AllocationProfiles
                         EquipGear();
                     if (Main.Settings.ManageEnergy)
                         AllocateEnergy();
-                    if (Main.Settings.ManageMagic && Main.Character.buttons.bloodMagic.interactable)
+                    if (Main.Settings.ManageMagic)
                         AllocateMagic();
                     if (Main.Settings.ManageDiggers && Main.Character.buttons.diggers.interactable) 
                         EquipDiggers();
