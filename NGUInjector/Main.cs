@@ -386,6 +386,9 @@ namespace NGUInjector
         // Stuff on a very short timer
         void QuickStuff()
         {
+            if (!Settings.GlobalEnabled)
+                return;
+
             //Turn on autoattack if we're in ITOPOD and its not on
             if (Settings.AutoQuestITOPOD && Character.adventureController.zone >= 1000 && !Character.adventure.autoattacking && !Settings.CombatEnabled)
             {
