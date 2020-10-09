@@ -2911,7 +2911,7 @@
     <value>NoControl</value>
   </data>
   <data name="WishDownButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>315, 131</value>
+    <value>318, 131</value>
   </data>
   <data name="WishDownButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
@@ -2941,7 +2941,7 @@
     <value>NoControl</value>
   </data>
   <data name="WishUpButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>315, 73</value>
+    <value>318, 73</value>
   </data>
   <data name="WishUpButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>

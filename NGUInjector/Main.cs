@@ -234,6 +234,11 @@ namespace NGUInjector
             }
         }
 
+        internal static void UpdateForm(SavedSettings newSettings)
+        {
+            settingsForm.UpdateFromSettings(newSettings);
+        }
+
         public void Update()
         {
             _timeLeft -= Time.deltaTime;

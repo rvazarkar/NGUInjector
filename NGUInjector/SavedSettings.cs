@@ -70,7 +70,6 @@ namespace NGUInjector
 
         private readonly string _savePath;
         
-
         public SavedSettings(string dir)
         {
             if (dir != null)
@@ -88,6 +87,7 @@ namespace NGUInjector
                 writer.Write(serialized);
                 writer.Flush();
             }
+            Main.UpdateForm(this);
         }
 
         internal bool LoadSettings()

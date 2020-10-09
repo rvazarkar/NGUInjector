@@ -205,42 +205,91 @@ namespace NGUInjector
             CubePriority.SelectedIndex = newSettings.CubePriority;
             BloodNumberThreshold.Text = $"{newSettings.BloodNumberThreshold:#.##E+00}";
 
-            yggdrasilLoadoutBox.DataSource = null;
-            var temp = Main.Settings.YggdrasilLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            yggdrasilLoadoutBox.DataSource = new BindingSource(temp, null);
-            yggdrasilLoadoutBox.ValueMember = "Key";
-            yggdrasilLoadoutBox.DisplayMember = "Value";
+            
+            var temp = newSettings.YggdrasilLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
+            if (temp.Count > 0)
+            {
+                yggdrasilLoadoutBox.DataSource = null;
+                yggdrasilLoadoutBox.DataSource = new BindingSource(temp, null);
+                yggdrasilLoadoutBox.ValueMember = "Key";
+                yggdrasilLoadoutBox.DisplayMember = "Value";
+            }
+            else
+            {
+                yggdrasilLoadoutBox.Items.Clear();
+            }
+            
 
-            priorityBoostBox.DataSource = null;
-            temp = Main.Settings.PriorityBoosts.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            priorityBoostBox.DataSource = new BindingSource(temp, null);
-            priorityBoostBox.ValueMember = "Key";
-            priorityBoostBox.DisplayMember = "Value";
+            temp = newSettings.PriorityBoosts.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
+            if (temp.Count > 0)
+            {
+                priorityBoostBox.DataSource = null;
+                priorityBoostBox.DataSource = new BindingSource(temp, null);
+                priorityBoostBox.ValueMember = "Key";
+                priorityBoostBox.DisplayMember = "Value";
+            }
+            else
+            {
+                priorityBoostBox.Items.Clear();
+            }
+            
+            temp = newSettings.BoostBlacklist.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
+            if (temp.Count > 0)
+            {
+                blacklistBox.DataSource = null;
+                blacklistBox.DataSource = new BindingSource(temp, null);
+                blacklistBox.ValueMember = "Key";
+                blacklistBox.DisplayMember = "Value";
+            }
+            else
+            {
+                blacklistBox.Items.Clear();
+            }
+            
 
-            blacklistBox.DataSource = null;
-            temp = Main.Settings.BoostBlacklist.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            blacklistBox.DataSource = new BindingSource(temp, null);
-            blacklistBox.ValueMember = "Key";
-            blacklistBox.DisplayMember = "Value";
+            
+            temp = newSettings.TitanLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
+            if (temp.Count > 0)
+            {
+                titanLoadout.DataSource = null;
+                titanLoadout.DataSource = new BindingSource(temp, null);
+                titanLoadout.ValueMember = "Key";
+                titanLoadout.DisplayMember = "Value";
+            }
+            else
+            {
+                titanLoadout.Items.Clear();
+            }
+            
 
-            titanLoadout.DataSource = null;
-            temp = Main.Settings.TitanLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            titanLoadout.DataSource = new BindingSource(temp, null);
-            titanLoadout.ValueMember = "Key";
-            titanLoadout.DisplayMember = "Value";
-
-            GoldLoadout.DataSource = null;
-            temp = Main.Settings.GoldDropLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            GoldLoadout.DataSource = new BindingSource(temp, null);
-            GoldLoadout.ValueMember = "Key";
-            GoldLoadout.DisplayMember = "Value";
-
-            WishPriority.DataSource = null;
-            temp = Main.Settings.WishPriorities.ToDictionary(x => x, x => Main.Character.wishesController.properties[x].wishName);
-            WishPriority.DataSource = new BindingSource(temp, null);
-            WishPriority.ValueMember = "Key";
-            WishPriority.DisplayMember = "Value";
-
+            
+            temp = newSettings.GoldDropLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
+            if (temp.Count > 0)
+            {
+                GoldLoadout.DataSource = null;
+                GoldLoadout.DataSource = new BindingSource(temp, null);
+                GoldLoadout.ValueMember = "Key";
+                GoldLoadout.DisplayMember = "Value";
+            }
+            else
+            {
+                GoldLoadout.Items.Clear();
+            }
+            
+            
+            temp = newSettings.WishPriorities.ToDictionary(x => x, x => Main.Character.wishesController.properties[x].wishName);
+            if (temp.Count > 0)
+            {
+                WishPriority.DataSource = null;
+                WishPriority.DataSource = new BindingSource(temp, null);
+                WishPriority.ValueMember = "Key";
+                WishPriority.DisplayMember = "Value";
+            }
+            else
+            {
+                WishPriority.Items.Clear();
+            }
+            
             Refresh();
             _initializing = false;
         }
@@ -402,11 +451,6 @@ namespace NGUInjector
             var temp = Main.Settings.YggdrasilLoadout.ToList();
             temp.Add(val);
             Main.Settings.YggdrasilLoadout = temp.ToArray();
-            yggdrasilLoadoutBox.DataSource = null;
-            var temp2 = Main.Settings.YggdrasilLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            yggdrasilLoadoutBox.DataSource = new BindingSource(temp2, null);
-            yggdrasilLoadoutBox.ValueMember = "Key";
-            yggdrasilLoadoutBox.DisplayMember = "Value";
         }
 
         private void yggRemoveButton_Click(object sender, EventArgs e)
@@ -421,11 +465,6 @@ namespace NGUInjector
             var temp = Main.Settings.YggdrasilLoadout.ToList();
             temp.RemoveAll(x => x == id.Key);
             Main.Settings.YggdrasilLoadout = temp.ToArray();
-            yggdrasilLoadoutBox.DataSource = null;
-            var temp2 = Main.Settings.YggdrasilLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            yggdrasilLoadoutBox.DataSource = new BindingSource(temp2, null);
-            yggdrasilLoadoutBox.ValueMember = "Key";
-            yggdrasilLoadoutBox.DisplayMember = "Value";
         }
 
         private void ManageInventory_CheckedChanged(object sender, EventArgs e)
@@ -454,11 +493,6 @@ namespace NGUInjector
             var temp = Main.Settings.PriorityBoosts.ToList();
             temp.Add(val);
             Main.Settings.PriorityBoosts = temp.ToArray();
-            priorityBoostBox.DataSource = null;
-            var temp2 = Main.Settings.PriorityBoosts.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            priorityBoostBox.DataSource = new BindingSource(temp2, null);
-            priorityBoostBox.ValueMember = "Key";
-            priorityBoostBox.DisplayMember = "Value";
         }
 
         private void priorityBoostRemove_Click(object sender, EventArgs e)
@@ -473,11 +507,6 @@ namespace NGUInjector
             var temp = Main.Settings.PriorityBoosts.ToList();
             temp.RemoveAll(x => x == id.Key);
             Main.Settings.PriorityBoosts = temp.ToArray();
-            priorityBoostBox.DataSource = null;
-            var temp2 = Main.Settings.PriorityBoosts.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            priorityBoostBox.DataSource = new BindingSource(temp2, null);
-            priorityBoostBox.ValueMember = "Key";
-            priorityBoostBox.DisplayMember = "Value";
         }
 
         private void prioUpButton_Click(object sender, EventArgs e)
@@ -492,12 +521,7 @@ namespace NGUInjector
             temp.RemoveAt(index);
             temp.Insert(index - 1, item);
             Main.Settings.PriorityBoosts = temp.ToArray();
-            priorityBoostBox.DataSource = null;
-            var temp2 = Main.Settings.PriorityBoosts.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            priorityBoostBox.DataSource = new BindingSource(temp2, null);
             priorityBoostBox.SelectedIndex = index - 1;
-            priorityBoostBox.ValueMember = "Key";
-            priorityBoostBox.DisplayMember = "Value";
         }
 
         private void prioDownButton_Click(object sender, EventArgs e)
@@ -515,12 +539,7 @@ namespace NGUInjector
             temp.RemoveAt(index);
             temp.Insert(index + 1, item);
             Main.Settings.PriorityBoosts = temp.ToArray();
-            priorityBoostBox.DataSource = null;
-            var temp2 = Main.Settings.PriorityBoosts.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            priorityBoostBox.DataSource = new BindingSource(temp2, null);
             priorityBoostBox.SelectedIndex = index + 1;
-            priorityBoostBox.ValueMember = "Key";
-            priorityBoostBox.DisplayMember = "Value";
         }
 
         private void blacklistAdd_Click(object sender, EventArgs e)
@@ -537,11 +556,6 @@ namespace NGUInjector
             var temp = Main.Settings.BoostBlacklist.ToList();
             temp.Add(val);
             Main.Settings.BoostBlacklist = temp.ToArray();
-            blacklistBox.DataSource = null;
-            var temp2 = Main.Settings.BoostBlacklist.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            blacklistBox.DataSource = new BindingSource(temp2, null);
-            blacklistBox.ValueMember = "Key";
-            blacklistBox.DisplayMember = "Value";
         }
 
         private void blacklistRemove_Click(object sender, EventArgs e)
@@ -556,11 +570,6 @@ namespace NGUInjector
             var temp = Main.Settings.BoostBlacklist.ToList();
             temp.RemoveAll(x => x == id.Key);
             Main.Settings.BoostBlacklist = temp.ToArray();
-            blacklistBox.DataSource = null;
-            var temp2 = Main.Settings.BoostBlacklist.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            blacklistBox.DataSource = new BindingSource(temp2, null);
-            blacklistBox.ValueMember = "Key";
-            blacklistBox.DisplayMember = "Value";
         }
 
         private void SwapTitanLoadout_CheckedChanged(object sender, EventArgs e)
@@ -600,11 +609,6 @@ namespace NGUInjector
             var temp = Main.Settings.TitanLoadout.ToList();
             temp.Add(val);
             Main.Settings.TitanLoadout = temp.ToArray();
-            titanLoadout.DataSource = null;
-            var temp2 = Main.Settings.TitanLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            titanLoadout.DataSource = new BindingSource(temp2, null);
-            titanLoadout.ValueMember = "Key";
-            titanLoadout.DisplayMember = "Value";
         }
 
         private void titanRemove_Click(object sender, EventArgs e)
@@ -619,11 +623,6 @@ namespace NGUInjector
             var temp = Main.Settings.TitanLoadout.ToList();
             temp.RemoveAll(x => x == item.Key);
             Main.Settings.TitanLoadout = temp.ToArray();
-            titanLoadout.DataSource = null;
-            var temp2 = Main.Settings.TitanLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            titanLoadout.DataSource = new BindingSource(temp2, null);
-            titanLoadout.ValueMember = "Key";
-            titanLoadout.DisplayMember = "Value";
         }
 
         private void CombatActive_CheckedChanged(object sender, EventArgs e)
@@ -723,11 +722,6 @@ namespace NGUInjector
             var temp = Main.Settings.GoldDropLoadout.ToList();
             temp.Add(val);
             Main.Settings.GoldDropLoadout = temp.ToArray();
-            GoldLoadout.DataSource = null;
-            var temp2 = Main.Settings.GoldDropLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            GoldLoadout.DataSource = new BindingSource(temp2, null);
-            GoldLoadout.ValueMember = "Key";
-            GoldLoadout.DisplayMember = "Value";
         }
 
         private void GoldLoadoutRemove_Click(object sender, EventArgs e)
@@ -742,11 +736,6 @@ namespace NGUInjector
             var temp = Main.Settings.GoldDropLoadout.ToList();
             temp.RemoveAll(x => x == id.Key);
             Main.Settings.GoldDropLoadout = temp.ToArray();
-            GoldLoadout.DataSource = null;
-            var temp2 = Main.Settings.GoldDropLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-            GoldLoadout.DataSource = new BindingSource(temp2, null);
-            GoldLoadout.ValueMember = "Key";
-            GoldLoadout.DisplayMember = "Value";
         }
 
         private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -814,11 +803,6 @@ namespace NGUInjector
                 var temp = Main.Settings.PriorityBoosts.ToList();
                 temp.Add(val);
                 Main.Settings.PriorityBoosts = temp.ToArray();
-                priorityBoostBox.DataSource = null;
-                var temp2 = Main.Settings.PriorityBoosts.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-                priorityBoostBox.DataSource = new BindingSource(temp2, null);
-                priorityBoostBox.ValueMember = "Key";
-                priorityBoostBox.DisplayMember = "Value";
             }
         }
 
@@ -841,11 +825,6 @@ namespace NGUInjector
                 var temp = Main.Settings.BoostBlacklist.ToList();
                 temp.Add(val);
                 Main.Settings.BoostBlacklist = temp.ToArray();
-                blacklistBox.DataSource = null;
-                var temp2 = Main.Settings.BoostBlacklist.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-                blacklistBox.DataSource = new BindingSource(temp2, null);
-                blacklistBox.ValueMember = "Key";
-                blacklistBox.DisplayMember = "Value";
             }
         }
 
@@ -878,11 +857,6 @@ namespace NGUInjector
                 var temp = Main.Settings.YggdrasilLoadout.ToList();
                 temp.Add(val);
                 Main.Settings.YggdrasilLoadout = temp.ToArray();
-                yggdrasilLoadoutBox.DataSource = null;
-                var temp2 = Main.Settings.YggdrasilLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-                yggdrasilLoadoutBox.DataSource = new BindingSource(temp2, null);
-                yggdrasilLoadoutBox.ValueMember = "Key";
-                yggdrasilLoadoutBox.DisplayMember = "Value";
             }
             
         }
@@ -906,11 +880,6 @@ namespace NGUInjector
                 var temp = Main.Settings.TitanLoadout.ToList();
                 temp.Add(val);
                 Main.Settings.TitanLoadout = temp.ToArray();
-                titanLoadout.DataSource = null;
-                var temp2 = Main.Settings.TitanLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-                titanLoadout.DataSource = new BindingSource(temp2, null);
-                titanLoadout.ValueMember = "Key";
-                titanLoadout.DisplayMember = "Value";
             }
         }
 
@@ -933,11 +902,6 @@ namespace NGUInjector
                 var temp = Main.Settings.GoldDropLoadout.ToList();
                 temp.Add(val);
                 Main.Settings.GoldDropLoadout = temp.ToArray();
-                GoldLoadout.DataSource = null;
-                var temp2 = Main.Settings.GoldDropLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
-                GoldLoadout.DataSource = new BindingSource(temp2, null);
-                GoldLoadout.ValueMember = "Key";
-                GoldLoadout.DisplayMember = "Value";
             }
         }
 
@@ -1026,11 +990,6 @@ namespace NGUInjector
             temp.RemoveAt(index);
             temp.Insert(index -1, item);
             Main.Settings.WishPriorities = temp.ToArray();
-            WishPriority.DataSource = null;
-            var temp2 = Main.Settings.WishPriorities.ToDictionary(x => x, x => Main.Character.wishesController.properties[x].wishName);
-            WishPriority.DataSource = new BindingSource(temp2, null);
-            WishPriority.ValueMember = "Key";
-            WishPriority.DisplayMember = "Value";
             WishPriority.SelectedIndex = index - 1;
 
             Main.Character.removeAllRes3();
@@ -1053,11 +1012,6 @@ namespace NGUInjector
             temp.RemoveAt(index);
             temp.Insert(index + 1, item);
             Main.Settings.WishPriorities = temp.ToArray();
-            WishPriority.DataSource = null;
-            var temp2 = Main.Settings.WishPriorities.ToDictionary(x => x, x => Main.Character.wishesController.properties[x].wishName);
-            WishPriority.DataSource = new BindingSource(temp2, null);
-            WishPriority.ValueMember = "Key";
-            WishPriority.DisplayMember = "Value";
             WishPriority.SelectedIndex = index + 1;
             Main.Character.removeAllRes3();
             Main.Character.removeMostEnergy();
@@ -1078,11 +1032,6 @@ namespace NGUInjector
             var temp = Main.Settings.WishPriorities.ToList();
             temp.Add(val);
             Main.Settings.WishPriorities = temp.ToArray();
-            WishPriority.DataSource = null;
-            var temp2 = Main.Settings.WishPriorities.ToDictionary(x => x, x => Main.Character.wishesController.properties[x].wishName);
-            WishPriority.DataSource = new BindingSource(temp2, null);
-            WishPriority.ValueMember = "Key";
-            WishPriority.DisplayMember = "Value";
             Main.Character.removeAllRes3();
             Main.Character.removeMostEnergy();
             Main.Character.removeMostMagic();
@@ -1101,11 +1050,6 @@ namespace NGUInjector
             var temp = Main.Settings.WishPriorities.ToList();
             temp.RemoveAll(x => x == id.Key);
             Main.Settings.WishPriorities = temp.ToArray();
-            WishPriority.DataSource = null;
-            var temp2 = Main.Settings.WishPriorities.ToDictionary(x => x, x => Main.Character.wishesController.properties[x].wishName);
-            WishPriority.DataSource = new BindingSource(temp2, null);
-            WishPriority.ValueMember = "Key";
-            WishPriority.DisplayMember = "Value";
             Main.Character.removeAllRes3();
             Main.Character.removeMostEnergy();
             Main.Character.removeMostMagic();
@@ -1137,11 +1081,6 @@ namespace NGUInjector
                 var temp = Main.Settings.WishPriorities.ToList();
                 temp.Add(val);
                 Main.Settings.WishPriorities = temp.ToArray();
-                WishPriority.DataSource = null;
-                var temp2 = Main.Settings.WishPriorities.ToDictionary(x => x, x => Main.Character.wishesController.properties[x].wishName);
-                WishPriority.DataSource = new BindingSource(temp2, null);
-                WishPriority.ValueMember = "Key";
-                WishPriority.DisplayMember = "Value";
             }
         }
 
@@ -1155,11 +1094,6 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.CubePriority = CubePriority.SelectedIndex;
-        }
-
-        private void tabPage3_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
