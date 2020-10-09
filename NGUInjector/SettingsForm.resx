@@ -874,7 +874,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>538, 304</value>
+    <value>590, 334</value>
   </data>
   <data name="tabPage2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -955,7 +955,7 @@
     <value>True</value>
   </data>
   <data name="yggRemoveButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>134, 149</value>
+    <value>233, 149</value>
   </data>
   <data name="yggRemoveButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 23</value>
@@ -982,7 +982,7 @@
     <value>8, 252</value>
   </data>
   <data name="yggLoadoutItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 20</value>
+    <value>205, 20</value>
   </data>
   <data name="yggLoadoutItem.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -1027,7 +1027,7 @@
     <value>4</value>
   </data>
   <data name="yggAddButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>134, 252</value>
+    <value>233, 252</value>
   </data>
   <data name="yggAddButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 20</value>
@@ -1060,7 +1060,7 @@
     <value>7, 85</value>
   </data>
   <data name="yggdrasilLoadoutBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 160</value>
+    <value>206, 160</value>
   </data>
   <data name="yggdrasilLoadoutBox.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -1138,7 +1138,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>590, 307</value>
+    <value>590, 334</value>
   </data>
   <data name="tabPage3.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1213,7 +1213,7 @@
     <value>NoControl</value>
   </data>
   <data name="prioDownButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>163, 206</value>
+    <value>230, 206</value>
   </data>
   <data name="prioDownButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
@@ -1240,7 +1240,7 @@
     <value>True</value>
   </data>
   <data name="prioUpButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>163, 148</value>
+    <value>230, 148</value>
   </data>
   <data name="prioUpButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
@@ -1270,7 +1270,7 @@
     <value>Microsoft Sans Serif, 9.75pt</value>
   </data>
   <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>231, 85</value>
+    <value>299, 85</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>109, 16</value>
@@ -1297,7 +1297,7 @@
     <value>True</value>
   </data>
   <data name="blacklistRemove.Location" type="System.Drawing.Point, System.Drawing">
-    <value>361, 177</value>
+    <value>496, 177</value>
   </data>
   <data name="blacklistRemove.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 23</value>
@@ -1321,10 +1321,10 @@
     <value>5</value>
   </data>
   <data name="blacklistAddItem.Location" type="System.Drawing.Point, System.Drawing">
-    <value>235, 280</value>
+    <value>303, 280</value>
   </data>
   <data name="blacklistAddItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 20</value>
+    <value>173, 20</value>
   </data>
   <data name="blacklistAddItem.TabIndex" type="System.Int32, mscorlib">
     <value>28</value>
@@ -1345,7 +1345,7 @@
     <value>True</value>
   </data>
   <data name="blacklistLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>232, 303</value>
+    <value>300, 303</value>
   </data>
   <data name="blacklistLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
@@ -1369,7 +1369,7 @@
     <value>7</value>
   </data>
   <data name="blacklistAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>361, 280</value>
+    <value>496, 280</value>
   </data>
   <data name="blacklistAdd.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 20</value>
@@ -1399,10 +1399,10 @@
     <value>test2</value>
   </data>
   <data name="blacklistBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>234, 113</value>
+    <value>302, 113</value>
   </data>
   <data name="blacklistBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 160</value>
+    <value>174, 160</value>
   </data>
   <data name="blacklistBox.TabIndex" type="System.Int32, mscorlib">
     <value>25</value>
@@ -1453,7 +1453,7 @@
     <value>True</value>
   </data>
   <data name="priorityBoostRemove.Location" type="System.Drawing.Point, System.Drawing">
-    <value>136, 177</value>
+    <value>203, 177</value>
   </data>
   <data name="priorityBoostRemove.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 23</value>
@@ -1480,7 +1480,7 @@
     <value>10, 280</value>
   </data>
   <data name="priorityBoostItemAdd.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 20</value>
+    <value>176, 20</value>
   </data>
   <data name="priorityBoostItemAdd.TabIndex" type="System.Int32, mscorlib">
     <value>22</value>
@@ -1525,7 +1525,7 @@
     <value>13</value>
   </data>
   <data name="priorityBoostAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>136, 280</value>
+    <value>203, 280</value>
   </data>
   <data name="priorityBoostAdd.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 20</value>
@@ -1558,7 +1558,7 @@
     <value>9, 113</value>
   </data>
   <data name="priorityBoostBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 160</value>
+    <value>177, 160</value>
   </data>
   <data name="priorityBoostBox.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
@@ -1738,7 +1738,7 @@
     <value>True</value>
   </data>
   <data name="titanRemove.Location" type="System.Drawing.Point, System.Drawing">
-    <value>136, 148</value>
+    <value>299, 148</value>
   </data>
   <data name="titanRemove.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 23</value>
@@ -1765,7 +1765,7 @@
     <value>10, 251</value>
   </data>
   <data name="titanAddItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 20</value>
+    <value>251, 20</value>
   </data>
   <data name="titanAddItem.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
@@ -1810,7 +1810,7 @@
     <value>5</value>
   </data>
   <data name="titanAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>136, 251</value>
+    <value>299, 251</value>
   </data>
   <data name="titanAdd.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 20</value>
@@ -1843,7 +1843,7 @@
     <value>9, 84</value>
   </data>
   <data name="titanLoadout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 160</value>
+    <value>252, 160</value>
   </data>
   <data name="titanLoadout.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -1894,7 +1894,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>538, 304</value>
+    <value>590, 334</value>
   </data>
   <data name="tabPage5.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -2224,7 +2224,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>590, 307</value>
+    <value>590, 334</value>
   </data>
   <data name="tabPage6.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -2311,7 +2311,7 @@
     <value>NoControl</value>
   </data>
   <data name="GoldLoadoutRemove.Location" type="System.Drawing.Point, System.Drawing">
-    <value>136, 156</value>
+    <value>252, 156</value>
   </data>
   <data name="GoldLoadoutRemove.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 23</value>
@@ -2338,7 +2338,7 @@
     <value>10, 259</value>
   </data>
   <data name="GoldItemBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 20</value>
+    <value>222, 20</value>
   </data>
   <data name="GoldItemBox.TabIndex" type="System.Int32, mscorlib">
     <value>22</value>
@@ -2389,7 +2389,7 @@
     <value>NoControl</value>
   </data>
   <data name="GoldLoadoutAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>136, 259</value>
+    <value>252, 259</value>
   </data>
   <data name="GoldLoadoutAdd.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 20</value>
@@ -2422,7 +2422,7 @@
     <value>9, 93</value>
   </data>
   <data name="GoldLoadout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 160</value>
+    <value>223, 160</value>
   </data>
   <data name="GoldLoadout.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
@@ -2560,7 +2560,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>590, 307</value>
+    <value>590, 334</value>
   </data>
   <data name="tabPage7.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -2884,7 +2884,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>538, 304</value>
+    <value>590, 334</value>
   </data>
   <data name="tabPage8.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -2911,7 +2911,7 @@
     <value>NoControl</value>
   </data>
   <data name="WishDownButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>162, 131</value>
+    <value>315, 131</value>
   </data>
   <data name="WishDownButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
@@ -2941,7 +2941,7 @@
     <value>NoControl</value>
   </data>
   <data name="WishUpButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>162, 73</value>
+    <value>315, 73</value>
   </data>
   <data name="WishUpButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
@@ -2971,7 +2971,7 @@
     <value>NoControl</value>
   </data>
   <data name="RemoveWishButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>135, 102</value>
+    <value>288, 102</value>
   </data>
   <data name="RemoveWishButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>84, 23</value>
@@ -3031,7 +3031,7 @@
     <value>9, 207</value>
   </data>
   <data name="WishAddInput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 20</value>
+    <value>246, 20</value>
   </data>
   <data name="WishAddInput.TabIndex" type="System.Int32, mscorlib">
     <value>28</value>
@@ -3082,7 +3082,7 @@
     <value>NoControl</value>
   </data>
   <data name="AddWishButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>135, 207</value>
+    <value>288, 207</value>
   </data>
   <data name="AddWishButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 20</value>
@@ -3115,7 +3115,7 @@
     <value>8, 41</value>
   </data>
   <data name="WishPriority.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 160</value>
+    <value>247, 160</value>
   </data>
   <data name="WishPriority.TabIndex" type="System.Int32, mscorlib">
     <value>25</value>
@@ -3139,7 +3139,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>590, 307</value>
+    <value>590, 334</value>
   </data>
   <data name="tabPage9.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
