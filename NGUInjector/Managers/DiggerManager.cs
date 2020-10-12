@@ -19,7 +19,7 @@ namespace NGUInjector.Managers
 
         internal static void TryTitanSwap()
         {
-            var ts = LoadoutManager.TitansSpawningSoon();
+            var ts = ZoneHelpers.TitansSpawningSoon();
             if (CurrentLock == LockType.Titan)
             {
                 if (ts.SpawningSoon)
