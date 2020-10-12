@@ -372,6 +372,7 @@ namespace NGUInjector.Managers
                     _cubeBoostAvg.Enqueue((decimal)(toughnessDiff + powerDiff));
                     output = $"{output} Average Per Minute: {_cubeBoostAvg.Avg():0}";
                     Log(output);
+                    Log($"Cube Power: {cube.Power} ({_character.inventoryController.cubePowerSoftcap()} softcap). Cube Toughness: {cube.Toughness} ({_character.inventoryController.cubeToughnessSoftcap()} softcap)");
                 }
 
                 _lastCube = cube;
