@@ -75,7 +75,6 @@ namespace NGUInjector.Managers
         private Cube _lastCube = null;
         private FixedSizedQueue _invBoostAvg = new FixedSizedQueue(60);
         private FixedSizedQueue _cubeBoostAvg = new FixedSizedQueue(60);
-        private int lastNeededCount = 0;
 
 
         //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane, Guffs
@@ -308,8 +307,8 @@ namespace NGUInjector.Managers
             var needed = new BoostsNeeded();
             var cube = new Cube
             {
-                Power = _controller.cubePower(),
-                Toughness = _controller.cubeToughness()
+                Power = _character.inventory.cubePower,
+                Toughness = _character.inventory.cubeToughness
             };
 
             foreach (var item in boostSlots)
