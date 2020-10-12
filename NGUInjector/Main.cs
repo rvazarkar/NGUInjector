@@ -43,8 +43,6 @@ namespace NGUInjector
 
         private static bool _tempSwapped = false;
 
-        internal static readonly int[] TitanZones = {6, 8, 11, 14, 16, 19, 23, 26, 30, 34, 38, 40, 42};
-
         internal static FileSystemWatcher ConfigWatcher;
         internal static FileSystemWatcher AllocationWatcher;
 
@@ -645,7 +643,7 @@ namespace NGUInjector
                 //Go to our gold loadout zone next to get a high gold drop
                 if (Settings.NextGoldSwap)
                 {
-                    if (CombatManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone >= 0)
+                    if (CombatManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneHelpers.ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone >= 0)
                     {
                         if (LoadoutManager.TryGoldDropSwap())
                         {
@@ -686,11 +684,18 @@ namespace NGUInjector
 
                     for (var i = Character.adventureController.zoneDropdown.options.Count - 2; i >= 0; i--)
                     {
-                        if (!ZoneIsTitan(i))
+                        if (!ZoneHelpers.ZoneIsTitan(i))
                         {
                             tempZone = i;
                             break;
                         }
+                    }
+                }
+                else
+                {
+                    if (ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) && !ZoneHelpers.TitansSpawningSoon().SpawningSoon)
+                    {
+                        tempZone = 1000;
                     }
                 }
             }
@@ -725,7 +730,7 @@ namespace NGUInjector
 
                 if (Settings.NextGoldSwap)
                 {
-                    if (CombatManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone > 0)
+                    if (CombatManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneHelpers.ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone > 0)
                     {
                         return;
                     }
@@ -762,11 +767,6 @@ namespace NGUInjector
             list.RemoveAll(x => x == 0);
 
             Log($"Equipped Items: [{string.Join(", ", list.Select(x => x.ToString()).ToArray())}]");
-        }
-
-        internal static bool ZoneIsTitan(int zone)
-        {
-            return TitanZones.Contains(zone);
         }
 
         public void OnGUI()
