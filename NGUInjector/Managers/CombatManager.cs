@@ -436,6 +436,7 @@ namespace NGUInjector.Managers
 
                     if (LoadoutManager.CurrentLock == LockType.Gold)
                     {
+                        Log("Gold Loadout kill done. Turning off setting and swapping gear");
                         Settings.NextGoldSwap = false;
                         settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
                         LoadoutManager.RestoreGear();
