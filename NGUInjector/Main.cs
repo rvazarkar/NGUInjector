@@ -119,9 +119,9 @@ namespace NGUInjector
                     {
                         PriorityBoosts = new int[] { },
                         YggdrasilLoadout = new int[] { },
-                        SwapYggdrasilLoadouts = true,
+                        SwapYggdrasilLoadouts = false,
                         HighestAKZone = 0,
-                        SwapTitanLoadouts = true,
+                        SwapTitanLoadouts = false,
                         TitanLoadout = new int[] { },
                         ManageDiggers = true,
                         ManageYggdrasil = true,
@@ -134,7 +134,7 @@ namespace NGUInjector
                         FastCombat = false,
                         PrecastBuffs = true,
                         AutoFight = false,
-                        AutoQuest = true,
+                        AutoQuest = false,
                         AutoQuestITOPOD = false,
                         AllowMajorQuests = false,
                         GoldDropLoadout = new int[] {},
@@ -169,7 +169,7 @@ namespace NGUInjector
                         UseButterMajor = false,
                         ManualMinors =  false,
                         UseButterMinor = false,
-                        ActivateFruits = true,
+                        ActivateFruits = false,
                         ManageR3 = true,
                         WishPriorities = new int[] {},
                         BeastMode = true
@@ -481,7 +481,7 @@ namespace NGUInjector
                     return;
                 }
 
-                if (Settings.ManageInventory)
+                if (Settings.ManageInventory && !Controller.midDrag)
                 {
                     var converted = Character.inventory.GetConvertedInventory().ToArray();
                     var boostSlots = _invManager.GetBoostSlots(converted);
@@ -625,7 +625,7 @@ namespace NGUInjector
             //If tm ever drops to 0, reset our gold loadout stuff
             if (Character.machine.realBaseGold == 0.0 && !Settings.NextGoldSwap)
             {
-                Log("Resetting Gold Loadout");
+                Log("Time Machine Gold is 0. Turning Gold Loadout back on.");
                 Settings.NextGoldSwap = true;
                 settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
             }
