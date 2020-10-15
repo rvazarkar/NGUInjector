@@ -2248,7 +2248,7 @@
     <value>True</value>
   </data>
   <data name="UseGoldLoadout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>252, 12</value>
+    <value>12, 14</value>
   </data>
   <data name="UseGoldLoadout.Size" type="System.Drawing.Size, System.Drawing">
     <value>112, 17</value>
@@ -2439,63 +2439,6 @@
   <data name="&gt;&gt;GoldLoadout.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 44</value>
-  </data>
-  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>84, 13</value>
-  </data>
-  <data name="label10.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="label10.Text" xml:space="preserve">
-    <value>Initial Gold Zone</value>
-  </data>
-  <data name="&gt;&gt;label10.Name" xml:space="preserve">
-    <value>label10</value>
-  </data>
-  <data name="&gt;&gt;label10.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
-    <value>tabPage7</value>
-  </data>
-  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="InitialGoldTarget.Items" xml:space="preserve">
-    <value>Idle</value>
-  </data>
-  <data name="InitialGoldTarget.Items1" xml:space="preserve">
-    <value>Manual</value>
-  </data>
-  <data name="InitialGoldTarget.Location" type="System.Drawing.Point, System.Drawing">
-    <value>111, 41</value>
-  </data>
-  <data name="InitialGoldTarget.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 21</value>
-  </data>
-  <data name="InitialGoldTarget.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;InitialGoldTarget.Name" xml:space="preserve">
-    <value>InitialGoldTarget</value>
-  </data>
-  <data name="&gt;&gt;InitialGoldTarget.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;InitialGoldTarget.Parent" xml:space="preserve">
-    <value>tabPage7</value>
-  </data>
-  <data name="&gt;&gt;InitialGoldTarget.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
   <data name="label9.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2503,7 +2446,7 @@
     <value>NoControl</value>
   </data>
   <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 12</value>
+    <value>9, 42</value>
   </data>
   <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
     <value>99, 13</value>
@@ -2524,7 +2467,13 @@
     <value>tabPage7</value>
   </data>
   <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>7</value>
+  </data>
+  <data name="GoldLoadoutZone.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="GoldLoadoutZone.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
   <data name="GoldLoadoutZone.Items" xml:space="preserve">
     <value>Idle</value>
@@ -2533,7 +2482,7 @@
     <value>Manual</value>
   </data>
   <data name="GoldLoadoutZone.Location" type="System.Drawing.Point, System.Drawing">
-    <value>111, 8</value>
+    <value>114, 39</value>
   </data>
   <data name="GoldLoadoutZone.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 21</value>
@@ -2551,7 +2500,7 @@
     <value>tabPage7</value>
   </data>
   <data name="&gt;&gt;GoldLoadoutZone.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>8</value>
   </data>
   <data name="tabPage7.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>

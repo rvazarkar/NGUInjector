@@ -118,10 +118,6 @@ namespace NGUInjector
             GoldLoadoutZone.ValueMember = "Key";
             GoldLoadoutZone.DisplayMember = "Value";
 
-            InitialGoldTarget.DataSource = new BindingSource(ZoneList, null);
-            InitialGoldTarget.ValueMember = "Key";
-            InitialGoldTarget.DisplayMember = "Value";
-
             blacklistLabel.Text = "";
             yggItemLabel.Text = "";
             priorityBoostLabel.Text = "";
@@ -182,7 +178,6 @@ namespace NGUInjector
             SetSnipeZone(CombatTargetZone, newSettings.SnipeZone);
             AllowFallthrough.Checked = newSettings.AllowZoneFallback;
             SetOtherZone(GoldLoadoutZone, newSettings.GoldZone);
-            SetOtherZone(InitialGoldTarget, newSettings.InitialGoldZone);
             QuestCombatMode.SelectedIndex = newSettings.QuestCombatMode;
             ManageQuests.Checked = newSettings.AutoQuest;
             AllowMajor.Checked = newSettings.AllowMajorQuests;
@@ -688,14 +683,6 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.NextGoldSwap = UseGoldLoadout.Checked;
-        }
-
-        private void InitialGoldTarget_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (_initializing) return;
-            var selected = InitialGoldTarget.SelectedItem;
-            var item = (KeyValuePair<int, string>)selected;
-            Main.Settings.InitialGoldZone = item.Key;
         }
 
         private void GoldItemBox_TextChanged(object sender, EventArgs e)

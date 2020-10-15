@@ -72,7 +72,7 @@ namespace NGUInjector.Managers
                 AcquireLock(LockType.Titan);
                 SaveCurrentLoadout();
 
-                if (Settings.NextGoldSwap && ts.IsHighest)
+                if (ts.RunMoneyLoadout)
                 {
                     Log("Equipping Gold Drop Loadout");
                     ChangeGear(Settings.GoldDropLoadout);

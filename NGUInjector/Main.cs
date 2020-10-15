@@ -143,7 +143,6 @@ namespace NGUInjector
                         MoneyPitLoadout = new int[] {},
                         AutoRebirth = false,
                         ManageWandoos = false,
-                        InitialGoldZone = -1,
                         MoneyPitThreshold = 1e5,
                         NextGoldSwap = false,
                         BoostBlacklist = new int[] {},
@@ -625,31 +624,27 @@ namespace NGUInjector
             //If tm ever drops to 0, reset our gold loadout stuff
             if (Character.machine.realBaseGold == 0.0 && !Settings.NextGoldSwap)
             {
-                Log("Time Machine Gold is 0. Turning Gold Loadout back on.");
-                Settings.NextGoldSwap = true;
-                settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
+                Log("Time Machine Gold is 0. Lets reset gold snipe zone.");
+                Settings.GoldZone = 0;
+                ZoneHelpers.ResetTitanDrops();
             }
 
             //This logic should trigger only if Time Machine is ready
             if (Character.buttons.brokenTimeMachine.interactable)
             {
-                //Hit our initial gold zone first to get TM started
-                if (Character.machine.realBaseGold == 0.0 && CombatManager.IsZoneUnlocked(Settings.InitialGoldZone) && Settings.InitialGoldZone >= 0)
+                if (Settings.GoldZone < ZoneHelpers.getMaxReachableZone())
                 {
-                    _combManager.ManualZone(Settings.InitialGoldZone, false, false, false, true);
-                    return;
+                    Settings.NextGoldSwap = true;
+                    Settings.GoldZone = ZoneHelpers.getMaxReachableZone();
+                    settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
                 }
-
                 //Go to our gold loadout zone next to get a high gold drop
                 if (Settings.NextGoldSwap)
                 {
-                    if (CombatManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneHelpers.ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone >= 0)
+                    if (LoadoutManager.TryGoldDropSwap())
                     {
-                        if (LoadoutManager.TryGoldDropSwap())
-                        {
-                            _combManager.ManualZone(Settings.GoldZone, true, false, false, true);
-                            return;
-                        }
+                        _combManager.ManualZone(Settings.GoldZone, true, false, false, false);
+                        return;
                     }
                 }
             }
@@ -680,16 +675,10 @@ namespace NGUInjector
             {
                 if (!CombatManager.IsZoneUnlocked(Settings.SnipeZone))
                 {
-                    if (!Settings.AllowZoneFallback) return;
+                    if (!Settings.AllowZoneFallback)
+                        return;
 
-                    for (var i = Character.adventureController.zoneDropdown.options.Count - 2; i >= 0; i--)
-                    {
-                        if (!ZoneHelpers.ZoneIsTitan(i))
-                        {
-                            tempZone = i;
-                            break;
-                        }
-                    }
+                    tempZone = ZoneHelpers.getMaxReachableZone();
                 }
                 else
                 {
@@ -721,21 +710,8 @@ namespace NGUInjector
             if (Settings.CombatEnabled)
                 return;
 
-            if (Character.buttons.brokenTimeMachine.interactable)
-            {
-                if (Character.machine.realBaseGold == 0.0 && CombatManager.IsZoneUnlocked(Settings.InitialGoldZone) && Settings.InitialGoldZone > 0)
-                {
-                    return;
-                }
-
-                if (Settings.NextGoldSwap)
-                {
-                    if (CombatManager.IsZoneUnlocked(Settings.GoldZone) && !ZoneHelpers.ZoneIsTitan(Settings.GoldZone) && Settings.GoldZone > 0)
-                    {
-                        return;
-                    }
-                }
-            }
+            if (Settings.NextGoldSwap)
+                return;
 
             //If we're not in ITOPOD, move there if its set
             if (Character.adventureController.zone >= 1000 || !Settings.AutoQuestITOPOD) return;
