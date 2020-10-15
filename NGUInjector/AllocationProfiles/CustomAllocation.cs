@@ -555,6 +555,31 @@ namespace NGUInjector.AllocationProfiles
             return null;
         }
 
+        public float RitualProgressPerTick(int id)
+        {
+            var num1 = 0.0;
+            if (_character.settings.rebirthDifficulty == difficulty.normal)
+                num1 = _character.magic.idleMagic* (double)_character.totalMagicPower() / 50000.0 / _character.bloodMagicController.normalSpeedDividers[id];
+            else if (_character.settings.rebirthDifficulty == difficulty.evil)
+                num1 = _character.magic.idleMagic* (double)_character.totalMagicPower() / 50000.0 / _character.bloodMagicController.evilSpeedDividers[id];
+            else if (_character.settings.rebirthDifficulty == difficulty.sadistic)
+                num1 = _character.magic.idleMagic* (double)_character.totalMagicPower() / _character.bloodMagicController.sadisticSpeedDividers[id];
+            if (_character.settings.rebirthDifficulty >= difficulty.sadistic)
+                num1 /= _character.bloodMagicController.bloodMagics[id].sadisticDivider();
+            var num2 = num1 * _character.bloodMagicController.bloodMagics[id].totalBloodMagicSpeedBonus();
+            if (num2 <= -3.40282346638529E+38)
+                num2 = 0.0;
+            if (num2 >= 3.40282346638529E+38)
+                num2 = 3.40282346638529E+38;
+            return (float)num2;
+        }
+
+        public float RitualTimeLeft(int id)
+        {
+            return (float) ((1.0 - _character.bloodMagic.ritual[id].progress) /
+                            RitualProgressPerTick(id) / 50.0);
+        }
+
         private void CastRituals()
         {
             for (var i = _character.bloodMagic.ritual.Count - 1; i >= 0; i--)
@@ -573,13 +598,17 @@ namespace NGUInjector.AllocationProfiles
                     continue;
                 }
 
-                var tLeft = _character.bloodMagicController.bloodMagics[i].timeLeft();
-                if (!tLeft.EndsWith("s"))
+                var tLeft = RitualTimeLeft(i);
+                if (_wrapper != null && _wrapper.Breakpoints.RebirthTime > 0 && Main.Settings.AutoRebirth)
                 {
-                    if (tLeft.Count(x => x == ':') > 1)
+                    if (_character.rebirthTime.totalseconds - tLeft < 0)
                         continue;
                 }
-
+                else if (tLeft > 3600)
+                {
+                    continue;
+                }
+                
                 _character.bloodMagicController.bloodMagics[i].cap();
             }
         }
@@ -974,7 +1003,7 @@ namespace NGUInjector.AllocationProfiles
             {
                 formula *= _character.timeMachineController.sadisticDivider();
             }
-            return Mathf.Min(Mathf.Ceil((float)formula), (float)9e18);
+            return Mathf.Min(Mathf.Ceil(formula), (float)9e18);
         }
 
         internal float CalculateATCap(int index)
@@ -989,7 +1018,7 @@ namespace NGUInjector.AllocationProfiles
             var formula = 50f * divisor /
                 (Mathf.Sqrt(_character.totalEnergyPower()) * _character.totalAdvancedTrainingSpeedBonus());
 
-            return Mathf.Min(Mathf.Ceil((float)formula), (float)9e18);
+            return Mathf.Min(Mathf.Ceil(formula), (float)9e18);
         }
 
         //internal float CalculateAugCap(int index)
@@ -1021,7 +1050,7 @@ namespace NGUInjector.AllocationProfiles
         internal void DebugTMCap()
         {
             var energy = CalculateTMEnergyCap();
-            var num = (double)_character.totalEnergyPower() / (double)_character.timeMachineController.baseSpeedDivider() * ((double)energy / 50000) * (double)_character.hacksController.totalTMSpeedBonus() * (double)_character.allChallenges.timeMachineChallenge.TMSpeedBonus() * (double)_character.cardsController.getBonus(cardBonus.TMSpeed) / (double)(_character.machine.levelSpeed + 1L);
+            var num = _character.totalEnergyPower() / (double)_character.timeMachineController.baseSpeedDivider() * ((double)energy / 50000) * _character.hacksController.totalTMSpeedBonus() * _character.allChallenges.timeMachineChallenge.TMSpeedBonus() * _character.cardsController.getBonus(cardBonus.TMSpeed) / (_character.machine.levelSpeed + 1L);
             Main.LogAllocation($"Calculated Energy: {energy}");
             Main.LogAllocation($"Deviation from game formula: {num}");
         }
@@ -1039,7 +1068,7 @@ namespace NGUInjector.AllocationProfiles
                     _character.hacksController.totalAugSpeedBonus() *
                     _character.cardsController.getBonus(cardBonus.augSpeed) *
                     _character.adventureController.itopod.totalAugSpeedBonus() *
-                    (1.0 + (double)_character.allChallenges.noAugsChallenge.evilCompletions() * 0.0500000007450581));
+                    (1.0 + _character.allChallenges.noAugsChallenge.evilCompletions() * 0.0500000007450581));
 
                 if (_character.allChallenges.noAugsChallenge.completions() >= 1)
                 {
@@ -1051,7 +1080,7 @@ namespace NGUInjector.AllocationProfiles
                 }
                 if (_character.settings.rebirthDifficulty >= difficulty.sadistic)
                 {
-                    formula *= (double)_character.augmentsController.augments[augIndex].sadisticDivider();
+                    formula *= _character.augmentsController.augments[augIndex].sadisticDivider();
                 }
                 if (_character.settings.rebirthDifficulty == difficulty.normal)
                 {
@@ -1075,7 +1104,7 @@ namespace NGUInjector.AllocationProfiles
                     _character.hacksController.totalAugSpeedBonus() *
                     _character.cardsController.getBonus(cardBonus.augSpeed) *
                     _character.adventureController.itopod.totalAugSpeedBonus() *
-                    (1.0 + (double)_character.allChallenges.noAugsChallenge.evilCompletions() * 0.0500000007450581));
+                    (1.0 + _character.allChallenges.noAugsChallenge.evilCompletions() * 0.0500000007450581));
 
                 if (_character.allChallenges.noAugsChallenge.completions() >= 1)
                 {
@@ -1087,7 +1116,7 @@ namespace NGUInjector.AllocationProfiles
                 }
                 if (_character.settings.rebirthDifficulty >= difficulty.sadistic)
                 {
-                    formula *= (double)_character.augmentsController.augments[augIndex].sadisticDivider();
+                    formula *= _character.augmentsController.augments[augIndex].sadisticDivider();
                 }
                 if (_character.settings.rebirthDifficulty == difficulty.normal)
                 {
