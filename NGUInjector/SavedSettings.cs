@@ -153,7 +153,6 @@ namespace NGUInjector
 
             _autoRebirth = other.AutoRebirth;
             _manageWandoos = other.ManageWandoos;
-            _initialGoldZone = other.InitialGoldZone;
             _nextGoldSwap = other.NextGoldSwap;
             _goldZone = other.GoldZone;
 

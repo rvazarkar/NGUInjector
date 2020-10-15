@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using static NGUInjector.Main;
 
 namespace NGUInjector.Managers
 {
     static class ZoneHelpers
     {
         internal static readonly int[] TitanZones = { 6, 8, 11, 14, 16, 19, 23, 26, 30, 34, 38, 40, 42 };
+        internal static bool[] TitanMoneyDone = new bool[TitanZones.Length];
         internal static bool ZoneIsTitan(int zone)
         {
             return TitanZones.Contains(zone);
@@ -15,95 +15,29 @@ namespace NGUInjector.Managers
 
         internal static TitanSpawn TitansSpawningSoon()
         {
-            var result = new TitanSpawn
-            {
-                IsHighest = false,
-                SpawningSoon = false
-            };
+            var result = new TitanSpawn();
 
             if (!Main.Character.buttons.adventure.IsInteractable())
             {
-                result.SpawningSoon = false;
                 return result;
             }
-
-            if (Main.Character.bossID >= 58)
+            for (int i = 0; i < TitanZones.Length; i++)
             {
                 result.Merge(GetTitanSpawn(1));
             }
-
-            if (Main.Character.bossID >= 66)
-            {
-                result.Merge(GetTitanSpawn(2));
-            }
-
-            if (Main.Character.bossID >= 82)
-            {
-                result.Merge(GetTitanSpawn(3));
-            }
-
-            if (Main.Character.bossID >= 100)
-            {
-                result.Merge(GetTitanSpawn(4));
-            }
-
-            if (Main.Character.bossID >= 116)
-            {
-                result.Merge(GetTitanSpawn(5));
-            }
-
-            if (Main.Character.bossID >= 132)
-            {
-                result.Merge(GetTitanSpawn(6));
-            }
-
-            if (Main.Character.effectiveBossID() >= 426)
-            {
-                result.Merge(GetTitanSpawn(7));
-            }
-
-            if (Main.Character.effectiveBossID() >= 467)
-            {
-                result.Merge(GetTitanSpawn(8));
-            }
-
-            if (Main.Character.effectiveBossID() >= 491)
-            {
-                result.Merge(GetTitanSpawn(9));
-            }
-
-            if (Main.Character.effectiveBossID() >= 727)
-            {
-                result.Merge(GetTitanSpawn(10));
-            }
-
-            if (Main.Character.effectiveBossID() >= 826)
-            {
-                result.Merge(GetTitanSpawn(11));
-            }
-
-            if (Main.Character.effectiveBossID() >= 848)
-            {
-                result.Merge(GetTitanSpawn(12));
-            }
-
             return result;
         }
 
         private static TitanSpawn GetTitanSpawn(int bossId)
         {
-            var result = new TitanSpawn
-            {
-                SpawningSoon = false,
-                IsHighest = false
-            };
+            var result = new TitanSpawn();
 
-            if (Test)
+            if (Main.Test)
             {
                 result.SpawningSoon = true;
             }
 
-            if (bossId > Settings.HighestAKZone)
+            if (bossId > Main.Settings.HighestAKZone)
             {
                 return result;
             }
@@ -129,34 +63,38 @@ namespace NGUInjector.Managers
             if (Math.Abs(spawnTime - spawn.totalseconds) < 20)
             {
                 result.SpawningSoon = true;
-            }
-            else
-            {
-                return result;
-            }
-
-            if (ZoneHelpers.ZoneIsTitan(Settings.GoldZone))
-            {
-                var id = Array.IndexOf(ZoneHelpers.TitanZones, Settings.GoldZone) + 1;
-                if (id == bossId)
-                    result.IsHighest = true;
+                // Run money once for each boss
+                result.RunMoneyLoadout = !TitanMoneyDone[bossId];
+                TitanMoneyDone[bossId] = true;
             }
 
             return result;
         }
 
-
+        internal static int getMaxReachableZone()
+        {
+            int tempZone = 0;
+            for (var i = Main.Character.adventureController.zoneDropdown.options.Count - 2; i >= 0; i--)
+            {
+                if (!ZoneIsTitan(i))
+                {
+                    tempZone = i;
+                    break;
+                }
+            }
+            return tempZone;
+        }
 
     }
     public class TitanSpawn
     {
-        internal bool SpawningSoon { get; set; }
-        internal bool IsHighest { get; set; }
+        internal bool SpawningSoon { get; set; } = false;
+        internal bool RunMoneyLoadout { get; set; } = false;
 
         internal void Merge(TitanSpawn other)
         {
             SpawningSoon = SpawningSoon || other.SpawningSoon;
-            IsHighest = IsHighest || other.IsHighest;
+            RunMoneyLoadout = RunMoneyLoadout || other.RunMoneyLoadout;
         }
     }
 }
