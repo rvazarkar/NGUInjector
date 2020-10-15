@@ -23,9 +23,14 @@ namespace NGUInjector.Managers
             }
             for (int i = 0; i < TitanZones.Length; i++)
             {
-                result.Merge(GetTitanSpawn(1));
+                result.Merge(GetTitanSpawn(i));
             }
             return result;
+        }
+
+        internal static void ResetTitanDrops()
+        {
+            TitanMoneyDone = new bool[TitanZones.Length];
         }
 
         private static TitanSpawn GetTitanSpawn(int bossId)

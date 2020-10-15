@@ -626,6 +626,7 @@ namespace NGUInjector
             {
                 Log("Time Machine Gold is 0. Lets reset gold snipe zone.");
                 Settings.GoldZone = 0;
+                ZoneHelpers.ResetTitanDrops();
             }
 
             //This logic should trigger only if Time Machine is ready
