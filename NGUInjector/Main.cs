@@ -171,7 +171,8 @@ namespace NGUInjector
                         ActivateFruits = false,
                         ManageR3 = true,
                         WishPriorities = new int[] {},
-                        BeastMode = true
+                        BeastMode = true,
+                        ManageNGUDiff = true
                     };
 
                     Settings.MassUpdate(temp);
@@ -420,6 +421,8 @@ namespace NGUInjector
 
                 if (needsAllocation)
                 {
+                    if (Settings.ManageNGUDiff)
+                        _profile.SwapNGUDiff();
                     if (Settings.ManageGear)
                         _profile.EquipGear();
                     if (Settings.ManageEnergy)
@@ -434,7 +437,6 @@ namespace NGUInjector
 
                     if (Settings.ManageR3 && Character.buttons.hacks.interactable) 
                         _profile.AllocateR3();
-
                     if (Settings.ManageWandoos && Character.buttons.wandoos.interactable)
                         _profile.SwapOS();
                 }
@@ -569,6 +571,8 @@ namespace NGUInjector
                     }
                 }
 
+                if (Settings.ManageNGUDiff)
+                    _profile.SwapNGUDiff();
                 if (Settings.ManageGear) 
                     _profile.EquipGear();
                 if (Settings.ManageEnergy)
@@ -599,9 +603,6 @@ namespace NGUInjector
                 {
                     _profile.DoRebirth();
                 }
-
-                Character.refreshMenus();
-
             }
             catch (Exception e)
             {

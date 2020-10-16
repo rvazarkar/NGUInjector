@@ -152,6 +152,7 @@
             this.goldErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.numberErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.wishErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.ManageNGUDiff = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -293,6 +294,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.ManageNGUDiff);
             this.tabPage2.Controls.Add(this.ManageR3);
             this.tabPage2.Controls.Add(this.BloodNumberThreshold);
             this.tabPage2.Controls.Add(this.label18);
@@ -1151,6 +1153,13 @@
             // 
             this.wishErrorProvider.ContainerControl = this;
             // 
+            // ManageNGUDiff
+            // 
+            resources.ApplyResources(this.ManageNGUDiff, "ManageNGUDiff");
+            this.ManageNGUDiff.Name = "ManageNGUDiff";
+            this.ManageNGUDiff.UseVisualStyleBackColor = true;
+            this.ManageNGUDiff.CheckedChanged += new System.EventHandler(this.ManageNGUDiff_CheckedChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1323,5 +1332,6 @@
         private System.Windows.Forms.CheckBox BeastMode;
         private System.Windows.Forms.ComboBox CubePriority;
         private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.CheckBox ManageNGUDiff;
     }
 }

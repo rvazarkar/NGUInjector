@@ -199,6 +199,7 @@ namespace NGUInjector
             BeastMode.Checked = newSettings.BeastMode;
             CubePriority.SelectedIndex = newSettings.CubePriority;
             BloodNumberThreshold.Text = $"{newSettings.BloodNumberThreshold:#.##E+00}";
+            ManageNGUDiff.Checked = newSettings.ManageNGUDiff;
 
             
             var temp = newSettings.YggdrasilLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
@@ -1081,6 +1082,12 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.CubePriority = CubePriority.SelectedIndex;
+        }
+
+        private void ManageNGUDiff_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.ManageNGUDiff = ManageNGUDiff.Checked;
         }
     }
 }
