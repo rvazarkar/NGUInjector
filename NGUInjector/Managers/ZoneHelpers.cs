@@ -21,7 +21,7 @@ namespace NGUInjector.Managers
             {
                 return result;
             }
-            for (int i = 0; i < TitanZones.Length; i++)
+            for (var i = 0; i < TitanZones.Length; i++)
             {
                 result.Merge(GetTitanSpawn(i));
             }

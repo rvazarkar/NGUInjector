@@ -422,12 +422,17 @@ namespace NGUInjector.AllocationProfiles
 
             var prioCount = temp.Count;
             var toAdd = (long) Math.Ceiling((double) _character.idleEnergy / prioCount);
-            _character.input.energyRequested.text = toAdd.ToString();
-            _character.input.validateInput();
+            SetInput(toAdd);
+
 
             foreach (var prio in temp)
             {
-                ReadEnergyBreakpoint(prio);
+                if (ReadEnergyBreakpoint(prio))
+                {
+                    prioCount--;
+                    toAdd = (long)Math.Ceiling((double)_character.idleEnergy / prioCount);
+                    SetInput(toAdd);
+                }
             }
 
             _character.NGUController.refreshMenu();
@@ -469,12 +474,16 @@ namespace NGUInjector.AllocationProfiles
 
             var prioCount = temp.Count;
             var toAdd = (long)Math.Ceiling((double)_character.magic.idleMagic / prioCount);
-            _character.input.energyRequested.text = toAdd.ToString();
-            _character.input.validateInput();
+            SetInput(toAdd);
 
             foreach (var prio in temp)
             {
-                ReadMagicBreakpoint(prio);
+                if (ReadMagicBreakpoint(prio))
+                {
+                    prioCount--;
+                    toAdd = (long)Math.Ceiling((double)_character.magic.idleMagic / prioCount);
+                    SetInput(toAdd);
+                }
             }
 
             _character.timeMachineController.updateMenu();
@@ -509,7 +518,12 @@ namespace NGUInjector.AllocationProfiles
 
             foreach (var prio in temp)
             {
-                ReadR3Breakpoint(prio);
+                if (ReadR3Breakpoint(prio))
+                {
+                    prioCount--;
+                    toAdd = (long)Math.Ceiling((double)_character.res3.idleRes3 / prioCount);
+                    SetInput(toAdd);
+                }
             }
 
             _character.hacksController.refreshMenu();
@@ -780,47 +794,60 @@ namespace NGUInjector.AllocationProfiles
             }
         }
 
-        private void ReadR3Breakpoint(string breakpoint)
+        private void SetInput(float val)
+        {
+            _character.energyMagicPanel.energyRequested.text = val.ToString();
+            _character.input.validateInput();
+        }
+
+        private bool ReadR3Breakpoint(string breakpoint)
         {
             if (breakpoint.StartsWith("HACK"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 14)
-                {
-                    return;
-                }
+                    return true;
 
                 _character.hacksController.addR3(index, _character.input.energyMagicInput);
+                return false;
             }
 
             if (breakpoint.StartsWith("WISH"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0)
-                {
-                    return;
-                }
+                    return true;
                 var wishID = _wishManager.GetSlot(index);
                 if (wishID == -1)
-                {
-                    return;
-                }
+                    return true;
                 _character.wishesController.addRes3(wishID);
+                return false;
             }
+
+            return true;
         }
 
-        private void ReadMagicBreakpoint(string breakpoint)
+        private bool ReadMagicBreakpoint(string breakpoint)
         {
+            var input = _character.energyMagicPanel.energyMagicInput;
             if (breakpoint.Equals("CAPWAN"))
             {
                 _character.wandoos98Controller.addCapMagic();
-                return;
+                return false;
             }
 
             if (breakpoint.Equals("WAN"))
             {
+                var cap = _character.wandoos98Controller.capAmountMagic();
+                if (cap > input)
+                {
+                    SetInput(cap);
+                    _character.wandoos98Controller.addMagic();
+                    return true;
+                }
                 _character.wandoos98Controller.addMagic();
-                return;
+
+                return false;
             }
 
             if (breakpoint.StartsWith("BR"))
@@ -828,7 +855,7 @@ namespace NGUInjector.AllocationProfiles
                 if (breakpoint.Contains("-"))
                 {
                     var success = int.TryParse(breakpoint.Split('-')[1], out var index);
-                    if (!success) return;
+                    if (!success) return false;
 
                     if (index < _character.rebirthTime.totalseconds)
                     {
@@ -839,16 +866,24 @@ namespace NGUInjector.AllocationProfiles
                         CastRitualEndTime(index);
                     }
 
-                    return;
+                    return false;
                 }
 
                 CastRituals();
-                return;
+                return false;;
             }
-            if(breakpoint.StartsWith("TM"))
+
+            if (breakpoint.StartsWith("TM"))
             {
-                _character.timeMachineController.addMagic();
-                return;
+                var cap= CalculateTMMagicCap();
+                if (cap > input)
+                {
+                    SetInput(cap);
+                    _character.timeMachineController.addMagic();
+                    return true;
+                }
+
+                return false;
             }
 
             if (breakpoint.StartsWith("CAPTM"))
@@ -857,16 +892,15 @@ namespace NGUInjector.AllocationProfiles
                 if (cap < _character.magic.idleMagic)
                 {
                     Main.LogAllocation($"Allocating {cap} to MagicTM ({_character.magic.idleMagic} idle)");
-                    _character.input.energyRequested.text = cap.ToString();
+                    SetInput(cap);
                 }
                 else
                 {
                     Main.LogAllocation($"Allocating {_character.magic.idleMagic} to MagicTM ({cap} cap)");
-                    _character.input.energyRequested.text = _character.magic.idleMagic.ToString();
+                    SetInput(_character.magic.idleMagic);
                 }
-                _character.input.validateInput();
                 _character.timeMachineController.addMagic();
-                return;
+                return false;
             }
 
             if (breakpoint.StartsWith("NGU"))
@@ -874,10 +908,19 @@ namespace NGUInjector.AllocationProfiles
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 6)
                 {
-                    return;
+                    return true;
                 }
+
+                var cap = _character.NGUController.magicNGUCapAmount(index);
+                if (cap > input)
+                {
+                    SetInput(cap);
+                    _character.NGUController.NGUMagic[index].add();
+                    return true;
+                }
+
                 _character.NGUController.NGUMagic[index].add();
-                return;
+                return false;
             }
 
             if (breakpoint.StartsWith("CAPNGU"))
@@ -885,9 +928,11 @@ namespace NGUInjector.AllocationProfiles
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 6)
                 {
-                    return;
+                    return false;
                 }
+
                 _character.NGUController.NGUMagic[index].cap();
+                return false;
             }
 
             if (breakpoint.StartsWith("CAPALLNGU"))
@@ -897,33 +942,37 @@ namespace NGUInjector.AllocationProfiles
                     _character.NGUController.NGUMagic[i].cap();
                 }
 
-                return;
+                return false;
             }
 
             if (breakpoint.StartsWith("WISH"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0)
-                {
-                    return;
-                }
+                    return true;
+
                 var wishID = _wishManager.GetSlot(index);
+
                 if (wishID == -1)
-                {
-                    return;
-                }
+                    return true;
+
                 _character.wishesController.addMagic(wishID);
+                return false;
             }
+
+            return true;
         }
 
-        private void ReadEnergyBreakpoint(string breakpoint)
-        {
+        
 
+        private bool ReadEnergyBreakpoint(string breakpoint)
+        {
+            var input = _character.energyMagicPanel.energyMagicInput;
             if (breakpoint.StartsWith("CAPBT"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 11)
-                    return;
+                    return false;
 
                 if (index <= 5)
                     _character.allOffenseController.trains[index].cap();
@@ -932,13 +981,15 @@ namespace NGUInjector.AllocationProfiles
                     index -= 6;
                     _character.allDefenseController.trains[index].cap();
                 }
+
+                return false;
             }
 
             if (breakpoint.StartsWith("BT"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 11)
-                    return;
+                    return true;
 
                 if (index <= 5)
                     _character.allOffenseController.trains[index].addEnergy();
@@ -947,24 +998,40 @@ namespace NGUInjector.AllocationProfiles
                     index -= 6;
                     _character.allDefenseController.trains[index].addEnergy();
                 }
+
+                return false;
             }
 
             if (breakpoint.StartsWith("WAN"))
             {
+                var cap = _character.wandoos98Controller.capAmountEnergy();
+                if (cap > input)
+                {
+                    SetInput(cap);
+                    _character.wandoos98Controller.addEnergy();
+                    return true;
+                }
                 _character.wandoos98Controller.addEnergy();
-                return;
+                return false;
             }
 
             if (breakpoint.StartsWith("CAPWAN"))
             {
                 _character.wandoos98Controller.addCapEnergy();
-                return;
+                return false;
             }
 
             if (breakpoint.StartsWith("TM"))
             {
+                var cap = CalculateTMEnergyCap();
+                if (cap > input)
+                {
+                    SetInput(cap);
+                    _character.timeMachineController.addEnergy();
+                    return true;
+                }
                 _character.timeMachineController.addEnergy();
-                return;
+                return false;
             }
 
             if (breakpoint.StartsWith("CAPTM"))
@@ -973,27 +1040,33 @@ namespace NGUInjector.AllocationProfiles
                 if (cap < _character.idleEnergy)
                 {
                     Main.LogAllocation($"Allocating {cap} to EnergyTM ({_character.idleEnergy} idle)");
-                    _character.input.energyRequested.text = cap.ToString();
+                    SetInput(cap);
                 }
                 else
                 {
                     Main.LogAllocation($"Allocating {_character.idleEnergy} to EnergyTM ({cap} cap)");
-                    _character.input.energyRequested.text = _character.idleEnergy.ToString();
+                    SetInput(_character.idleEnergy);
                 }
-                _character.input.validateInput();
                 _character.timeMachineController.addEnergy();
-                return;
+                return false;
             }
             
             if (breakpoint.StartsWith("NGU"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 8)
+                    return true;
+
+                var cap = _character.NGUController.energyNGUCapAmount(index);
+                if (cap > input)
                 {
-                    return;
+                    SetInput(cap);
+                    _character.NGUController.NGU[index].add();
+                    return true;
                 }
+
                 _character.NGUController.NGU[index].add();
-                return;
+                return false;
             }
 
             if (breakpoint.StartsWith("CAPALLNGU"))
@@ -1003,26 +1076,31 @@ namespace NGUInjector.AllocationProfiles
                     _character.NGUController.NGU[i].cap();
                 }
 
-                return;
+                return false;
             }
 
             if (breakpoint.StartsWith("CAPNGU"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 8)
-                {
-                    return;
-                }
+                    return false;
                 _character.NGUController.NGU[index].cap();
-                return;
+
+                return false;
             }
 
             if (breakpoint.StartsWith("AT"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 4)
+                    return true;
+
+                var cap = CalculateATCap(index);
+                var reCalc = false;
+                if (input > cap)
                 {
-                    return;
+                    reCalc = true;
+                    SetInput(cap);
                 }
 
                 switch (index)
@@ -1043,16 +1121,14 @@ namespace NGUInjector.AllocationProfiles
                         _character.advancedTrainingController.wandoosMagic.addEnergy();
                         break;
                 }
-                return;
+                return reCalc;
             }
 
             if (breakpoint.StartsWith("CAPAT"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 4)
-                {
-                    return;
-                }
+                    return false;
 
                 var cap = CalculateATCap(index);
                 if (cap < _character.idleEnergy)
@@ -1085,18 +1161,25 @@ namespace NGUInjector.AllocationProfiles
                         _character.advancedTrainingController.wandoosMagic.addEnergy();
                         break;
                 }
-                return;
+                return false;
             }
 
             if (breakpoint.StartsWith("AUG"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 13)
-                {
-                    return;
-                }
+                    return true;
 
                 var augIndex = (int)Math.Floor((double)(index / 2));
+                var reCalc = false;
+
+                var cap = CalculateAugCap(index);
+
+                if (cap > input)
+                {
+                    SetInput(cap);
+                    reCalc = true;
+                }
 
                 if (index % 2 == 0)
                 {
@@ -1107,16 +1190,14 @@ namespace NGUInjector.AllocationProfiles
                     _character.augmentsController.augments[augIndex].addEnergyUpgrade();
                 }
 
-                return;
+                return reCalc;
             }
 
             if (breakpoint.StartsWith("CAPAUG"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 13)
-                {
-                    return;
-                }
+                    return false;
 
                 var augIndex = (int)Math.Floor((double)(index / 2));
 
@@ -1142,23 +1223,24 @@ namespace NGUInjector.AllocationProfiles
                 {
                     _character.augmentsController.augments[augIndex].addEnergyUpgrade();
                 }
+
+                return false;
             }
 
             if (breakpoint.StartsWith("WISH"))
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0)
-                {
-                    return;
-                }
+                    return true;
 
                 var wishID = _wishManager.GetSlot(index);
                 if (wishID == -1)
-                {
-                    return;
-                }
+                    return true;
                 _character.wishesController.addEnergy(wishID);
+                return false;
             }
+
+            return true;
         }
 
         internal float CalculateTMEnergyCap()
