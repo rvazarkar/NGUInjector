@@ -32,7 +32,7 @@ namespace NGUInjector
         private InventoryManager _invManager;
         private CombatManager _combManager;
         private QuestManager _questManager;
-        private CustomAllocation _profile;
+        private static CustomAllocation _profile;
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
         internal const string Version = "2.6.0";
@@ -40,6 +40,7 @@ namespace NGUInjector
         internal static bool Test { get; set; }
 
         private static string _dir;
+        private static string _profilesDir;
 
         private static bool _tempSwapped = false;
 
@@ -93,7 +94,12 @@ namespace NGUInjector
             CombatWriter = new StreamWriter(Path.Combine(logDir, "combat.log")) { AutoFlush = true };
             AllocationWriter = new StreamWriter(Path.Combine(logDir, "allocation.log")) { AutoFlush = true};
             PitSpinWriter = new StreamWriter(Path.Combine(logDir, "pitspin.log"), true) {AutoFlush = true};
-
+            
+            _profilesDir = Path.Combine(_dir, "profiles");
+            if (!Directory.Exists(_profilesDir))
+            {
+                Directory.CreateDirectory(_profilesDir);
+            }
             try
             {
                 Character = FindObjectOfType<Character>();
@@ -172,7 +178,8 @@ namespace NGUInjector
                         ManageR3 = true,
                         WishPriorities = new int[] {},
                         BeastMode = true,
-                        ManageNGUDiff = true
+                        ManageNGUDiff = true,
+                        AllocationFile = "default",
                     };
 
                     Settings.MassUpdate(temp);
@@ -181,8 +188,8 @@ namespace NGUInjector
                 }
                 settingsForm = new SettingsForm();
 
-                _profile = new CustomAllocation(_dir);
-                _profile.ReloadAllocation();
+                LoadAllocation();
+                LoadAllocationProfiles();
 
                 ConfigWatcher = new FileSystemWatcher
                 {
@@ -201,17 +208,21 @@ namespace NGUInjector
                     }
                     Settings.LoadSettings();
                     settingsForm.UpdateFromSettings(Settings);
+                    LoadAllocation();
                 };
 
                 AllocationWatcher = new FileSystemWatcher
                 {
-                    Path = _dir,
-                    Filter = "allocation.json",
-                    NotifyFilter = NotifyFilters.LastWrite,
+                    Path = _profilesDir,
+                    Filter = "*.json",
+                    NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName,
                     EnableRaisingEvents = true
                 };
 
                 AllocationWatcher.Changed += (sender, args) => { LoadAllocation(); };
+                AllocationWatcher.Created += (sender, args) => { LoadAllocationProfiles(); };
+                AllocationWatcher.Deleted += (sender, args) => { LoadAllocationProfiles(); };
+                AllocationWatcher.Renamed += (sender, args) => { LoadAllocationProfiles(); };
 
                 Settings.SaveSettings();
                 Settings.LoadSettings();
@@ -612,9 +623,15 @@ namespace NGUInjector
             _timeLeft = 10f;
         }
 
-        private void LoadAllocation()
+        internal static void LoadAllocation()
         {
+            _profile = new CustomAllocation(_profilesDir, Settings.AllocationFile);
             _profile.ReloadAllocation();
+        }
+
+        private void LoadAllocationProfiles() {
+            string[] files = Directory.GetFiles(_profilesDir);
+            settingsForm.UpdateProfileList(files.Select((string filePath) => Path.GetFileNameWithoutExtension(filePath)).ToArray(), Settings.AllocationFile);
         }
 
         private void SnipeZone()

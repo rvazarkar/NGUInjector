@@ -28,14 +28,15 @@ namespace NGUInjector.AllocationProfiles
         private bool _hasWandoosSwapped;
         private bool _hasNGUSwapped;
         private readonly string _allocationPath;
+        private readonly string _profileName;
         private string[] _validEnergyPriorities = { "WAN", "CAPWAN", "TM", "CAPTM", "CAPAT", "AT", "NGU", "CAPNGU", "AUG", "BT", "CAPBT", "CAPAUG", "CAPALLNGU", "BLANK", "WISH" };
         private string[] _validMagicPriorities = { "WAN", "CAPWAN", "BR", "TM", "CAPTM", "NGU", "CAPNGU", "CAPALLNGU", "BLANK", "WISH" };
         private string[] _validR3Priorities = {"HACK", "WISH"};
 
-        public CustomAllocation(string dir)
+        public CustomAllocation(string profilesDir, string profile)
         {
-            var path = Path.Combine(dir, "allocation.json");
-            _allocationPath = path;
+            _allocationPath = Path.Combine(profilesDir, profile + ".json");
+            _profileName = profile;
             _wishManager = new WishManager();
         }
 
@@ -154,6 +155,7 @@ namespace NGUInjector.AllocationProfiles
 
                     Main.Log(BuildAllocationString());
 
+
                     _currentDiggerBreakpoint = null;
                     _currentEnergyBreakpoint = null;
                     _currentGearBreakpoint = null;
@@ -251,7 +253,7 @@ namespace NGUInjector.AllocationProfiles
         private string BuildAllocationString()
         {
             var builder = new StringBuilder();
-            builder.AppendLine("Loaded Custom Allocation");
+            builder.AppendLine($"Loaded Custom Allocation from profile '{_profileName}'");
             builder.AppendLine($"{_wrapper.Breakpoints.Energy.Length} Energy Breakpoints");
             builder.AppendLine($"{_wrapper.Breakpoints.Magic.Length} Magic Breakpoints");
             builder.AppendLine($"{_wrapper.Breakpoints.R3.Length} R3 Breakpoints");

@@ -45,6 +45,10 @@
             this.AutoFightBosses = new System.Windows.Forms.CheckBox();
             this.AutoITOPOD = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ManageNGUDiff = new System.Windows.Forms.CheckBox();
+            this.ChangeProfileFile = new System.Windows.Forms.Button();
+            this.AllocationProfileFileLabel = new System.Windows.Forms.Label();
+            this.AllocationProfileFile = new System.Windows.Forms.ComboBox();
             this.ManageR3 = new System.Windows.Forms.CheckBox();
             this.BloodNumberThreshold = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -152,7 +156,6 @@
             this.goldErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.numberErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.wishErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.ManageNGUDiff = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -295,6 +298,9 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.ManageNGUDiff);
+            this.tabPage2.Controls.Add(this.ChangeProfileFile);
+            this.tabPage2.Controls.Add(this.AllocationProfileFileLabel);
+            this.tabPage2.Controls.Add(this.AllocationProfileFile);
             this.tabPage2.Controls.Add(this.ManageR3);
             this.tabPage2.Controls.Add(this.BloodNumberThreshold);
             this.tabPage2.Controls.Add(this.label18);
@@ -315,6 +321,31 @@
             resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // ManageNGUDiff
+            // 
+            resources.ApplyResources(this.ManageNGUDiff, "ManageNGUDiff");
+            this.ManageNGUDiff.Name = "ManageNGUDiff";
+            this.ManageNGUDiff.UseVisualStyleBackColor = true;
+            this.ManageNGUDiff.CheckedChanged += new System.EventHandler(this.ManageNGUDiff_CheckedChanged);
+            // 
+            // ChangeProfileFile
+            // 
+            resources.ApplyResources(this.ChangeProfileFile, "ChangeProfileFile");
+            this.ChangeProfileFile.Name = "ChangeProfileFile";
+            this.ChangeProfileFile.UseVisualStyleBackColor = true;
+            this.ChangeProfileFile.Click += new System.EventHandler(this.ChangeProfileFile_Click);
+            // 
+            // AllocationProfileFileLabel
+            // 
+            resources.ApplyResources(this.AllocationProfileFileLabel, "AllocationProfileFileLabel");
+            this.AllocationProfileFileLabel.Name = "AllocationProfileFileLabel";
+            // 
+            // AllocationProfileFile
+            // 
+            this.AllocationProfileFile.FormattingEnabled = true;
+            resources.ApplyResources(this.AllocationProfileFile, "AllocationProfileFile");
+            this.AllocationProfileFile.Name = "AllocationProfileFile";
             // 
             // ManageR3
             // 
@@ -1153,13 +1184,6 @@
             // 
             this.wishErrorProvider.ContainerControl = this;
             // 
-            // ManageNGUDiff
-            // 
-            resources.ApplyResources(this.ManageNGUDiff, "ManageNGUDiff");
-            this.ManageNGUDiff.Name = "ManageNGUDiff";
-            this.ManageNGUDiff.UseVisualStyleBackColor = true;
-            this.ManageNGUDiff.CheckedChanged += new System.EventHandler(this.ManageNGUDiff_CheckedChanged);
-            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1333,5 +1357,8 @@
         private System.Windows.Forms.ComboBox CubePriority;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.CheckBox ManageNGUDiff;
+        private System.Windows.Forms.ComboBox AllocationProfileFile;
+        private System.Windows.Forms.Label AllocationProfileFileLabel;
+        private System.Windows.Forms.Button ChangeProfileFile;
     }
 }
