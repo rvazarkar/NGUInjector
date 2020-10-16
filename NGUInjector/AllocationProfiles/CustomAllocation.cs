@@ -162,6 +162,8 @@ namespace NGUInjector.AllocationProfiles
                     _currentR3Breakpoint = null;
                     _currentNguBreakpoint = null;
 
+                    if (Main.Settings.ManageNGUDiff)
+                        SwapNGUDiff();
                     if (Main.Settings.ManageEnergy) _character.removeMostEnergy();
 
                     if (Main.Settings.ManageR3) _character.removeAllRes3();
@@ -178,8 +180,7 @@ namespace NGUInjector.AllocationProfiles
                         EquipDiggers();
                     if (Main.Settings.ManageR3 && Main.Character.buttons.hacks.interactable)
                         AllocateR3();
-                    if (Main.Settings.ManageNGUDiff)
-                        SwapNGUDiff();
+                    
                 }
                 catch (Exception e)
                 {
@@ -962,8 +963,6 @@ namespace NGUInjector.AllocationProfiles
 
             return true;
         }
-
-        
 
         private bool ReadEnergyBreakpoint(string breakpoint)
         {
