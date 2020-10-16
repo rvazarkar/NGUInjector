@@ -292,8 +292,9 @@ namespace NGUInjector
 
         internal void UpdateProfileList(string[] profileList, string selectedProfile)
         {
+            AllocationProfileFile.DataSource = null;
             AllocationProfileFile.DataSource = new BindingSource(profileList, null);
-            AllocationProfileFile.SelectedText = selectedProfile;
+            AllocationProfileFile.SelectedItem = selectedProfile;
         }
 
         internal void UpdateProgressBar(int progress)

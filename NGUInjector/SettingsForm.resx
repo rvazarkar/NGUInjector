@@ -436,7 +436,7 @@
     <value>True</value>
   </data>
   <data name="ManageNGUDiff.Location" type="System.Drawing.Point, System.Drawing">
-    <value>228, 64</value>
+    <value>124, 64</value>
   </data>
   <data name="ManageNGUDiff.Size" type="System.Drawing.Size, System.Drawing">
     <value>135, 17</value>
@@ -460,7 +460,7 @@
     <value>0</value>
   </data>
   <data name="ChangeProfileFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>419, 12</value>
+    <value>421, 12</value>
   </data>
   <data name="ChangeProfileFile.Size" type="System.Drawing.Size, System.Drawing">
     <value>107, 23</value>
@@ -490,13 +490,13 @@
     <value>16, 17</value>
   </data>
   <data name="AllocationProfileFileLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 13</value>
+    <value>85, 13</value>
   </data>
   <data name="AllocationProfileFileLabel.TabIndex" type="System.Int32, mscorlib">
     <value>18</value>
   </data>
   <data name="AllocationProfileFileLabel.Text" xml:space="preserve">
-    <value>Allocation profile file</value>
+    <value>Allocation Profile</value>
   </data>
   <data name="&gt;&gt;AllocationProfileFileLabel.Name" xml:space="preserve">
     <value>AllocationProfileFileLabel</value>
@@ -511,7 +511,7 @@
     <value>2</value>
   </data>
   <data name="AllocationProfileFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>122, 14</value>
+    <value>124, 14</value>
   </data>
   <data name="AllocationProfileFile.Size" type="System.Drawing.Size, System.Drawing">
     <value>291, 21</value>

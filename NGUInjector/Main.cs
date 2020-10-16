@@ -100,6 +100,15 @@ namespace NGUInjector
             {
                 Directory.CreateDirectory(_profilesDir);
             }
+
+            var oldPath = Path.Combine(_dir, "allocation.json");
+            
+            if (File.Exists(oldPath))
+            {
+                var newPath = Path.Combine(_profilesDir, "default.json");
+                File.Move(oldPath, newPath);
+            }
+
             try
             {
                 Character = FindObjectOfType<Character>();
@@ -186,7 +195,15 @@ namespace NGUInjector
 
                     Log($"Created default settings");
                 }
+
                 settingsForm = new SettingsForm();
+
+                if (string.IsNullOrEmpty(Settings.AllocationFile))
+                {
+                    var temp = Settings;
+                    temp.AllocationFile = "default";
+                    Settings.MassUpdate(temp);
+                }
 
                 LoadAllocation();
                 LoadAllocationProfiles();
@@ -629,9 +646,9 @@ namespace NGUInjector
             _profile.ReloadAllocation();
         }
 
-        private void LoadAllocationProfiles() {
-            string[] files = Directory.GetFiles(_profilesDir);
-            settingsForm.UpdateProfileList(files.Select((string filePath) => Path.GetFileNameWithoutExtension(filePath)).ToArray(), Settings.AllocationFile);
+        private static void LoadAllocationProfiles() {
+            var files = Directory.GetFiles(_profilesDir);
+            settingsForm.UpdateProfileList(files.Select(Path.GetFileNameWithoutExtension).ToArray(), Settings.AllocationFile);
         }
 
         private void SnipeZone()
