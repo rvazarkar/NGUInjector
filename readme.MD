@@ -129,7 +129,9 @@ An in game menu can be opened using the F1 button.
 
 # Allocation
 
-The allocation.json file is a JSON file that contains time breakpoints for configuring your gear, diggers, energy allocation and magic allocation. A sample allocation file can be found in the sampleprofile folder or on the repo [here](https://github.com/rvazarkar/NGUInjector/blob/master/NGUInjector/SampleProfiles/24hr_with_gear.json).
+The allocation.json file is a JSON file that contains time breakpoints for configuring your gear, diggers, energy allocation and magic allocation. Sample allocation files can be found in the sampleprofile folder.
+
+[Sample 24 Hour Profile](https://github.com/rvazarkar/NGUInjector/blob/master/NGUInjector/SampleProfiles/24hr_with_gear.json).
 
 The time portion of every breakpoint refers to rebirth time in seconds.
 
@@ -173,7 +175,7 @@ Available non-cap priorities for Energy are as follows:
 - WAN - Allocate energy to energy wandoos
 - TM - Allocate energy to energy time machine
 - BT-X (0-11) - Allocate energy to basic training
-- WISH-X (0-223) - Allocate energy to wish
+- WISH-X (0-X) - Allocate energy to wish. X is the wish slot you wish to allocate too. If you only have 1 slot, WISH-0 will be the one you use. Wishes will follow the priority set in the WishPriorities setting and then work through cheapest wishes
 
 More information on allocation indexes can be found on the [wiki](https://github.com/rvazarkar/NGUInjector/wiki/Allocation-Indexes)
 
@@ -213,7 +215,7 @@ Available non-cap priorities for Magic are as follows:
 - NGU-X (0-6) - Allocate energy to NGU
 - WAN - Allocate energy to magic wandoos
 - TM - Allocate energy to magic time machine
-- WISH-X (0-223) - Allocate energy to wish
+- WISH-X (0-X) - Allocate magic to wishes. X is the wish slot you wish to allocate too. If you only have 1 slot, WISH-0 will be the one you use. Wishes will follow the priority set in the WishPriorities setting and then work through cheapest wishes
 
 More information on allocation indexes can be found on the [wiki](https://github.com/rvazarkar/NGUInjector/wiki/Allocation-Indexes)
 
@@ -231,7 +233,7 @@ An R3 breakpoint is structured as follows:
 Available priorities for R3 are as follows:
 
 - HACK-X (0-13) - Allocate R3 to hacks
-- WISH-X (0-223) - Allocate R3 to wishes
+- WISH-X (0-X) - Allocate R3 to wishes. X is the wish slot you wish to allocate too. If you only have 1 slot, WISH-0 will be the one you use. Wishes will follow the priority set in the WishPriorities setting and then work through cheapest wishes
 
 ## Gear
 

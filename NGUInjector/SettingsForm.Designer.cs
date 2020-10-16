@@ -45,6 +45,7 @@
             this.AutoFightBosses = new System.Windows.Forms.CheckBox();
             this.AutoITOPOD = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ManageNGUDiff = new System.Windows.Forms.CheckBox();
             this.ChangeProfileFile = new System.Windows.Forms.Button();
             this.AllocationProfileFileLabel = new System.Windows.Forms.Label();
             this.AllocationProfileFile = new System.Windows.Forms.ComboBox();
@@ -296,6 +297,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.ManageNGUDiff);
             this.tabPage2.Controls.Add(this.ChangeProfileFile);
             this.tabPage2.Controls.Add(this.AllocationProfileFileLabel);
             this.tabPage2.Controls.Add(this.AllocationProfileFile);
@@ -319,6 +321,13 @@
             resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // ManageNGUDiff
+            // 
+            resources.ApplyResources(this.ManageNGUDiff, "ManageNGUDiff");
+            this.ManageNGUDiff.Name = "ManageNGUDiff";
+            this.ManageNGUDiff.UseVisualStyleBackColor = true;
+            this.ManageNGUDiff.CheckedChanged += new System.EventHandler(this.ManageNGUDiff_CheckedChanged);
             // 
             // ChangeProfileFile
             // 
@@ -1347,6 +1356,7 @@
         private System.Windows.Forms.CheckBox BeastMode;
         private System.Windows.Forms.ComboBox CubePriority;
         private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.CheckBox ManageNGUDiff;
         private System.Windows.Forms.ComboBox AllocationProfileFile;
         private System.Windows.Forms.Label AllocationProfileFileLabel;
         private System.Windows.Forms.Button ChangeProfileFile;

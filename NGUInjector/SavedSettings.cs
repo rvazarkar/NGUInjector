@@ -67,10 +67,11 @@ namespace NGUInjector
         [SerializeField] private int[] _wishPriorities;
         [SerializeField] private bool _beastMode;
         [SerializeField] private int _cubePriority;
+        [SerializeField] private bool _manageNguDiff;
         [SerializeField] private string _allocationFile;
 
         private readonly string _savePath;
-        
+
         public SavedSettings(string dir)
         {
             if (dir != null)
@@ -182,6 +183,7 @@ namespace NGUInjector
             _wishPriorities = other.WishPriorities;
             _beastMode = other.BeastMode;
             _cubePriority = other.CubePriority;
+            _manageNguDiff = other.ManageNGUDiff;
             _allocationFile = other.AllocationFile;
         }
 
@@ -765,6 +767,17 @@ namespace NGUInjector
             {
                 if (value == _cubePriority) return;
                 _cubePriority = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ManageNGUDiff
+        {
+            get => _manageNguDiff;
+            set
+            {
+                if (value == _manageNguDiff) return;
+                _manageNguDiff = value;
                 SaveSettings();
             }
         }

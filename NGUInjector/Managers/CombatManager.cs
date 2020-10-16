@@ -75,6 +75,15 @@ namespace NGUInjector.Managers
                 }
             }
 
+            if (ai == AI.exploder && ac.currentEnemy.attackRate - eai.GetPV<float>("enemyAttackTimer") < 1)
+            {
+                if (ac.blockMove.button.IsInteractable())
+                {
+                    ac.blockMove.doMove();
+                    return true;
+                }
+            }
+
             if (ac.currentEnemy.curHP / ac.currentEnemy.maxHP < .2)
             {
                 return false;
@@ -121,7 +130,7 @@ namespace NGUInjector.Managers
                     return true;
             }
 
-            if (ai != AI.charger && ai != AI.rapid && !UltimateBuffActive() && !DefenseBuffActive())
+            if (ai != AI.charger && ai != AI.rapid && ai != AI.exploder && !UltimateBuffActive() && !DefenseBuffActive())
             {
                 if (!BlockActive())
                 {
@@ -276,10 +285,9 @@ namespace NGUInjector.Managers
                 return;
 
             //Check if we're in the right zone, if not move there
-            if (IsZoneUnlocked(zone) && _character.adventure.zone != zone)
+            if (_character.adventure.zone != zone && _character.adventure.zone != -1)
             {
-                MoveToZone(zone);
-                return;
+                MoveToZone(-1);
             }
 
             //Wait for an enemy to spawn
