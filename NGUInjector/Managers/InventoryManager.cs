@@ -289,6 +289,7 @@ namespace NGUInjector.Managers
 
         internal void ManageConvertibles(ih[] ci)
         {
+            var curPage = (int)Math.Floor((double)_controller.inventory[0].id / 60);
             var grouped = ci.Where(x => _convertibles.Contains(x.id));
             foreach (var item in grouped)
             {
@@ -300,6 +301,7 @@ namespace NGUInjector.Managers
                 typeof(ItemController).GetMethod("consumeItem", BindingFlags.NonPublic | BindingFlags.Instance)
                     ?.Invoke(ic, null);
             }
+            _controller.changePage(curPage);
         }
 
         internal void ShowBoostProgress(ih[] boostSlots)
