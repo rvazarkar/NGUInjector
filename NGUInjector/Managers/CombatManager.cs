@@ -276,10 +276,9 @@ namespace NGUInjector.Managers
                 return;
 
             //Check if we're in the right zone, if not move there
-            if (IsZoneUnlocked(zone) && _character.adventure.zone != zone)
+            if (_character.adventure.zone != zone && _character.adventure.zone != -1)
             {
-                MoveToZone(zone);
-                return;
+                MoveToZone(-1);
             }
 
             //Wait for an enemy to spawn
