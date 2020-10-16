@@ -75,6 +75,15 @@ namespace NGUInjector.Managers
                 }
             }
 
+            if (ai == AI.exploder && ac.currentEnemy.attackRate - eai.GetPV<float>("enemyAttackTimer") < 1)
+            {
+                if (ac.blockMove.button.IsInteractable())
+                {
+                    ac.blockMove.doMove();
+                    return true;
+                }
+            }
+
             if (ac.currentEnemy.curHP / ac.currentEnemy.maxHP < .2)
             {
                 return false;
@@ -121,7 +130,7 @@ namespace NGUInjector.Managers
                     return true;
             }
 
-            if (ai != AI.charger && ai != AI.rapid && !UltimateBuffActive() && !DefenseBuffActive())
+            if (ai != AI.charger && ai != AI.rapid && ai != AI.exploder && !UltimateBuffActive() && !DefenseBuffActive())
             {
                 if (!BlockActive())
                 {
