@@ -284,9 +284,15 @@ namespace NGUInjector
             {
                 WishPriority.Items.Clear();
             }
-            
+
             Refresh();
             _initializing = false;
+        }
+
+        internal void UpdateProfileList(string[] profileList, string selectedProfile)
+        {
+            AllocationProfileFile.DataSource = new BindingSource(profileList, null);
+            AllocationProfileFile.SelectedText = selectedProfile;
         }
 
         internal void UpdateProgressBar(int progress)
@@ -1081,6 +1087,13 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.CubePriority = CubePriority.SelectedIndex;
+        }
+
+        private void ChangeProfileFile_Click(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.AllocationFile = AllocationProfileFile.SelectedItem.ToString();
+            Main.LoadAllocation();
         }
     }
 }

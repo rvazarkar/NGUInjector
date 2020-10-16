@@ -67,6 +67,7 @@ namespace NGUInjector
         [SerializeField] private int[] _wishPriorities;
         [SerializeField] private bool _beastMode;
         [SerializeField] private int _cubePriority;
+        [SerializeField] private string _allocationFile;
 
         private readonly string _savePath;
         
@@ -181,6 +182,7 @@ namespace NGUInjector
             _wishPriorities = other.WishPriorities;
             _beastMode = other.BeastMode;
             _cubePriority = other.CubePriority;
+            _allocationFile = other.AllocationFile;
         }
 
         public int HighestAKZone
@@ -763,6 +765,17 @@ namespace NGUInjector
             {
                 if (value == _cubePriority) return;
                 _cubePriority = value;
+                SaveSettings();
+            }
+        }
+
+        public string AllocationFile
+        {
+            get => _allocationFile;
+            set
+            {
+                if (value == _allocationFile) return;
+                _allocationFile = value;
                 SaveSettings();
             }
         }

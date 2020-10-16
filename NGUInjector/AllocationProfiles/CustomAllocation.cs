@@ -24,14 +24,15 @@ namespace NGUInjector.AllocationProfiles
         private bool _hasDiggerSwapped;
         private bool _hasWandoosSwapped;
         private readonly string _allocationPath;
+        private readonly string _profileName;
         private string[] _validEnergyPriorities = { "WAN", "CAPWAN", "TM", "CAPTM", "CAPAT", "AT", "NGU", "CAPNGU", "AUG", "BT", "CAPBT", "CAPAUG", "CAPALLNGU", "BLANK", "WISH" };
         private string[] _validMagicPriorities = { "WAN", "CAPWAN", "BR", "TM", "CAPTM", "NGU", "CAPNGU", "CAPALLNGU", "BLANK", "WISH" };
         private string[] _validR3Priorities = {"HACK", "WISH"};
 
-        public CustomAllocation(string dir)
+        public CustomAllocation(string profilesDir, string profile)
         {
-            var path = Path.Combine(dir, "allocation.json");
-            _allocationPath = path;
+            _allocationPath = Path.Combine(profilesDir, profile + ".json");
+            _profileName = profile;
             _wishManager = new WishManager();
         }
 
@@ -111,15 +112,16 @@ namespace NGUInjector.AllocationProfiles
                         _wrapper.Breakpoints.RebirthTime = -1;
                         Main.Log("Invalid rebirth time in allocation. Rebirth disabled");
                     }
-
+                    var msg = $"Loaded custom allocation from profile '{_profileName}':\n{_wrapper.Breakpoints.Energy.Length} energy breakpoints\n{_wrapper.Breakpoints.Magic.Length} magic breakpoints\n{_wrapper.Breakpoints.R3.Length} R3 breakpoints\n{_wrapper.Breakpoints.Gear.Length} gear breakpoints\n{_wrapper.Breakpoints.Diggers.Length} digger breakpoints,\n{_wrapper.Breakpoints.Wandoos.Length} wandoos OS breakpoints.\n";
                     if (_wrapper.Breakpoints.RebirthTime > 0)
                     {
-                        Main.Log($"Loaded custom allocation:\n{_wrapper.Breakpoints.Energy.Length} energy breakpoints\n{_wrapper.Breakpoints.Magic.Length} magic breakpoints\n{_wrapper.Breakpoints.R3.Length} R3 breakpoints\n{_wrapper.Breakpoints.Gear.Length} gear breakpoints\n{_wrapper.Breakpoints.Diggers.Length} digger breakpoints,\n{_wrapper.Breakpoints.Wandoos.Length} wandoos OS breakpoints. \nRebirth at {_wrapper.Breakpoints.RebirthTime}");
+                       msg += $"Rebirth at {_wrapper.Breakpoints.RebirthTime}";
                     }
                     else
                     {
-                        Main.Log($"Loaded custom allocation:\n{_wrapper.Breakpoints.Energy.Length} energy breakpoints\n{_wrapper.Breakpoints.Magic.Length} magic breakpoints\n{_wrapper.Breakpoints.R3.Length} R3 breakpoints\n{_wrapper.Breakpoints.Gear.Length} gear breakpoints\n{_wrapper.Breakpoints.Diggers.Length} digger breakpoints.\n{_wrapper.Breakpoints.Wandoos.Length} wandoos OS breakpoints. \nNo rebirth time specified");
+                        msg += $"No rebirth time specified";
                     }
+                    Main.Log(msg);
 
                     _currentDiggerBreakpoint = null;
                     _currentEnergyBreakpoint = null;
