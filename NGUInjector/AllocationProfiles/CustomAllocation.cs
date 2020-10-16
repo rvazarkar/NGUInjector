@@ -839,7 +839,7 @@ namespace NGUInjector.AllocationProfiles
             if (breakpoint.Equals("WAN"))
             {
                 var cap = _character.wandoos98Controller.capAmountMagic();
-                if (cap > input)
+                if (input > cap)
                 {
                     SetInput(cap);
                     _character.wandoos98Controller.addMagic();
@@ -876,7 +876,7 @@ namespace NGUInjector.AllocationProfiles
             if (breakpoint.StartsWith("TM"))
             {
                 var cap= CalculateTMMagicCap();
-                if (cap > input)
+                if (input > cap)
                 {
                     SetInput(cap);
                     _character.timeMachineController.addMagic();
@@ -912,7 +912,7 @@ namespace NGUInjector.AllocationProfiles
                 }
 
                 var cap = _character.NGUController.magicNGUCapAmount(index);
-                if (cap > input)
+                if (input > cap)
                 {
                     SetInput(cap);
                     _character.NGUController.NGUMagic[index].add();
@@ -1005,7 +1005,7 @@ namespace NGUInjector.AllocationProfiles
             if (breakpoint.StartsWith("WAN"))
             {
                 var cap = _character.wandoos98Controller.capAmountEnergy();
-                if (cap > input)
+                if (input > cap)
                 {
                     SetInput(cap);
                     _character.wandoos98Controller.addEnergy();
@@ -1024,7 +1024,7 @@ namespace NGUInjector.AllocationProfiles
             if (breakpoint.StartsWith("TM"))
             {
                 var cap = CalculateTMEnergyCap();
-                if (cap > input)
+                if (input > cap)
                 {
                     SetInput(cap);
                     _character.timeMachineController.addEnergy();
@@ -1056,9 +1056,9 @@ namespace NGUInjector.AllocationProfiles
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 8)
                     return true;
-
+                
                 var cap = _character.NGUController.energyNGUCapAmount(index);
-                if (cap > input)
+                if (input > cap)
                 {
                     SetInput(cap);
                     _character.NGUController.NGU[index].add();
@@ -1175,7 +1175,7 @@ namespace NGUInjector.AllocationProfiles
 
                 var cap = CalculateAugCap(index);
 
-                if (cap > input)
+                if (input > cap)
                 {
                     SetInput(cap);
                     reCalc = true;
