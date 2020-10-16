@@ -43,9 +43,9 @@ namespace NGUInjector.Managers
             }
 
             if (bossId > Main.Settings.HighestAKZone)
-            {
                 return result;
-            }
+            if (TitanZones[bossId] > getMaxReachableZone(true))
+                return result;
 
             var controller = Main.Character.adventureController;
             var adventure = Main.Character.adventure;
@@ -76,18 +76,16 @@ namespace NGUInjector.Managers
             return result;
         }
 
-        internal static int getMaxReachableZone()
+        internal static int getMaxReachableZone(bool includingTitans)
         {
-            int tempZone = 0;
             for (var i = Main.Character.adventureController.zoneDropdown.options.Count - 2; i >= 0; i--)
             {
                 if (!ZoneIsTitan(i))
-                {
-                    tempZone = i;
-                    break;
-                }
+                    return i;
+                else if (includingTitans)
+                    return i;
             }
-            return tempZone;
+            return 0;
         }
 
     }

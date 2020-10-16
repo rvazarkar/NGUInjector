@@ -625,17 +625,20 @@ namespace NGUInjector
             if (Character.machine.realBaseGold == 0.0 && !Settings.NextGoldSwap)
             {
                 Log("Time Machine Gold is 0. Lets reset gold snipe zone.");
-                Settings.GoldZone = 0;
                 ZoneHelpers.ResetTitanDrops();
+                Settings.GoldZone = 0;
+                Settings.NextGoldSwap = true;
+                settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
             }
 
             //This logic should trigger only if Time Machine is ready
             if (Character.buttons.brokenTimeMachine.interactable)
             {
-                if (Settings.GoldZone < ZoneHelpers.getMaxReachableZone())
+                var maxZone = ZoneHelpers.getMaxReachableZone(false);
+                if (Settings.GoldZone < maxZone)
                 {
+                    Settings.GoldZone = maxZone;
                     Settings.NextGoldSwap = true;
-                    Settings.GoldZone = ZoneHelpers.getMaxReachableZone();
                     settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
                 }
                 //Go to our gold loadout zone next to get a high gold drop
@@ -678,7 +681,7 @@ namespace NGUInjector
                     if (!Settings.AllowZoneFallback)
                         return;
 
-                    tempZone = ZoneHelpers.getMaxReachableZone();
+                    tempZone = ZoneHelpers.getMaxReachableZone(false);
                 }
                 else
                 {
