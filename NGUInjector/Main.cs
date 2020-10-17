@@ -655,7 +655,6 @@ namespace NGUInjector
         {
             if (!Settings.GlobalEnabled)
                 return;
-
             //If tm ever drops to 0, reset our gold loadout stuff
             if (Character.machine.realBaseGold == 0.0 && !Settings.NextGoldSwap)
             {
@@ -670,15 +669,21 @@ namespace NGUInjector
             if (Character.buttons.brokenTimeMachine.interactable)
             {
                 var maxZone = ZoneHelpers.getMaxReachableZone(false);
+                while (!ZoneHelpers.canSnipeZone(maxZone) || ZoneHelpers.ZoneIsTitan(maxZone))
+                {
+                    maxZone--;
+                }
                 if (Settings.GoldZone < maxZone)
                 {
                     Settings.GoldZone = maxZone;
                     Settings.NextGoldSwap = true;
                     settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
+                    Log($"Setting new gold snipe zone to {maxZone}");
                 }
                 //Go to our gold loadout zone next to get a high gold drop
                 if (Settings.NextGoldSwap)
                 {
+                    ;
                     if (LoadoutManager.TryGoldDropSwap())
                     {
                         _combManager.ManualZone(Settings.GoldZone, true, false, false, false);
