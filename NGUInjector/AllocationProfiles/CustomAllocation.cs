@@ -106,46 +106,50 @@ namespace NGUInjector.AllocationProfiles
 
                     _wrapper.Breakpoints.Magic = breakpoints["Magic"].Children.Select(bp => new AllocationBreakPoint
                     {
-                        Time = bp["Time"].AsInt,
+                        Time = ParseTime(bp["Time"]),
                         Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value.ToUpper())
                             .Where(x => _validMagicPriorities.Any(x.StartsWith)).ToArray()
                     }).OrderByDescending(x => x.Time).ToArray();
 
                     _wrapper.Breakpoints.Energy = breakpoints["Energy"].Children.Select(bp => new AllocationBreakPoint
                     {
-                        Time = bp["Time"].AsInt,
+                        Time = ParseTime(bp["Time"]),
                         Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value.ToUpper())
                             .Where(x => _validEnergyPriorities.Any(x.StartsWith)).ToArray()
                     }).OrderByDescending(x => x.Time).ToArray();
 
                     _wrapper.Breakpoints.R3 = breakpoints["R3"].Children.Select(bp => new AllocationBreakPoint
                     {
-                        Time = bp["Time"].AsInt,
+                        Time = ParseTime(bp["Time"]),
                         Priorities = bp["Priorities"].AsArray.Children.Select(x => x.Value.ToUpper())
                             .Where(x => _validR3Priorities.Any(x.StartsWith)).ToArray()
                     }).OrderByDescending(x => x.Time).ToArray();
 
-                    _wrapper.Breakpoints.Gear = breakpoints["Gear"].Children
-                        .Select(bp => new GearBreakpoint
-                            {Time = bp["Time"].AsInt, Gear = bp["ID"].AsArray.Children.Select(x => x.AsInt).ToArray()})
-                        .OrderByDescending(x => x.Time).ToArray();
+                    _wrapper.Breakpoints.Gear = breakpoints["Gear"].Children.Select(bp => new GearBreakpoint
+                    {
+                        Time = ParseTime(bp["Time"]),
+                        Gear = bp["ID"].AsArray.Children.Select(x => x.AsInt).ToArray()
+                    }).OrderByDescending(x => x.Time).ToArray();
 
-                    _wrapper.Breakpoints.Diggers = breakpoints["Diggers"].Children
-                        .Select(bp => new DiggerBreakpoint
-                        {
-                            Time = bp["Time"].AsInt,
-                            Diggers = bp["List"].AsArray.Children.Select(x => x.AsInt).ToArray()
-                        }).OrderByDescending(x => x.Time).ToArray();
+                    _wrapper.Breakpoints.Diggers = breakpoints["Diggers"].Children.Select(bp => new DiggerBreakpoint
+                    {
+                        Time = ParseTime(bp["Time"]),
+                        Diggers = bp["List"].AsArray.Children.Select(x => x.AsInt).ToArray()
+                    }).OrderByDescending(x => x.Time).ToArray();
 
-                    _wrapper.Breakpoints.Wandoos = breakpoints["Wandoos"].Children
-                        .Select(bp => new WandoosBreakpoint {Time = bp["Time"].AsInt, OS = bp["OS"].AsInt})
-                        .OrderByDescending(x => x.Time).ToArray();
+                    _wrapper.Breakpoints.Wandoos = breakpoints["Wandoos"].Children.Select(bp => new WandoosBreakpoint
+                    {
+                        Time = ParseTime(bp["Time"]),
+                        OS = bp["OS"].AsInt
+                    }).OrderByDescending(x => x.Time).ToArray();
 
-                    _wrapper.Breakpoints.RebirthTime = breakpoints["RebirthTime"].AsInt;
+                    _wrapper.Breakpoints.RebirthTime = ParseTime(breakpoints["RebirthTime"]);
 
-                    _wrapper.Breakpoints.NGUBreakpoints = breakpoints["NGUDiff"].Children
-                        .Select(bp => new NGUDiffBreakpoint {Time = bp["Time"], Diff = bp["Diff"].AsInt})
-                        .Where(x => x.Diff <= 2).OrderByDescending(x => x.Time).ToArray();
+                    _wrapper.Breakpoints.NGUBreakpoints = breakpoints["NGUDiff"].Children.Select(bp => new NGUDiffBreakpoint
+                    {
+                        Time = ParseTime(bp["Time"]),
+                        Diff = bp["Diff"].AsInt
+                    }).Where(x => x.Diff <= 2).OrderByDescending(x => x.Time).ToArray();
 
                     if (_wrapper.Breakpoints.RebirthTime < 180 && _wrapper.Breakpoints.RebirthTime != -1)
                     {
@@ -1483,6 +1487,11 @@ namespace NGUInjector.AllocationProfiles
             var success = int.TryParse(prio.Split('-')[1], out var index);
             if (success) return index;
             return -1;
+        }
+
+        private int ParseTime(SimpleJSON.JSONNode timeNode)
+        {
+            return timeNode.AsInt;
         }
     }
 
