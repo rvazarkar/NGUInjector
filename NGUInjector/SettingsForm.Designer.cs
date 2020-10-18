@@ -118,6 +118,14 @@
             this.BossesOnly = new System.Windows.Forms.CheckBox();
             this.CombatActive = new System.Windows.Forms.CheckBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.ResetTitanStatus = new System.Windows.Forms.Button();
+            this.label21 = new System.Windows.Forms.Label();
+            this.TitanGoldTargets = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.SaveResnipeButton = new System.Windows.Forms.Button();
+            this.ResnipeInput = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
+            this.ManageGoldLoadouts = new System.Windows.Forms.CheckBox();
             this.UseGoldLoadout = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.GoldLoadoutRemove = new System.Windows.Forms.Button();
@@ -125,8 +133,6 @@
             this.GoldItemLabel = new System.Windows.Forms.Label();
             this.GoldLoadoutAdd = new System.Windows.Forms.Button();
             this.GoldLoadout = new System.Windows.Forms.ListBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.GoldLoadoutZone = new System.Windows.Forms.ComboBox();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.ButterMinors = new System.Windows.Forms.CheckBox();
             this.ButterMajors = new System.Windows.Forms.CheckBox();
@@ -171,6 +177,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.titanAddItem)).BeginInit();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ResnipeInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GoldItemBox)).BeginInit();
             this.tabPage8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AbandonMinorThreshold)).BeginInit();
@@ -895,6 +902,13 @@
             // 
             // tabPage7
             // 
+            this.tabPage7.Controls.Add(this.ResetTitanStatus);
+            this.tabPage7.Controls.Add(this.label21);
+            this.tabPage7.Controls.Add(this.TitanGoldTargets);
+            this.tabPage7.Controls.Add(this.SaveResnipeButton);
+            this.tabPage7.Controls.Add(this.ResnipeInput);
+            this.tabPage7.Controls.Add(this.label10);
+            this.tabPage7.Controls.Add(this.ManageGoldLoadouts);
             this.tabPage7.Controls.Add(this.UseGoldLoadout);
             this.tabPage7.Controls.Add(this.label11);
             this.tabPage7.Controls.Add(this.GoldLoadoutRemove);
@@ -902,11 +916,66 @@
             this.tabPage7.Controls.Add(this.GoldItemLabel);
             this.tabPage7.Controls.Add(this.GoldLoadoutAdd);
             this.tabPage7.Controls.Add(this.GoldLoadout);
-            this.tabPage7.Controls.Add(this.label9);
-            this.tabPage7.Controls.Add(this.GoldLoadoutZone);
             resources.ApplyResources(this.tabPage7, "tabPage7");
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // ResetTitanStatus
+            // 
+            resources.ApplyResources(this.ResetTitanStatus, "ResetTitanStatus");
+            this.ResetTitanStatus.Name = "ResetTitanStatus";
+            this.ResetTitanStatus.UseVisualStyleBackColor = true;
+            this.ResetTitanStatus.Click += new System.EventHandler(this.ResetTitanStatus_Click);
+            // 
+            // label21
+            // 
+            resources.ApplyResources(this.label21, "label21");
+            this.label21.Name = "label21";
+            // 
+            // TitanGoldTargets
+            // 
+            this.TitanGoldTargets.CheckBoxes = true;
+            this.TitanGoldTargets.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.TitanGoldTargets.HideSelection = false;
+            resources.ApplyResources(this.TitanGoldTargets, "TitanGoldTargets");
+            this.TitanGoldTargets.Name = "TitanGoldTargets";
+            this.TitanGoldTargets.UseCompatibleStateImageBehavior = false;
+            this.TitanGoldTargets.View = System.Windows.Forms.View.Details;
+            this.TitanGoldTargets.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.TitanGoldTargets_ItemChecked);
+            // 
+            // columnHeader1
+            // 
+            resources.ApplyResources(this.columnHeader1, "columnHeader1");
+            // 
+            // SaveResnipeButton
+            // 
+            resources.ApplyResources(this.SaveResnipeButton, "SaveResnipeButton");
+            this.SaveResnipeButton.Name = "SaveResnipeButton";
+            this.SaveResnipeButton.UseVisualStyleBackColor = true;
+            this.SaveResnipeButton.Click += new System.EventHandler(this.SaveResnipeButton_Click);
+            // 
+            // ResnipeInput
+            // 
+            resources.ApplyResources(this.ResnipeInput, "ResnipeInput");
+            this.ResnipeInput.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
+            this.ResnipeInput.Name = "ResnipeInput";
+            // 
+            // label10
+            // 
+            resources.ApplyResources(this.label10, "label10");
+            this.label10.Name = "label10";
+            // 
+            // ManageGoldLoadouts
+            // 
+            resources.ApplyResources(this.ManageGoldLoadouts, "ManageGoldLoadouts");
+            this.ManageGoldLoadouts.Name = "ManageGoldLoadouts";
+            this.ManageGoldLoadouts.UseVisualStyleBackColor = true;
+            this.ManageGoldLoadouts.CheckedChanged += new System.EventHandler(this.ManageGoldLoadouts_CheckedChanged);
             // 
             // UseGoldLoadout
             // 
@@ -963,21 +1032,6 @@
             resources.GetString("GoldLoadout.Items1")});
             resources.ApplyResources(this.GoldLoadout, "GoldLoadout");
             this.GoldLoadout.Name = "GoldLoadout";
-            // 
-            // label9
-            // 
-            resources.ApplyResources(this.label9, "label9");
-            this.label9.Name = "label9";
-            // 
-            // GoldLoadoutZone
-            // 
-            resources.ApplyResources(this.GoldLoadoutZone, "GoldLoadoutZone");
-            this.GoldLoadoutZone.FormattingEnabled = true;
-            this.GoldLoadoutZone.Items.AddRange(new object[] {
-            resources.GetString("GoldLoadoutZone.Items"),
-            resources.GetString("GoldLoadoutZone.Items1")});
-            this.GoldLoadoutZone.Name = "GoldLoadoutZone";
-            this.GoldLoadoutZone.SelectedIndexChanged += new System.EventHandler(this.GoldLoadoutZone_SelectedIndexChanged);
             // 
             // tabPage8
             // 
@@ -1213,6 +1267,7 @@
             this.tabPage6.PerformLayout();
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ResnipeInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GoldItemBox)).EndInit();
             this.tabPage8.ResumeLayout(false);
             this.tabPage8.PerformLayout();
@@ -1294,8 +1349,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox CombatTargetZone;
         private System.Windows.Forms.TabPage tabPage7;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox GoldLoadoutZone;
         private System.Windows.Forms.CheckBox FastCombat;
         private System.Windows.Forms.CheckBox RecoverHealth;
         private System.Windows.Forms.Label label11;
@@ -1360,5 +1413,13 @@
         private System.Windows.Forms.ComboBox AllocationProfileFile;
         private System.Windows.Forms.Label AllocationProfileFileLabel;
         private System.Windows.Forms.Button ChangeProfileFile;
+        private System.Windows.Forms.CheckBox ManageGoldLoadouts;
+        private System.Windows.Forms.Button SaveResnipeButton;
+        private System.Windows.Forms.NumericUpDown ResnipeInput;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.ListView TitanGoldTargets;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.Button ResetTitanStatus;
     }
 }

@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="AllocationProfiles\CustomAllocation.cs" />
     <Compile Include="AllocationProfiles\AllocationProfile.cs" />
+    <Compile Include="Managers\ZoneStats.cs" />
     <Compile Include="Managers\ZoneHelpers.cs" />
     <Compile Include="Managers\CombatHelpers.cs" />
     <Compile Include="Managers\CombatManager.cs" />
@@ -90,6 +91,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="defaultZoneStats.json" />
     <None Include="inject.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

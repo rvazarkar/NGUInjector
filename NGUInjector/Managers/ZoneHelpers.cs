@@ -7,7 +7,6 @@ namespace NGUInjector.Managers
     static class ZoneHelpers
     {
         internal static readonly int[] TitanZones = { 6, 8, 11, 14, 16, 19, 23, 26, 30, 34, 38, 40, 42 };
-        internal static bool[] TitanMoneyDone = new bool[TitanZones.Length];
 
         internal static bool ZoneIsTitan(int zone)
         {
@@ -31,7 +30,7 @@ namespace NGUInjector.Managers
 
         internal static void ResetTitanDrops()
         {
-            TitanMoneyDone = new bool[TitanZones.Length];
+            Main.Settings.TitanMoneyDone = new bool[TitanZones.Length];
         }
 
         private static TitanSpawn GetTitanSpawn(int bossId)
@@ -51,14 +50,14 @@ namespace NGUInjector.Managers
             var controller = Main.Character.adventureController;
             var adventure = Main.Character.adventure;
 
-            var spawnMethod = controller.GetType().GetMethod($"boss{bossId}SpawnTime",
+            var spawnMethod = controller.GetType().GetMethod($"boss{bossId + 1}SpawnTime",
                 BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             var spawnTimeObj = spawnMethod?.Invoke(controller, null);
             if (spawnTimeObj == null)
                 return result;
             var spawnTime = (float)spawnTimeObj;
 
-            var spawnField = adventure.GetType().GetField($"boss{bossId}Spawn",
+            var spawnField = adventure.GetType().GetField($"boss{bossId + 1}Spawn",
                 BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             var spawnObj = spawnField?.GetValue(adventure);
 
@@ -70,8 +69,10 @@ namespace NGUInjector.Managers
             {
                 result.SpawningSoon = true;
                 // Run money once for each boss
-                result.RunMoneyLoadout = !TitanMoneyDone[bossId];
-                TitanMoneyDone[bossId] = true;
+                result.RunMoneyLoadout = Main.Settings.TitanGoldTargets[bossId] && !Main.Settings.TitanMoneyDone[bossId];
+                var temp = Main.Settings.TitanMoneyDone;
+                temp[bossId] = true;
+                Main.Settings.TitanMoneyDone = temp;
             }
 
             return result;

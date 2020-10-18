@@ -72,12 +72,11 @@ namespace NGUInjector.Managers
                 AcquireLock(LockType.Titan);
                 SaveCurrentLoadout();
 
-                if (ts.RunMoneyLoadout)
+                if (Settings.ManageGoldLoadouts && ts.RunMoneyLoadout)
                 {
                     Log("Equipping Gold Drop Loadout");
                     ChangeGear(Settings.GoldDropLoadout);
                     Settings.NextGoldSwap = false;
-                    settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
                 }
                 else
                 {

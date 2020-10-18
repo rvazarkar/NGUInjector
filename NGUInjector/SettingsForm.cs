@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using NGUInjector.AllocationProfiles;
+using NGUInjector.Managers;
 
 namespace NGUInjector
 {
@@ -114,10 +115,6 @@ namespace NGUInjector
             //Remove ITOPOD for non combat zones
             ZoneList.Remove(1000);
 
-            GoldLoadoutZone.DataSource = new BindingSource(ZoneList, null);
-            GoldLoadoutZone.ValueMember = "Key";
-            GoldLoadoutZone.DisplayMember = "Value";
-
             blacklistLabel.Text = "";
             yggItemLabel.Text = "";
             priorityBoostLabel.Text = "";
@@ -140,14 +137,35 @@ namespace NGUInjector
             VersionLabel.Text = $"Version: {Main.Version}";
         }
 
+        internal void SetTitanGoldBox(SavedSettings newSettings)
+        {
+            TitanGoldTargets.Items.Clear();
+            for (var i = 0; i < ZoneHelpers.TitanZones.Length; i++)
+            {
+                var text =
+                    $"{ZoneList[ZoneHelpers.TitanZones[i]]}";
+                if (newSettings.TitanGoldTargets[i])
+                {
+                    text = $"{text} ({(newSettings.TitanMoneyDone[i] ? "Done" : "Waiting")})";
+                }
+                var item = new ListViewItem
+                {
+                    Tag = i,
+                    Checked = newSettings.TitanGoldTargets[i],
+                    Text = text,
+                    BackColor = newSettings.TitanGoldTargets[i]
+                        ? newSettings.TitanMoneyDone[i] ? Color.Green : Color.Yellow
+                        : Color.White
+                };
+                TitanGoldTargets.Items.Add(item);
+            }
+
+            TitanGoldTargets.Columns[0].Width = -1;
+        }
+
         internal void SetSnipeZone(ComboBox control, int setting)
         {
             control.SelectedIndex = setting >= 1000 ? 44 : setting + 1;
-        }
-
-        internal void SetOtherZone(ComboBox control, int setting)
-        {
-            control.SelectedIndex = setting + 1;
         }
         
         internal void UpdateFromSettings(SavedSettings newSettings)
@@ -177,7 +195,6 @@ namespace NGUInjector
             CombatMode.SelectedIndex = newSettings.CombatMode;
             SetSnipeZone(CombatTargetZone, newSettings.SnipeZone);
             AllowFallthrough.Checked = newSettings.AllowZoneFallback;
-            SetOtherZone(GoldLoadoutZone, newSettings.GoldZone);
             QuestCombatMode.SelectedIndex = newSettings.QuestCombatMode;
             ManageQuests.Checked = newSettings.AutoQuest;
             AllowMajor.Checked = newSettings.AllowMajorQuests;
@@ -200,6 +217,9 @@ namespace NGUInjector
             CubePriority.SelectedIndex = newSettings.CubePriority;
             BloodNumberThreshold.Text = $"{newSettings.BloodNumberThreshold:#.##E+00}";
             ManageNGUDiff.Checked = newSettings.ManageNGUDiff;
+            ManageGoldLoadouts.Checked = newSettings.ManageGoldLoadouts;
+
+            SetTitanGoldBox(newSettings);
 
             
             var temp = newSettings.YggdrasilLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
@@ -302,30 +322,6 @@ namespace NGUInjector
             if (progress < 0)
                 return;
             progressBar1.Value = progress;
-        }
-
-        internal void UpdateGoldLoadout(bool active)
-        {
-            _initializing = true;
-            UseGoldLoadout.Checked = active;
-            Refresh();
-            _initializing = false;
-        }
-
-        internal void UpdateActive(bool active)
-        {
-            _initializing = true;
-            MasterEnable.Checked = active;
-            Refresh();
-            _initializing = false;
-        }
-
-        internal void UpdateITOPOD(bool active)
-        {
-            _initializing = true;
-            AutoITOPOD.Checked = active;
-            Refresh();
-            _initializing = false;
         }
 
         private void MasterEnable_CheckedChanged(object sender, EventArgs e)
@@ -677,14 +673,6 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.AllowZoneFallback = AllowFallthrough.Checked;
-        }
-
-        private void GoldLoadoutZone_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (_initializing) return;
-            var selected = GoldLoadoutZone.SelectedItem;
-            var item = (KeyValuePair<int, string>)selected;
-            Main.Settings.GoldZone = item.Key;
         }
 
         private void UseGoldLoadout_CheckedChanged(object sender, EventArgs e)
@@ -1102,6 +1090,33 @@ namespace NGUInjector
             if (_initializing) return;
             Main.Settings.AllocationFile = AllocationProfileFile.SelectedItem.ToString();
             Main.LoadAllocation();
+        }
+
+        private void TitanGoldTargets_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            if (_initializing) return;
+            var temp = Main.Settings.TitanGoldTargets;
+            temp[(int)e.Item.Tag] = e.Item.Checked;
+            Main.Log($"{e.Item.Text} - {e.Item.Checked}");
+            Main.Settings.TitanGoldTargets = temp;
+        }
+
+        private void ResetTitanStatus_Click(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            var temp = new bool[ZoneHelpers.TitanZones.Length];
+            Main.Settings.TitanMoneyDone = temp;
+        }
+
+        private void ManageGoldLoadouts_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.ManageGoldLoadouts = ManageGoldLoadouts.Checked;
+        }
+
+        private void SaveResnipeButton_Click(object sender, EventArgs e)
+        {
+            Main.Settings.ResnipeTime = decimal.ToInt32(ResnipeInput.Value);
         }
     }
 }

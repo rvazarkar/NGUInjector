@@ -37,10 +37,8 @@ namespace NGUInjector
         [SerializeField] private int[] _moneyPitLoadout;
         [SerializeField] private bool _autoRebirth;
         [SerializeField] private bool _manageWandoos;
-        [SerializeField] private int _initialGoldZone = -1;
         [SerializeField] private double _moneyPitThreshold;
         [SerializeField] private bool _nextGoldSwap;
-        [SerializeField] private int _goldZone = -1;
         [SerializeField] private int[] _boostBlacklist;
         [SerializeField] private bool _snipeBossOnly;
         [SerializeField] private bool _recoverHealth;
@@ -69,8 +67,14 @@ namespace NGUInjector
         [SerializeField] private int _cubePriority;
         [SerializeField] private bool _manageNguDiff;
         [SerializeField] private string _allocationFile;
+        [SerializeField] private bool _manageGoldLoadouts;
+        [SerializeField] private int _resnipeTime;
+        [SerializeField] private bool[] _titanMoneyDone;
+        [SerializeField] private bool[] _titanGoldTargets;
 
         private readonly string _savePath;
+        private bool _disableSave;
+        
 
         public SavedSettings(string dir)
         {
@@ -81,6 +85,7 @@ namespace NGUInjector
         internal void SaveSettings()
         {
             if (_savePath == null) return;
+            if (_disableSave) return;
             Main.Log("Saving Settings");
             Main.IgnoreNextChange = true;
             var serialized = JsonUtility.ToJson(this, true);
@@ -90,6 +95,11 @@ namespace NGUInjector
                 writer.Flush();
             }
             Main.UpdateForm(this);
+        }
+
+        internal void SetSaveDisabled(bool disabled)
+        {
+            _disableSave = disabled;
         }
 
         internal bool LoadSettings()
@@ -156,7 +166,6 @@ namespace NGUInjector
             _autoRebirth = other.AutoRebirth;
             _manageWandoos = other.ManageWandoos;
             _nextGoldSwap = other.NextGoldSwap;
-            _goldZone = other.GoldZone;
 
             _combatMode = other.CombatMode;
             _recoverHealth = other.RecoverHealth;
@@ -185,6 +194,10 @@ namespace NGUInjector
             _cubePriority = other.CubePriority;
             _manageNguDiff = other.ManageNGUDiff;
             _allocationFile = other.AllocationFile;
+            _manageGoldLoadouts = other.ManageGoldLoadouts;
+            _titanGoldTargets = other.TitanGoldTargets;
+            _titanMoneyDone = other.TitanMoneyDone;
+            _resnipeTime = other.ResnipeTime;
         }
 
         public int HighestAKZone
@@ -454,17 +467,6 @@ namespace NGUInjector
             }
         }
 
-        public int InitialGoldZone
-        {
-            get => _initialGoldZone;
-            set
-            {
-                if (value == _initialGoldZone) return;
-                _initialGoldZone = value;
-                SaveSettings();
-            }
-        }
-
         public double MoneyPitThreshold
         {
             get => _moneyPitThreshold;
@@ -485,18 +487,7 @@ namespace NGUInjector
                 SaveSettings();
             }
         }
-
-        public int GoldZone
-        {
-            get => _goldZone;
-            set
-            {
-                if (value == _goldZone) return;
-                _goldZone = value;
-                SaveSettings();
-            }
-        }
-
+        
         public bool SnipeBossOnly
         {
             get => _snipeBossOnly;
@@ -789,6 +780,48 @@ namespace NGUInjector
             {
                 if (value == _allocationFile) return;
                 _allocationFile = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ManageGoldLoadouts
+        {
+            get => _manageGoldLoadouts;
+            set
+            {
+                if (value == _manageGoldLoadouts) return;
+                _manageGoldLoadouts = value;
+                SaveSettings();
+            }
+        }
+
+        public int ResnipeTime
+        {
+            get => _resnipeTime;
+            set
+            {
+                if (value == _resnipeTime) return;
+                _resnipeTime = value;
+                SaveSettings();
+            }
+        }
+
+        public bool[] TitanMoneyDone
+        {
+            get => _titanMoneyDone;
+            set
+            {
+                _titanMoneyDone = value;
+                SaveSettings();
+            }
+        }
+
+        public bool[] TitanGoldTargets
+        {
+            get => _titanGoldTargets;
+            set
+            {
+                _titanGoldTargets = value;
                 SaveSettings();
             }
         }

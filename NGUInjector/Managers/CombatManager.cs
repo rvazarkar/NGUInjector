@@ -307,7 +307,7 @@ namespace NGUInjector.Managers
             }
         }
 
-        internal void ManualZone(int zone, bool bossOnly, bool recoverHealth, bool precastBuffs, bool fastCombat)
+        internal void ManualZone(int zone, bool bossOnly, bool recoverHealth, bool precastBuffs, bool fastCombat, bool beastMode)
         {
             //Start by turning off auto attack if its on unless we can only idle attack
             if (!_character.adventure.autoattacking)
@@ -326,13 +326,13 @@ namespace NGUInjector.Managers
                 }
             }
 
-            if (_character.adventure.beastModeOn && !Settings.BeastMode && _character.adventureController.beastModeMove.button.interactable)
+            if (_character.adventure.beastModeOn && !beastMode && _character.adventureController.beastModeMove.button.interactable)
             {
                 _character.adventureController.beastModeMove.doMove();
                 return;
             }
 
-            if (!_character.adventure.beastModeOn && Settings.BeastMode &&
+            if (!_character.adventure.beastModeOn && beastMode &&
                 _character.adventureController.beastModeMove.button.interactable)
             {
                 _character.adventureController.beastModeMove.doMove();
@@ -436,20 +436,20 @@ namespace NGUInjector.Managers
                 if (isFighting)
                 {
                     isFighting = false;
-                    if (precastBuffs)
-                    {
-                        MoveToZone(-1);
-                        return;
-                    }
-
                     if (LoadoutManager.CurrentLock == LockType.Gold)
                     {
                         Log("Gold Loadout kill done. Turning off setting and swapping gear");
                         Settings.NextGoldSwap = false;
-                        settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
                         LoadoutManager.RestoreGear();
                         LoadoutManager.ReleaseLock();
                         MoveToZone(-1);
+                        return;
+                    }
+
+                    if (precastBuffs)
+                    {
+                        MoveToZone(-1);
+                        return;
                     }
                 }
                 return;

@@ -163,7 +163,6 @@ namespace NGUInjector
                         MoneyPitThreshold = 1e5,
                         NextGoldSwap = false,
                         BoostBlacklist = new int[] {},
-                        GoldZone = 0,
                         CombatMode = 0,
                         RecoverHealth = false,
                         SnipeBossOnly = true,
@@ -191,6 +190,10 @@ namespace NGUInjector
                         BeastMode = true,
                         ManageNGUDiff = true,
                         AllocationFile = "default",
+                        TitanGoldTargets = new bool[ZoneHelpers.TitanZones.Length],
+                        ManageGoldLoadouts = false,
+                        ResnipeTime = 3600,
+                        TitanMoneyDone = new bool[ZoneHelpers.TitanZones.Length]
                     };
 
                     Settings.MassUpdate(temp);
@@ -202,9 +205,25 @@ namespace NGUInjector
 
                 if (string.IsNullOrEmpty(Settings.AllocationFile))
                 {
-                    var temp = Settings;
-                    temp.AllocationFile = "default";
-                    Settings.MassUpdate(temp);
+                    Settings.SetSaveDisabled(true);
+                    Settings.AllocationFile = "default";
+                    Settings.SetSaveDisabled(false);
+                }
+
+                if (Settings.TitanGoldTargets == null || Settings.TitanGoldTargets.Length == 0)
+                {
+                    Settings.SetSaveDisabled(true);
+                    Settings.TitanGoldTargets = new bool[ZoneHelpers.TitanZones.Length];
+                    Settings.TitanMoneyDone = new bool[ZoneHelpers.TitanZones.Length];
+                    Settings.SetSaveDisabled(false);
+                }
+
+                if (Settings.TitanMoneyDone == null || Settings.TitanMoneyDone.Length == 0)
+                {
+                    Settings.SetSaveDisabled(true);
+                    Settings.TitanGoldTargets = new bool[ZoneHelpers.TitanZones.Length];
+                    Settings.TitanMoneyDone = new bool[ZoneHelpers.TitanZones.Length];
+                    Settings.SetSaveDisabled(false);
                 }
 
                 LoadAllocation();
@@ -246,6 +265,8 @@ namespace NGUInjector
                 Settings.SaveSettings();
                 Settings.LoadSettings();
 
+                DefaultZoneStats.CreateOverrides();
+
                 settingsForm.UpdateFromSettings(Settings);
                 settingsForm.Show();
 
@@ -254,6 +275,7 @@ namespace NGUInjector
                 InvokeRepeating("MonitorLog", 0.0f, 1f);
                 InvokeRepeating("QuickStuff", 0.0f, .5f);
                 InvokeRepeating("ShowBoostProgress", 0.0f, 60.0f);
+                InvokeRepeating("SetResnipe", 0f,1f);
             }
             catch (Exception e)
             {
@@ -285,7 +307,6 @@ namespace NGUInjector
             if (Input.GetKeyDown(KeyCode.F2))
             {
                 Settings.GlobalEnabled = !Settings.GlobalEnabled;
-                settingsForm.UpdateActive(Settings.GlobalEnabled);
             }
 
             if (Input.GetKeyDown(KeyCode.F3))
@@ -301,7 +322,6 @@ namespace NGUInjector
             if (Input.GetKeyDown(KeyCode.F4))
             {
                 Settings.AutoQuestITOPOD = !Settings.AutoQuestITOPOD;
-                settingsForm.UpdateITOPOD(Settings.AutoQuestITOPOD);
             }
 
             if (Input.GetKeyDown(KeyCode.F5))
@@ -700,28 +720,20 @@ namespace NGUInjector
             if (Character.machine.realBaseGold == 0.0 && !Settings.NextGoldSwap)
             {
                 Log("Time Machine Gold is 0. Lets reset gold snipe zone.");
-                ZoneHelpers.ResetTitanDrops();
-                Settings.GoldZone = 0;
                 Settings.NextGoldSwap = true;
-                settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
+                Settings.TitanMoneyDone = new bool[ZoneHelpers.TitanZones.Length];
             }
 
             //This logic should trigger only if Time Machine is ready
             if (Character.buttons.brokenTimeMachine.interactable)
             {
-                var maxZone = ZoneHelpers.GetMaxReachableZone(false);
-                if (Settings.GoldZone < maxZone)
-                {
-                    Settings.GoldZone = maxZone;
-                    Settings.NextGoldSwap = true;
-                    settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
-                }
                 //Go to our gold loadout zone next to get a high gold drop
-                if (Settings.NextGoldSwap)
+                if (Settings.ManageGoldLoadouts && Settings.NextGoldSwap)
                 {
                     if (LoadoutManager.TryGoldDropSwap())
                     {
-                        _combManager.ManualZone(Settings.GoldZone, true, false, false, false);
+                        var bestZone = DefaultZoneStats.GetBestZone();
+                        _combManager.ManualZone(bestZone.Zone, true, bestZone.FightType == 1, false, bestZone.FightType == 2, false);
                         return;
                     }
                 }
@@ -732,7 +744,7 @@ namespace NGUInjector
             {
                 if (Settings.QuestCombatMode == 0)
                 {
-                    _combManager.ManualZone(questZone, false, false, false, Settings.QuestFastCombat);
+                    _combManager.ManualZone(questZone, false, false, false, Settings.QuestFastCombat, Settings.BeastMode);
                 }
                 else
                 {
@@ -769,7 +781,7 @@ namespace NGUInjector
             
             if (Settings.CombatMode == 0)
             {
-                _combManager.ManualZone(tempZone, Settings.SnipeBossOnly, Settings.RecoverHealth, Settings.PrecastBuffs, Settings.FastCombat);
+                _combManager.ManualZone(tempZone, Settings.SnipeBossOnly, Settings.RecoverHealth, Settings.PrecastBuffs, Settings.FastCombat, Settings.BeastMode);
             }
             else
             {
@@ -863,6 +875,15 @@ namespace NGUInjector
             }
         }
 
+        void SetResnipe()
+        {
+            if (Settings.ResnipeTime == 0) return;
+            if (Math.Abs(Character.rebirthTime.totalseconds - Settings.ResnipeTime) <= 1)
+            {
+                Settings.NextGoldSwap = true;
+            }
+        }
+
         void ShowBoostProgress()
         {
             var boostSlots = _invManager.GetBoostSlots(Character.inventory.GetConvertedInventory().ToArray());
@@ -884,6 +905,7 @@ namespace NGUInjector
             CancelInvoke("SnipeZone");
             CancelInvoke("MonitorLog");
             CancelInvoke("QuickStuff");
+            CancelInvoke("SetResnipe");
         }
     }
 }

@@ -2343,20 +2343,203 @@
   <data name="&gt;&gt;tabPage6.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
+  <data name="ResetTitanStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>444, 290</value>
+  </data>
+  <data name="ResetTitanStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>117, 23</value>
+  </data>
+  <data name="ResetTitanStatus.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="ResetTitanStatus.Text" xml:space="preserve">
+    <value>Reset Titan Status</value>
+  </data>
+  <data name="&gt;&gt;ResetTitanStatus.Name" xml:space="preserve">
+    <value>ResetTitanStatus</value>
+  </data>
+  <data name="&gt;&gt;ResetTitanStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ResetTitanStatus.Parent" xml:space="preserve">
+    <value>tabPage7</value>
+  </data>
+  <data name="&gt;&gt;ResetTitanStatus.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label21.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label21.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="label21.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label21.Location" type="System.Drawing.Point, System.Drawing">
+    <value>350, 70</value>
+  </data>
+  <data name="label21.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 16</value>
+  </data>
+  <data name="label21.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="label21.Text" xml:space="preserve">
+    <value>Titans to Swap For</value>
+  </data>
+  <data name="&gt;&gt;label21.Name" xml:space="preserve">
+    <value>label21</value>
+  </data>
+  <data name="&gt;&gt;label21.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label21.Parent" xml:space="preserve">
+    <value>tabPage7</value>
+  </data>
+  <data name="&gt;&gt;label21.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="columnHeader1.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="columnHeader1.Width" type="System.Int32, mscorlib">
+    <value>203</value>
+  </data>
+  <data name="TitanGoldTargets.Location" type="System.Drawing.Point, System.Drawing">
+    <value>353, 98</value>
+  </data>
+  <data name="TitanGoldTargets.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 186</value>
+  </data>
+  <data name="TitanGoldTargets.TabIndex" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
+  <data name="&gt;&gt;TitanGoldTargets.Name" xml:space="preserve">
+    <value>TitanGoldTargets</value>
+  </data>
+  <data name="&gt;&gt;TitanGoldTargets.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TitanGoldTargets.Parent" xml:space="preserve">
+    <value>tabPage7</value>
+  </data>
+  <data name="&gt;&gt;TitanGoldTargets.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="SaveResnipeButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>328, 30</value>
+  </data>
+  <data name="SaveResnipeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="SaveResnipeButton.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="SaveResnipeButton.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="&gt;&gt;SaveResnipeButton.Name" xml:space="preserve">
+    <value>SaveResnipeButton</value>
+  </data>
+  <data name="&gt;&gt;SaveResnipeButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SaveResnipeButton.Parent" xml:space="preserve">
+    <value>tabPage7</value>
+  </data>
+  <data name="&gt;&gt;SaveResnipeButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="ResnipeInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>202, 30</value>
+  </data>
+  <data name="ResnipeInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 20</value>
+  </data>
+  <data name="ResnipeInput.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="&gt;&gt;ResnipeInput.Name" xml:space="preserve">
+    <value>ResnipeInput</value>
+  </data>
+  <data name="&gt;&gt;ResnipeInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ResnipeInput.Parent" xml:space="preserve">
+    <value>tabPage7</value>
+  </data>
+  <data name="&gt;&gt;ResnipeInput.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="label10.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>124, 34</value>
+  </data>
+  <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>72, 13</value>
+  </data>
+  <data name="label10.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>Resnipe Time</value>
+  </data>
+  <data name="&gt;&gt;label10.Name" xml:space="preserve">
+    <value>label10</value>
+  </data>
+  <data name="&gt;&gt;label10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label10.Parent" xml:space="preserve">
+    <value>tabPage7</value>
+  </data>
+  <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="ManageGoldLoadouts.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ManageGoldLoadouts.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 7</value>
+  </data>
+  <data name="ManageGoldLoadouts.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 17</value>
+  </data>
+  <data name="ManageGoldLoadouts.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="ManageGoldLoadouts.Text" xml:space="preserve">
+    <value>Enable Gold Management</value>
+  </data>
+  <data name="&gt;&gt;ManageGoldLoadouts.Name" xml:space="preserve">
+    <value>ManageGoldLoadouts</value>
+  </data>
+  <data name="&gt;&gt;ManageGoldLoadouts.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ManageGoldLoadouts.Parent" xml:space="preserve">
+    <value>tabPage7</value>
+  </data>
+  <data name="&gt;&gt;ManageGoldLoadouts.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
   <data name="UseGoldLoadout.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="UseGoldLoadout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 14</value>
+    <value>12, 33</value>
   </data>
   <data name="UseGoldLoadout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>112, 17</value>
+    <value>95, 17</value>
   </data>
   <data name="UseGoldLoadout.TabIndex" type="System.Int32, mscorlib">
     <value>25</value>
   </data>
   <data name="UseGoldLoadout.Text" xml:space="preserve">
-    <value>Use Gold Loadout</value>
+    <value>Do Gold Snipe</value>
   </data>
   <data name="&gt;&gt;UseGoldLoadout.Name" xml:space="preserve">
     <value>UseGoldLoadout</value>
@@ -2368,7 +2551,7 @@
     <value>tabPage7</value>
   </data>
   <data name="&gt;&gt;UseGoldLoadout.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>7</value>
   </data>
   <data name="label11.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2380,7 +2563,7 @@
     <value>NoControl</value>
   </data>
   <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 65</value>
+    <value>4, 70</value>
   </data>
   <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
     <value>57, 16</value>
@@ -2401,7 +2584,7 @@
     <value>tabPage7</value>
   </data>
   <data name="&gt;&gt;label11.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>8</value>
   </data>
   <data name="GoldLoadoutRemove.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2410,7 +2593,7 @@
     <value>NoControl</value>
   </data>
   <data name="GoldLoadoutRemove.Location" type="System.Drawing.Point, System.Drawing">
-    <value>252, 156</value>
+    <value>249, 161</value>
   </data>
   <data name="GoldLoadoutRemove.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 23</value>
@@ -2431,10 +2614,10 @@
     <value>tabPage7</value>
   </data>
   <data name="&gt;&gt;GoldLoadoutRemove.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>9</value>
   </data>
   <data name="GoldItemBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 259</value>
+    <value>7, 264</value>
   </data>
   <data name="GoldItemBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>222, 20</value>
@@ -2452,7 +2635,7 @@
     <value>tabPage7</value>
   </data>
   <data name="&gt;&gt;GoldItemBox.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>10</value>
   </data>
   <data name="GoldItemLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2461,7 +2644,7 @@
     <value>NoControl</value>
   </data>
   <data name="GoldItemLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 282</value>
+    <value>6, 287</value>
   </data>
   <data name="GoldItemLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
@@ -2482,13 +2665,13 @@
     <value>tabPage7</value>
   </data>
   <data name="&gt;&gt;GoldItemLabel.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>11</value>
   </data>
   <data name="GoldLoadoutAdd.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="GoldLoadoutAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>252, 259</value>
+    <value>249, 264</value>
   </data>
   <data name="GoldLoadoutAdd.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 20</value>
@@ -2509,7 +2692,7 @@
     <value>tabPage7</value>
   </data>
   <data name="&gt;&gt;GoldLoadoutAdd.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>12</value>
   </data>
   <data name="GoldLoadout.Items" xml:space="preserve">
     <value>test</value>
@@ -2518,7 +2701,7 @@
     <value>test2</value>
   </data>
   <data name="GoldLoadout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 93</value>
+    <value>6, 98</value>
   </data>
   <data name="GoldLoadout.Size" type="System.Drawing.Size, System.Drawing">
     <value>223, 160</value>
@@ -2536,67 +2719,7 @@
     <value>tabPage7</value>
   </data>
   <data name="&gt;&gt;GoldLoadout.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="label9.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 42</value>
-  </data>
-  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>99, 13</value>
-  </data>
-  <data name="label9.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="label9.Text" xml:space="preserve">
-    <value>Gold Loadout Zone</value>
-  </data>
-  <data name="&gt;&gt;label9.Name" xml:space="preserve">
-    <value>label9</value>
-  </data>
-  <data name="&gt;&gt;label9.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
-    <value>tabPage7</value>
-  </data>
-  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="GoldLoadoutZone.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="GoldLoadoutZone.Items" xml:space="preserve">
-    <value>Idle</value>
-  </data>
-  <data name="GoldLoadoutZone.Items1" xml:space="preserve">
-    <value>Manual</value>
-  </data>
-  <data name="GoldLoadoutZone.Location" type="System.Drawing.Point, System.Drawing">
-    <value>114, 39</value>
-  </data>
-  <data name="GoldLoadoutZone.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 21</value>
-  </data>
-  <data name="GoldLoadoutZone.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;GoldLoadoutZone.Name" xml:space="preserve">
-    <value>GoldLoadoutZone</value>
-  </data>
-  <data name="&gt;&gt;GoldLoadoutZone.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GoldLoadoutZone.Parent" xml:space="preserve">
-    <value>tabPage7</value>
-  </data>
-  <data name="&gt;&gt;GoldLoadoutZone.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>13</value>
   </data>
   <data name="tabPage7.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -3272,6 +3395,12 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Injector Settings</value>
+  </data>
+  <data name="&gt;&gt;columnHeader1.Name" xml:space="preserve">
+    <value>columnHeader1</value>
+  </data>
+  <data name="&gt;&gt;columnHeader1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;moneyPitError.Name" xml:space="preserve">
     <value>moneyPitError</value>
