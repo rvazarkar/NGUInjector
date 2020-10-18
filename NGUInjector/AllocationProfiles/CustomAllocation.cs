@@ -1491,7 +1491,19 @@ namespace NGUInjector.AllocationProfiles
 
         private int ParseTime(SimpleJSON.JSONNode timeNode)
         {
-            return timeNode.AsInt;
+            if (timeNode.IsNumber)
+                return timeNode.AsInt;
+            if (timeNode.IsString)
+            {
+                TimeSpan interval;
+                if (TimeSpan.TryParse(timeNode.Value, out interval))
+                {
+                    Main.Log($"Converted time node from: {timeNode} --> {interval.TotalSeconds} seconds");
+                    return (int)interval.TotalSeconds;
+                }
+            }
+            Main.Log($"Cannot convet to time: {timeNode}");
+            return -1;
         }
     }
 
