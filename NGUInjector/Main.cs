@@ -6,6 +6,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting.Messaging;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -37,6 +38,7 @@ namespace NGUInjector
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
         internal const string Version = "2.6.0";
+        private static int _furthestZone;
 
         internal static bool Test { get; set; }
 
@@ -161,7 +163,7 @@ namespace NGUInjector
                         AutoRebirth = false,
                         ManageWandoos = false,
                         MoneyPitThreshold = 1e5,
-                        NextGoldSwap = false,
+                        DoGoldSwap = false,
                         BoostBlacklist = new int[] {},
                         CombatMode = 0,
                         RecoverHealth = false,
@@ -193,7 +195,8 @@ namespace NGUInjector
                         TitanGoldTargets = new bool[ZoneHelpers.TitanZones.Length],
                         ManageGoldLoadouts = false,
                         ResnipeTime = 3600,
-                        TitanMoneyDone = new bool[ZoneHelpers.TitanZones.Length]
+                        TitanMoneyDone = new bool[ZoneHelpers.TitanZones.Length],
+                        GoldCBlockMode = false
                     };
 
                     Settings.MassUpdate(temp);
@@ -717,10 +720,10 @@ namespace NGUInjector
                 return;
 
             //If tm ever drops to 0, reset our gold loadout stuff
-            if (Character.machine.realBaseGold == 0.0 && !Settings.NextGoldSwap)
+            if (Character.machine.realBaseGold == 0.0 && !Settings.DoGoldSwap)
             {
                 Log("Time Machine Gold is 0. Lets reset gold snipe zone.");
-                Settings.NextGoldSwap = true;
+                Settings.DoGoldSwap = true;
                 Settings.TitanMoneyDone = new bool[ZoneHelpers.TitanZones.Length];
             }
 
@@ -728,11 +731,12 @@ namespace NGUInjector
             if (Character.buttons.brokenTimeMachine.interactable)
             {
                 //Go to our gold loadout zone next to get a high gold drop
-                if (Settings.ManageGoldLoadouts && Settings.NextGoldSwap)
+                if (Settings.ManageGoldLoadouts && Settings.DoGoldSwap)
                 {
                     if (LoadoutManager.TryGoldDropSwap())
                     {
                         var bestZone = DefaultZoneStats.GetBestZone();
+                        _furthestZone = bestZone.Zone;
                         _combManager.ManualZone(bestZone.Zone, true, bestZone.FightType == 1, false, bestZone.FightType == 2, false);
                         return;
                     }
@@ -800,7 +804,7 @@ namespace NGUInjector
             if (Settings.CombatEnabled)
                 return;
 
-            if (Settings.NextGoldSwap)
+            if (Settings.DoGoldSwap)
                 return;
 
             //If we're not in ITOPOD, move there if its set
@@ -877,10 +881,23 @@ namespace NGUInjector
 
         void SetResnipe()
         {
-            if (Settings.ResnipeTime == 0) return;
+            if (Settings.ResnipeTime == 0 && !Settings.GoldCBlockMode) return;
+
+            if (Settings.GoldCBlockMode)
+            {
+                var furthest = ZoneHelpers.GetMaxReachableZone(false);
+                if (furthest > _furthestZone)
+                {
+                    Settings.DoGoldSwap = true;
+                    _furthestZone = furthest;
+                }
+
+                return;
+            }
+
             if (Math.Abs(Character.rebirthTime.totalseconds - Settings.ResnipeTime) <= 1)
             {
-                Settings.NextGoldSwap = true;
+                Settings.DoGoldSwap = true;
             }
         }
 

@@ -154,7 +154,7 @@ namespace NGUInjector
                     Checked = newSettings.TitanGoldTargets[i],
                     Text = text,
                     BackColor = newSettings.TitanGoldTargets[i]
-                        ? newSettings.TitanMoneyDone[i] ? Color.Green : Color.Yellow
+                        ? newSettings.TitanMoneyDone[i] ? Color.LightGreen : Color.Yellow
                         : Color.White
                 };
                 TitanGoldTargets.Items.Add(item);
@@ -201,7 +201,7 @@ namespace NGUInjector
             AbandonMinors.Checked = newSettings.AbandonMinors;
             AbandonMinorThreshold.Value = newSettings.MinorAbandonThreshold;
             QuestFastCombat.Checked = newSettings.QuestFastCombat;
-            UseGoldLoadout.Checked = newSettings.NextGoldSwap;
+            UseGoldLoadout.Checked = newSettings.DoGoldSwap;
             AutoSpellSwap.Checked = newSettings.AutoSpellSwap;
             SpaghettiCap.Value = newSettings.SpaghettiThreshold;
             CounterfeitCap.Value = newSettings.CounterfeitThreshold;
@@ -218,10 +218,11 @@ namespace NGUInjector
             BloodNumberThreshold.Text = $"{newSettings.BloodNumberThreshold:#.##E+00}";
             ManageNGUDiff.Checked = newSettings.ManageNGUDiff;
             ManageGoldLoadouts.Checked = newSettings.ManageGoldLoadouts;
+            CBlockMode.Checked = newSettings.GoldCBlockMode;
+            ResnipeInput.Value = newSettings.ResnipeTime;
 
             SetTitanGoldBox(newSettings);
 
-            
             var temp = newSettings.YggdrasilLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
             if (temp.Count > 0)
             {
@@ -678,7 +679,7 @@ namespace NGUInjector
         private void UseGoldLoadout_CheckedChanged(object sender, EventArgs e)
         {
             if (_initializing) return;
-            Main.Settings.NextGoldSwap = UseGoldLoadout.Checked;
+            Main.Settings.DoGoldSwap = UseGoldLoadout.Checked;
         }
 
         private void GoldItemBox_TextChanged(object sender, EventArgs e)
@@ -1117,6 +1118,12 @@ namespace NGUInjector
         private void SaveResnipeButton_Click(object sender, EventArgs e)
         {
             Main.Settings.ResnipeTime = decimal.ToInt32(ResnipeInput.Value);
+        }
+
+        private void CBlockMode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.GoldCBlockMode = CBlockMode.Checked;
         }
     }
 }

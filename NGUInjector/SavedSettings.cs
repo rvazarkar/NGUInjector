@@ -38,7 +38,7 @@ namespace NGUInjector
         [SerializeField] private bool _autoRebirth;
         [SerializeField] private bool _manageWandoos;
         [SerializeField] private double _moneyPitThreshold;
-        [SerializeField] private bool _nextGoldSwap;
+        [SerializeField] private bool _doGoldSwap;
         [SerializeField] private int[] _boostBlacklist;
         [SerializeField] private bool _snipeBossOnly;
         [SerializeField] private bool _recoverHealth;
@@ -71,10 +71,12 @@ namespace NGUInjector
         [SerializeField] private int _resnipeTime;
         [SerializeField] private bool[] _titanMoneyDone;
         [SerializeField] private bool[] _titanGoldTargets;
+        [SerializeField] private bool _goldCBlockMode;
 
         private readonly string _savePath;
         private bool _disableSave;
         
+
 
         public SavedSettings(string dir)
         {
@@ -165,7 +167,7 @@ namespace NGUInjector
 
             _autoRebirth = other.AutoRebirth;
             _manageWandoos = other.ManageWandoos;
-            _nextGoldSwap = other.NextGoldSwap;
+            _doGoldSwap = other.DoGoldSwap;
 
             _combatMode = other.CombatMode;
             _recoverHealth = other.RecoverHealth;
@@ -198,6 +200,7 @@ namespace NGUInjector
             _titanGoldTargets = other.TitanGoldTargets;
             _titanMoneyDone = other.TitanMoneyDone;
             _resnipeTime = other.ResnipeTime;
+            _goldCBlockMode = other.GoldCBlockMode;
         }
 
         public int HighestAKZone
@@ -477,13 +480,13 @@ namespace NGUInjector
             }
         }
 
-        public bool NextGoldSwap
+        public bool DoGoldSwap
         {
-            get => _nextGoldSwap;
+            get => _doGoldSwap;
             set
             {
-                if (value == _nextGoldSwap) return;
-                _nextGoldSwap = value;
+                if (value == _doGoldSwap) return;
+                _doGoldSwap = value;
                 SaveSettings();
             }
         }
@@ -822,6 +825,17 @@ namespace NGUInjector
             set
             {
                 _titanGoldTargets = value;
+                SaveSettings();
+            }
+        }
+
+        public bool GoldCBlockMode
+        {
+            get => _goldCBlockMode;
+            set
+            {
+                if (value == _goldCBlockMode) return;
+                _goldCBlockMode = value;
                 SaveSettings();
             }
         }

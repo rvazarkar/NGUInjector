@@ -162,6 +162,7 @@
             this.goldErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.numberErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.wishErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.CBlockMode = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -902,6 +903,7 @@
             // 
             // tabPage7
             // 
+            this.tabPage7.Controls.Add(this.CBlockMode);
             this.tabPage7.Controls.Add(this.ResetTitanStatus);
             this.tabPage7.Controls.Add(this.label21);
             this.tabPage7.Controls.Add(this.TitanGoldTargets);
@@ -1238,6 +1240,13 @@
             // 
             this.wishErrorProvider.ContainerControl = this;
             // 
+            // CBlockMode
+            // 
+            resources.ApplyResources(this.CBlockMode, "CBlockMode");
+            this.CBlockMode.Name = "CBlockMode";
+            this.CBlockMode.UseVisualStyleBackColor = true;
+            this.CBlockMode.CheckedChanged += new System.EventHandler(this.CBlockMode_CheckedChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1421,5 +1430,6 @@
         private System.Windows.Forms.ListView TitanGoldTargets;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.Button ResetTitanStatus;
+        private System.Windows.Forms.CheckBox CBlockMode;
     }
 }

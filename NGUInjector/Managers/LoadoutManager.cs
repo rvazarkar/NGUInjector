@@ -76,7 +76,7 @@ namespace NGUInjector.Managers
                 {
                     Log("Equipping Gold Drop Loadout");
                     ChangeGear(Settings.GoldDropLoadout);
-                    Settings.NextGoldSwap = false;
+                    Settings.DoGoldSwap = false;
                 }
                 else
                 {
