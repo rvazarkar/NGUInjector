@@ -8,6 +8,7 @@ namespace NGUInjector.Managers
     {
         internal static readonly int[] TitanZones = { 6, 8, 11, 14, 16, 19, 23, 26, 30, 34, 38, 40, 42 };
         internal static bool[] TitanMoneyDone = new bool[TitanZones.Length];
+
         internal static bool ZoneIsTitan(int zone)
         {
             return TitanZones.Contains(zone);
@@ -44,7 +45,7 @@ namespace NGUInjector.Managers
 
             if (bossId > Main.Settings.HighestAKZone)
                 return result;
-            if (TitanZones[bossId] > getMaxReachableZone(true))
+            if (TitanZones[bossId] > GetMaxReachableZone(true))
                 return result;
 
             var controller = Main.Character.adventureController;
@@ -76,23 +77,26 @@ namespace NGUInjector.Managers
             return result;
         }
 
-        internal static int getMaxReachableZone(bool includingTitans)
+        internal static int GetMaxReachableZone(bool includingTitans)
         {
             for (var i = Main.Character.adventureController.zoneDropdown.options.Count - 2; i >= 0; i--)
             {
                 if (!ZoneIsTitan(i))
                     return i;
-                else if (includingTitans)
+                if (includingTitans)
                     return i;
             }
             return 0;
         }
 
     }
+
+    
+
     public class TitanSpawn
     {
-        internal bool SpawningSoon { get; set; } = false;
-        internal bool RunMoneyLoadout { get; set; } = false;
+        internal bool SpawningSoon { get; set; }
+        internal bool RunMoneyLoadout { get; set; }
 
         internal void Merge(TitanSpawn other)
         {

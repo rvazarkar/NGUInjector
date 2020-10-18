@@ -44,6 +44,11 @@ namespace NGUInjector
             }).Where(x => x.id != 0);
         }
 
+        public static bool HasBoosts(this Inventory inv)
+        {
+            return inv.inventory.Any(x => x.id < 40 && x.id > 0);
+        }
+
         public static IEnumerable<ih> GetConvertedEquips(this Inventory inv)
         {
             var list = new List<ih>

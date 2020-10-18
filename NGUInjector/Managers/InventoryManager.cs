@@ -113,13 +113,15 @@ namespace NGUInjector.Managers
             result = result.Concat(invItems).ToList();
 
             //Make sure we filter out non-equips again, just in case one snuck into priorityboosts
-            return result.Where(x => x.equipment.isEquipment()).ToArray();
+            return result.Where(x => x.equipment.isEquipment()).Where(x => x.equipment.GetNeededBoosts().Total() > 0).ToArray();
         }
 
         internal void BoostInventory(ih[] boostSlots)
         {
             foreach (var item in boostSlots)
             {
+                if (!_character.inventory.HasBoosts())
+                    break;
                 _controller.applyAllBoosts(item.slot);
             }
         }
@@ -183,28 +185,54 @@ namespace NGUInjector.Managers
 
         internal void BoostInfinityCube()
         {
+            if (!_character.inventory.HasBoosts())
+                return;
             _controller.infinityCubeAll();
             _controller.updateInventory();
         }
 
-        internal void MergeEquipped()
+        internal void MergeEquipped(ih[] ci)
         {
-            // Boost Equipped Slots
-            _controller.mergeAll(-1);
-            _controller.mergeAll(-2);
-            _controller.mergeAll(-3);
-            _controller.mergeAll(-4);
-            _controller.mergeAll(-5);
+            if (ci.Any(x => x.id == _character.inventory.head.id))
+            {
+                _controller.mergeAll(-1);
+            }
+
+            if (ci.Any(x => x.id == _character.inventory.chest.id))
+            {
+                _controller.mergeAll(-2);
+            }
+
+            if (ci.Any(x => x.id == _character.inventory.legs.id))
+            {
+                _controller.mergeAll(-3);
+            }
+
+            if (ci.Any(x => x.id == _character.inventory.boots.id))
+            {
+                _controller.mergeAll(-4);
+            }
+
+            if (ci.Any(x => x.id == _character.inventory.weapon.id))
+            {
+                _controller.mergeAll(-5);
+            }
 
             if (_controller.weapon2Unlocked())
             {
-                _controller.mergeAll(-6);
+                if (ci.Any(x => x.id == _character.inventory.weapon2.id))
+                {
+                    _controller.mergeAll(-6);
+                }
             }
 
             //Boost Accessories
             for (var i = 10000; _controller.accessoryID(i) < _controller.accessorySpaces(); i++)
             {
-                _controller.mergeAll(i);
+                if (ci.Any(x => x.id == _character.inventory.accs[_controller.accessoryID(i)].id))
+                {
+                    _controller.mergeAll(i);
+                }
             }
         }
 
@@ -276,8 +304,12 @@ namespace NGUInjector.Managers
 
         internal void MergeGuffs(ih[] ci)
         {
-            for (var id = 1000000; id - 1000000 < _character.inventory.macguffins.Count; ++id)
-                _controller.mergeAll(id);
+            for (var id = 0; id < _character.inventory.macguffins.Count; ++id)
+            {
+                var guffId = _character.inventory.macguffins[id].id;
+                if (ci.Any(x => x.id == guffId))
+                    _controller.mergeAll(_controller.globalMacguffinID(id));
+            }
 
             var invGuffs = ci.Where(x => _guffs.Contains(x.id)).GroupBy(x => x.id).Where(x => x.Count() > 1);
             foreach (var guff in invGuffs)
@@ -553,6 +585,11 @@ namespace NGUInjector.Managers
             Power += other.Power;
             Toughness += other.Toughness;
             Special += other.Special;
+        }
+
+        public decimal Total()
+        {
+            return Power + Toughness + Special;
         }
     }
 }

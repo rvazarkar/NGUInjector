@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
 using System.Linq;
@@ -89,6 +90,7 @@ namespace NGUInjector
             {
                 Directory.CreateDirectory(logDir);
             }
+
             OutputWriter = new StreamWriter(Path.Combine(logDir, "inject.log")) {AutoFlush = true};
             LootWriter = new StreamWriter(Path.Combine(logDir, "loot.log")) { AutoFlush = true };
             CombatWriter = new StreamWriter(Path.Combine(logDir, "combat.log")) { AutoFlush = true };
@@ -177,7 +179,7 @@ namespace NGUInjector
                         BloodNumberThreshold = 1e10,
                         CubePriority = 0,
                         CombatEnabled = false,
-                        GlobalEnabled = true,
+                        GlobalEnabled = false,
                         QuickDiggers = new int[] {},
                         QuickLoadout = new int[] {},
                         UseButterMajor = false,
@@ -516,7 +518,7 @@ namespace NGUInjector
                     var boostSlots = _invManager.GetBoostSlots(converted);
                     _invManager.EnsureFiltered(converted);
                     _invManager.ManageConvertibles(converted);
-                    _invManager.MergeEquipped();
+                    _invManager.MergeEquipped(converted);
                     _invManager.MergeInventory(converted);
                     _invManager.MergeBoosts(converted);
                     _invManager.MergeGuffs(converted);
@@ -524,6 +526,44 @@ namespace NGUInjector
                     _invManager.BoostInfinityCube();
                     _invManager.ManageBoostConversion(boostSlots);
                 }
+
+                //if (Settings.ManageInventory && !Controller.midDrag)
+                //{
+                //    var watch = Stopwatch.StartNew();
+                //    var converted = Character.inventory.GetConvertedInventory().ToArray();
+                //    Log($"Creating CI: {watch.ElapsedMilliseconds}");
+                //    watch = Stopwatch.StartNew();
+                //    var boostSlots = _invManager.GetBoostSlots(converted);
+                //    Log($"Get Boost Slots: {watch.ElapsedMilliseconds}");
+                //    watch = Stopwatch.StartNew();
+                //    _invManager.EnsureFiltered(converted);
+                //    Log($"Filtering: {watch.ElapsedMilliseconds}");
+                //    watch = Stopwatch.StartNew();
+                //    _invManager.ManageConvertibles(converted);
+                //    Log($"Convertibles: {watch.ElapsedMilliseconds}");
+                //    watch = Stopwatch.StartNew();
+                //    _invManager.MergeEquipped(converted);
+                //    Log($"Merge Equipped: {watch.ElapsedMilliseconds}");
+                //    watch = Stopwatch.StartNew();
+                //    _invManager.MergeInventory(converted);
+                //    Log($"Merge Inventory: {watch.ElapsedMilliseconds}");
+                //    watch = Stopwatch.StartNew();
+                //    _invManager.MergeBoosts(converted);
+                //    Log($"Merge Boosts: {watch.ElapsedMilliseconds}");
+                //    watch = Stopwatch.StartNew();
+                //    _invManager.MergeGuffs(converted);
+                //    Log($"Merge Guffs: {watch.ElapsedMilliseconds}");
+                //    watch = Stopwatch.StartNew();
+                //    _invManager.BoostInventory(boostSlots);
+                //    Log($"Boost Inventory: {watch.ElapsedMilliseconds}");
+                //    watch = Stopwatch.StartNew();
+                //    _invManager.BoostInfinityCube();
+                //    Log($"Boost Cube: {watch.ElapsedMilliseconds}");
+                //    watch = Stopwatch.StartNew();
+                //    _invManager.ManageBoostConversion(boostSlots);
+                //    Log($"Boost Conversion: {watch.ElapsedMilliseconds}");
+                //    watch.Stop();
+                //}
 
                 if (Settings.SwapTitanLoadouts)
                 {
@@ -669,7 +709,7 @@ namespace NGUInjector
             //This logic should trigger only if Time Machine is ready
             if (Character.buttons.brokenTimeMachine.interactable)
             {
-                var maxZone = ZoneHelpers.getMaxReachableZone(false);
+                var maxZone = ZoneHelpers.GetMaxReachableZone(false);
                 if (Settings.GoldZone < maxZone)
                 {
                     Settings.GoldZone = maxZone;
@@ -716,7 +756,7 @@ namespace NGUInjector
                     if (!Settings.AllowZoneFallback)
                         return;
 
-                    tempZone = ZoneHelpers.getMaxReachableZone(false);
+                    tempZone = ZoneHelpers.GetMaxReachableZone(false);
                 }
                 else
                 {
