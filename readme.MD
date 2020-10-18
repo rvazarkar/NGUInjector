@@ -286,6 +286,41 @@ A rebirth breakpoint is added as follows:
 
 A setting of -1 means no rebirths. Otherwise rebirth will be performed when the time in seconds is reached.
 
+## Time setting
+
+All times can be also defined as a strings with standard time parsing format.
+
+#### Example usage:
+```
+{
+    "Time": "1:10:0", // 1h 10 minutes
+    "OS": 1
+}
+```
+#### Examples of time expressions
+```
+//              String to Parse                  TimeSpan
+//            -----------------   -----------------------
+//                          "0"        00:00:00
+//                         "14"     14.00:00:00 (14 days)
+//                      "1:2:3"        01:02:03
+//                "10.20:30:40"     10.20:30:40
+//             "0023:0059:0059"        23:59:59
+//                     "23:0:0"        23:00:00
+//                     "24:0:0"   Parse operation failed.
+//                     "0:59:0"        00:59:00
+//                     "0:60:0"   Parse operation failed.
+//                     "0:0:59"        00:00:59
+//                     "0:0:60"   Parse operation failed.
+//                       "10:0"        10:00:00
+//                       "0:10"        00:10:00
+//                    "10:20:0"        10:20:00
+//                    "0.12:00"        12:00:00
+//                   "10.12:00"     10.12:00:00
+```
+
+See https://docs.microsoft.com/en-us/dotnet/api/system.timespan.tryparse?view=netcore-3.1
+
 # Other Features
 
 ## Quicksave + NGUSav.ES JSON
