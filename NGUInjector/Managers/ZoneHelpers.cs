@@ -88,18 +88,6 @@ namespace NGUInjector.Managers
             return 0;
         }
 
-        internal static Boolean canSnipeZone(int zoneId)
-        {
-            var controller = Main.Character.adventureController;
-            var zones = controller.enemyList;
-            var enemies = zones[zoneId];
-            float maxAttack = enemies.OrderByDescending(e => e.attack).First().attack;
-            float maxDefense = enemies.OrderByDescending(e => e.defense).First().defense;
-            float neededAttack = maxAttack * 3;
-            float neededDefense = maxDefense * 2;
-            return (controller.attack() > neededAttack && controller.defense() > neededDefense);
-        }
-
     }
     public class TitanSpawn
     {
