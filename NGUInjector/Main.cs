@@ -278,7 +278,7 @@ namespace NGUInjector
                 InvokeRepeating("MonitorLog", 0.0f, 1f);
                 InvokeRepeating("QuickStuff", 0.0f, .5f);
                 InvokeRepeating("ShowBoostProgress", 0.0f, 60.0f);
-                InvokeRepeating("SetResnipe", 0f,1f);
+                InvokeRepeating("SetResnipe", 0f, 1f);
             }
             catch (Exception e)
             {
@@ -885,7 +885,7 @@ namespace NGUInjector
 
             if (Settings.GoldCBlockMode)
             {
-                var furthest = ZoneHelpers.GetMaxReachableZone(false);
+                var furthest = DefaultZoneStats.GetBestZone().Zone;
                 if (furthest > _furthestZone)
                 {
                     Settings.DoGoldSwap = true;
