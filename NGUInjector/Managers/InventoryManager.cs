@@ -476,15 +476,21 @@ namespace NGUInjector.Managers
                 return;
             }
 
+            var cube = new Cube
+            {
+                Power = _character.inventory.cubePower,
+                Toughness = _character.inventory.cubeToughness
+            };
+
             if (Settings.CubePriority > 0)
             {
                 if (Settings.CubePriority == 1)
                 {
-                    if (_controller.cubePower() > _controller.cubeToughness())
+                    if (cube.Power > cube.Toughness)
                     {
                         _controller.selectAutoToughTransform();
                     }
-                    else if (_controller.cubeToughness() > _controller.cubePower())
+                    else if (cube.Toughness > cube.Power)
                     {
                         _controller.selectAutoPowerTransform();
                     }
