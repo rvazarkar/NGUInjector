@@ -1232,9 +1232,14 @@ namespace NGUInjector.AllocationProfiles
             return true;
         }
 
-        internal float CalculateTMEnergyCap(bool useInput)
+        internal CapCalc CalculateTMEnergyCapCalc(bool useInput, int offset)
         {
-            var formula = 50000 * _character.timeMachineController.baseSpeedDivider() * (1f + _character.machine.levelSpeed + 500) / (
+            var ret = new CapCalc
+            {
+                Num = 0,
+                PPT = 1
+            };
+            var formula = 50000 * _character.timeMachineController.baseSpeedDivider() * (1f + _character.machine.levelSpeed + offset) / (
                 _character.totalEnergyPower() * _character.hacksController.totalTMSpeedBonus() *
                 _character.allChallenges.timeMachineChallenge.TMSpeedBonus() *
                 _character.cardsController.getBonus(cardBonus.TMSpeed));
@@ -1245,7 +1250,10 @@ namespace NGUInjector.AllocationProfiles
             }
 
             if (formula >= _character.hardCap())
-                return _character.hardCap();
+            {
+                ret.Num = _character.hardCap();
+                return ret;
+            }
 
             var num4 = formula <= 1.0 ? 1L : (long)formula;
             var num = (long)(num4 / (long)Math.Ceiling(num4 / (useInput ? (double)_character.energyMagicPanel.energyMagicInput : (double)_character.idleEnergy)) * 1.00000202655792);
@@ -1255,11 +1263,81 @@ namespace NGUInjector.AllocationProfiles
                 num = _character.idleEnergy;
             if (num < 0L)
                 num = 0L;
-            return num;
+
+            ret.Num = num;
+            ret.PPT = (double)num / num4;
+            return ret;
         }
 
         internal float CalculateTMMagicCap(bool useInput)
         {
+            var calcA = CalculateTMMagicCapCalc(useInput, 500);
+            if (calcA.PPT < 1)
+            {
+                var calcB = CalculateTMMagicCapCalc(useInput, calcA.GetOffset());
+                return calcB.Num;
+            }
+
+            return calcA.Num;
+        }
+
+        internal float CalculateTMEnergyCap(bool useInput)
+        {
+            var calcA = CalculateTMEnergyCapCalc(useInput, 500);
+            if (calcA.PPT < 1)
+            {
+                var calcB = CalculateTMEnergyCapCalc(useInput, calcA.GetOffset());
+                return calcB.Num;
+            }
+
+            return calcA.Num;
+        }
+
+        internal CapCalc CalculateTMMagicCapCalc(bool useInput, int offset)
+        {
+            var ret = new CapCalc
+            {
+                Num = 0,
+                PPT = 1
+            };
+            var formula = 50000 * _character.timeMachineController.baseGoldMultiDivider() *
+                (1f + _character.machine.levelGoldMulti + offset) / (
+                    _character.totalMagicPower() * _character.hacksController.totalTMSpeedBonus() *
+                    _character.allChallenges.timeMachineChallenge.TMSpeedBonus() *
+                    _character.cardsController.getBonus(cardBonus.TMSpeed));
+
+            if (_character.settings.rebirthDifficulty >= difficulty.sadistic)
+            {
+                formula *= _character.timeMachineController.sadisticDivider();
+            }
+
+            if (formula >= _character.hardCap())
+            {
+                ret.Num = _character.hardCap();
+                return ret;
+            }
+                
+
+            var num4 = formula <= 1.0 ? 1L : (long)formula;
+            var num = (long)(num4 / (long)Math.Ceiling(num4 / (useInput ? (double)_character.energyMagicPanel.energyMagicInput : (double)_character.magic.idleMagic)) * 1.00000202655792);
+            if (num + 1L <= long.MaxValue)
+                ++num;
+            if (num > _character.idleEnergy)
+                num = _character.idleEnergy;
+            if (num < 0L)
+                num = 0L;
+            ret.Num = num;
+            ret.PPT = (double) num / num4;
+            return ret;
+        }
+
+        internal CapCalc CalculateTMMagicCapCalc(bool useInput)
+        {
+            var ret = new CapCalc
+            {
+                Num = 0,
+                PPT = 1
+            };
             var formula = 50000 * _character.timeMachineController.baseGoldMultiDivider() *
                 (1f + _character.machine.levelGoldMulti + 500) / (
                     _character.totalMagicPower() * _character.hacksController.totalTMSpeedBonus() *
@@ -1272,7 +1350,10 @@ namespace NGUInjector.AllocationProfiles
             }
 
             if (formula >= _character.hardCap())
-                return _character.hardCap();
+            {
+                ret.Num = _character.hardCap();
+                return ret;
+            }
 
             var num4 = formula <= 1.0 ? 1L : (long)formula;
             var num = (long)(num4 / (long)Math.Ceiling(num4 / (useInput ? (double)_character.energyMagicPanel.energyMagicInput : (double)_character.magic.idleMagic)) * 1.00000202655792);
@@ -1282,23 +1363,33 @@ namespace NGUInjector.AllocationProfiles
                 num = _character.idleEnergy;
             if (num < 0L)
                 num = 0L;
-            return num;
+            ret.Num = num;
+            ret.PPT = (double)num / num4;
+            return ret;
         }
 
-        internal float CalculateATCap(int index, bool useInput)
+        private CapCalc CalculateATCap(int index, bool useInput, int offset)
         {
-            var divisor = GetDivisor(index);
+            var ret = new CapCalc
+            {
+                Num = 0,
+                PPT = 1
+            };
+            var divisor = GetDivisor(index, offset);
             if (divisor == 0.0)
-                return 0;
+                return ret;
 
             if (_character.wishes.wishes[190].level >= 1)
-                return 0;
+                return ret;
 
             var formula = 50f * divisor /
-                (Mathf.Sqrt(_character.totalEnergyPower()) * _character.totalAdvancedTrainingSpeedBonus());
+                          (Mathf.Sqrt(_character.totalEnergyPower()) * _character.totalAdvancedTrainingSpeedBonus());
 
             if (formula >= _character.hardCap())
-                return _character.hardCap();
+            {
+                ret.Num = _character.hardCap();
+                return ret;
+            }
 
             var num = (long)(formula / (long)Math.Ceiling(formula / (useInput ? (double)_character.energyMagicPanel.energyMagicInput : (double)_character.idleEnergy)) * 1.00000202655792);
 
@@ -1309,7 +1400,32 @@ namespace NGUInjector.AllocationProfiles
             if (num < 0L)
                 num = 0L;
 
-            return num;
+            ret.Num = num;
+            ret.PPT = (double) num / formula;
+            return ret;
+        }
+
+        internal float CalculateATCap(int index, bool useInput)
+        {
+            var calcA = CalculateATCap(index, useInput, 500);
+            if (calcA.PPT < 1)
+            {
+                var calcB = CalculateATCap(index, useInput, calcA.GetOffset());
+                return calcB.Num;
+            }
+
+            return calcA.Num;
+        }
+
+        internal class CapCalc
+        {
+            internal double PPT { get; set; }
+            internal long Num { get; set; }
+
+            internal int GetOffset()
+            {
+                return (int)Math.Floor(PPT * 50 * 10);
+            }
         }
 
         //internal void DebugATCap(int index)
@@ -1333,8 +1449,13 @@ namespace NGUInjector.AllocationProfiles
         //    Main.LogAllocation($"Game Divisor: {_character.advancedTrainingController.getDivisor(index)}");
         //}
 
-        internal float GetNGUEnergyCapA(int id, int offset)
+        internal CapCalc GetNGUEnergyCapCalc(int id, bool useInput, int offset)
         {
+            var ret = new CapCalc
+            {
+                Num = 0,
+                PPT = 1
+            };
             var num1 = 0.0f;
             if (_character.settings.nguLevelTrack == difficulty.normal)
                 num1 = _character.NGU.skills[id].level + 1L + offset;
@@ -1343,12 +1464,6 @@ namespace NGUInjector.AllocationProfiles
             else if (_character.settings.nguLevelTrack == difficulty.sadistic)
                 num1 = _character.NGU.skills[id].sadisticLevel + 1L + offset;
 
-            return num1;
-        }
-
-        internal float CalculateNGUEnergyCap(int id, bool useInput)
-        {
-            var num1 = GetNGUEnergyCapA(id, 500);
             var num2 = _character.totalEnergyPower() * (double)_character.totalNGUSpeedBonus() * _character.adventureController.itopod.totalEnergyNGUBonus() * _character.inventory.macguffinBonuses[4] * _character.NGUController.energyNGUBonus() * _character.allDiggers.totalEnergyNGUBonus() * _character.hacksController.totalEnergyNGUBonus() * _character.beastQuestPerkController.totalEnergyNGUSpeed() * _character.wishesController.totalEnergyNGUSpeed() * _character.cardsController.getBonus(cardBonus.energyNGUSpeed);
             if (_character.allChallenges.trollChallenge.sadisticCompletions() >= 1)
                 num2 *= 3.0;
@@ -1356,7 +1471,11 @@ namespace NGUInjector.AllocationProfiles
                 num2 /= _character.NGUController.NGU[0].sadisticDivider();
             var num3 = _character.NGUController.energySpeedDivider(id) * (double)num1 / num2;
             if (num3 >= _character.hardCap())
-                return _character.hardCap();
+            {
+                ret.Num = _character.hardCap();
+                return ret;
+            }
+                
             var num4 = num3 <= 1.0 ? 1L : (long)num3;
             var num = (long)(num4 / (long)Math.Ceiling(num4 / (useInput ? (double)_character.energyMagicPanel.energyMagicInput : (double)_character.idleEnergy)) * 1.00000202655792);
             if (num + 1L <= long.MaxValue)
@@ -1364,12 +1483,33 @@ namespace NGUInjector.AllocationProfiles
             if (num > _character.idleEnergy)
                 num = _character.idleEnergy;
             if (num < 0L)
-                num = 0L;
-            return num;
+                num = 0;
+
+            var ppt = (double)num / num4;
+            ret.Num = num;
+            ret.PPT = ppt;
+            return ret;
         }
 
-        internal float GetNGUMagicCapA(int id, int offset)
+        internal float CalculateNGUEnergyCap(int id, bool useInput)
         {
+            var calcA = GetNGUEnergyCapCalc(id, useInput, 500);
+            if (calcA.PPT < 1)
+            {
+                var calcB = GetNGUEnergyCapCalc(id, useInput, calcA.GetOffset());
+                return calcB.Num;
+            }
+
+            return calcA.Num;
+        }
+
+        internal CapCalc GetNGUMagicCapCalc(int id, bool useInput, int offset)
+        {
+            var ret = new CapCalc
+            {
+                Num = 0,
+                PPT = 1
+            };
             var num1 = 0.0f;
             if (_character.settings.nguLevelTrack == difficulty.normal)
                 num1 = _character.NGU.magicSkills[id].level + 1L + offset;
@@ -1378,12 +1518,6 @@ namespace NGUInjector.AllocationProfiles
             else if (_character.settings.nguLevelTrack == difficulty.sadistic)
                 num1 = _character.NGU.magicSkills[id].sadisticLevel + 1L + offset;
 
-            return num1;
-        }
-
-        internal float CalculateNGUMagicCap(int id, bool useInput)
-        {
-            var num1 = GetNGUMagicCapA(id, 500);
             var num2 = _character.totalMagicPower() * (double)_character.totalNGUSpeedBonus() * _character.adventureController.itopod.totalMagicNGUBonus() * _character.inventory.macguffinBonuses[5] * _character.NGUController.magicNGUBonus() * _character.allDiggers.totalMagicNGUBonus() * _character.hacksController.totalMagicNGUBonus() * _character.beastQuestPerkController.totalMagicNGUSpeed() * _character.wishesController.totalMagicNGUSpeed() * _character.cardsController.getBonus(cardBonus.magicNGUSpeed);
             if (_character.allChallenges.trollChallenge.completions() >= 1)
                 num2 *= 3.0;
@@ -1391,7 +1525,10 @@ namespace NGUInjector.AllocationProfiles
                 num2 /= _character.NGUController.NGUMagic[0].sadisticDivider();
             var num3 = _character.NGUController.magicSpeedDivider(id) * (double)num1 / num2;
             if (num3 >= _character.hardCap())
-                return _character.hardCap();
+            {
+                ret.Num = _character.hardCap();
+                return ret;
+            }
             var num4 = num3 <= 1.0 ? 1L : (long)num3;
             var num = (long)(num4 / (long)Math.Ceiling(num4 / (useInput ? (double)_character.energyMagicPanel.energyMagicInput : (double)_character.magic.idleMagic)) * 1.00000202655792);
             if (num + 1L <= long.MaxValue)
@@ -1400,16 +1537,49 @@ namespace NGUInjector.AllocationProfiles
                 num = _character.magic.idleMagic;
             if (num < 0L)
                 num = 0L;
-            return num;
+
+            var ppt = (double)num / num4;
+            ret.Num = num;
+            ret.PPT = ppt;
+            return ret;
+        }
+
+        internal float CalculateNGUMagicCap(int id, bool useInput)
+        {
+            var calcA = GetNGUMagicCapCalc(id, useInput, 500);
+            if (calcA.PPT < 1)
+            {
+                var calcB = GetNGUMagicCapCalc(id, useInput, calcA.GetOffset());
+                return calcB.Num;
+            }
+
+            return calcA.Num;
         }
 
         internal float CalculateAugCap(int index, bool useInput)
         {
+            var calcA = CalculateAugCapCalc(index, useInput, 500);
+            if (calcA.PPT < 1)
+            {
+                var calcB = CalculateAugCapCalc(index, useInput, calcA.GetOffset());
+                return calcB.Num;
+            }
+
+            return calcA.Num;
+        }
+
+        internal CapCalc CalculateAugCapCalc(int index, bool useInput, int offset)
+        {
+            var ret = new CapCalc
+            {
+                Num = 0,
+                PPT = 1
+            };
             var augIndex = (int)Math.Floor((double)(index / 2));
             double formula = 0;
             if (index % 2 == 0)
             {
-                formula = 50000 * (1f + _character.augments.augs[augIndex].augLevel + 500) /
+                formula = 50000 * (1f + _character.augments.augs[augIndex].augLevel + offset) /
                     (_character.totalEnergyPower() *
                     (1 + _character.inventoryController.bonuses[specType.Augs]) *
                     _character.inventory.macguffinBonuses[12] *
@@ -1445,7 +1615,7 @@ namespace NGUInjector.AllocationProfiles
             }
             else
             {
-                formula = 50000 * (1f + _character.augments.augs[augIndex].upgradeLevel + 500) /
+                formula = 50000 * (1f + _character.augments.augs[augIndex].upgradeLevel + offset) /
                     (_character.totalEnergyPower() *
                     (1 + _character.inventoryController.bonuses[specType.Augs]) *
                     _character.inventory.macguffinBonuses[12] *
@@ -1483,7 +1653,10 @@ namespace NGUInjector.AllocationProfiles
             }
 
             if (formula >= _character.hardCap())
-                return _character.hardCap();
+            {
+                ret.Num = _character.hardCap();
+                return ret;
+            }
             var num4 = formula <= 1.0 ? 1L : (long)formula;
             var num = (long)(num4 / (long)Math.Ceiling(num4 / (useInput ? (double)_character.energyMagicPanel.energyMagicInput : (double)_character.idleEnergy)) * 1.00000202655792);
             if (num + 1L <= long.MaxValue)
@@ -1492,7 +1665,10 @@ namespace NGUInjector.AllocationProfiles
                 num = _character.idleEnergy;
             if (num < 0L)
                 num = 0L;
-            return num;
+            var ppt = (double)num / num4;
+            ret.Num = num;
+            ret.PPT = ppt;
+            return ret;
         }
 
         private bool IsBTUnlocked(int index)
@@ -1542,7 +1718,7 @@ namespace NGUInjector.AllocationProfiles
             return _character.bossID > _character.augmentsController.augments[augIndex].upgradeBossRequired;
         }
 
-        private float GetDivisor(int index)
+        private float GetDivisor(int index, int offset)
         {
             float baseTime;
             switch (index)
@@ -1567,7 +1743,7 @@ namespace NGUInjector.AllocationProfiles
                     break;
             }
 
-            return baseTime * (_character.advancedTraining.level[index] + 500 + 1f);
+            return baseTime * (_character.advancedTraining.level[index] + offset + 1f);
         }
 
         private int ParseIndex(string prio)
