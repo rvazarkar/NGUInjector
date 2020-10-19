@@ -37,7 +37,7 @@ namespace NGUInjector
         private static CustomAllocation _profile;
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
-        internal const string Version = "2.6.0";
+        internal const string Version = "3.0.0";
         private static int _furthestZone;
 
         internal static bool Test { get; set; }
@@ -81,38 +81,48 @@ namespace NGUInjector
 
         public void Start()
         {
-            _dir = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%/Desktop"), "NGUInjector");
-            if (!Directory.Exists(_dir))
+            try
             {
-                Directory.CreateDirectory(_dir);
-            }
+                _dir = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%/Desktop"), "NGUInjector");
+                if (!Directory.Exists(_dir))
+                {
+                    Directory.CreateDirectory(_dir);
+                }
 
-            var logDir = Path.Combine(_dir, "logs");
-            if (!Directory.Exists(logDir))
-            {
-                Directory.CreateDirectory(logDir);
-            }
+                var logDir = Path.Combine(_dir, "logs");
+                if (!Directory.Exists(logDir))
+                {
+                    Directory.CreateDirectory(logDir);
+                }
 
-            OutputWriter = new StreamWriter(Path.Combine(logDir, "inject.log")) {AutoFlush = true};
-            LootWriter = new StreamWriter(Path.Combine(logDir, "loot.log")) { AutoFlush = true };
-            CombatWriter = new StreamWriter(Path.Combine(logDir, "combat.log")) { AutoFlush = true };
-            AllocationWriter = new StreamWriter(Path.Combine(logDir, "allocation.log")) { AutoFlush = true};
-            PitSpinWriter = new StreamWriter(Path.Combine(logDir, "pitspin.log"), true) {AutoFlush = true};
-            
-            _profilesDir = Path.Combine(_dir, "profiles");
-            if (!Directory.Exists(_profilesDir))
-            {
-                Directory.CreateDirectory(_profilesDir);
-            }
+                OutputWriter = new StreamWriter(Path.Combine(logDir, "inject.log")) {AutoFlush = true};
+                LootWriter = new StreamWriter(Path.Combine(logDir, "loot.log")) {AutoFlush = true};
+                CombatWriter = new StreamWriter(Path.Combine(logDir, "combat.log")) {AutoFlush = true};
+                AllocationWriter = new StreamWriter(Path.Combine(logDir, "allocation.log")) {AutoFlush = true};
+                PitSpinWriter = new StreamWriter(Path.Combine(logDir, "pitspin.log"), true) {AutoFlush = true};
 
-            var oldPath = Path.Combine(_dir, "allocation.json");
-            
-            if (File.Exists(oldPath))
-            {
+                _profilesDir = Path.Combine(_dir, "profiles");
+                if (!Directory.Exists(_profilesDir))
+                {
+                    Directory.CreateDirectory(_profilesDir);
+                }
+
+                var oldPath = Path.Combine(_dir, "allocation.json");
                 var newPath = Path.Combine(_profilesDir, "default.json");
-                File.Move(oldPath, newPath);
-            }
 
+                if (File.Exists(oldPath) && !File.Exists(newPath))
+                {
+                    File.Move(oldPath, newPath);
+                }
+            }
+            catch (Exception e)
+            {
+                Log(e.Message);
+                Log(e.StackTrace);
+                Loader.Unload();
+                return;
+            }
+            
             try
             {
                 Character = FindObjectOfType<Character>();
@@ -736,7 +746,8 @@ namespace NGUInjector
                     if (LoadoutManager.TryGoldDropSwap())
                     {
                         var bestZone = DefaultZoneStats.GetBestZone();
-                        _furthestZone = bestZone.Zone;
+                        _furthestZone = ZoneHelpers.GetMaxReachableZone(false);
+                        
                         _combManager.ManualZone(bestZone.Zone, true, bestZone.FightType == 1, false, bestZone.FightType == 2, false);
                         return;
                     }
