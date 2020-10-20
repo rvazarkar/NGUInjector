@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllocationProfiles\AllocationCapCalculators.cs" />
     <Compile Include="AllocationProfiles\CustomAllocation.cs" />
     <Compile Include="AllocationProfiles\AllocationProfile.cs" />
     <Compile Include="Managers\ZoneStatHelper.cs" />
