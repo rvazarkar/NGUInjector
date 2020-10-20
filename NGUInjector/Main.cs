@@ -278,7 +278,7 @@ namespace NGUInjector
                 Settings.SaveSettings();
                 Settings.LoadSettings();
 
-                DefaultZoneStats.CreateOverrides();
+                ZoneStatHelper.CreateOverrides();
 
                 settingsForm.UpdateFromSettings(Settings);
                 settingsForm.Show();
@@ -525,9 +525,9 @@ namespace NGUInjector
                 var spaghetti = (Character.bloodMagicController.lootBonus() - 1) * 100;
                 var counterfeit = ((Character.bloodMagicController.goldBonus() - 1)) * 100;
                 var number = Character.bloodMagic.rebirthPower;
-                Character.bloodMagic.rebirthAutoSpell = Settings.BloodNumberThreshold >= number;
-                Character.bloodMagic.goldAutoSpell = Settings.CounterfeitThreshold >= counterfeit;
-                Character.bloodMagic.lootAutoSpell = Settings.SpaghettiThreshold >= spaghetti;
+                Character.bloodMagic.rebirthAutoSpell = Settings.BloodNumberThreshold > 0 && Settings.BloodNumberThreshold >= number;
+                Character.bloodMagic.goldAutoSpell = Settings.CounterfeitThreshold > 0 && Settings.CounterfeitThreshold >= counterfeit;
+                Character.bloodMagic.lootAutoSpell = Settings.SpaghettiThreshold > 0 && Settings.SpaghettiThreshold >= spaghetti;
                 Character.bloodSpells.updateGoldToggleState();
                 Character.bloodSpells.updateLootToggleState();
                 Character.bloodSpells.updateRebirthToggleState();
@@ -745,7 +745,7 @@ namespace NGUInjector
                 {
                     if (LoadoutManager.TryGoldDropSwap())
                     {
-                        var bestZone = DefaultZoneStats.GetBestZone();
+                        var bestZone = ZoneStatHelper.GetBestZone();
                         _furthestZone = ZoneHelpers.GetMaxReachableZone(false);
                         
                         _combManager.ManualZone(bestZone.Zone, true, bestZone.FightType == 1, false, bestZone.FightType == 2, false);

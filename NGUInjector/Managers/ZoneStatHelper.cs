@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NGUInjector.Managers
 {
-    internal class DefaultZoneStats
+    internal class ZoneStatHelper
     {
         internal static Dictionary<int, ZoneStats> UserOverrides;
 

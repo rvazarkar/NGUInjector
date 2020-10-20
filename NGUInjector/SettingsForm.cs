@@ -1098,7 +1098,6 @@ namespace NGUInjector
             if (_initializing) return;
             var temp = Main.Settings.TitanGoldTargets;
             temp[(int)e.Item.Tag] = e.Item.Checked;
-            Main.Log($"{e.Item.Text} - {e.Item.Checked}");
             Main.Settings.TitanGoldTargets = temp;
         }
 
