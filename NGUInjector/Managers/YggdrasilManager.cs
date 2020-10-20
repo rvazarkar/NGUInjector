@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Windows.Forms;
 using static NGUInjector.Main;
 
 namespace NGUInjector.Managers
@@ -69,6 +74,7 @@ namespace NGUInjector.Managers
 
         private void ActuallyHarvest()
         {
+            ReadTooltipLog(false);
             var currentPage = _character.yggdrasilController.curPage;
             _character.yggdrasilController.changePage(0);
             _character.yggdrasilController.consumeAll();
@@ -78,10 +84,12 @@ namespace NGUInjector.Managers
             _character.yggdrasilController.consumeAll();
             _character.yggdrasilController.changePage(currentPage);
             _character.yggdrasilController.refreshMenu();
+            ReadTooltipLog(true);
         }
 
         internal static void HarvestAll()
         {
+            ReadTooltipLog(false);
             var currentPage = Main.Character.yggdrasilController.curPage;
             Main.Character.yggdrasilController.changePage(0);
             Main.Character.yggdrasilController.consumeAll(true);
@@ -91,6 +99,31 @@ namespace NGUInjector.Managers
             Main.Character.yggdrasilController.consumeAll(true);
             Main.Character.yggdrasilController.changePage(currentPage);
             Main.Character.yggdrasilController.refreshMenu();
+            ReadTooltipLog(true);
+        }
+
+        internal static void ReadTooltipLog(bool doLog)
+        {
+            var bLog = Main.Character.tooltip.log;
+            var type = bLog.GetType().GetField("Eventlog",
+                BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
+            var val = type?.GetValue(bLog);
+
+            if (val != null)
+            {
+                //Add something to the end of our logs to mark them as complete
+                var log = (List<string>)val;
+                for (var i = log.Count - 1; i >= 0; i--)
+                {
+                    var line = log[i];
+                    if (line.EndsWith("<b></b>")) continue;
+                    if (doLog)
+                    {
+                        LogPitSpin(line);
+                    }
+                    log[i] = $"{line}<b></b>";
+                }
+            }
         }
 
         internal void CheckFruits()
