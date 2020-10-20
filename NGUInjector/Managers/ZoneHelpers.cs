@@ -40,7 +40,7 @@ namespace NGUInjector.Managers
                 result.SpawningSoon = true;
             }
 
-            if (bossId > Main.Settings.HighestAKZone)
+            if (bossId + 1 > Main.Settings.HighestAKZone)
                 return result;
             if (TitanZones[bossId] > GetMaxReachableZone(true))
                 return result;
