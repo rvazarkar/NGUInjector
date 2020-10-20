@@ -414,6 +414,16 @@ namespace NGUInjector
                 return;
             }
 
+            var saveTime = File.GetLastWriteTime(filename);
+            var diff = saveTime.GetPrettyDate();
+
+            var confirmResult = MessageBox.Show($"Last quicksave was {diff}. Are you sure you want to load?",
+                "Load Quicksave"
+                , MessageBoxButtons.YesNo);
+
+            if (confirmResult == DialogResult.No)
+                return;
+
             Log("Loading quicksave");
             string base64Data;
             try
