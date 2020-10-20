@@ -28,11 +28,6 @@ namespace NGUInjector.Managers
             return result;
         }
 
-        internal static void ResetTitanDrops()
-        {
-            Main.Settings.TitanMoneyDone = new bool[TitanZones.Length];
-        }
-
         private static TitanSpawn GetTitanSpawn(int bossId)
         {
             var result = new TitanSpawn();
