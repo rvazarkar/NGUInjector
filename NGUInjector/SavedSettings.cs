@@ -814,6 +814,7 @@ namespace NGUInjector
             get => _titanMoneyDone;
             set
             {
+                if (Enumerable.SequenceEqual(_titanMoneyDone, value)) return;
                 _titanMoneyDone = value;
                 SaveSettings();
             }
@@ -824,6 +825,7 @@ namespace NGUInjector
             get => _titanGoldTargets;
             set
             {
+                if (Enumerable.SequenceEqual(_titanGoldTargets, value)) return;
                 _titanGoldTargets = value;
                 SaveSettings();
             }
