@@ -166,24 +166,24 @@ namespace NGUInjector.AllocationProfiles
                     _currentR3Breakpoint = null;
                     _currentNguBreakpoint = null;
 
-                    if (Main.Settings.ManageNGUDiff)
-                        SwapNGUDiff();
-                    if (Main.Settings.ManageEnergy) _character.removeMostEnergy();
+                    //if (Main.Settings.ManageNGUDiff)
+                    //    SwapNGUDiff();
+                    //if (Main.Settings.ManageEnergy) _character.removeMostEnergy();
 
-                    if (Main.Settings.ManageR3) _character.removeAllRes3();
+                    //if (Main.Settings.ManageR3) _character.removeAllRes3();
 
-                    if (Main.Settings.ManageMagic) _character.removeMostMagic();
+                    //if (Main.Settings.ManageMagic) _character.removeMostMagic();
 
-                    if (Main.Settings.ManageGear)
-                        EquipGear();
-                    if (Main.Settings.ManageEnergy)
-                        AllocateEnergy();
-                    if (Main.Settings.ManageMagic)
-                        AllocateMagic();
-                    if (Main.Settings.ManageDiggers && Main.Character.buttons.diggers.interactable) 
-                        EquipDiggers();
-                    if (Main.Settings.ManageR3 && Main.Character.buttons.hacks.interactable)
-                        AllocateR3();
+                    //if (Main.Settings.ManageGear)
+                    //    EquipGear();
+                    //if (Main.Settings.ManageEnergy)
+                    //    AllocateEnergy();
+                    //if (Main.Settings.ManageMagic)
+                    //    AllocateMagic();
+                    //if (Main.Settings.ManageDiggers && Main.Character.buttons.diggers.interactable) 
+                    //    EquipDiggers();
+                    //if (Main.Settings.ManageR3 && Main.Character.buttons.hacks.interactable)
+                    //    AllocateR3();
                     
                 }
                 catch (Exception e)
@@ -300,6 +300,8 @@ namespace NGUInjector.AllocationProfiles
                 _character.settings.nguLevelTrack = difficulty.sadistic;
             }
 
+            _hasNGUSwapped = true;
+
             _character.NGUController.refreshMenu();
         }
 
@@ -316,6 +318,7 @@ namespace NGUInjector.AllocationProfiles
 
             if (_hasWandoosSwapped) return;
 
+            _hasWandoosSwapped = true;
             if (bp.OS == 0 && _character.wandoos98.os == OSType.wandoos98) return;
             if (bp.OS == 1 && _character.wandoos98.os == OSType.wandoosMEH) return;
             if (bp.OS == 2 && _character.wandoos98.os == OSType.wandoosXL) return;
