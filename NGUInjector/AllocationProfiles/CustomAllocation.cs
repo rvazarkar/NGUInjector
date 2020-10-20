@@ -1320,10 +1320,10 @@ namespace NGUInjector.AllocationProfiles
 
         private bool ATTargetMet(int index)
         {
-            if (_character.advancedTraining.target[index] == 0)
+            if (_character.advancedTraining.levelTarget[index] == 0)
                 return false;
 
-            return _character.advancedTraining.level[index] >= _character.advancedTraining.target[index];
+            return _character.advancedTraining.level[index] >= _character.advancedTraining.levelTarget[index];
         }
 
         private bool AugTargetMet(int index)
