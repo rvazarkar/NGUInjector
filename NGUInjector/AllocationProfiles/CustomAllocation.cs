@@ -34,6 +34,8 @@ namespace NGUInjector.AllocationProfiles
         private string[] _validMagicPriorities = { "WAN", "CAPWAN", "BR", "RIT", "CAPRIT", "TM", "CAPTM", "NGU", "CAPNGU", "CAPALLNGU", "ALLNGU", "BLANK", "WISH" };
         private string[] _validR3Priorities = {"HACK", "WISH"};
 
+        internal bool IsAllocationRunning;
+
         public CustomAllocation(string profilesDir, string profile)
         {
             _allocationPath = Path.Combine(profilesDir, profile + ".json");
@@ -157,7 +159,7 @@ namespace NGUInjector.AllocationProfiles
 
                     Main.Log(BuildAllocationString());
 
-
+                    
                     _currentDiggerBreakpoint = null;
                     _currentEnergyBreakpoint = null;
                     _currentGearBreakpoint = null;
@@ -166,25 +168,7 @@ namespace NGUInjector.AllocationProfiles
                     _currentR3Breakpoint = null;
                     _currentNguBreakpoint = null;
 
-                    //if (Main.Settings.ManageNGUDiff)
-                    //    SwapNGUDiff();
-                    //if (Main.Settings.ManageEnergy) _character.removeMostEnergy();
-
-                    //if (Main.Settings.ManageR3) _character.removeAllRes3();
-
-                    //if (Main.Settings.ManageMagic) _character.removeMostMagic();
-
-                    //if (Main.Settings.ManageGear)
-                    //    EquipGear();
-                    //if (Main.Settings.ManageEnergy)
-                    //    AllocateEnergy();
-                    //if (Main.Settings.ManageMagic)
-                    //    AllocateMagic();
-                    //if (Main.Settings.ManageDiggers && Main.Character.buttons.diggers.interactable) 
-                    //    EquipDiggers();
-                    //if (Main.Settings.ManageR3 && Main.Character.buttons.hacks.interactable)
-                    //    AllocateR3();
-                    
+                    this.DoAllocations();
                 }
                 catch (Exception e)
                 {

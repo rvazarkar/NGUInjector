@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using NGUInjector.AllocationProfiles;
 using NGUInjector.Managers;
 using UnityEngine;
 using static NGUInjector.Main;
@@ -100,6 +101,36 @@ namespace NGUInjector
         private static decimal CalcCap(float cap, float level)
         {
             return (decimal)Mathf.Floor(cap * (float)(1.0 + level / 100.0));
+        }
+
+        internal static void DoAllocations(this CustomAllocation allocation)
+        {
+            if (allocation.IsAllocationRunning)
+                return;
+
+            allocation.IsAllocationRunning = true;
+
+            if (Settings.ManageNGUDiff)
+                allocation.SwapNGUDiff();
+            if (Settings.ManageGear)
+                allocation.EquipGear();
+            if (Settings.ManageEnergy)
+                allocation.AllocateEnergy();
+            if (Settings.ManageMagic)
+                allocation.AllocateMagic();
+            if (Settings.ManageR3)
+                allocation.AllocateR3();
+
+            if (Settings.ManageDiggers && Main.Character.buttons.diggers.interactable)
+            {
+                allocation.EquipDiggers();
+                DiggerManager.RecapDiggers();
+            }
+
+            if (Settings.ManageWandoos && Main.Character.buttons.wandoos.interactable)
+                allocation.SwapOS();
+
+            allocation.IsAllocationRunning = false;
         }
     }
 }

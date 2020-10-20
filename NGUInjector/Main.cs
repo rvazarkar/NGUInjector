@@ -485,26 +485,9 @@ namespace NGUInjector
                     }
                 }
 
-                if (needsAllocation)
+                if (needsAllocation && !_profile.IsAllocationRunning)
                 {
-                    if (Settings.ManageNGUDiff)
-                        _profile.SwapNGUDiff();
-                    if (Settings.ManageGear)
-                        _profile.EquipGear();
-                    if (Settings.ManageEnergy)
-                        _profile.AllocateEnergy();
-                    if (Settings.ManageMagic)
-                        _profile.AllocateMagic();
-                    if (Settings.ManageDiggers && Character.buttons.diggers.interactable)
-                    {
-                        _profile.EquipDiggers();
-                        DiggerManager.RecapDiggers();
-                    }
-
-                    if (Settings.ManageR3 && Character.buttons.hacks.interactable) 
-                        _profile.AllocateR3();
-                    if (Settings.ManageWandoos && Character.buttons.wandoos.interactable)
-                        _profile.SwapOS();
+                    _profile.DoAllocations();
                 }
             }
 
@@ -675,25 +658,7 @@ namespace NGUInjector
                     }
                 }
 
-                if (Settings.ManageNGUDiff)
-                    _profile.SwapNGUDiff();
-                if (Settings.ManageGear) 
-                    _profile.EquipGear();
-                if (Settings.ManageEnergy)
-                    _profile.AllocateEnergy();
-                if (Settings.ManageMagic)
-                    _profile.AllocateMagic();
-                if (Settings.ManageR3)
-                    _profile.AllocateR3();
-                
-                if (Settings.ManageDiggers && Character.buttons.diggers.interactable)
-                {
-                    _profile.EquipDiggers();
-                    DiggerManager.RecapDiggers();
-                }
-                    
-                if (Settings.ManageWandoos && Character.buttons.wandoos.interactable)
-                    _profile.SwapOS();
+                _profile.DoAllocations();
 
                 if (Settings.AutoQuest && Character.buttons.beast.interactable)
                 {
