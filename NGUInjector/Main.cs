@@ -787,7 +787,7 @@ namespace NGUInjector
                 }
                 else
                 {
-                    if (ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) && !ZoneHelpers.TitansSpawningSoon().SpawningSoon)
+                    if (ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) && !ZoneHelpers.TitanSpawningSoon(Array.IndexOf(ZoneHelpers.TitanZones, Settings.SnipeZone)))
                     {
                         tempZone = 1000;
                     }

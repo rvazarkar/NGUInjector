@@ -18,14 +18,17 @@ namespace NGUInjector.Managers
             var result = new TitanSpawn();
 
             if (!Main.Character.buttons.adventure.IsInteractable())
-            {
                 return result;
-            }
             for (var i = 0; i < TitanZones.Length; i++)
             {
                 result.Merge(GetTitanSpawn(i));
             }
             return result;
+        }
+
+        internal static bool TitanSpawningSoon(int boss)
+        {
+            return Main.Character.buttons.adventure.IsInteractable() && CheckTitanSpawnTime(boss);
         }
 
         private static TitanSpawn GetTitanSpawn(int bossId)
@@ -42,25 +45,7 @@ namespace NGUInjector.Managers
             if (TitanZones[bossId] > GetMaxReachableZone(true))
                 return result;
 
-            var controller = Main.Character.adventureController;
-            var adventure = Main.Character.adventure;
-
-            var spawnMethod = controller.GetType().GetMethod($"boss{bossId + 1}SpawnTime",
-                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            var spawnTimeObj = spawnMethod?.Invoke(controller, null);
-            if (spawnTimeObj == null)
-                return result;
-            var spawnTime = (float)spawnTimeObj;
-
-            var spawnField = adventure.GetType().GetField($"boss{bossId + 1}Spawn",
-                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            var spawnObj = spawnField?.GetValue(adventure);
-
-            if (spawnObj == null)
-                return result;
-            var spawn = (PlayerTime)spawnObj;
-
-            if (Math.Abs(spawnTime - spawn.totalseconds) < 20)
+            if (CheckTitanSpawnTime(bossId))
             {
                 result.SpawningSoon = true;
                 // Run money once for each boss
@@ -71,6 +56,29 @@ namespace NGUInjector.Managers
             }
 
             return result;
+        }
+
+        private static bool CheckTitanSpawnTime(int bossId)
+        {
+            var controller = Main.Character.adventureController;
+            var adventure = Main.Character.adventure;
+
+            var spawnMethod = controller.GetType().GetMethod($"boss{bossId + 1}SpawnTime",
+                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            var spawnTimeObj = spawnMethod?.Invoke(controller, null);
+            if (spawnTimeObj == null)
+                return false;
+            var spawnTime = (float) spawnTimeObj;
+
+            var spawnField = adventure.GetType().GetField($"boss{bossId + 1}Spawn",
+                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            var spawnObj = spawnField?.GetValue(adventure);
+
+            if (spawnObj == null)
+                return false;
+
+            var spawn = (PlayerTime) spawnObj;
+            return Math.Abs(spawnTime - spawn.totalseconds) < 20;
         }
 
         internal static int GetMaxReachableZone(bool includingTitans)
