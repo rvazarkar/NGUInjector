@@ -76,6 +76,7 @@ namespace NGUInjector
 
         internal static void LogAllocation(string msg)
         {
+            if (!Settings.DebugAllocation) return;
             AllocationWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
         }
 
@@ -130,7 +131,6 @@ namespace NGUInjector
                 Log("Injected");
                 LogLoot("Starting Loot Writer");
                 LogCombat("Starting Combat Writer");
-                LogAllocation("Started Allocation Writer");
                 Controller = Character.inventoryController;
                 PlayerController = FindObjectOfType<PlayerController>();
                 _invManager = new InventoryManager();
@@ -206,7 +206,8 @@ namespace NGUInjector
                         ManageGoldLoadouts = false,
                         ResnipeTime = 3600,
                         TitanMoneyDone = new bool[ZoneHelpers.TitanZones.Length],
-                        GoldCBlockMode = false
+                        GoldCBlockMode = false,
+                        DebugAllocation = false
                     };
 
                     Settings.MassUpdate(temp);
@@ -277,6 +278,8 @@ namespace NGUInjector
 
                 Settings.SaveSettings();
                 Settings.LoadSettings();
+
+                LogAllocation("Started Allocation Writer");
 
                 ZoneStatHelper.CreateOverrides();
 

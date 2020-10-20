@@ -72,6 +72,7 @@ namespace NGUInjector
         [SerializeField] private bool[] _titanMoneyDone;
         [SerializeField] private bool[] _titanGoldTargets;
         [SerializeField] private bool _goldCBlockMode;
+        [SerializeField] private bool _debugAllocation;
 
         private readonly string _savePath;
         private bool _disableSave;
@@ -201,6 +202,7 @@ namespace NGUInjector
             _titanMoneyDone = other.TitanMoneyDone;
             _resnipeTime = other.ResnipeTime;
             _goldCBlockMode = other.GoldCBlockMode;
+            _debugAllocation = other.DebugAllocation;
         }
 
         public int HighestAKZone
@@ -840,6 +842,12 @@ namespace NGUInjector
                 _goldCBlockMode = value;
                 SaveSettings();
             }
+        }
+
+        public bool DebugAllocation
+        {
+            get => _debugAllocation;
+            set => _debugAllocation = value;
         }
     }
 }

@@ -841,6 +841,7 @@ namespace NGUInjector.AllocationProfiles
                 var cap = _character.wandoos98Controller.capAmountMagic();
                 if (input > cap)
                 {
+                    Main.LogAllocation($"Magic Wandoos - Changing input to {cap} to prevent overallocation");
                     SetInput(cap);
                     _character.wandoos98Controller.addMagic();
                     return true;
@@ -927,9 +928,14 @@ namespace NGUInjector.AllocationProfiles
 
             if (breakpoint.StartsWith("TM"))
             {
-                if (_character.machine.multiTarget > 0 && _character.machine.goldMultiLevel >= _character.machine.multiTarget)
+                if (_character.machine.multiTarget > 0 &&
+                    _character.machine.goldMultiLevel >= _character.machine.multiTarget)
+                {
+                    Main.LogAllocation($"Skipping {breakpoint} because target is met");
                     return true;
+                }
                 var cap= _calcs.CalculateTMMagicCap(true);
+                Main.LogAllocation($"Magic Time Machine - Changing input to {cap}");
                 SetInput(cap);
                 _character.timeMachineController.addMagic();
                 return true;
@@ -937,8 +943,12 @@ namespace NGUInjector.AllocationProfiles
 
             if (breakpoint.StartsWith("CAPTM"))
             {
-                if (_character.machine.multiTarget > 0 && _character.machine.goldMultiLevel >= _character.machine.multiTarget)
+                if (_character.machine.multiTarget > 0 &&
+                    _character.machine.goldMultiLevel >= _character.machine.multiTarget)
+                {
+                    Main.LogAllocation($"Skipping {breakpoint} because target is met");
                     return true;
+                }
                 var cap = _calcs.CalculateTMMagicCap(false);
                 SetInput(cap);
                 _character.timeMachineController.addMagic();
@@ -955,7 +965,10 @@ namespace NGUInjector.AllocationProfiles
 
                 var target = _character.NGU.magicSkills[index].target;
                 if (target > 0 && _character.NGU.magicSkills[index].level >= target)
+                {
+                    Main.LogAllocation($"Skipping {breakpoint} because target is met");
                     return true;
+                }
 
                 var cap = _calcs.CalculateNGUMagicCap(index, true);
                 SetInput(cap);
@@ -973,7 +986,10 @@ namespace NGUInjector.AllocationProfiles
 
                 var target = _character.NGU.magicSkills[index].target;
                 if (target > 0 && _character.NGU.magicSkills[index].level >= target)
+                {
+                    Main.LogAllocation($"Skipping {breakpoint} because target is met");
                     return false;
+                }
 
                 var cap = _calcs.CalculateNGUMagicCap(index, false);
                 SetInput(cap);
@@ -1089,8 +1105,12 @@ namespace NGUInjector.AllocationProfiles
 
             if (breakpoint.StartsWith("TM"))
             {
-                if (_character.machine.speedTarget > 0 && _character.machine.speedLevel >= _character.machine.speedTarget)
+                if (_character.machine.speedTarget > 0 &&
+                    _character.machine.speedLevel >= _character.machine.speedTarget)
+                {
+                    Main.LogAllocation($"Skipping {breakpoint} because target is met");
                     return true;
+                }
                 var cap = _calcs.CalculateTMEnergyCap(true);
                 SetInput(cap);
                 _character.timeMachineController.addEnergy();
@@ -1186,7 +1206,11 @@ namespace NGUInjector.AllocationProfiles
                     return true;
 
                 if (ATTargetMet(index))
+                {
+                    Main.LogAllocation($"Skipping {breakpoint} because target is met");
                     return true;
+                }
+                    
 
                 var cap = _calcs.CalculateATCap(index, true);
                 SetInput(cap);
@@ -1219,7 +1243,10 @@ namespace NGUInjector.AllocationProfiles
                     return false;
 
                 if (ATTargetMet(index))
+                {
+                    Main.LogAllocation($"Skipping {breakpoint} because target is met");
                     return false;
+                }
 
                 var cap = _calcs.CalculateATCap(index, false);
                 SetInput(cap);
@@ -1252,7 +1279,11 @@ namespace NGUInjector.AllocationProfiles
                     return true;
 
                 if (AugTargetMet(index))
+                {
+                    Main.LogAllocation($"Skipping {breakpoint} because target is met");
                     return true;
+                }
+                    
 
                 var augIndex = (int)Math.Floor((double)(index / 2));
 
@@ -1278,8 +1309,11 @@ namespace NGUInjector.AllocationProfiles
                     return false;
 
                 if (AugTargetMet(index))
+                {
+                    Main.LogAllocation($"Skipping {breakpoint} because target is met");
                     return false;
-
+                }
+                
                 var augIndex = (int)Math.Floor((double)(index / 2));
 
                 var cap = _calcs.CalculateAugCap(index, false);
@@ -1320,10 +1354,8 @@ namespace NGUInjector.AllocationProfiles
 
         private bool ATTargetMet(int index)
         {
-            if (_character.advancedTraining.levelTarget[index] == 0)
-                return false;
-
-            return _character.advancedTraining.level[index] >= _character.advancedTraining.levelTarget[index];
+            return _character.advancedTraining.levelTarget[index] != 0 && _character.advancedTraining.level[index] >=
+                _character.advancedTraining.levelTarget[index];
         }
 
         private bool AugTargetMet(int index)
@@ -1333,12 +1365,12 @@ namespace NGUInjector.AllocationProfiles
             if (index % 2 == 0)
             {
                 var target = _character.augments.augs[augIndex].augmentTarget;
-                return _character.augments.augs[augIndex].augLevel >= target;
+                return target != 0 && _character.augments.augs[augIndex].augLevel >= target;
             }
             else
             {
                 var target = _character.augments.augs[augIndex].upgradeTarget;
-                return _character.augments.augs[augIndex].upgradeLevel >= target;
+                return target != 0 && _character.augments.augs[augIndex].upgradeLevel >= target;
             }
         }
 
