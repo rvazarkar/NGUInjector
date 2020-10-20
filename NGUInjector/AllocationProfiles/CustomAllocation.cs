@@ -927,6 +927,8 @@ namespace NGUInjector.AllocationProfiles
 
             if (breakpoint.StartsWith("TM"))
             {
+                if (_character.machine.multiTarget > 0 && _character.machine.goldMultiLevel >= _character.machine.multiTarget)
+                    return true;
                 var cap= _calcs.CalculateTMMagicCap(true);
                 SetInput(cap);
                 _character.timeMachineController.addMagic();
@@ -935,6 +937,8 @@ namespace NGUInjector.AllocationProfiles
 
             if (breakpoint.StartsWith("CAPTM"))
             {
+                if (_character.machine.multiTarget > 0 && _character.machine.goldMultiLevel >= _character.machine.multiTarget)
+                    return true;
                 var cap = _calcs.CalculateTMMagicCap(false);
                 SetInput(cap);
                 _character.timeMachineController.addMagic();
@@ -948,6 +952,10 @@ namespace NGUInjector.AllocationProfiles
                 {
                     return true;
                 }
+
+                var target = _character.NGU.magicSkills[index].target;
+                if (target > 0 && _character.NGU.magicSkills[index].level >= target)
+                    return true;
 
                 var cap = _calcs.CalculateNGUMagicCap(index, true);
                 SetInput(cap);
@@ -963,6 +971,10 @@ namespace NGUInjector.AllocationProfiles
                     return false;
                 }
 
+                var target = _character.NGU.magicSkills[index].target;
+                if (target > 0 && _character.NGU.magicSkills[index].level >= target)
+                    return false;
+
                 var cap = _calcs.CalculateNGUMagicCap(index, false);
                 SetInput(cap);
                 _character.NGUController.NGUMagic[index].add();
@@ -973,6 +985,9 @@ namespace NGUInjector.AllocationProfiles
             {
                 for (var i = 0; i < 7; i++)
                 {
+                    var target = _character.NGU.magicSkills[i].target;
+                    if (target > 0 && _character.NGU.magicSkills[i].level >= target)
+                        continue;
                     var cap = _calcs.CalculateNGUMagicCap(i, false);
                     SetInput(cap);
                     _character.NGUController.NGUMagic[i].add();
@@ -986,6 +1001,9 @@ namespace NGUInjector.AllocationProfiles
                 var originalInput = input;
                 for (var i = 0; i < 7; i++)
                 {
+                    var target = _character.NGU.magicSkills[i].target;
+                    if (target > 0 && _character.NGU.magicSkills[i].level >= target)
+                        return true;
                     var cap = _calcs.CalculateNGUMagicCap(i, true);
                     SetInput(cap);
                     _character.NGUController.NGUMagic[i].add();
@@ -1071,6 +1089,8 @@ namespace NGUInjector.AllocationProfiles
 
             if (breakpoint.StartsWith("TM"))
             {
+                if (_character.machine.speedTarget > 0 && _character.machine.speedLevel >= _character.machine.speedTarget)
+                    return true;
                 var cap = _calcs.CalculateTMEnergyCap(true);
                 SetInput(cap);
                 _character.timeMachineController.addEnergy();
@@ -1079,6 +1099,8 @@ namespace NGUInjector.AllocationProfiles
 
             if (breakpoint.StartsWith("CAPTM"))
             {
+                if (_character.machine.speedTarget > 0 && _character.machine.speedLevel >= _character.machine.speedTarget)
+                    return true;
                 var cap = _calcs.CalculateTMEnergyCap(false);
                 SetInput(cap);
                 _character.timeMachineController.addEnergy();
@@ -1090,7 +1112,11 @@ namespace NGUInjector.AllocationProfiles
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 8)
                     return true;
-                
+
+                var target = _character.NGU.skills[index].target;
+                if (target > 0 && _character.NGU.skills[index].level >= target)
+                    return true;
+
                 var cap = _calcs.CalculateNGUEnergyCap(index, true);
                 if (input > cap)
                 {
@@ -1107,6 +1133,9 @@ namespace NGUInjector.AllocationProfiles
             {
                 for (var i = 0; i < 9; i++)
                 {
+                    var target = _character.NGU.skills[i].target;
+                    if (target > 0 && _character.NGU.skills[i].level >= target)
+                        continue;
                     var cap = _calcs.CalculateNGUEnergyCap(i,false);
                     SetInput(cap);
                     _character.NGUController.NGU[i].add();
@@ -1120,6 +1149,10 @@ namespace NGUInjector.AllocationProfiles
                 var originalInput = input;
                 for (var i = 0; i < 9; i++)
                 {
+
+                    var target = _character.NGU.skills[i].target;
+                    if (target > 0 && _character.NGU.skills[i].level >= target)
+                        continue;
                     var cap = _calcs.CalculateNGUEnergyCap(i, true);
                     SetInput(cap);
                     _character.NGUController.NGU[i].add();
@@ -1135,6 +1168,10 @@ namespace NGUInjector.AllocationProfiles
                 if (!success || index < 0 || index > 8)
                     return false;
 
+                var target = _character.NGU.skills[index].target;
+                if (target > 0 && _character.NGU.skills[index].level >= target)
+                    return false;
+
                 var cap = _calcs.CalculateNGUEnergyCap(index, false);
                 SetInput(cap);
                 _character.NGUController.NGU[index].add();
@@ -1146,6 +1183,9 @@ namespace NGUInjector.AllocationProfiles
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 4)
+                    return true;
+
+                if (ATTargetMet(index))
                     return true;
 
                 var cap = _calcs.CalculateATCap(index, true);
@@ -1178,6 +1218,9 @@ namespace NGUInjector.AllocationProfiles
                 if (!success || index < 0 || index > 4)
                     return false;
 
+                if (ATTargetMet(index))
+                    return false;
+
                 var cap = _calcs.CalculateATCap(index, false);
                 SetInput(cap);
                 
@@ -1208,6 +1251,9 @@ namespace NGUInjector.AllocationProfiles
                 if (!success || index < 0 || index > 13)
                     return true;
 
+                if (AugTargetMet(index))
+                    return true;
+
                 var augIndex = (int)Math.Floor((double)(index / 2));
 
                 var cap = _calcs.CalculateAugCap(index, true);
@@ -1229,6 +1275,9 @@ namespace NGUInjector.AllocationProfiles
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 13)
+                    return false;
+
+                if (AugTargetMet(index))
                     return false;
 
                 var augIndex = (int)Math.Floor((double)(index / 2));
@@ -1268,7 +1317,30 @@ namespace NGUInjector.AllocationProfiles
         {
             return prio.StartsWith("CAP") || prio.StartsWith("BR");
         }
-        
+
+        private bool ATTargetMet(int index)
+        {
+            if (_character.advancedTraining.target[index] == 0)
+                return false;
+
+            return _character.advancedTraining.level[index] >= _character.advancedTraining.target[index];
+        }
+
+        private bool AugTargetMet(int index)
+        {
+            var augIndex = (int)Math.Floor((double)(index / 2));
+
+            if (index % 2 == 0)
+            {
+                var target = _character.augments.augs[augIndex].augmentTarget;
+                return _character.augments.augs[augIndex].augLevel >= target;
+            }
+            else
+            {
+                var target = _character.augments.augs[augIndex].upgradeTarget;
+                return _character.augments.augs[augIndex].upgradeLevel >= target;
+            }
+        }
 
         private bool IsBTUnlocked(int index)
         {
