@@ -1124,5 +1124,28 @@ namespace NGUInjector
             if (_initializing) return;
             Main.Settings.GoldCBlockMode = CBlockMode.Checked;
         }
+
+        private void HarvestSafety_CheckedChanged(object sender, EventArgs e)
+        {
+            HarvestAllButton.Enabled = HarvestSafety.Checked;
+        }
+
+        private void HarvestAllButton_Click(object sender, EventArgs e)
+        {
+            if (Main.Settings.SwapYggdrasilLoadouts && Main.Settings.YggdrasilLoadout.Length > 0)
+            {
+                if (!LoadoutManager.TryYggdrasilSwap() || !DiggerManager.TryYggSwap())
+                {
+                    Main.Log("Unable to harvest now");
+                    return;
+                }
+
+                YggdrasilManager.HarvestAll();
+                LoadoutManager.RestoreGear();
+                LoadoutManager.ReleaseLock();
+                DiggerManager.RestoreDiggers();
+                DiggerManager.ReleaseLock();
+            }
+        }
     }
 }

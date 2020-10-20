@@ -118,6 +118,7 @@
             this.BossesOnly = new System.Windows.Forms.CheckBox();
             this.CombatActive = new System.Windows.Forms.CheckBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.CBlockMode = new System.Windows.Forms.CheckBox();
             this.ResetTitanStatus = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
             this.TitanGoldTargets = new System.Windows.Forms.ListView();
@@ -162,7 +163,8 @@
             this.goldErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.numberErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.wishErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.CBlockMode = new System.Windows.Forms.CheckBox();
+            this.HarvestAllButton = new System.Windows.Forms.Button();
+            this.HarvestSafety = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -471,6 +473,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.HarvestSafety);
+            this.tabPage3.Controls.Add(this.HarvestAllButton);
             this.tabPage3.Controls.Add(this.ActivateFruits);
             this.tabPage3.Controls.Add(this.label3);
             this.tabPage3.Controls.Add(this.yggRemoveButton);
@@ -922,6 +926,13 @@
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
+            // CBlockMode
+            // 
+            resources.ApplyResources(this.CBlockMode, "CBlockMode");
+            this.CBlockMode.Name = "CBlockMode";
+            this.CBlockMode.UseVisualStyleBackColor = true;
+            this.CBlockMode.CheckedChanged += new System.EventHandler(this.CBlockMode_CheckedChanged);
+            // 
             // ResetTitanStatus
             // 
             resources.ApplyResources(this.ResetTitanStatus, "ResetTitanStatus");
@@ -1240,12 +1251,19 @@
             // 
             this.wishErrorProvider.ContainerControl = this;
             // 
-            // CBlockMode
+            // HarvestAllButton
             // 
-            resources.ApplyResources(this.CBlockMode, "CBlockMode");
-            this.CBlockMode.Name = "CBlockMode";
-            this.CBlockMode.UseVisualStyleBackColor = true;
-            this.CBlockMode.CheckedChanged += new System.EventHandler(this.CBlockMode_CheckedChanged);
+            resources.ApplyResources(this.HarvestAllButton, "HarvestAllButton");
+            this.HarvestAllButton.Name = "HarvestAllButton";
+            this.HarvestAllButton.UseVisualStyleBackColor = true;
+            this.HarvestAllButton.Click += new System.EventHandler(this.HarvestAllButton_Click);
+            // 
+            // HarvestSafety
+            // 
+            resources.ApplyResources(this.HarvestSafety, "HarvestSafety");
+            this.HarvestSafety.Name = "HarvestSafety";
+            this.HarvestSafety.UseVisualStyleBackColor = true;
+            this.HarvestSafety.CheckedChanged += new System.EventHandler(this.HarvestSafety_CheckedChanged);
             // 
             // SettingsForm
             // 
@@ -1431,5 +1449,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.Button ResetTitanStatus;
         private System.Windows.Forms.CheckBox CBlockMode;
+        private System.Windows.Forms.Button HarvestAllButton;
+        private System.Windows.Forms.CheckBox HarvestSafety;
     }
 }

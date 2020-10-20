@@ -993,6 +993,57 @@
   <data name="&gt;&gt;tabPage2.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="HarvestSafety.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="HarvestSafety.Location" type="System.Drawing.Point, System.Drawing">
+    <value>462, 310</value>
+  </data>
+  <data name="HarvestSafety.Size" type="System.Drawing.Size, System.Drawing">
+    <value>15, 14</value>
+  </data>
+  <data name="HarvestSafety.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;HarvestSafety.Name" xml:space="preserve">
+    <value>HarvestSafety</value>
+  </data>
+  <data name="&gt;&gt;HarvestSafety.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;HarvestSafety.Parent" xml:space="preserve">
+    <value>tabPage3</value>
+  </data>
+  <data name="&gt;&gt;HarvestSafety.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="HarvestAllButton.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="HarvestAllButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>483, 305</value>
+  </data>
+  <data name="HarvestAllButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>101, 23</value>
+  </data>
+  <data name="HarvestAllButton.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="HarvestAllButton.Text" xml:space="preserve">
+    <value>Harvest All Now</value>
+  </data>
+  <data name="&gt;&gt;HarvestAllButton.Name" xml:space="preserve">
+    <value>HarvestAllButton</value>
+  </data>
+  <data name="&gt;&gt;HarvestAllButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;HarvestAllButton.Parent" xml:space="preserve">
+    <value>tabPage3</value>
+  </data>
+  <data name="&gt;&gt;HarvestAllButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="ActivateFruits.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1018,7 +1069,7 @@
     <value>tabPage3</value>
   </data>
   <data name="&gt;&gt;ActivateFruits.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1048,7 +1099,7 @@
     <value>tabPage3</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="yggRemoveButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1075,7 +1126,7 @@
     <value>tabPage3</value>
   </data>
   <data name="&gt;&gt;yggRemoveButton.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="yggLoadoutItem.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 252</value>
@@ -1096,7 +1147,7 @@
     <value>tabPage3</value>
   </data>
   <data name="&gt;&gt;yggLoadoutItem.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="yggItemLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1123,7 +1174,7 @@
     <value>tabPage3</value>
   </data>
   <data name="&gt;&gt;yggItemLabel.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="yggAddButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>233, 252</value>
@@ -1147,7 +1198,7 @@
     <value>tabPage3</value>
   </data>
   <data name="&gt;&gt;yggAddButton.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="yggdrasilLoadoutBox.Items" xml:space="preserve">
     <value>test</value>
@@ -1174,7 +1225,7 @@
     <value>tabPage3</value>
   </data>
   <data name="&gt;&gt;yggdrasilLoadoutBox.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="YggdrasilSwap.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1201,7 +1252,7 @@
     <value>tabPage3</value>
   </data>
   <data name="&gt;&gt;YggdrasilSwap.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="ManageYggdrasil.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1228,7 +1279,7 @@
     <value>tabPage3</value>
   </data>
   <data name="&gt;&gt;ManageYggdrasil.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="tabPage3.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
