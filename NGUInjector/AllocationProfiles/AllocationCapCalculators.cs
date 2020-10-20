@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace NGUInjector.AllocationProfiles
 {
-    class AllocationCapCalculators
+    internal class AllocationCapCalculators
     {
-        private Character _character;
+        private readonly Character _character;
         public AllocationCapCalculators(Character character)
         {
-
+            _character = character;
         }
+
         internal CapCalc GetNGUEnergyCapCalc(int id, bool useInput, int offset)
         {
             var ret = new CapCalc
@@ -410,6 +412,46 @@ namespace NGUInjector.AllocationProfiles
             ret.Num = num;
             ret.PPT = (double)num / formula;
             return ret;
+        }
+
+        internal long GetRitualCap(int index)
+        {
+
+            if (_character.settings.rebirthDifficulty == difficulty.normal)
+            {
+                var num = Math.Ceiling(50000.0 * _character.bloodMagicController.normalSpeedDividers[index] / (_character.totalMagicPower() * (double)_character.bloodMagicController.bloodMagics[index].totalBloodMagicSpeedBonus())) * 1.000002;
+                if (num < 1.0)
+                    num = 1.0;
+                if (num > _character.hardCap())
+                    num = _character.hardCap();
+                return (long)num;
+            }
+            if (_character.settings.rebirthDifficulty == difficulty.evil)
+            {
+                var num = Math.Ceiling(50000.0 * _character.bloodMagicController.evilSpeedDividers[index] / (_character.totalMagicPower() * (double)_character.bloodMagicController.bloodMagics[index].totalBloodMagicSpeedBonus())) * 1.00000202655792;
+                if (num < 1.0)
+                    num = 1.0;
+                if (num > _character.hardCap())
+                    num = _character.hardCap();
+                return (long)num;
+            }
+            if (_character.settings.rebirthDifficulty == difficulty.sadistic)
+            {
+                var num = Math.Ceiling(_character.bloodMagicController.bloodMagics[index].sadisticDivider() * (double)_character.bloodMagicController.sadisticSpeedDividers[index] / (_character.totalMagicPower() * (double)_character.bloodMagicController.bloodMagics[index].totalBloodMagicSpeedBonus())) * 1.00000202655792;
+                if (num < 1.0)
+                    num = 1.0;
+                if (num > _character.hardCap())
+                    num = _character.hardCap();
+                return (long)num;
+            }
+            var num1 = (double)(long)(Math.Ceiling(50000.0 * _character.bloodMagicController.normalSpeedDividers[index] / (_character.totalMagicPower() * (double)_character.bloodMagicController.bloodMagics[index].totalBloodMagicSpeedBonus())) * 1.00000202655792);
+            if (num1 < 1.0)
+                num1 = 1.0;
+            if (num1 > _character.hardCap())
+                num1 = _character.hardCap();
+
+            var num2 = (long)(num1 / (long)Math.Ceiling((double)num1 / (double)_character.energyMagicPanel.energyMagicInput) * 1.00000202655792);
+            return num2;
         }
     }
 

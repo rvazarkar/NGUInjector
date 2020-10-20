@@ -934,6 +934,7 @@ namespace NGUInjector
             CancelInvoke("MonitorLog");
             CancelInvoke("QuickStuff");
             CancelInvoke("SetResnipe");
+            Loader.Unload();
         }
     }
 }

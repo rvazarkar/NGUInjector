@@ -870,8 +870,36 @@ namespace NGUInjector.AllocationProfiles
                     }
                     return true;
                 }
-                    
 
+                var cap = _calcs.GetRitualCap(index);
+                SetInput(cap);
+                _character.bloodMagicController.bloodMagics[index].add();
+                return true;
+            }
+
+            if (breakpoint.StartsWith("CAPRIT"))
+            {
+                var success = int.TryParse(breakpoint.Split('-')[1], out var index);
+                if (!success || index < 0 || index > _character.bloodMagic.ritual.Count)
+                {
+                    return true;
+                }
+
+                if (index > _character.bloodMagicController.ritualsUnlocked())
+                    return true;
+
+                var goldCost = _character.bloodMagicController.bloodMagics[index].baseCost * _character.totalDiscount();
+                if (goldCost > _character.realGold && _character.bloodMagic.ritual[index].progress <= 0)
+                {
+                    if (_character.bloodMagic.ritual[index].magic > 0)
+                    {
+                        _character.bloodMagicController.bloodMagics[index].removeAllMagic();
+                    }
+                    return true;
+                }
+
+                _character.bloodMagicController.bloodMagics[index].cap();
+                return true;
             }
 
             if (breakpoint.StartsWith("BR"))
