@@ -18,6 +18,7 @@ After injecting the dll, a new folder will be created on your Desktop called NGU
 
 - **settings.json** - Contains settings used by the application. Most settings can be configured from the in-game menu.
 - **allocation.json** - Breakpoints for assigning gear, magic, energy, wandoos OS, rebirth time, and diggers. See the allocation section for more information
+- **zoneOverrides.json** - Override the default values for Idle/Manual Power/Toughness for gold sniping
 
 A logs folder will also be created with the following files:
 
@@ -326,6 +327,12 @@ A rebirth breakpoint is added as follows:
 ```
 
 A setting of -1 means no rebirths. Otherwise rebirth will be performed when the time in seconds is reached.
+
+# Zone Stat Overrides
+
+The optimal zone for gold sniping is calculated using a set of values from pins that show stats necessary to do each zone. If the manual threshold is met for a zone, the script will snipe a boss without fast combat. If the idle threshold is met, the script will snipe a boss using fast combat. Beast Mode will always be turned off for this.
+
+The stats for the zones can be manually overriden using the `zoneOverrides.json` file in the user's directory. For the default stats used see [here](https://github.com/rvazarkar/NGUInjector/wiki/Default-Zone-Stats-for-Sniping)
 
 # Other Features
 
