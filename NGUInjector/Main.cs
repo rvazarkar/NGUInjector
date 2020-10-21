@@ -702,7 +702,14 @@ namespace NGUInjector
 
                 if (Settings.AutoRebirth)
                 {
-                    _profile.DoRebirth();
+                    if (!Character.bossController.isFighting && !Character.bossController.nukeBoss)
+                    {
+                        _profile.DoRebirth();
+                    }
+                    else
+                    {
+                        Log("Delaying rebirth while boss fight in progress");
+                    }
                 }
             }
             catch (Exception e)
