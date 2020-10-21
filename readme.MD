@@ -98,7 +98,7 @@ An in game menu can be opened using the F1 button.
 - **Highest Autokillable Titan** - The highest titan you can autokill in your TitanLoadout. When this titan or any previous titan is spawning, a titan loadout will be equipped
 - **Loadout** - The gear to equip when autokilling titans.
 
-![Adventure](https://i.imgur.com/e6urxA4.png)
+![Adventure](https://i.imgur.com/ThIghQJ.png)
 
 - **Combat Enabled** - Turns on auto combat to go to target zone and kill stuff.
 - **Bosses Only** - If enabled, will only fight bosses when doing combat. Good for zone sniping.
@@ -110,6 +110,7 @@ An in game menu can be opened using the F1 button.
 - **Combat Mode** - If set to manual, will execute a custom combat routine. If set to idle, will just idle the zone.
 - **Target Zone** - The target zone to snipe/do combat in. ITOPOD is at the bottom of the list.
 - **Allow Fallthrough** - If set to true, combat will use the highest unlocked zone you have until the target zone is unlocked.
+- **ITOPOD** - Equivalent to setting target zone to ITOPOD, just a quicker option
 
 ![Gold](https://i.imgur.com/FplCVyi.png)
 
