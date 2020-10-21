@@ -245,6 +245,7 @@ namespace NGUInjector.AllocationProfiles
             builder.AppendLine($"{_wrapper.Breakpoints.Magic.Length} Magic Breakpoints");
             builder.AppendLine($"{_wrapper.Breakpoints.R3.Length} R3 Breakpoints");
             builder.AppendLine($"{_wrapper.Breakpoints.Gear.Length} Gear Breakpoints");
+            builder.AppendLine($"{_wrapper.Breakpoints.Diggers.Length} Digger Breakpoints");
             builder.AppendLine($"{_wrapper.Breakpoints.Wandoos.Length} Wandoos Breakpoints");
             builder.AppendLine($"{_wrapper.Breakpoints.NGUBreakpoints.Length} NGU Difficulty Breakpoints");
             if (_wrapper.Breakpoints.RebirthTime > 0)
@@ -377,6 +378,7 @@ namespace NGUInjector.AllocationProfiles
             _currentWandoosBreakpoint = null;
             _currentMagicBreakpoint = null;
             _currentR3Breakpoint = null;
+            _currentNguBreakpoint = null;
 
             Main.Log("Rebirth time hit, performing rebirth");
             var controller = Main.Character.rebirth;
