@@ -32,7 +32,7 @@ Saving either file will automatically reload the settings in the configuration f
 
 An in game menu can be opened using the F1 button.
 
-![General Settings](https://i.imgur.com/eceDl71.png)
+![General Settings]https://i.imgur.com/Ru8YXTA.png)
 
 - **Master Switch** - If turned off, will disable all automation
 
@@ -40,15 +40,17 @@ An in game menu can be opened using the F1 button.
 - **Auto Money Pit** - Automatically throw money into the money pit if the Money Pit Threshold is met. Logs the result to the loot.log file
 - **Auto Move to ITOPOD** - Automatically move to ITOPOD when nothing else is happening in automation.
 - **Auto Fight Bosses** - Automatically nuke/fight bosses.
-- **Auto Buy Energy/Magic** - Automatically spend EXP on energy/magic. Will use the custom caps set by the user in the spend exp page. Will always buy energy and magic in pairs.
+- **Auto Buy Energy/Magic/R3** - Automatically spend EXP on energy/magic/R3. Will use the custom caps set by the user in the spend exp page. Will always buy unlocked exp spends in groups.
 - **Money Pit Threshold** - The amount of gold to wait for to throw gold into the money pit. Accepts scientific notation (ex: 1E+28)
 
-![Allocation Settings](https://i.imgur.com/DdEsU4d.png)
+![Allocation Settings](https://i.imgur.com/dbpniX2.png)
 
+- **Allocation Profile** - Allows you to quickly switch allocation profiles. Any profiles stored in the profiles folder will be listed here. Press change allocation after swapping to change to load the new allocation.
 - **Manage Energy** - Manage energy based on breakpoints in allocation.json
 - **Manage Magic** - Manage magic based on breakpoints in allocation.json
 - **Manage R3** - Manage resource 3 based on breakpoints in allocation.json
 - **Manage Gear** - Manage gear based on breakpoints in allocation.json
+- **Manage NGU Difficulty** - Manage NGU difficulty based on breakpoints in allocation.json
 - **Manage Diggers** - Manage diggers based on breakpoints in allocation.json
 - **Manage Wandoos OS** - Manage wandoos OS based on breakpoints in allocation.json
 - **Auto Rebirth** - Automatically rebirth after the time in allocation.json is reached.
@@ -58,12 +60,13 @@ An in game menu can be opened using the F1 button.
 - **Number Bonus** - Number to cast Blood NUMBER Boost until
 - **Counterfeit %** - Percent to cast Counterfeit Gold until
 
-![Yggdrasil](https://i.imgur.com/QG1KiQi.png)
+![Yggdrasil](https://i.imgur.com/VTdl8Hy.png)
 
 - **Manage Yggdrasil** - Automatically harvest fruits.
 - **Activate Fruits** - Reactivate fruits you haven't bought the exp perk for
 - **Swap Loadout for Yggdrasil** - Equip the loadout specified in YggdrasilLoadout before harvesting
 - **Loadout** - Edit the loadout used for harvest yggdrasil. Add items using the box in the bottom.
+- **Harvest All Now** - Allows you to do a Yggdrasil swap and immediately harvest all fruits. Check the box next to the button to enable it. Good for manual rebirths
 
 ![Inventory](https://i.imgur.com/TfCk3IO.png)
 
@@ -86,7 +89,7 @@ An in game menu can be opened using the F1 button.
 ![Titans](https://i.imgur.com/Ikq0bUZ.png)
 
 - **Swap Loadout for Titans** - Equip the gear in TitanLoadout right before any titan less than or equal your highest autokillable titan spawns
-- **Highest Autokillable Titan** - The highest titan you can autokill in your TitanLoadout. When this titan or any previous titan is spawning.
+- **Highest Autokillable Titan** - The highest titan you can autokill in your TitanLoadout. When this titan or any previous titan is spawning, a titan loadout will be equipped
 - **Loadout** - The gear to equip when autokilling titans.
 
 ![Adventure](https://i.imgur.com/e6urxA4.png)
@@ -97,16 +100,19 @@ An in game menu can be opened using the F1 button.
 - **Recover HP** - If enabled, will recover HP in safe zone between kills
 - **Fast Combat** - If enabled, will just quickly attack and skip buffs altogether
 - **Beast Mode** - Whether to use beast mode or not while in combat
+- **Optimize ITOPOD Floor** - Will optimize your ITOPOD floor every 10 seconds. Does nothing if Lazy Floor Shifter is on
 - **Combat Mode** - If set to manual, will execute a custom combat routine. If set to idle, will just idle the zone.
 - **Target Zone** - The target zone to snipe/do combat in. ITOPOD is at the bottom of the list.
 - **Allow Fallthrough** - If set to true, combat will use the highest unlocked zone you have until the target zone is unlocked.
 
-![Gold](https://i.imgur.com/bnUSR1l.png)
+![Gold](https://i.imgur.com/FplCVyi.png)
 
-- **Gold Loadout Zone** - The zone in which to snipe a boss with the gold loadout gear equipped
-- **Use Gold Loadout** - If checked, automation will go to the target zone and snipe a boss in gold loadout gear. This will automatically enable itself on each rebirth.
-- **Initial Gold Zone** - Automation will visit this zone to kill an enemy to jumpstart your time machine initially.
+- **Enable Gold Management** - If turned off, will disable all gold swap logic
+- **Do Gold Snipe** - If checked, will immediately equip gold loadout gear and perform a boss snipe in the best calculated zone based on the zone stats and gold loadout power/toughness.
+- **Resnipe Time** - Set this value to re-enable gold snipe at a certain time during your rebirth. Best set to after AT is completed in order to get a higher zone.
+- **CBlock Mode** - If checked, will automatically gold snipe every new zone that is unlocked. Useful for challenge blocks where zones sporadically become available.
 - **Loadout** - Items to use when swapping for gold loadout.
+- **Titans to Swap For** - Check the box next to titans you want to swap to gold loadouts for. Leave all boxes unchecked in order to never use gold loadouts for titans
 
 ![Quests](https://i.imgur.com/4AuAUhy.png)
 
@@ -140,16 +146,18 @@ The time portion of every breakpoint refers to rebirth time in seconds.
 An energy breakpoint is structured as follows:
 
 ```
-{
-"Time": 0,
-"Priorities": ["CAPNGU-0", "CAPWAN", "AT-1", "NGU-1"]
-}
+"Energy": [
+    {
+        "Time": 0,
+        "Priorities": ["CAPNGU-0", "CAPWAN", "AT-1", "NGU-1"]
+    }
+]
+
 ```
 
 Priorities come in 2 types - cap and non-cap. Any priority that has -X after it is 0 indexed.
 
-When a cap priority is used, the equivalent of hitting the cap button will be used. If a cap button doesn't exist, the program will calculate an appropriate cap and attempt to BB for the next 10 seconds. If cap is higher than idle, all energy will be allocated to it. Cap priorities always run before regular priorities.
-When a non-cap priority is used, remaining energy after cap priorities will be evenly divided between the allocations specified.
+A cap priority will use as much idle energy as possible and hit the highest BB breakpoint possible for the next 10 seconds. A non-cap priority will take a divider of your idle energy based on number of non-cap priorities and attempt to hit the highest BB breakpoint possible for the next 10 seconds. When a priority is calculated, it will push excess energy to later priorities.
 
 In the above example the following actions will be taken:
 
@@ -159,16 +167,17 @@ In the above example the following actions will be taken:
 
 Available cap priorities for Energy are as follows:
 
-- CAPNGU-X (0-8) - Use the cap button for the NGU
-- CAPALLNGU - Use the cap button for every NGU starting from 0
+- CAPNGU-X (0-8) - Calculate a cap for the NGU
+- CAPALLNGU - Calculate a cap for every NGU starting from 0
 - CAPAT-X (0-4) - Calculate a cap for the AT and attempt to BB it.
-- CAPWAN - Use the cap button for wandoos energy
+- CAPWAN - Calculate a cap for wandoos energy
 - CAPTM - Calculate a cap for energy time machine and attempt to BB it.
-- CAPBT-X (0-11) - Use the cap button for basic training
+- CAPBT-X (0-11) - Calculate a cap for basic training
 - CAPAUG-X (0-13) - Calculate a cap for augments and attempt to BB it
 
 Available non-cap priorities for Energy are as follows:
 
+- ALLNGU - Allocate energy to every NGU
 - NGU-X (0-8) - Allocate energy to NGU
 - AT-X (0-4) - Allocate energy to AT
 - AUG-X (0-13) - Allocate energy to augment
@@ -184,16 +193,18 @@ More information on allocation indexes can be found on the [wiki](https://github
 A magic breakpoint is structured as follows:
 
 ```
-{
-"Time": 0,
-"Priorities": ["CAPNGU-0", "CAPWAN", "BR", "NGU-1"]
-}
+"Magic": [
+    {
+        "Time": 0,
+        "Priorities": ["CAPNGU-0", "CAPWAN", "BR", "NGU-1"]
+    }
+]
+
 ```
 
 Priorities come in 2 types - cap and non-cap. Any priority that has -X after it is 0 indexed.
 
-When a cap priority is used, the equivalent of hitting the cap button will be used. If a cap button doesn't exist, the program will calculate an appropriate cap and attempt to BB for the next 10 seconds. Cap priorities always run before regular priorities.
-When a non-cap priority is used, remaining magic after cap priorities will be evenly divided between the allocations specified.
+A cap priority will use as much idle energy as possible and hit the highest BB breakpoint possible for the next 10 seconds. A non-cap priority will take a divider of your idle energy based on number of non-cap priorities and attempt to hit the highest BB breakpoint possible for the next 10 seconds. When a priority is calculated, it will push excess energy to later priorities.
 
 In the above example the following actions will be taken:
 
@@ -208,13 +219,16 @@ Available cap priorities for Magic are as follows:
 - CAPALLNGU - Use the cap button for every NGU starting from 0
 - CAPWAN - Use the cap button for wandoos magic
 - CAPTM - Calculate a cap for magic time machine and attempt to BB it.
+- CAPRIT-X - Calculate a cap for the ritual and allocate
 - BR - Cast rituals from highest to lowest ignoring rituals you cant afford or will take more than an hour
+- BR-X - Cast rituals from highest to lowest that will finish before time specified by X. BR-3600 will cast rituals that will end before the 1 hour mark from your current time.
 
 Available non-cap priorities for Magic are as follows:
 
 - NGU-X (0-6) - Allocate energy to NGU
 - WAN - Allocate energy to magic wandoos
 - TM - Allocate energy to magic time machine
+- RIT-X - Allocate energy to ritual
 - WISH-X (0-X) - Allocate magic to wishes. X is the wish slot you wish to allocate too. If you only have 1 slot, WISH-0 will be the one you use. Wishes will follow the priority set in the WishPriorities setting and then work through cheapest wishes
 
 More information on allocation indexes can be found on the [wiki](https://github.com/rvazarkar/NGUInjector/wiki/Allocation-Indexes)
@@ -224,10 +238,13 @@ More information on allocation indexes can be found on the [wiki](https://github
 An R3 breakpoint is structured as follows:
 
 ```
-{
-"Time": 0,
-"Priorities": ["HACK-1"]
-}
+"R3": [
+    {
+        "Time": 0,
+        "Priorities": ["HACK-1"]
+    }
+]
+
 ```
 
 Available priorities for R3 are as follows:
@@ -240,10 +257,13 @@ Available priorities for R3 are as follows:
 A gear breakpoint is structured as follows:
 
 ```
-{
-    "Time": 0,
-    "ID": [189, 442, 160, 441, 148, 169, 139, 184, 187, 185, 186, 188]
-}
+"Gear": [
+    {
+        "Time": 0,
+        "ID": [189, 442, 160, 441, 148, 169, 139, 184, 187, 185, 186, 188]
+    }
+]
+
 ```
 
 The list of IDs is the IDs of the gear desired.
@@ -255,10 +275,13 @@ You can dump your loadouts from Gear Optimizer using the method found on [this w
 A digger breakpoint is structured as follows:
 
 ```
-{
-    "Time": 3650,
-    "List": [3, 4, 5, 8]
-}
+"Diggers": [
+    {
+        "Time": 3650,
+        "List": [3, 4, 5, 8]
+    }
+]
+
 ```
 
 The list of diggers is 0 indexed. Drop chance digger is 0, EXP digger is 11. More information can be found on the [wiki](https://github.com/rvazarkar/NGUInjector/wiki/Allocation-Indexes)
@@ -268,13 +291,31 @@ The list of diggers is 0 indexed. Drop chance digger is 0, EXP digger is 11. Mor
 A wandoos breakpoint is structured as follows:
 
 ```
-{
-    "Time": 0,
-    "OS": 1
-}
+"Wandoos": [
+    {
+        "Time": 0,
+        "OS": 1
+    }
+]
+
 ```
 
 The OS is 0 indexed. Wandoos 98 is 0, Wandoos MEH is 1, Wandoos XL is 2
+
+## NGU Difficulty
+
+A NGU Difficulty breakpoint is structured as follows:
+
+```
+"NGUDiff": [
+    {
+    "Time": 0,
+    "Diff": 0
+    }
+]
+```
+
+The difficulty is 0 indexed. Normal NGUs is 0, Evil NGUs is 1, Sadistic NGUs is 2
 
 ## Rebirth
 
@@ -304,6 +345,10 @@ Pressing the F5 buttonw will dump your current equipment to the log file for use
 
 The adventure log will automatically be monitored and loot dropped will be written to loot.log in the folder on your desktop.
 
+## Monitor Money Pit/Daily Spin/Yggdrasil Results
+
+The pitspin.log file will contain the results of each automatic money pit, daily spin, and yggdrasil harvest and will persist across sessions.
+
 ## Quick Disable/Enable
 
 Pressing the F2 button will globally disable all features of the app until re-enabled.
@@ -320,3 +365,5 @@ Lock a boost in your inventory and the script will automatically merge boosts on
 
 SharpMonoInjector can be found [here](https://github.com/warbler/SharpMonoInjector). This wouldn't be possible without the excellent work done there.
 Obviously 4G for making NGU Idle.
+Altizar on discord for WISH logic and some other fixes
+Ingwar on discord for allocation profile logic and some other fixes
