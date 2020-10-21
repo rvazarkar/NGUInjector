@@ -392,6 +392,7 @@ namespace NGUInjector.Managers
             //Move to the zone
             if (_character.adventure.zone != zone)
             {
+                isFighting = false;
                 MoveToZone(zone);
                 return;
             }
