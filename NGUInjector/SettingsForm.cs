@@ -220,6 +220,7 @@ namespace NGUInjector
             ManageGoldLoadouts.Checked = newSettings.ManageGoldLoadouts;
             CBlockMode.Checked = newSettings.GoldCBlockMode;
             ResnipeInput.Value = newSettings.ResnipeTime;
+            OptimizeITOPOD.Checked = newSettings.OptimizeITOPODFloor;
 
             SetTitanGoldBox(newSettings);
 
@@ -1146,6 +1147,12 @@ namespace NGUInjector
                 DiggerManager.RestoreDiggers();
                 DiggerManager.ReleaseLock();
             }
+        }
+
+        private void OptimizeITOPOD_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.OptimizeITOPODFloor = OptimizeITOPOD.Checked;
         }
     }
 }

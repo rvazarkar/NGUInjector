@@ -93,6 +93,22 @@ namespace NGUInjector.Managers
             return 0;
         }
 
+        internal static void OptimizeITOPOD()
+        {
+            if (!Main.Settings.OptimizeITOPODFloor) return;
+            if (Main.Character.arbitrary.boughtLazyITOPOD && Main.Character.arbitrary.lazyITOPODOn) return;
+            if (Main.Character.adventure.zone < 1000) return;
+            var controller = Main.Character.adventureController;
+            var level = controller.itopodLevel;
+            var optimal = Main.Character.calculateBestItopodLevel();
+            if (level == optimal) return;
+            controller.itopodStartInput.text = optimal.ToString();
+            controller.itopodEndInput.text = optimal.ToString();
+            controller.verifyItopodInputs();
+            controller.zoneSelector.changeZone(1000);
+            controller.log.AddEvent($"The CHEATER Floor Shifter changed your current floor from {level} to {optimal}");
+        }
+
     }
 
     

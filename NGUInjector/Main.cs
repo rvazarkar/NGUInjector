@@ -561,6 +561,8 @@ namespace NGUInjector
                     return;
                 }
 
+                ZoneHelpers.OptimizeITOPOD();
+
                 if (Settings.ManageInventory && !Controller.midDrag)
                 {
                     var converted = Character.inventory.GetConvertedInventory().ToArray();
