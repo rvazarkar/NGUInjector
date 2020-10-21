@@ -151,7 +151,7 @@
     <value>True</value>
   </data>
   <data name="VersionLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>450, 279</value>
+    <value>512, 308</value>
   </data>
   <data name="VersionLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 13</value>
