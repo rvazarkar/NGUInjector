@@ -30,7 +30,7 @@ namespace NGUInjector.AllocationProfiles
         private bool _hasNGUSwapped;
         private readonly string _allocationPath;
         private readonly string _profileName;
-        private string[] _validEnergyPriorities = { "WAN", "CAPWAN", "TM", "CAPTM", "CAPAT", "AT", "NGU", "CAPNGU", "AUG", "BT", "CAPBT", "CAPAUG", "CAPALLNGU", "ALLNGU", "BLANK", "WISH" };
+        private string[] _validEnergyPriorities = { "WAN", "CAPWAN", "TM", "CAPTM", "CAPAT", "AT", "NGU", "CAPNGU", "AUG", "BT", "CAPBT", "CAPALLBT", "CAPAUG", "CAPALLNGU", "ALLNGU", "BLANK", "WISH" };
         private string[] _validMagicPriorities = { "WAN", "CAPWAN", "BR", "RIT", "CAPRIT", "TM", "CAPTM", "NGU", "CAPNGU", "CAPALLNGU", "ALLNGU", "BLANK", "WISH" };
         private string[] _validR3Priorities = {"HACK", "WISH"};
 
@@ -1053,6 +1053,27 @@ namespace NGUInjector.AllocationProfiles
                 }
 
                 return false;
+            }
+
+            if (breakpoint.StartsWith("CAPALLBT"))
+            {
+                for (var i = 0; i < 6; i++)
+                {
+                    if (IsBTUnlocked(i))
+                    {
+                        _character.allOffenseController.trains[i].cap();
+                    }
+
+                    if (!_character.settings.syncTraining)
+                    {
+                        if (IsBTUnlocked(i + 6))
+                        {
+                            _character.allDefenseController.trains[i].cap();
+                        }
+                    }
+                }
+
+                return true;
             }
 
             if (breakpoint.StartsWith("BT"))

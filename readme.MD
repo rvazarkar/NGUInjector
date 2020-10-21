@@ -17,8 +17,13 @@ To upgrade to a new release, restart NGU idle and run the inject script again.
 After injecting the dll, a new folder will be created on your Desktop called NGUInjector. Settings files will be automatically written to this directory. The following files are of interest:
 
 - **settings.json** - Contains settings used by the application. Most settings can be configured from the in-game menu.
-- **allocation.json** - Breakpoints for assigning gear, magic, energy, wandoos OS, rebirth time, and diggers. See the allocation section for more information
 - **zoneOverrides.json** - Override the default values for Idle/Manual Power/Toughness for gold sniping
+
+A profiles folder will be created with the following files:
+
+- **default.json** - Breakpoints for assigning gear, magic, energy, wandoos OS, rebirth time, and diggers. See the allocation section for more information
+
+More profiles can be added to this folder at your discretion.
 
 A logs folder will also be created with the following files:
 
@@ -174,6 +179,7 @@ Available cap priorities for Energy are as follows:
 - CAPWAN - Calculate a cap for wandoos energy
 - CAPTM - Calculate a cap for energy time machine and attempt to BB it.
 - CAPBT-X (0-11) - Calculate a cap for basic training
+- CAPALLBT - Caps all basic trainings
 - CAPAUG-X (0-13) - Calculate a cap for augments and attempt to BB it
 
 Available non-cap priorities for Energy are as follows:
