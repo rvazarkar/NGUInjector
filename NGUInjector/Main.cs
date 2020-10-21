@@ -208,7 +208,8 @@ namespace NGUInjector
                         ResnipeTime = 3600,
                         TitanMoneyDone = new bool[ZoneHelpers.TitanZones.Length],
                         GoldCBlockMode = false,
-                        DebugAllocation = false
+                        DebugAllocation = false,
+                        AdventureTargetITOPOD = false
                     };
 
                     Settings.MassUpdate(temp);
@@ -782,7 +783,7 @@ namespace NGUInjector
             if (Settings.SnipeZone < 0)
                 return;
 
-            var tempZone = Settings.SnipeZone;
+            var tempZone = Settings.AdventureTargetITOPOD ? 1000 : Settings.SnipeZone;
             if (Settings.SnipeZone < 1000)
             {
                 if (!CombatManager.IsZoneUnlocked(Settings.SnipeZone))

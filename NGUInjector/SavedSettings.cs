@@ -74,6 +74,7 @@ namespace NGUInjector
         [SerializeField] private bool _goldCBlockMode;
         [SerializeField] private bool _debugAllocation;
         [SerializeField] private bool _optimizeItopodFloor;
+        [SerializeField] private bool _adventureTargetItopod;
 
         private readonly string _savePath;
         private bool _disableSave;
@@ -205,6 +206,7 @@ namespace NGUInjector
             _goldCBlockMode = other.GoldCBlockMode;
             _debugAllocation = other.DebugAllocation;
             _optimizeItopodFloor = other.OptimizeITOPODFloor;
+            _adventureTargetItopod = other.AdventureTargetITOPOD;
         }
 
         public int HighestAKZone
@@ -859,6 +861,17 @@ namespace NGUInjector
             {
                 if (value == _optimizeItopodFloor) return;
                 _optimizeItopodFloor = value;
+                SaveSettings();
+            }
+        }
+
+        public bool AdventureTargetITOPOD
+        {
+            get => _adventureTargetItopod;
+            set
+            {
+                if (value == _adventureTargetItopod) return;
+                _adventureTargetItopod = value;
                 SaveSettings();
             }
         }

@@ -221,6 +221,7 @@ namespace NGUInjector
             CBlockMode.Checked = newSettings.GoldCBlockMode;
             ResnipeInput.Value = newSettings.ResnipeTime;
             OptimizeITOPOD.Checked = newSettings.OptimizeITOPODFloor;
+            TargetITOPOD.Checked = newSettings.AdventureTargetITOPOD;
 
             SetTitanGoldBox(newSettings);
 
@@ -1153,6 +1154,12 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.OptimizeITOPODFloor = OptimizeITOPOD.Checked;
+        }
+
+        private void TargetITOPOD_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.AdventureTargetITOPOD = TargetITOPOD.Checked;
         }
     }
 }

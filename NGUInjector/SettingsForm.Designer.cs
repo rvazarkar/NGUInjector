@@ -166,6 +166,7 @@
             this.HarvestAllButton = new System.Windows.Forms.Button();
             this.HarvestSafety = new System.Windows.Forms.CheckBox();
             this.OptimizeITOPOD = new System.Windows.Forms.CheckBox();
+            this.TargetITOPOD = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -812,6 +813,7 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.TargetITOPOD);
             this.tabPage6.Controls.Add(this.OptimizeITOPOD);
             this.tabPage6.Controls.Add(this.BeastMode);
             this.tabPage6.Controls.Add(this.AllowFallthrough);
@@ -1274,6 +1276,13 @@
             this.OptimizeITOPOD.UseVisualStyleBackColor = true;
             this.OptimizeITOPOD.CheckedChanged += new System.EventHandler(this.OptimizeITOPOD_CheckedChanged);
             // 
+            // TargetITOPOD
+            // 
+            resources.ApplyResources(this.TargetITOPOD, "TargetITOPOD");
+            this.TargetITOPOD.Name = "TargetITOPOD";
+            this.TargetITOPOD.UseVisualStyleBackColor = true;
+            this.TargetITOPOD.CheckedChanged += new System.EventHandler(this.TargetITOPOD_CheckedChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1461,5 +1470,6 @@
         private System.Windows.Forms.Button HarvestAllButton;
         private System.Windows.Forms.CheckBox HarvestSafety;
         private System.Windows.Forms.CheckBox OptimizeITOPOD;
+        private System.Windows.Forms.CheckBox TargetITOPOD;
     }
 }
