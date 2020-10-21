@@ -164,7 +164,18 @@ namespace NGUInjector.Managers
                     var equip = FindItemSlot(itemId);
 
                     if (equip == null)
+                    {
+                        try
+                        {
+                            Log($"Missing item {Controller.itemInfo.itemName[itemId]} with ID {itemId}");
+                        }
+                        catch (Exception)
+                        {
+                            //pass
+                        }
+
                         continue;
+                    }
 
                     var type = equip.equipment.type;
 
