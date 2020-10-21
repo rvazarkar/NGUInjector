@@ -709,7 +709,7 @@ namespace NGUInjector
                     }
                     else
                     {
-                        Log("Delaying rebirth while boss fight in progress");
+                        Log("Delaying rebirth while boss fight is in progress");
                     }
                 }
             }
@@ -784,7 +784,7 @@ namespace NGUInjector
                 return;
 
             var tempZone = Settings.AdventureTargetITOPOD ? 1000 : Settings.SnipeZone;
-            if (Settings.SnipeZone < 1000)
+            if (tempZone < 1000)
             {
                 if (!CombatManager.IsZoneUnlocked(Settings.SnipeZone))
                 {
