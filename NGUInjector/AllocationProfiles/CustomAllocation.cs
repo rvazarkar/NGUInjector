@@ -93,6 +93,7 @@ namespace NGUInjector.AllocationProfiles
 
             priorities.RemoveAll(x => x.Contains("AUG") && !IsAUGUnlocked(ParseIndex(x)));
             priorities.RemoveAll(x => x.Contains("BT") && !IsBTUnlocked(ParseIndex(x)));
+            priorities.RemoveAll(x => x.Contains("AT") && ATTargetMet(ParseIndex(x)));
 
             return priorities;
         }

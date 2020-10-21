@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using SimpleJSON;
 
 namespace NGUInjector.Managers
 {
@@ -9,9 +12,68 @@ namespace NGUInjector.Managers
     {
         internal static Dictionary<int, ZoneStats> UserOverrides;
 
-        internal static void CreateOverrides()
+        internal static void CreateOverrides(string dir)
         {
             UserOverrides = Defaults.ToDictionary(entry => entry.Key, entry => entry.Value);
+            var overridePath = Path.Combine(dir, "zoneOverride.json");
+            if (!File.Exists(overridePath))
+            {
+                var emptyZones = @"{
+    ""zones"": {
+    ""0"": {
+      ""MPower"": 10,
+      ""MToughness"": 10,
+      ""IPower"": 13,
+      ""IToughness"": 13,
+      ""OPower"": 129.5,
+      ""Name"": ""Tutorial Zone""
+    }
+}
+}
+        ";
+
+                using (var writer = new StreamWriter(File.Open(overridePath, FileMode.CreateNew)))
+                {
+                    writer.WriteLine(emptyZones);
+                    writer.Flush();
+                }
+            }
+
+            var overrides = new List<string>();
+
+            try
+            {
+                var text = File.ReadAllText(overridePath);
+                var parsed = JSON.Parse(text);
+                var zones = parsed["zones"];
+                
+                foreach (var key in zones.Keys)
+                {
+                    var success = int.TryParse(key.Value, out var index);
+                    if (!success)
+                        continue;
+                    Main.Log($"Key: {index}");
+                    var stat = new ZoneStats
+                    {
+                        IPower = zones[key.Value]["IPower"].AsDouble,
+                        IToughness = zones[key.Value]["IToughness"].AsDouble,
+                        MPower = zones[key.Value]["MPower"].AsDouble,
+                        MToughness = zones[key.Value]["MToughness"].AsDouble,
+                        OPower = zones[key.Value]["OPower"].AsDouble,
+                        Name = zones[key.Value]["Name"]
+                    };
+                    UserOverrides[index] = stat;
+                    overrides.Add(stat.Name);
+                }
+            }
+            catch (Exception e)
+            {
+                Main.Log(e.Message);
+                Main.Log(e.StackTrace);
+            }
+
+            if (overrides.Count > 0)
+                Main.Log($"Loaded Zone Overrides: {string.Join(",", overrides.ToArray())}");
         }
 
         internal static ZoneTarget GetBestZone()

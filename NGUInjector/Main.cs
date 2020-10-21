@@ -49,6 +49,7 @@ namespace NGUInjector
 
         internal static FileSystemWatcher ConfigWatcher;
         internal static FileSystemWatcher AllocationWatcher;
+        internal static FileSystemWatcher ZoneWatcher;
 
         internal static bool IgnoreNextChange { get; set; }
 
@@ -243,6 +244,20 @@ namespace NGUInjector
                 LoadAllocation();
                 LoadAllocationProfiles();
 
+                ZoneWatcher = new FileSystemWatcher
+                {
+                    Path = _dir,
+                    Filter = "zoneOverride.json",
+                    NotifyFilter = NotifyFilters.LastWrite,
+                    EnableRaisingEvents = true
+                };
+
+                ZoneWatcher.Changed += (sender, args) =>
+                {
+                    Log(_dir);
+                    ZoneStatHelper.CreateOverrides(_dir);
+                };
+
                 ConfigWatcher = new FileSystemWatcher
                 {
                     Path = _dir,
@@ -281,7 +296,7 @@ namespace NGUInjector
 
                 LogAllocation("Started Allocation Writer");
 
-                ZoneStatHelper.CreateOverrides();
+                ZoneStatHelper.CreateOverrides(_dir);
 
                 settingsForm.UpdateFromSettings(Settings);
                 settingsForm.Show();
