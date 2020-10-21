@@ -60,7 +60,7 @@ namespace NGUInjector
 
             if (Controller.weapon2Unlocked())
             {
-                list.Add(inv.weapon.GetInventoryHelper(-6));
+                list.Add(inv.weapon2.GetInventoryHelper(-6));
             }
 
             list.AddRange(inv.accs.Select((t, i) => t.GetInventoryHelper(i + 10000)));
