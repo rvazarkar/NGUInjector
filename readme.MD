@@ -38,7 +38,7 @@ Saving either file will automatically reload the settings in the configuration f
 
 An in game menu can be opened using the F1 button.
 
-![General Settings]https://i.imgur.com/Ru8YXTA.png)
+![General Settings](https://i.imgur.com/Ru8YXTA.png)
 
 - **Master Switch** - If turned off, will disable all automation
 
