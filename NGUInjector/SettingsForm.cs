@@ -1134,7 +1134,7 @@ namespace NGUInjector
 
         private void HarvestAllButton_Click(object sender, EventArgs e)
         {
-            if (Main.Settings.SwapYggdrasilLoadouts && Main.Settings.YggdrasilLoadout.Length > 0)
+            if (Main.Settings.SwapYggdrasilLoadouts && Main.Settings.YggdrasilLoadout.Length > 0 && YggdrasilManager.AnyHarvestable())
             {
                 if (!LoadoutManager.TryYggdrasilSwap() || !DiggerManager.TryYggSwap())
                 {

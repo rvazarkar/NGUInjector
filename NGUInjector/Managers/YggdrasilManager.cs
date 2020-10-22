@@ -17,7 +17,18 @@ namespace NGUInjector.Managers
             _character = Main.Character;
         }
 
-        bool NeedsHarvest()
+        internal static bool AnyHarvestable()
+        {
+            for (var i = 0; i < Main.Character.yggdrasil.fruits.Count; i++)
+            {
+                if (Main.Character.yggdrasilController.fruits[0].harvestTier(i) > 0)
+                    return true;
+            }
+
+            return false;
+        }
+
+        internal bool NeedsHarvest()
         {
             return _character.yggdrasilController.anyFruitMaxxed();
         }
