@@ -236,8 +236,6 @@ namespace NGUInjector.AllocationProfiles
             return ret;
         }
 
-
-
         internal CapCalc CalculateTMEnergyCapCalc(bool useInput, int offset)
         {
             var ret = new CapCalc

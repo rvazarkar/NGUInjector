@@ -20,7 +20,7 @@ namespace NGUInjector.Managers
 
         bool HasFullHP()
         {
-            return (Math.Abs(_character.totalAdvHP() - _character.adventure.curHP) < 5);
+            return Math.Abs(_character.totalAdvHP() - _character.adventure.curHP) < 5;
         }
 
         float GetHPPercentage()
@@ -343,12 +343,14 @@ namespace NGUInjector.Managers
             if (_character.adventure.zone != zone && _character.adventure.zone != -1)
             {
                 MoveToZone(-1);
+                return;
             }
 
             //If precast buffs is true and we have no enemy and charge isn't active, go back to safe zone
             if (precastBuffs && !ChargeActive() && _character.adventureController.currentEnemy == null)
             {
                 MoveToZone(-1);
+                return;
             }
 
             //If we're in safe zone, recover health if needed. Also precast buffs
@@ -447,7 +449,7 @@ namespace NGUInjector.Managers
                         return;
                     }
 
-                    if (precastBuffs)
+                    if (precastBuffs || recoverHealth && !HasFullHP())
                     {
                         MoveToZone(-1);
                         return;
