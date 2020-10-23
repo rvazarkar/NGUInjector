@@ -633,15 +633,22 @@ namespace NGUInjector
                 {
                     //We haven't unlocked custom purchases yet
                     if (Character.highestBoss < 17) return;
-                    var r3 = Character.res3.res3On;
-                    var magic = Character.highestBoss >= 37;
 
-                    long total = 0;
                     var ePurchase = Character.energyPurchases;
                     var mPurchase = Character.magicPurchases;
                     var r3Purchase = Character.res3Purchases;
 
-                    total += ePurchase.customAllCost();
+                    var energy = ePurchase.customAllCost() > 0;
+                    var r3 = Character.res3.res3On && r3Purchase.customAllCost() > 0;
+                    var magic = Character.highestBoss >= 37 && mPurchase.customAllCost() > 0;
+
+                    long total = 0;
+
+                    if (energy)
+                    {
+                        total += ePurchase.customAllCost();
+                    }
+                    
                     if (magic)
                     {
                         total += mPurchase.customAllCost();
@@ -656,7 +663,12 @@ namespace NGUInjector
 
                     if (numPurchases > 0)
                     {
-                        var t = "exp";
+                        var t = string.Empty;
+                        if (energy)
+                        {
+                            t += "/exp";
+                        }
+                        
                         if (magic)
                         {
                             t += "/magic";
@@ -666,13 +678,18 @@ namespace NGUInjector
                         {
                             t += "/res3";
                         }
+
+                        t = t.Substring(1);
                         
                         Log($"Buying {numPurchases} {t} purchases");
                         for (var i = 0; i < numPurchases; i++)
                         {
-                            var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
-                                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                            ePurchaseMethod?.Invoke(ePurchase, null);
+                            if (energy)
+                            {
+                                var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
+                                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                ePurchaseMethod?.Invoke(ePurchase, null);
+                            }
 
                             if (magic)
                             {
@@ -748,6 +765,11 @@ namespace NGUInjector
             //This logic should trigger only if Time Machine is ready
             if (Character.buttons.brokenTimeMachine.interactable)
             {
+                if (Character.machine.realBaseGold == 0.0)
+                {
+                    _combManager.ManualZone(0, false, false, false, true, false);
+                    return;
+                }
                 //Go to our gold loadout zone next to get a high gold drop
                 if (Settings.ManageGoldLoadouts && Settings.DoGoldSwap)
                 {
