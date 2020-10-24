@@ -47,7 +47,7 @@ namespace NGUInjector.Managers
 
             if (CheckTitanSpawnTime(bossId))
             {
-                result.SpawningSoon = true;
+                result.SpawningSoon = Main.Settings.TitanSwapTargets[bossId];
                 // Run money once for each boss
                 result.RunMoneyLoadout = Main.Settings.TitanGoldTargets[bossId] && !Main.Settings.TitanMoneyDone[bossId];
                 var temp = Main.Settings.TitanMoneyDone;

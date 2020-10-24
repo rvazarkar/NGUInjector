@@ -67,6 +67,8 @@
             this.ManageMagic = new System.Windows.Forms.CheckBox();
             this.ManageEnergy = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.HarvestSafety = new System.Windows.Forms.CheckBox();
+            this.HarvestAllButton = new System.Windows.Forms.Button();
             this.ActivateFruits = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.yggRemoveButton = new System.Windows.Forms.Button();
@@ -106,6 +108,8 @@
             this.titanLoadout = new System.Windows.Forms.ListBox();
             this.SwapTitanLoadout = new System.Windows.Forms.CheckBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.TargetITOPOD = new System.Windows.Forms.CheckBox();
+            this.OptimizeITOPOD = new System.Windows.Forms.CheckBox();
             this.BeastMode = new System.Windows.Forms.CheckBox();
             this.AllowFallthrough = new System.Windows.Forms.CheckBox();
             this.RecoverHealth = new System.Windows.Forms.CheckBox();
@@ -163,10 +167,9 @@
             this.goldErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.numberErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.wishErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.HarvestAllButton = new System.Windows.Forms.Button();
-            this.HarvestSafety = new System.Windows.Forms.CheckBox();
-            this.OptimizeITOPOD = new System.Windows.Forms.CheckBox();
-            this.TargetITOPOD = new System.Windows.Forms.CheckBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.TitanSwapTargets = new System.Windows.Forms.ListView();
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -490,6 +493,20 @@
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // HarvestSafety
+            // 
+            resources.ApplyResources(this.HarvestSafety, "HarvestSafety");
+            this.HarvestSafety.Name = "HarvestSafety";
+            this.HarvestSafety.UseVisualStyleBackColor = true;
+            this.HarvestSafety.CheckedChanged += new System.EventHandler(this.HarvestSafety_CheckedChanged);
+            // 
+            // HarvestAllButton
+            // 
+            resources.ApplyResources(this.HarvestAllButton, "HarvestAllButton");
+            this.HarvestAllButton.Name = "HarvestAllButton";
+            this.HarvestAllButton.UseVisualStyleBackColor = true;
+            this.HarvestAllButton.Click += new System.EventHandler(this.HarvestAllButton_Click);
+            // 
             // ActivateFruits
             // 
             resources.ApplyResources(this.ActivateFruits, "ActivateFruits");
@@ -730,6 +747,8 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.label9);
+            this.tabPage5.Controls.Add(this.TitanSwapTargets);
             this.tabPage5.Controls.Add(this.label1);
             this.tabPage5.Controls.Add(this.HighestTitanDropdown);
             this.tabPage5.Controls.Add(this.label8);
@@ -829,6 +848,20 @@
             resources.ApplyResources(this.tabPage6, "tabPage6");
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // TargetITOPOD
+            // 
+            resources.ApplyResources(this.TargetITOPOD, "TargetITOPOD");
+            this.TargetITOPOD.Name = "TargetITOPOD";
+            this.TargetITOPOD.UseVisualStyleBackColor = true;
+            this.TargetITOPOD.CheckedChanged += new System.EventHandler(this.TargetITOPOD_CheckedChanged);
+            // 
+            // OptimizeITOPOD
+            // 
+            resources.ApplyResources(this.OptimizeITOPOD, "OptimizeITOPOD");
+            this.OptimizeITOPOD.Name = "OptimizeITOPOD";
+            this.OptimizeITOPOD.UseVisualStyleBackColor = true;
+            this.OptimizeITOPOD.CheckedChanged += new System.EventHandler(this.OptimizeITOPOD_CheckedChanged);
             // 
             // BeastMode
             // 
@@ -1255,33 +1288,26 @@
             // 
             this.wishErrorProvider.ContainerControl = this;
             // 
-            // HarvestAllButton
+            // label9
             // 
-            resources.ApplyResources(this.HarvestAllButton, "HarvestAllButton");
-            this.HarvestAllButton.Name = "HarvestAllButton";
-            this.HarvestAllButton.UseVisualStyleBackColor = true;
-            this.HarvestAllButton.Click += new System.EventHandler(this.HarvestAllButton_Click);
+            resources.ApplyResources(this.label9, "label9");
+            this.label9.Name = "label9";
             // 
-            // HarvestSafety
+            // TitanSwapTargets
             // 
-            resources.ApplyResources(this.HarvestSafety, "HarvestSafety");
-            this.HarvestSafety.Name = "HarvestSafety";
-            this.HarvestSafety.UseVisualStyleBackColor = true;
-            this.HarvestSafety.CheckedChanged += new System.EventHandler(this.HarvestSafety_CheckedChanged);
+            this.TitanSwapTargets.CheckBoxes = true;
+            this.TitanSwapTargets.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader2});
+            this.TitanSwapTargets.HideSelection = false;
+            resources.ApplyResources(this.TitanSwapTargets, "TitanSwapTargets");
+            this.TitanSwapTargets.Name = "TitanSwapTargets";
+            this.TitanSwapTargets.UseCompatibleStateImageBehavior = false;
+            this.TitanSwapTargets.View = System.Windows.Forms.View.Details;
+            this.TitanSwapTargets.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.TitanSwapTargets_ItemChecked);
             // 
-            // OptimizeITOPOD
+            // columnHeader2
             // 
-            resources.ApplyResources(this.OptimizeITOPOD, "OptimizeITOPOD");
-            this.OptimizeITOPOD.Name = "OptimizeITOPOD";
-            this.OptimizeITOPOD.UseVisualStyleBackColor = true;
-            this.OptimizeITOPOD.CheckedChanged += new System.EventHandler(this.OptimizeITOPOD_CheckedChanged);
-            // 
-            // TargetITOPOD
-            // 
-            resources.ApplyResources(this.TargetITOPOD, "TargetITOPOD");
-            this.TargetITOPOD.Name = "TargetITOPOD";
-            this.TargetITOPOD.UseVisualStyleBackColor = true;
-            this.TargetITOPOD.CheckedChanged += new System.EventHandler(this.TargetITOPOD_CheckedChanged);
+            resources.ApplyResources(this.columnHeader2, "columnHeader2");
             // 
             // SettingsForm
             // 
@@ -1471,5 +1497,8 @@
         private System.Windows.Forms.CheckBox HarvestSafety;
         private System.Windows.Forms.CheckBox OptimizeITOPOD;
         private System.Windows.Forms.CheckBox TargetITOPOD;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ListView TitanSwapTargets;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
     }
 }

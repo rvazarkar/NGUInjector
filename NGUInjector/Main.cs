@@ -207,6 +207,7 @@ namespace NGUInjector
                         ManageGoldLoadouts = false,
                         ResnipeTime = 3600,
                         TitanMoneyDone = new bool[ZoneHelpers.TitanZones.Length],
+                        TitanSwapTargets = new bool[ZoneHelpers.TitanZones.Length],
                         GoldCBlockMode = false,
                         DebugAllocation = false,
                         AdventureTargetITOPOD = false
@@ -239,6 +240,13 @@ namespace NGUInjector
                     Settings.SetSaveDisabled(true);
                     Settings.TitanGoldTargets = new bool[ZoneHelpers.TitanZones.Length];
                     Settings.TitanMoneyDone = new bool[ZoneHelpers.TitanZones.Length];
+                    Settings.SetSaveDisabled(false);
+                }
+
+                if (Settings.TitanSwapTargets == null || Settings.TitanSwapTargets.Length == 0)
+                {
+                    Settings.SetSaveDisabled(true);
+                    Settings.TitanSwapTargets = new bool[ZoneHelpers.TitanZones.Length];
                     Settings.SetSaveDisabled(false);
                 }
 

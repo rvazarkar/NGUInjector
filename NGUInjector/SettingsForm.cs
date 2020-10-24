@@ -163,6 +163,25 @@ namespace NGUInjector
             TitanGoldTargets.Columns[0].Width = -1;
         }
 
+        internal void SetTitanSwapBox(SavedSettings newSettings)
+        {
+            TitanSwapTargets.Items.Clear();
+            for (var i = 0; i < ZoneHelpers.TitanZones.Length; i++)
+            {
+                var text =
+                    $"{ZoneList[ZoneHelpers.TitanZones[i]]}";
+                var item = new ListViewItem
+                {
+                    Tag = i,
+                    Checked = newSettings.TitanSwapTargets[i],
+                    Text = text,
+                };
+                TitanSwapTargets.Items.Add(item);
+            }
+
+            TitanSwapTargets.Columns[0].Width = -1;
+        }
+
         internal void SetSnipeZone(ComboBox control, int setting)
         {
             control.SelectedIndex = setting >= 1000 ? 44 : setting + 1;
@@ -224,6 +243,7 @@ namespace NGUInjector
             TargetITOPOD.Checked = newSettings.AdventureTargetITOPOD;
 
             SetTitanGoldBox(newSettings);
+            SetTitanSwapBox(newSettings);
 
             var temp = newSettings.YggdrasilLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
             if (temp.Count > 0)
@@ -1098,7 +1118,7 @@ namespace NGUInjector
         private void TitanGoldTargets_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
             if (_initializing) return;
-            var temp = Main.Settings.TitanGoldTargets;
+            var temp = Main.Settings.TitanGoldTargets.ToArray();
             temp[(int)e.Item.Tag] = e.Item.Checked;
             Main.Settings.TitanGoldTargets = temp;
         }
@@ -1160,6 +1180,15 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.AdventureTargetITOPOD = TargetITOPOD.Checked;
+        }
+
+        private void TitanSwapTargets_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            if (_initializing) return;
+            var temp = Main.Settings.TitanSwapTargets.ToArray();
+            temp[(int)e.Item.Tag] = e.Item.Checked;
+            Main.Log($"{(int)e.Item.Tag} - {e.Item.Checked}");
+            Main.Settings.TitanSwapTargets = temp;
         }
     }
 }

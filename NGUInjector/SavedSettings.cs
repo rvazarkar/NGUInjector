@@ -71,6 +71,7 @@ namespace NGUInjector
         [SerializeField] private int _resnipeTime;
         [SerializeField] private bool[] _titanMoneyDone;
         [SerializeField] private bool[] _titanGoldTargets;
+        [SerializeField] private bool[] _titanSwapTargets;
         [SerializeField] private bool _goldCBlockMode;
         [SerializeField] private bool _debugAllocation;
         [SerializeField] private bool _optimizeItopodFloor;
@@ -79,8 +80,6 @@ namespace NGUInjector
         private readonly string _savePath;
         private bool _disableSave;
         
-
-
         public SavedSettings(string dir)
         {
             if (dir != null)
@@ -833,6 +832,17 @@ namespace NGUInjector
             {
                 if (_titanGoldTargets != null && _titanGoldTargets.SequenceEqual(value)) return;
                 _titanGoldTargets = value;
+                SaveSettings();
+            }
+        }
+
+        public bool[] TitanSwapTargets
+        {
+            get => _titanSwapTargets;
+            set
+            {
+                if (_titanSwapTargets != null && _titanSwapTargets.SequenceEqual(value)) return;
+                _titanSwapTargets = value;
                 SaveSettings();
             }
         }

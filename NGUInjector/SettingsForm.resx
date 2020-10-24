@@ -1806,6 +1806,66 @@
   <data name="&gt;&gt;tabPage4.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="label9.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label9.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="label9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>350, 57</value>
+  </data>
+  <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 16</value>
+  </data>
+  <data name="label9.TabIndex" type="System.Int32, mscorlib">
+    <value>34</value>
+  </data>
+  <data name="label9.Text" xml:space="preserve">
+    <value>Titans to Swap For</value>
+  </data>
+  <data name="&gt;&gt;label9.Name" xml:space="preserve">
+    <value>label9</value>
+  </data>
+  <data name="&gt;&gt;label9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label9.Parent" xml:space="preserve">
+    <value>tabPage5</value>
+  </data>
+  <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="columnHeader2.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="columnHeader2.Width" type="System.Int32, mscorlib">
+    <value>203</value>
+  </data>
+  <data name="TitanSwapTargets.Location" type="System.Drawing.Point, System.Drawing">
+    <value>353, 85</value>
+  </data>
+  <data name="TitanSwapTargets.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 186</value>
+  </data>
+  <data name="TitanSwapTargets.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="&gt;&gt;TitanSwapTargets.Name" xml:space="preserve">
+    <value>TitanSwapTargets</value>
+  </data>
+  <data name="&gt;&gt;TitanSwapTargets.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TitanSwapTargets.Parent" xml:space="preserve">
+    <value>tabPage5</value>
+  </data>
+  <data name="&gt;&gt;TitanSwapTargets.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1831,7 +1891,7 @@
     <value>tabPage5</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="HighestTitanDropdown.Location" type="System.Drawing.Point, System.Drawing">
     <value>140, 28</value>
@@ -1852,7 +1912,7 @@
     <value>tabPage5</value>
   </data>
   <data name="&gt;&gt;HighestTitanDropdown.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="label8.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1882,13 +1942,13 @@
     <value>tabPage5</value>
   </data>
   <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="titanRemove.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="titanRemove.Location" type="System.Drawing.Point, System.Drawing">
-    <value>299, 148</value>
+    <value>267, 147</value>
   </data>
   <data name="titanRemove.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 23</value>
@@ -1909,7 +1969,7 @@
     <value>tabPage5</value>
   </data>
   <data name="&gt;&gt;titanRemove.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="titanAddItem.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 251</value>
@@ -1930,7 +1990,7 @@
     <value>tabPage5</value>
   </data>
   <data name="&gt;&gt;titanAddItem.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="titanLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1957,10 +2017,10 @@
     <value>tabPage5</value>
   </data>
   <data name="&gt;&gt;titanLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="titanAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>299, 251</value>
+    <value>267, 250</value>
   </data>
   <data name="titanAdd.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 20</value>
@@ -1981,7 +2041,7 @@
     <value>tabPage5</value>
   </data>
   <data name="&gt;&gt;titanAdd.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="titanLoadout.Items" xml:space="preserve">
     <value>test</value>
@@ -2008,7 +2068,7 @@
     <value>tabPage5</value>
   </data>
   <data name="&gt;&gt;titanLoadout.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="SwapTitanLoadout.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2035,7 +2095,7 @@
     <value>tabPage5</value>
   </data>
   <data name="&gt;&gt;SwapTitanLoadout.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="tabPage5.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -3581,6 +3641,12 @@
   </data>
   <data name="&gt;&gt;wishErrorProvider.Type" xml:space="preserve">
     <value>System.Windows.Forms.ErrorProvider, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;columnHeader2.Name" xml:space="preserve">
+    <value>columnHeader2</value>
+  </data>
+  <data name="&gt;&gt;columnHeader2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>SettingsForm</value>
