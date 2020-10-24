@@ -823,7 +823,7 @@ namespace NGUInjector.AllocationProfiles
             if (breakpoint.Equals("CAPWAN"))
             {
                 _character.wandoos98Controller.addCapMagic();
-                return false;
+                return true;
             }
 
             if (breakpoint.Equals("WAN"))
@@ -1111,7 +1111,7 @@ namespace NGUInjector.AllocationProfiles
             if (breakpoint.StartsWith("CAPWAN"))
             {
                 _character.wandoos98Controller.addCapEnergy();
-                return false;
+                return true;
             }
 
             if (breakpoint.StartsWith("TM"))
