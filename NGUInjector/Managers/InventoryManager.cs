@@ -73,8 +73,8 @@ namespace NGUInjector.Managers
         private readonly int[] _mergeBlacklist = { 367, 368, 369, 370, 371, 372 };
         private BoostsNeeded _previousBoostsNeeded = null;
         private Cube _lastCube = null;
-        private FixedSizedQueue _invBoostAvg = new FixedSizedQueue(60);
-        private FixedSizedQueue _cubeBoostAvg = new FixedSizedQueue(60);
+        private readonly FixedSizedQueue _invBoostAvg = new FixedSizedQueue(60);
+        private readonly FixedSizedQueue _cubeBoostAvg = new FixedSizedQueue(60);
 
 
         //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane, Guffs
@@ -365,7 +365,6 @@ namespace NGUInjector.Managers
                               _previousBoostsNeeded.Special;
 
                     var diff = current - old;
-
                     //If diff is > 0, then we either added another item to boost or we levelled something. Don't add the diff to average
                     if (diff <= 0)
                     {

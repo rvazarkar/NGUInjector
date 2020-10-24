@@ -818,10 +818,7 @@ namespace NGUInjector
             {
                 if (!CombatManager.IsZoneUnlocked(Settings.SnipeZone))
                 {
-                    if (!Settings.AllowZoneFallback)
-                        return;
-
-                    tempZone = ZoneHelpers.GetMaxReachableZone(false);
+                    tempZone = Settings.AllowZoneFallback ? ZoneHelpers.GetMaxReachableZone(false) : 1000;
                 }
                 else
                 {
