@@ -887,9 +887,8 @@ namespace NGUInjector
 
         public void OnGUI()
         {
-            GUI.Label(new Rect(10, 10, 200, 40), $"Injected");
-            GUI.Label(new Rect(10, 20, 200, 40), $"Automation - {(Settings.GlobalEnabled ? "Active" : "Inactive")}");
-            GUI.Label(new Rect(10, 30, 200, 40), $"Next Loop - {_timeLeft:00.0}s");
+            GUI.Label(new Rect(10, 10, 200, 40), $"Automation - {(Settings.GlobalEnabled ? "Active" : "Inactive")}");
+            GUI.Label(new Rect(10, 20, 200, 40), $"Next Loop - {_timeLeft:00.0}s");
         }
 
         void MonitorLog()
