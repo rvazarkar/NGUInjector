@@ -343,14 +343,12 @@ namespace NGUInjector.Managers
             if (_character.adventure.zone != zone && _character.adventure.zone != -1)
             {
                 MoveToZone(-1);
-                return;
             }
 
             //If precast buffs is true and we have no enemy and charge isn't active, go back to safe zone
             if (precastBuffs && !ChargeActive() && _character.adventureController.currentEnemy == null)
             {
                 MoveToZone(-1);
-                return;
             }
 
             //If we're in safe zone, recover health if needed. Also precast buffs
