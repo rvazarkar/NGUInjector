@@ -35,11 +35,8 @@ namespace NGUInjector.AllocationProfiles
             if (_character.settings.nguLevelTrack >= difficulty.sadistic)
                 num2 /= _character.NGUController.NGU[0].sadisticDivider();
             var num3 = _character.NGUController.energySpeedDivider(id) * (double)num1 / num2;
-            if (num3 >= _character.hardCap())
-            {
-                ret.Num = _character.hardCap();
-                return ret;
-            }
+            if (num3 >= _character.hardCap()) 
+                num3 = _character.hardCap();
 
             var num4 = num3 <= 1.0 ? 1L : (long)num3;
             var num = (long)(num4 / (long)Math.Ceiling(num4 / (useInput ? (double)_character.energyMagicPanel.energyMagicInput : (double)_character.idleEnergy)) * 1.00000202655792);
@@ -89,11 +86,8 @@ namespace NGUInjector.AllocationProfiles
             if (_character.settings.nguLevelTrack >= difficulty.sadistic)
                 num2 /= _character.NGUController.NGUMagic[0].sadisticDivider();
             var num3 = _character.NGUController.magicSpeedDivider(id) * (double)num1 / num2;
-            if (num3 >= _character.hardCap())
-            {
-                ret.Num = _character.hardCap();
-                return ret;
-            }
+            if (num3 >= _character.hardCap()) 
+                num3 = _character.hardCap();
             var num4 = num3 <= 1.0 ? 1L : (long)num3;
             var num = (long)(num4 / (long)Math.Ceiling(num4 / (useInput ? (double)_character.energyMagicPanel.energyMagicInput : (double)_character.magic.idleMagic)) * 1.00000202655792);
             if (num + 1L <= long.MaxValue)
@@ -217,11 +211,9 @@ namespace NGUInjector.AllocationProfiles
                 }
             }
 
-            if (formula >= _character.hardCap())
-            {
-                ret.Num = _character.hardCap();
-                return ret;
-            }
+            if (formula >= _character.hardCap()) 
+                formula = _character.hardCap();
+
             var num4 = formula <= 1.0 ? 1L : (long)formula;
             var num = (long)(num4 / (long)Math.Ceiling(num4 / (useInput ? (double)_character.energyMagicPanel.energyMagicInput : (double)_character.idleEnergy)) * 1.00000202655792);
             if (num + 1L <= long.MaxValue)
@@ -253,11 +245,8 @@ namespace NGUInjector.AllocationProfiles
                 formula *= _character.timeMachineController.sadisticDivider();
             }
 
-            if (formula >= _character.hardCap())
-            {
-                ret.Num = _character.hardCap();
-                return ret;
-            }
+            if (formula >= _character.hardCap()) 
+                formula = _character.hardCap();
 
             var num4 = formula <= 1.0 ? 1L : (long)formula;
             var num = (long)(num4 / (long)Math.Ceiling(num4 / (useInput ? (double)_character.energyMagicPanel.energyMagicInput : (double)_character.idleEnergy)) * 1.00000202655792);
@@ -315,11 +304,8 @@ namespace NGUInjector.AllocationProfiles
                 formula *= _character.timeMachineController.sadisticDivider();
             }
 
-            if (formula >= _character.hardCap())
-            {
-                ret.Num = _character.hardCap();
-                return ret;
-            }
+            if (formula >= _character.hardCap()) 
+                formula = _character.hardCap();
 
 
             var num4 = formula <= 1.0 ? 1L : (long)formula;
@@ -394,8 +380,7 @@ namespace NGUInjector.AllocationProfiles
 
             if (formula >= _character.hardCap())
             {
-                ret.Num = _character.hardCap();
-                return ret;
+                formula = _character.hardCap();
             }
 
             var num = (long)(formula / (long)Math.Ceiling(formula / (useInput ? (double)_character.energyMagicPanel.energyMagicInput : (double)_character.idleEnergy)) * 1.00000202655792);
@@ -414,7 +399,6 @@ namespace NGUInjector.AllocationProfiles
 
         internal long GetRitualCap(int index)
         {
-
             if (_character.settings.rebirthDifficulty == difficulty.normal)
             {
                 var num = Math.Ceiling(50000.0 * _character.bloodMagicController.normalSpeedDividers[index] / (_character.totalMagicPower() * (double)_character.bloodMagicController.bloodMagics[index].totalBloodMagicSpeedBonus())) * 1.000002;
@@ -422,7 +406,8 @@ namespace NGUInjector.AllocationProfiles
                     num = 1.0;
                 if (num > _character.hardCap())
                     num = _character.hardCap();
-                return (long)num;
+                var num2 = (long)(num / (long)Math.Ceiling((double)num / (double)_character.energyMagicPanel.energyMagicInput) * 1.00000202655792);
+                return num2;
             }
             if (_character.settings.rebirthDifficulty == difficulty.evil)
             {
@@ -431,7 +416,8 @@ namespace NGUInjector.AllocationProfiles
                     num = 1.0;
                 if (num > _character.hardCap())
                     num = _character.hardCap();
-                return (long)num;
+                var num2 = (long)(num / (long)Math.Ceiling((double)num / (double)_character.energyMagicPanel.energyMagicInput) * 1.00000202655792);
+                return num2;
             }
             if (_character.settings.rebirthDifficulty == difficulty.sadistic)
             {
@@ -440,16 +426,11 @@ namespace NGUInjector.AllocationProfiles
                     num = 1.0;
                 if (num > _character.hardCap())
                     num = _character.hardCap();
-                return (long)num;
+                var num2 = (long)(num / (long)Math.Ceiling((double)num / (double)_character.energyMagicPanel.energyMagicInput) * 1.00000202655792);
+                return num2;
             }
-            var num1 = (double)(long)(Math.Ceiling(50000.0 * _character.bloodMagicController.normalSpeedDividers[index] / (_character.totalMagicPower() * (double)_character.bloodMagicController.bloodMagics[index].totalBloodMagicSpeedBonus())) * 1.00000202655792);
-            if (num1 < 1.0)
-                num1 = 1.0;
-            if (num1 > _character.hardCap())
-                num1 = _character.hardCap();
 
-            var num2 = (long)(num1 / (long)Math.Ceiling((double)num1 / (double)_character.energyMagicPanel.energyMagicInput) * 1.00000202655792);
-            return num2;
+            return 0;
         }
     }
 

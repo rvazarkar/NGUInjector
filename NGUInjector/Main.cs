@@ -891,7 +891,7 @@ namespace NGUInjector
             GUI.Label(new Rect(10, 20, 200, 40), $"Next Loop - {_timeLeft:00.0}s");
         }
 
-        void MonitorLog()
+        public void MonitorLog()
         {
             var bLog = Character.adventureController.log;
             var type = bLog.GetType().GetField("Eventlog",
@@ -924,7 +924,7 @@ namespace NGUInjector
             }
         }
 
-        void SetResnipe()
+        public void SetResnipe()
         {
             if (Settings.ResnipeTime == 0 && !Settings.GoldCBlockMode) return;
 
@@ -946,7 +946,7 @@ namespace NGUInjector
             }
         }
 
-        void ShowBoostProgress()
+        public void ShowBoostProgress()
         {
             var boostSlots = _invManager.GetBoostSlots(Character.inventory.GetConvertedInventory().ToArray());
             try
