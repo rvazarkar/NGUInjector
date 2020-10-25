@@ -52,14 +52,14 @@ An in game menu can be opened using the F1 button.
 ![Allocation Settings](https://i.imgur.com/dbpniX2.png)
 
 - **Allocation Profile** - Allows you to quickly switch allocation profiles. Any profiles stored in the profiles folder will be listed here. Press change allocation after swapping to change to load the new allocation.
-- **Manage Energy** - Manage energy based on breakpoints in allocation.json
-- **Manage Magic** - Manage magic based on breakpoints in allocation.json
-- **Manage R3** - Manage resource 3 based on breakpoints in allocation.json
-- **Manage Gear** - Manage gear based on breakpoints in allocation.json
-- **Manage NGU Difficulty** - Manage NGU difficulty based on breakpoints in allocation.json
-- **Manage Diggers** - Manage diggers based on breakpoints in allocation.json
-- **Manage Wandoos OS** - Manage wandoos OS based on breakpoints in allocation.json
-- **Auto Rebirth** - Automatically rebirth after the time in allocation.json is reached.
+- **Manage Energy** - Manage energy based on breakpoints in your selected allocation file
+- **Manage Magic** - Manage magic based on breakpoints in your selected allocation file
+- **Manage R3** - Manage resource 3 based on breakpoints in your selected allocation file
+- **Manage Gear** - Manage gear based on breakpoints in your selected allocation file
+- **Manage NGU Difficulty** - Manage NGU difficulty based on breakpoints in your selected allocation file
+- **Manage Diggers** - Manage diggers based on breakpoints in your selected allocation file
+- **Manage Wandoos OS** - Manage wandoos OS based on breakpoints in your selected allocation file
+- **Auto Rebirth** - Automatically rebirth after the time in your selected allocation file is reached.
 
 - **Change Auto Spells** - Manage Spoopy Spell casting
 - **Spaghetti %** - Percent to cast Blood Spaghetti until
@@ -142,7 +142,7 @@ An in game menu can be opened using the F1 button.
 
 # Allocation
 
-The allocation.json file is a JSON file that contains time breakpoints for configuring your gear, diggers, energy allocation and magic allocation. Sample allocation files can be found in the sampleprofile folder.
+Allocation profiles can be found in the profiles folder and contain time breakpoints for configuring your gear, diggers, energy allocation and magic allocation. Sample allocation files can be found in the sampleprofile folder.
 
 [Sample 24 Hour Profile](https://github.com/rvazarkar/NGUInjector/blob/master/NGUInjector/SampleProfiles/24hr_with_gear.json).
 
@@ -353,7 +353,7 @@ Pressing the F7 button will load the save created by the quicksave function
 
 ## Dump Equipment to Log
 
-Pressing the F5 buttonw will dump your current equipment to the log file for use in allocation.json
+Pressing the F5 buttonw will dump your current equipment to the log file for use in allocation files
 
 ## Monitor Loot Log File
 
