@@ -257,7 +257,7 @@ An R3 breakpoint is structured as follows:
 
 Available priorities for R3 are as follows:
 
-- HACK-X (0-13) - Allocate R3 to hacks
+- HACK-X (0-14) - Allocate R3 to hacks
 - WISH-X (0-X) - Allocate R3 to wishes. X is the wish slot you wish to allocate too. If you only have 1 slot, WISH-0 will be the one you use. Wishes will follow the priority set in the WishPriorities setting and then work through cheapest wishes
 
 ## Gear
