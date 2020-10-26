@@ -906,6 +906,8 @@ namespace NGUInjector
                 var line = log[i];
                 if (!line.Contains("dropped")) continue;
                 if (line.Contains("gold")) continue;
+                if (line.Contains("Boost")) continue;
+                if (line.Contains("EXP")) continue;
                 if (line.EndsWith("<b></b>")) continue;
                 var result = line;
                 if (result.Contains("\n"))
