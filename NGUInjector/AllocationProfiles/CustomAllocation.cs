@@ -956,8 +956,25 @@ namespace NGUInjector.AllocationProfiles
                     return true;
                 }
 
-                var target = _character.NGU.magicSkills[index].target;
-                if (target > 0 && _character.NGU.magicSkills[index].level >= target)
+                long target;
+                long level;
+                if (_character.settings.nguLevelTrack == difficulty.normal)
+                {
+                    target = _character.NGU.magicSkills[index].target;
+                    level = _character.NGU.magicSkills[index].level;
+                }
+                else if (_character.settings.nguLevelTrack == difficulty.evil)
+                {
+                    target = _character.NGU.magicSkills[index].evilTarget;
+                    level = _character.NGU.magicSkills[index].evilLevel;
+                }
+                else
+                {
+                    target = _character.NGU.magicSkills[index].sadisticTarget;
+                    level = _character.NGU.magicSkills[index].sadisticLevel;
+                }
+
+                if (target > 0 && level >= target)
                 {
                     Main.LogAllocation($"Skipping {breakpoint} because target is met");
                     return true;
@@ -977,8 +994,25 @@ namespace NGUInjector.AllocationProfiles
                     return false;
                 }
 
-                var target = _character.NGU.magicSkills[index].target;
-                if (target > 0 && _character.NGU.magicSkills[index].level >= target)
+                long target;
+                long level;
+                if (_character.settings.nguLevelTrack == difficulty.normal)
+                {
+                    target = _character.NGU.magicSkills[index].target;
+                    level = _character.NGU.magicSkills[index].level;
+                }
+                else if (_character.settings.nguLevelTrack == difficulty.evil)
+                {
+                    target = _character.NGU.magicSkills[index].evilTarget;
+                    level = _character.NGU.magicSkills[index].evilLevel;
+                }
+                else
+                {
+                    target = _character.NGU.magicSkills[index].sadisticTarget;
+                    level = _character.NGU.magicSkills[index].sadisticLevel;
+                }
+
+                if (target > 0 && level >= target)
                 {
                     Main.LogAllocation($"Skipping {breakpoint} because target is met");
                     return false;
@@ -1047,7 +1081,10 @@ namespace NGUInjector.AllocationProfiles
             {
                 var success = int.TryParse(breakpoint.Split('-')[1], out var index);
                 if (!success || index < 0 || index > 11)
+                {
+                    Main.LogAllocation($"Skipping {breakpoint} because of bad index");
                     return false;
+                }
 
                 if (index <= 5)
                     _character.allOffenseController.trains[index].cap();
@@ -1103,10 +1140,12 @@ namespace NGUInjector.AllocationProfiles
                 var cap = _character.wandoos98Controller.capAmountEnergy();
                 if (input > cap)
                 {
+                    Main.LogAllocation($"Setting input to {cap} for {breakpoint}");
                     SetInput(cap);
                     _character.wandoos98Controller.addEnergy();
                     return true;
                 }
+                Main.LogAllocation($"Allocating {input} for {breakpoint}");
                 _character.wandoos98Controller.addEnergy();
                 return false;
             }
@@ -1147,18 +1186,39 @@ namespace NGUInjector.AllocationProfiles
                 if (!success || index < 0 || index > 8)
                     return true;
 
-                var target = _character.NGU.skills[index].target;
-                if (target > 0 && _character.NGU.skills[index].level >= target)
+                long target;
+                long level;
+                if (_character.settings.nguLevelTrack == difficulty.normal)
+                {
+                    target = _character.NGU.skills[index].target;
+                    level = _character.NGU.skills[index].level;
+                }else if (_character.settings.nguLevelTrack == difficulty.evil)
+                {
+                    target = _character.NGU.skills[index].evilTarget;
+                    level = _character.NGU.skills[index].evilLevel;
+                }
+                else
+                {
+                    target = _character.NGU.skills[index].sadisticTarget;
+                    level = _character.NGU.skills[index].sadisticLevel;
+                }
+                
+                if (target > 0 && level >= target)
+                {
+                    Main.LogAllocation($"Skipping {breakpoint} because target is met");
                     return true;
+                }
 
                 var cap = _calcs.CalculateNGUEnergyCap(index, true);
                 if (input > cap)
                 {
+                    Main.LogAllocation($"Setting input to {cap} for {breakpoint}");
                     SetInput(cap);
                     _character.NGUController.NGU[index].add();
                     return true;
                 }
 
+                Main.LogAllocation($"Allocating {input} to {breakpoint}");
                 _character.NGUController.NGU[index].add();
                 return true;
             }
@@ -1202,8 +1262,25 @@ namespace NGUInjector.AllocationProfiles
                 if (!success || index < 0 || index > 8)
                     return false;
 
-                var target = _character.NGU.skills[index].target;
-                if (target > 0 && _character.NGU.skills[index].level >= target)
+                long target;
+                long level;
+                if (_character.settings.nguLevelTrack == difficulty.normal)
+                {
+                    target = _character.NGU.skills[index].target;
+                    level = _character.NGU.skills[index].level;
+                }
+                else if (_character.settings.nguLevelTrack == difficulty.evil)
+                {
+                    target = _character.NGU.skills[index].evilTarget;
+                    level = _character.NGU.skills[index].evilLevel;
+                }
+                else
+                {
+                    target = _character.NGU.skills[index].sadisticTarget;
+                    level = _character.NGU.skills[index].sadisticLevel;
+                }
+
+                if (target > 0 && level >= target)
                     return false;
 
                 var cap = _calcs.CalculateNGUEnergyCap(index, false);
@@ -1224,7 +1301,6 @@ namespace NGUInjector.AllocationProfiles
                     Main.LogAllocation($"Skipping {breakpoint} because target is met");
                     return true;
                 }
-                    
 
                 var cap = _calcs.CalculateATCap(index, true);
                 SetInput(cap);
