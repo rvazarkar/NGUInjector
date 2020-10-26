@@ -798,6 +798,9 @@ namespace NGUInjector.AllocationProfiles
                 if (!success || index < 0 || index > 14)
                     return true;
 
+                if (_character.hacksController.hitTarget(index))
+                    return true;
+
                 _character.hacksController.addR3(index, _character.input.energyMagicInput);
                 return false;
             }
