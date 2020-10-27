@@ -755,7 +755,8 @@ namespace NGUInjector
                 if (Settings.AutoQuest && Character.buttons.beast.interactable)
                 {
                     var converted = Character.inventory.GetConvertedInventory().ToArray();
-                    _invManager.ManageQuestItems(converted);
+                    if (!Character.inventoryController.midDrag)
+                        _invManager.ManageQuestItems(converted);
                     _questManager.CheckQuestTurnin();
                     _questManager.ManageQuests();
                 }
