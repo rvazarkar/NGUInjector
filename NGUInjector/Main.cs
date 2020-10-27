@@ -999,14 +999,9 @@ namespace NGUInjector
             
         }
 
-        //public void OnApplicationQuit()
-        //{
-        //    CancelInvoke("AutomationRoutine");
-        //    CancelInvoke("SnipeZone");
-        //    CancelInvoke("MonitorLog");
-        //    CancelInvoke("QuickStuff");
-        //    CancelInvoke("SetResnipe");
-        //    Loader.Unload();
-        //}
+        public void OnApplicationQuit()
+        {
+            Loader.Unload();
+        }
     }
 }

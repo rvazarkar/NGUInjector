@@ -160,7 +160,6 @@ namespace NGUInjector.AllocationProfiles
 
                     Main.Log(BuildAllocationString());
 
-                    
                     _currentDiggerBreakpoint = null;
                     _currentEnergyBreakpoint = null;
                     _currentGearBreakpoint = null;
@@ -277,8 +276,8 @@ namespace NGUInjector.AllocationProfiles
             if (bp.Diff == 0)
             {
                 _character.settings.nguLevelTrack = difficulty.normal;
-            }else if (bp.Diff == 1 && _character.settings.rebirthDifficulty == difficulty.evil ||
-                      _character.settings.rebirthDifficulty == difficulty.sadistic)
+            }else if (bp.Diff == 1 && (_character.settings.rebirthDifficulty == difficulty.evil ||
+                      _character.settings.rebirthDifficulty == difficulty.sadistic))
             {
                 _character.settings.nguLevelTrack = difficulty.evil;
             }else if (bp.Diff == 2 && _character.settings.rebirthDifficulty == difficulty.sadistic)
