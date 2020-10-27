@@ -1190,5 +1190,15 @@ namespace NGUInjector
             Main.Log($"{(int)e.Item.Tag} - {e.Item.Checked}");
             Main.Settings.TitanSwapTargets = temp;
         }
+
+        private void UnloadSafety_CheckedChanged(object sender, EventArgs e)
+        {
+            UnloadButton.Enabled = UnloadSafety.Checked;
+        }
+
+        private void UnloadButton_Click(object sender, EventArgs e)
+        {
+            Loader.Unload();
+        }
     }
 }

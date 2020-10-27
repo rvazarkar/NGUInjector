@@ -170,6 +170,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.TitanSwapTargets = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.UnloadButton = new System.Windows.Forms.Button();
+            this.UnloadSafety = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -203,6 +205,7 @@
             // 
             // tableLayoutPanel1
             // 
+
             resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
             this.tableLayoutPanel1.Controls.Add(this.progressBar1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 1);
@@ -231,6 +234,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.UnloadSafety);
+            this.tabPage1.Controls.Add(this.UnloadButton);
             this.tabPage1.Controls.Add(this.VersionLabel);
             this.tabPage1.Controls.Add(this.AutoBuyEM);
             this.tabPage1.Controls.Add(this.MoneyPitThresholdSave);
@@ -1309,6 +1314,20 @@
             // 
             resources.ApplyResources(this.columnHeader2, "columnHeader2");
             // 
+            // UnloadButton
+            // 
+            resources.ApplyResources(this.UnloadButton, "UnloadButton");
+            this.UnloadButton.Name = "UnloadButton";
+            this.UnloadButton.UseVisualStyleBackColor = true;
+            this.UnloadButton.Click += new System.EventHandler(this.UnloadButton_Click);
+            // 
+            // UnloadSafety
+            // 
+            resources.ApplyResources(this.UnloadSafety, "UnloadSafety");
+            this.UnloadSafety.Name = "UnloadSafety";
+            this.UnloadSafety.UseVisualStyleBackColor = true;
+            this.UnloadSafety.CheckedChanged += new System.EventHandler(this.UnloadSafety_CheckedChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1500,5 +1519,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ListView TitanSwapTargets;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.CheckBox UnloadSafety;
+        private System.Windows.Forms.Button UnloadButton;
     }
 }
