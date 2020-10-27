@@ -110,6 +110,7 @@ namespace NGUInjector.Managers
                     SetLevelMaxAffordable(i);
                 }
             }
+            Main.Character.allDiggers.refreshMenu();
         }
 
         private static void SetLevelMaxAffordable(int id)
@@ -147,8 +148,6 @@ namespace NGUInjector.Managers
                 }
                 else if (!Main.Character.diggers.diggers[id].active && Main.Character.diggers.diggers[id].curLevel > 0L && Main.Character.diggers.activeDiggers.Count < Main.Character.allDiggers.maxDiggerSlots())
                     Main.Character.allDiggers.activateDigger(id);
-
-                Main.Character.allDiggers.refreshMenu();
             }
         }
 
