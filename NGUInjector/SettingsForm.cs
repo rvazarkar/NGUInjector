@@ -14,15 +14,19 @@ namespace NGUInjector
 {
     public partial class SettingsForm : Form
     {
-        internal static readonly Dictionary<int, string> TitanList = new Dictionary<int, string>();
-        internal static readonly Dictionary<int, string> ZoneList = new Dictionary<int, string>();
-        internal static readonly Dictionary<int, string> CombatModeList = new Dictionary<int, string>();
-        internal static readonly Dictionary<int, string> CubePriorityList = new Dictionary<int, string>();
+        internal readonly Dictionary<int, string> TitanList;
+        internal readonly Dictionary<int, string> ZoneList;
+        internal readonly Dictionary<int, string> CombatModeList;
+        internal readonly Dictionary<int, string> CubePriorityList;
         private bool _initializing = true;
         public SettingsForm()
         {
             InitializeComponent();
 
+            CubePriorityList = new Dictionary<int, string>();
+            CombatModeList = new Dictionary<int, string>();
+            ZoneList = new Dictionary<int, string>();
+            TitanList = new Dictionary<int, string>();
             // Populate our data sources
             TitanList.Add(0, "None");
             TitanList.Add(1, "GRB");

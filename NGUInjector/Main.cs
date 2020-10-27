@@ -30,6 +30,7 @@ namespace NGUInjector
         internal static StreamWriter CombatWriter;
         internal static StreamWriter AllocationWriter;
         internal static StreamWriter PitSpinWriter;
+        internal static Main reference;
         private YggdrasilManager _yggManager;
         private InventoryManager _invManager;
         private CombatManager _combManager;
@@ -37,7 +38,7 @@ namespace NGUInjector
         private static CustomAllocation _profile;
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
-        internal const string Version = "3.0.0";
+        internal const string Version = "3.1.0";
         private static int _furthestZone;
 
         internal static bool Test { get; set; }
@@ -79,6 +80,36 @@ namespace NGUInjector
         {
             if (!Settings.DebugAllocation) return;
             AllocationWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
+        }
+
+        internal void Unload()
+        {
+            try
+            {
+                CancelInvoke("AutomationRoutine");
+                CancelInvoke("SnipeZone");
+                CancelInvoke("MonitorLog");
+                CancelInvoke("QuickStuff");
+                CancelInvoke("SetResnipe");
+                CancelInvoke("ShowBoostProgress");
+
+
+                LootWriter.Close();
+                CombatWriter.Close();
+                AllocationWriter.Close();
+                PitSpinWriter.Close();
+                settingsForm.Close();
+                settingsForm.Dispose();
+
+                ConfigWatcher.Dispose();
+                AllocationWatcher.Dispose();
+                ZoneWatcher.Dispose();
+            }
+            catch (Exception e)
+            {
+                Log(e.Message);
+            }
+            OutputWriter.Close();
         }
 
         public void Start()
@@ -316,11 +347,14 @@ namespace NGUInjector
                 InvokeRepeating("QuickStuff", 0.0f, .5f);
                 InvokeRepeating("ShowBoostProgress", 0.0f, 60.0f);
                 InvokeRepeating("SetResnipe", 0f,1f);
+
+                reference = this;
             }
             catch (Exception e)
             {
-                Log(e.Message);
+                Log(e.ToString());
                 Log(e.StackTrace);
+                Log(e.InnerException.ToString());
             }
         }
 
@@ -524,7 +558,7 @@ namespace NGUInjector
                     }
                 }
 
-                if (needsAllocation && !_profile.IsAllocationRunning)
+                if (needsAllocation)
                 {
                     _profile.DoAllocations();
                 }
@@ -906,7 +940,9 @@ namespace NGUInjector
                 var line = log[i];
                 if (!line.Contains("dropped")) continue;
                 if (line.Contains("gold")) continue;
-                if (line.Contains("Boost")) continue;
+                if (line.ToLower().Contains("special boost")) continue;
+                if (line.ToLower().Contains("toughness boost")) continue;
+                if (line.ToLower().Contains("power boost")) continue;
                 if (line.Contains("EXP")) continue;
                 if (line.EndsWith("<b></b>")) continue;
                 var result = line;
@@ -963,14 +999,14 @@ namespace NGUInjector
             
         }
 
-        public void OnApplicationQuit()
-        {
-            CancelInvoke("AutomationRoutine");
-            CancelInvoke("SnipeZone");
-            CancelInvoke("MonitorLog");
-            CancelInvoke("QuickStuff");
-            CancelInvoke("SetResnipe");
-            Loader.Unload();
-        }
+        //public void OnApplicationQuit()
+        //{
+        //    CancelInvoke("AutomationRoutine");
+        //    CancelInvoke("SnipeZone");
+        //    CancelInvoke("MonitorLog");
+        //    CancelInvoke("QuickStuff");
+        //    CancelInvoke("SetResnipe");
+        //    Loader.Unload();
+        //}
     }
 }
