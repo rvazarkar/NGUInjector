@@ -53,15 +53,15 @@ namespace NGUInjector.Managers
 
             if (ai == AI.charger && eai.GetPV<int>("chargeCooldown") >= 3)
             {
-                if (ac.parryMove.button.IsInteractable() && !_pc.isBlocking)
-                {
-                    ac.parryMove.doMove();
-                    return true;
-                }
-
                 if (ac.blockMove.button.IsInteractable() && !_pc.isParrying)
                 {
                     ac.blockMove.doMove();
+                    return true;
+                }
+
+                if (ac.parryMove.button.IsInteractable() && !_pc.isBlocking)
+                {
+                    ac.parryMove.doMove();
                     return true;
                 }
             }
@@ -132,15 +132,15 @@ namespace NGUInjector.Managers
 
             if (ai != AI.charger && ai != AI.rapid && ai != AI.exploder && !UltimateBuffActive() && !DefenseBuffActive())
             {
-                if (!BlockActive())
-                {
-                    if (CastParry())
-                        return true;
-                }
-
                 if (!ParryActive())
                 {
                     if (CastBlock())
+                        return true;
+                }
+
+                if (!BlockActive())
+                {
+                    if (CastParry())
                         return true;
                 }
             }
