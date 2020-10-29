@@ -51,6 +51,10 @@ namespace NGUInjector
         [SerializeField] private bool _autoSpellSwap;
         [SerializeField] private int _spaghettiThreshold;
         [SerializeField] private int _counterfeitThreshold;
+        [SerializeField] private bool _castBloodSpells;
+        [SerializeField] private double _ironPillThreshold;
+        [SerializeField] private int _bloodMacGuffinAThreshold;
+        [SerializeField] private int _bloodMacGuffinBThreshold;
         [SerializeField] private bool _autoBuyEm;
         [SerializeField] private double _bloodNumberThreshold;
         [SerializeField] private int[] _quickLoadout;
@@ -182,6 +186,10 @@ namespace NGUInjector
             _autoSpellSwap = other.AutoSpellSwap;
             _counterfeitThreshold = other.CounterfeitThreshold;
             _spaghettiThreshold = other.SpaghettiThreshold;
+            _castBloodSpells = other.CastBloodSpells;
+            _ironPillThreshold = other.IronPillThreshold;
+            _bloodMacGuffinAThreshold = other.BloodMacGuffinAThreshold;
+            _bloodMacGuffinBThreshold = other.BloodMacGuffinBThreshold;
             _autoBuyEm = other.AutoBuyEM;
             _bloodNumberThreshold = other.BloodNumberThreshold;
             _quickDiggers = other.QuickDiggers;
@@ -612,6 +620,50 @@ namespace NGUInjector
             {
                 if (value == _spaghettiThreshold) return;
                 _spaghettiThreshold = value;
+                SaveSettings();
+            }
+        }
+
+        public bool CastBloodSpells
+        {
+            get => _castBloodSpells;
+            set
+            {
+                if (value == _castBloodSpells) return;
+                _castBloodSpells = value;
+                SaveSettings();
+            }
+        }
+
+        public double IronPillThreshold
+        {
+            get => _ironPillThreshold;
+            set
+            {
+                if (value == _ironPillThreshold) return;
+                _ironPillThreshold = value;
+                SaveSettings();
+            }
+        }
+
+        public int BloodMacGuffinAThreshold
+        {
+            get => _bloodMacGuffinAThreshold;
+            set
+            {
+                if (value == _bloodMacGuffinAThreshold) return;
+                _bloodMacGuffinAThreshold = value;
+                SaveSettings();
+            }
+        }
+
+        public int BloodMacGuffinBThreshold
+        {
+            get => _bloodMacGuffinBThreshold;
+            set
+            {
+                if (value == _bloodMacGuffinBThreshold) return;
+                _bloodMacGuffinBThreshold = value;
                 SaveSettings();
             }
         }
