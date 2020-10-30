@@ -2020,7 +2020,7 @@
     <value>NoControl</value>
   </data>
   <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>350, 57</value>
+    <value>362, 56</value>
   </data>
   <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 16</value>
@@ -2050,7 +2050,7 @@
     <value>203</value>
   </data>
   <data name="TitanSwapTargets.Location" type="System.Drawing.Point, System.Drawing">
-    <value>353, 85</value>
+    <value>365, 84</value>
   </data>
   <data name="TitanSwapTargets.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 186</value>

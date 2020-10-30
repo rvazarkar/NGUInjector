@@ -1001,10 +1001,6 @@ namespace NGUInjector
             temp.Insert(index -1, item);
             Main.Settings.WishPriorities = temp.ToArray();
             WishPriority.SelectedIndex = index - 1;
-
-            Main.Character.removeAllRes3();
-            Main.Character.removeMostEnergy();
-            Main.Character.removeMostMagic();
         }
 
         private void WishDownButton_Click(object sender, EventArgs e)
@@ -1023,9 +1019,6 @@ namespace NGUInjector
             temp.Insert(index + 1, item);
             Main.Settings.WishPriorities = temp.ToArray();
             WishPriority.SelectedIndex = index + 1;
-            Main.Character.removeAllRes3();
-            Main.Character.removeMostEnergy();
-            Main.Character.removeMostMagic();
         }
 
         private void AddWishButton_Click(object sender, EventArgs e)
@@ -1042,9 +1035,6 @@ namespace NGUInjector
             var temp = Main.Settings.WishPriorities.ToList();
             temp.Add(val);
             Main.Settings.WishPriorities = temp.ToArray();
-            Main.Character.removeAllRes3();
-            Main.Character.removeMostEnergy();
-            Main.Character.removeMostMagic();
         }
 
         private void RemoveWishButton_Click(object sender, EventArgs e)
@@ -1060,9 +1050,6 @@ namespace NGUInjector
             var temp = Main.Settings.WishPriorities.ToList();
             temp.RemoveAll(x => x == id.Key);
             Main.Settings.WishPriorities = temp.ToArray();
-            Main.Character.removeAllRes3();
-            Main.Character.removeMostEnergy();
-            Main.Character.removeMostMagic();
         }
 
         private void WishAddInput_TextChanged(object sender, EventArgs e)

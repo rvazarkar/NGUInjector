@@ -266,14 +266,12 @@ namespace NGUInjector
                 {
                     Settings.SetSaveDisabled(true);
                     Settings.TitanGoldTargets = new bool[ZoneHelpers.TitanZones.Length];
-                    Settings.TitanMoneyDone = new bool[ZoneHelpers.TitanZones.Length];
                     Settings.SetSaveDisabled(false);
                 }
 
                 if (Settings.TitanMoneyDone == null || Settings.TitanMoneyDone.Length == 0)
                 {
                     Settings.SetSaveDisabled(true);
-                    Settings.TitanGoldTargets = new bool[ZoneHelpers.TitanZones.Length];
                     Settings.TitanMoneyDone = new bool[ZoneHelpers.TitanZones.Length];
                     Settings.SetSaveDisabled(false);
                 }
