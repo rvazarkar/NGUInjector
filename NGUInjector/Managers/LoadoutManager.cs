@@ -106,7 +106,7 @@ namespace NGUInjector.Managers
             Log("Equipping Money Pit");
             AcquireLock(LockType.MoneyPit);
             SaveCurrentLoadout();
-            ChangeGear(Settings.MoneyPitLoadout);
+            ChangeGear(Settings.MoneyPitLoadout, true);
             return true;
         }
 
@@ -144,7 +144,7 @@ namespace NGUInjector.Managers
             return false;
         }
 
-        internal static void ChangeGear(int[] gearIds)
+        internal static void ChangeGear(int[] gearIds, bool moneyPit = false)
         {
             Log($"Received New Gear: {string.Join(",", gearIds.Select(x => x.ToString()).ToArray())}");
             var weaponSlot = -5;
@@ -161,7 +161,7 @@ namespace NGUInjector.Managers
                 {
                     var inv = Main.Character.inventory;
 
-                    var equip = FindItemSlot(itemId);
+                    var equip = FindItemSlot(itemId, moneyPit);
 
                     if (equip == null)
                     {
@@ -237,7 +237,7 @@ namespace NGUInjector.Managers
             Log("Finished equipping gear");
         }
 
-        private static ih FindItemSlot(int id)
+        private static ih FindItemSlot(int id, bool moneyPit = false)
         {
             var inv = Main.Character.inventory;
             if (inv.head.id == id)
@@ -283,7 +283,10 @@ namespace NGUInjector.Managers
 
             var items = Main.Character.inventory.GetConvertedInventory()
                 .Where(x => x.id == id && x.equipment.isEquipment()).ToArray();
-            if (items.Length != 0) return items.MaxItem();
+            if (items.Length != 0)
+            {
+                return moneyPit ? items.OrderByDescending(x => x.level).First() : items.MaxItem();
+            }
 
             return null;
         }
