@@ -445,7 +445,7 @@ namespace NGUInjector.AllocationProfiles
                     }
                     else
                     {
-                        Main.Log("Casting Failed Blood MacGuffin B Spell - Insufficient Power " + mcguffB + " of " + Main.Settings.BloodMacGuffinBThreshold););
+                        Main.Log("Casting Failed Blood MacGuffin B Spell - Insufficient Power " + mcguffB + " of " + Main.Settings.BloodMacGuffinBThreshold);
                     }
                 }
             }
@@ -467,7 +467,7 @@ namespace NGUInjector.AllocationProfiles
                     }
                     else
                     {
-                        Main.Log("Casting Failed Blood MacGuffin A Spell - Insufficient Power " + mcguffA + " of " + Main.Settings.BloodMacGuffinAThreshold););
+                        Main.Log("Casting Failed Blood MacGuffin A Spell - Insufficient Power " + mcguffA + " of " + Main.Settings.BloodMacGuffinAThreshold);
                     }
                 }
             }
