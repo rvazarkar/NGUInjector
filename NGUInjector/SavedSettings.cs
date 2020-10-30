@@ -51,6 +51,10 @@ namespace NGUInjector
         [SerializeField] private bool _autoSpellSwap;
         [SerializeField] private int _spaghettiThreshold;
         [SerializeField] private int _counterfeitThreshold;
+        [SerializeField] private bool _castBloodSpells;
+        [SerializeField] private double _ironPillThreshold;
+        [SerializeField] private int _bloodMacGuffinAThreshold;
+        [SerializeField] private int _bloodMacGuffinBThreshold;
         [SerializeField] private bool _autoBuyEm;
         [SerializeField] private double _bloodNumberThreshold;
         [SerializeField] private int[] _quickLoadout;
@@ -63,6 +67,8 @@ namespace NGUInjector
         [SerializeField] private bool _manageR3;
         [SerializeField] private bool _activateFruits;
         [SerializeField] private int[] _wishPriorities;
+        [SerializeField] private bool _wishSortPriorities;
+        [SerializeField] private bool _wishSortOrder;        
         [SerializeField] private bool _beastMode;
         [SerializeField] private int _cubePriority;
         [SerializeField] private bool _manageNguDiff;
@@ -182,6 +188,10 @@ namespace NGUInjector
             _autoSpellSwap = other.AutoSpellSwap;
             _counterfeitThreshold = other.CounterfeitThreshold;
             _spaghettiThreshold = other.SpaghettiThreshold;
+            _castBloodSpells = other.CastBloodSpells;
+            _ironPillThreshold = other.IronPillThreshold;
+            _bloodMacGuffinAThreshold = other.BloodMacGuffinAThreshold;
+            _bloodMacGuffinBThreshold = other.BloodMacGuffinBThreshold;
             _autoBuyEm = other.AutoBuyEM;
             _bloodNumberThreshold = other.BloodNumberThreshold;
             _quickDiggers = other.QuickDiggers;
@@ -194,6 +204,8 @@ namespace NGUInjector
             _manageR3 = other.ManageR3;
             _activateFruits = other.ActivateFruits;
             _wishPriorities = other.WishPriorities;
+            _wishSortPriorities = other.wishSortPriorities;
+            _wishSortOrder = other.wishSortOrder;
             _beastMode = other.BeastMode;
             _cubePriority = other.CubePriority;
             _manageNguDiff = other.ManageNGUDiff;
@@ -616,6 +628,50 @@ namespace NGUInjector
             }
         }
 
+        public bool CastBloodSpells
+        {
+            get => _castBloodSpells;
+            set
+            {
+                if (value == _castBloodSpells) return;
+                _castBloodSpells = value;
+                SaveSettings();
+            }
+        }
+
+        public double IronPillThreshold
+        {
+            get => _ironPillThreshold;
+            set
+            {
+                if (value == _ironPillThreshold) return;
+                _ironPillThreshold = value;
+                SaveSettings();
+            }
+        }
+
+        public int BloodMacGuffinAThreshold
+        {
+            get => _bloodMacGuffinAThreshold;
+            set
+            {
+                if (value == _bloodMacGuffinAThreshold) return;
+                _bloodMacGuffinAThreshold = value;
+                SaveSettings();
+            }
+        }
+
+        public int BloodMacGuffinBThreshold
+        {
+            get => _bloodMacGuffinBThreshold;
+            set
+            {
+                if (value == _bloodMacGuffinBThreshold) return;
+                _bloodMacGuffinBThreshold = value;
+                SaveSettings();
+            }
+        }
+
         public int CounterfeitThreshold
         {
             get => _counterfeitThreshold;
@@ -744,6 +800,28 @@ namespace NGUInjector
             {
                 if (value == _wishPriorities) return;
                 _wishPriorities = value;
+                SaveSettings();
+            }
+        }
+
+        public bool wishSortPriorities
+        {
+            get => _wishSortPriorities;
+            set
+            {
+                if (value == _wishSortPriorities) return;
+                _wishSortPriorities = value;
+                SaveSettings();
+            }
+        }
+
+        public bool wishSortOrder
+        {
+            get => _wishSortOrder;
+            set
+            {
+                if (value == _wishSortOrder) return;
+                _wishSortOrder = value;
                 SaveSettings();
             }
         }
