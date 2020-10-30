@@ -92,7 +92,7 @@ namespace NGUInjector.Managers
         {
             Main.Log($"Equipping Diggers: {string.Join(",", diggers.Select(x => x.ToString()).ToArray())}");
             Main.Character.allDiggers.clearAllActiveDiggers();
-            var sorted = diggers.OrderByDescending(x => x).ToArray();
+            var sorted = diggers.OrderByDescending(x => x).Where(x => x <= 11 && x >= 0).ToArray();
             for (var i = 0; i < sorted.Length; i++)
             {
                 if (Main.Character.diggers.diggers[i].maxLevel <= 0)
