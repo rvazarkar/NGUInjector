@@ -63,7 +63,6 @@ namespace NGUInjector.Managers
                 {
                     temp.Add(i);
                 }
-                    
             }
 
             _savedDiggers = temp.ToArray();

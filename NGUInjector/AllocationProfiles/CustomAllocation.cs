@@ -605,13 +605,28 @@ namespace NGUInjector.AllocationProfiles
             if (temp.Count > 0) _character.removeAllRes3();
             else return;
 
-            var prioCount = temp.Count;
+            var prioCount = temp.Count(x => !x.StartsWith("HACK"));
+            if (temp.Any(x => x.StartsWith("HACK")))
+                prioCount++;
+
             var toAdd = (long)Math.Ceiling((double)_character.res3.idleRes3 / prioCount);
             _character.input.energyRequested.text = toAdd.ToString();
             _character.input.validateInput();
 
+            var hackAllocated = false;
+
             foreach (var prio in temp)
             {
+                if (hackAllocated && prio.StartsWith("HACK"))
+                {
+                    continue;
+                }
+
+                if (prio.StartsWith("HACK") && !HackTargetMet(prio))
+                {
+                    hackAllocated = true;
+                }
+
                 if (ReadR3Breakpoint(prio))
                 {
                     prioCount--;
@@ -896,6 +911,15 @@ namespace NGUInjector.AllocationProfiles
         {
             _character.energyMagicPanel.energyRequested.text = val.ToString();
             _character.energyMagicPanel.validateInput();
+        }
+
+        private bool HackTargetMet(string breakpoint)
+        {
+            var success = int.TryParse(breakpoint.Split('-')[1], out var index);
+            if (!success || index < 0 || index > 14)
+                return true;
+
+            return _character.hacksController.hitTarget(index);
         }
 
         private bool ReadR3Breakpoint(string breakpoint)
