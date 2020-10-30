@@ -212,6 +212,7 @@ namespace NGUInjector
             _allocationFile = other.AllocationFile;
             _manageGoldLoadouts = other.ManageGoldLoadouts;
             _titanGoldTargets = other.TitanGoldTargets;
+            _titanSwapTargets = other.TitanSwapTargets;
             _titanMoneyDone = other.TitanMoneyDone;
             _resnipeTime = other.ResnipeTime;
             _goldCBlockMode = other.GoldCBlockMode;
