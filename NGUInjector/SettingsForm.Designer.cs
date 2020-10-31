@@ -1436,11 +1436,13 @@
             resources.ApplyResources(this.MoneyPitThresholdSave, "MoneyPitThresholdSave");
             this.MoneyPitThresholdSave.Name = "MoneyPitThresholdSave";
             this.MoneyPitThresholdSave.UseVisualStyleBackColor = true;
+            this.MoneyPitThresholdSave.Click += new System.EventHandler(this.MoneyPitThresholdSave_Click);
             // 
             // MoneyPitThreshold
             // 
             resources.ApplyResources(this.MoneyPitThreshold, "MoneyPitThreshold");
             this.MoneyPitThreshold.Name = "MoneyPitThreshold";
+            this.MoneyPitThreshold.TextChanged += new System.EventHandler(this.MoneyPitThreshold_TextChanged_1);
             // 
             // label7
             // 
@@ -1452,12 +1454,14 @@
             resources.ApplyResources(this.AutoMoneyPit, "AutoMoneyPit");
             this.AutoMoneyPit.Name = "AutoMoneyPit";
             this.AutoMoneyPit.UseVisualStyleBackColor = true;
+            this.AutoMoneyPit.CheckedChanged += new System.EventHandler(this.AutoMoneyPit_CheckedChanged);
             // 
             // AutoDailySpin
             // 
             resources.ApplyResources(this.AutoDailySpin, "AutoDailySpin");
             this.AutoDailySpin.Name = "AutoDailySpin";
             this.AutoDailySpin.UseVisualStyleBackColor = true;
+            this.AutoDailySpin.CheckedChanged += new System.EventHandler(this.AutoDailySpin_CheckedChanged);
             // 
             // progressBar1
             // 
