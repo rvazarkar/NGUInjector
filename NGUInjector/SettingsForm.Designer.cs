@@ -172,6 +172,14 @@
             this.WishPriority = new System.Windows.Forms.ListBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.ITOPODCombatMode = new System.Windows.Forms.ComboBox();
+            this.ITOPODBeastMode = new System.Windows.Forms.CheckBox();
+            this.ITOPODRecoverHP = new System.Windows.Forms.CheckBox();
+            this.ITOPODFastCombat = new System.Windows.Forms.CheckBox();
+            this.ITOPODPrecastBuffs = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).BeginInit();
@@ -890,6 +898,14 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.ITOPODBeastMode);
+            this.tabPage6.Controls.Add(this.ITOPODRecoverHP);
+            this.tabPage6.Controls.Add(this.ITOPODFastCombat);
+            this.tabPage6.Controls.Add(this.ITOPODPrecastBuffs);
+            this.tabPage6.Controls.Add(this.label24);
+            this.tabPage6.Controls.Add(this.ITOPODCombatMode);
+            this.tabPage6.Controls.Add(this.label22);
+            this.tabPage6.Controls.Add(this.label23);
             this.tabPage6.Controls.Add(this.TargetITOPOD);
             this.tabPage6.Controls.Add(this.OptimizeITOPOD);
             this.tabPage6.Controls.Add(this.BeastMode);
@@ -1326,6 +1342,60 @@
             resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             // 
+            // label22
+            // 
+            this.label22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.label22, "label22");
+            this.label22.Name = "label22";
+            // 
+            // label23
+            // 
+            resources.ApplyResources(this.label23, "label23");
+            this.label23.Name = "label23";
+            // 
+            // label24
+            // 
+            resources.ApplyResources(this.label24, "label24");
+            this.label24.Name = "label24";
+            // 
+            // ITOPODCombatMode
+            // 
+            this.ITOPODCombatMode.FormattingEnabled = true;
+            this.ITOPODCombatMode.Items.AddRange(new object[] {
+            resources.GetString("ITOPODCombatMode.Items"),
+            resources.GetString("ITOPODCombatMode.Items1")});
+            resources.ApplyResources(this.ITOPODCombatMode, "ITOPODCombatMode");
+            this.ITOPODCombatMode.Name = "ITOPODCombatMode";
+            this.ITOPODCombatMode.SelectedIndexChanged += new System.EventHandler(this.ITOPODCombatMode_SelectedIndexChanged);
+            // 
+            // ITOPODBeastMode
+            // 
+            resources.ApplyResources(this.ITOPODBeastMode, "ITOPODBeastMode");
+            this.ITOPODBeastMode.Name = "ITOPODBeastMode";
+            this.ITOPODBeastMode.UseVisualStyleBackColor = true;
+            this.ITOPODBeastMode.CheckedChanged += new System.EventHandler(this.ITOPODBeastMode_CheckedChanged);
+            // 
+            // ITOPODRecoverHP
+            // 
+            resources.ApplyResources(this.ITOPODRecoverHP, "ITOPODRecoverHP");
+            this.ITOPODRecoverHP.Name = "ITOPODRecoverHP";
+            this.ITOPODRecoverHP.UseVisualStyleBackColor = true;
+            this.ITOPODRecoverHP.CheckedChanged += new System.EventHandler(this.ITOPODRecoverHP_CheckedChanged);
+            // 
+            // ITOPODFastCombat
+            // 
+            resources.ApplyResources(this.ITOPODFastCombat, "ITOPODFastCombat");
+            this.ITOPODFastCombat.Name = "ITOPODFastCombat";
+            this.ITOPODFastCombat.UseVisualStyleBackColor = true;
+            this.ITOPODFastCombat.CheckedChanged += new System.EventHandler(this.ITOPODFastCombat_CheckedChanged);
+            // 
+            // ITOPODPrecastBuffs
+            // 
+            resources.ApplyResources(this.ITOPODPrecastBuffs, "ITOPODPrecastBuffs");
+            this.ITOPODPrecastBuffs.Name = "ITOPODPrecastBuffs";
+            this.ITOPODPrecastBuffs.UseVisualStyleBackColor = true;
+            this.ITOPODPrecastBuffs.CheckedChanged += new System.EventHandler(this.ITOPODPrecastBuffs_CheckedChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1520,5 +1590,13 @@
         private System.Windows.Forms.Label AddWishLabel;
         private System.Windows.Forms.Button AddWishButton;
         private System.Windows.Forms.ListBox WishPriority;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.CheckBox ITOPODBeastMode;
+        private System.Windows.Forms.CheckBox ITOPODRecoverHP;
+        private System.Windows.Forms.CheckBox ITOPODFastCombat;
+        private System.Windows.Forms.CheckBox ITOPODPrecastBuffs;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.ComboBox ITOPODCombatMode;
     }
 }

@@ -53,8 +53,8 @@ namespace NGUInjector
         [SerializeField] private int _counterfeitThreshold;
         [SerializeField] private bool _castBloodSpells;
         [SerializeField] private double _ironPillThreshold;
-        [SerializeField] private int _bloodMacGuffinAThreshold;
-        [SerializeField] private int _bloodMacGuffinBThreshold;
+        [SerializeField] private double _bloodMacGuffinAThreshold;
+        [SerializeField] private double _bloodMacGuffinBThreshold;
         [SerializeField] private bool _autoBuyEm;
         [SerializeField] private double _bloodNumberThreshold;
         [SerializeField] private int[] _quickLoadout;
@@ -81,11 +81,17 @@ namespace NGUInjector
         [SerializeField] private bool _goldCBlockMode;
         [SerializeField] private bool _debugAllocation;
         [SerializeField] private bool _optimizeItopodFloor;
+        [SerializeField] private int _itopodCombatMode;
+        [SerializeField] private bool _itopodBeastMode;
+        [SerializeField] private bool _itopodFastCombat;
+        [SerializeField] private bool _itopodRecoverHp;
+        [SerializeField] private bool _itopodPrecastBuffs;
         [SerializeField] private bool _adventureTargetItopod;
 
         private readonly string _savePath;
         private bool _disableSave;
         
+
         public SavedSettings(string dir)
         {
             if (dir != null)
@@ -204,8 +210,8 @@ namespace NGUInjector
             _manageR3 = other.ManageR3;
             _activateFruits = other.ActivateFruits;
             _wishPriorities = other.WishPriorities;
-            _wishSortPriorities = other.wishSortPriorities;
-            _wishSortOrder = other.wishSortOrder;
+            _wishSortPriorities = other.WishSortPriorities;
+            _wishSortOrder = other.WishSortOrder;
             _beastMode = other.BeastMode;
             _cubePriority = other.CubePriority;
             _manageNguDiff = other.ManageNGUDiff;
@@ -219,6 +225,11 @@ namespace NGUInjector
             _debugAllocation = other.DebugAllocation;
             _optimizeItopodFloor = other.OptimizeITOPODFloor;
             _adventureTargetItopod = other.AdventureTargetITOPOD;
+            _itopodBeastMode = other.ITOPODBeastMode;
+            _itopodCombatMode = other.ITOPODCombatMode;
+            _itopodFastCombat = other.ITOPODFastCombat;
+            _itopodPrecastBuffs = other.ITOPODPrecastBuffs;
+            _itopodRecoverHp = other.ITOPODRecoverHP;
         }
 
         public int HighestAKZone
@@ -651,7 +662,7 @@ namespace NGUInjector
             }
         }
 
-        public int BloodMacGuffinAThreshold
+        public double BloodMacGuffinAThreshold
         {
             get => _bloodMacGuffinAThreshold;
             set
@@ -662,7 +673,7 @@ namespace NGUInjector
             }
         }
 
-        public int BloodMacGuffinBThreshold
+        public double BloodMacGuffinBThreshold
         {
             get => _bloodMacGuffinBThreshold;
             set
@@ -805,7 +816,7 @@ namespace NGUInjector
             }
         }
 
-        public bool wishSortPriorities
+        public bool WishSortPriorities
         {
             get => _wishSortPriorities;
             set
@@ -816,7 +827,7 @@ namespace NGUInjector
             }
         }
 
-        public bool wishSortOrder
+        public bool WishSortOrder
         {
             get => _wishSortOrder;
             set
@@ -961,6 +972,61 @@ namespace NGUInjector
             {
                 if (value == _adventureTargetItopod) return;
                 _adventureTargetItopod = value;
+                SaveSettings();
+            }
+        }
+
+        public int ITOPODCombatMode
+        {
+            get => _itopodCombatMode;
+            set
+            {
+                if (value == _itopodCombatMode) return;
+                _itopodCombatMode = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ITOPODBeastMode
+        {
+            get => _itopodBeastMode;
+            set
+            {
+                if (value == _itopodBeastMode) return;
+                _itopodBeastMode = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ITOPODFastCombat
+        {
+            get => _itopodFastCombat;
+            set
+            {
+                if (value == _itopodFastCombat) return;
+                _itopodFastCombat = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ITOPODRecoverHP
+        {
+            get => _itopodRecoverHp;
+            set
+            {
+                if (value == _itopodRecoverHp) return;
+                _itopodRecoverHp = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ITOPODPrecastBuffs
+        {
+            get => _itopodPrecastBuffs;
+            set
+            {
+                if (value == _itopodPrecastBuffs) return;
+                _itopodPrecastBuffs = value;
                 SaveSettings();
             }
         }

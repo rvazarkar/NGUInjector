@@ -2346,6 +2346,237 @@
   <data name="&gt;&gt;tabPage5.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="ITOPODBeastMode.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ITOPODBeastMode.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ITOPODBeastMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>294, 180</value>
+  </data>
+  <data name="ITOPODBeastMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 17</value>
+  </data>
+  <data name="ITOPODBeastMode.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="ITOPODBeastMode.Text" xml:space="preserve">
+    <value>Beast Mode</value>
+  </data>
+  <data name="&gt;&gt;ITOPODBeastMode.Name" xml:space="preserve">
+    <value>ITOPODBeastMode</value>
+  </data>
+  <data name="&gt;&gt;ITOPODBeastMode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ITOPODBeastMode.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;ITOPODBeastMode.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ITOPODRecoverHP.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ITOPODRecoverHP.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ITOPODRecoverHP.Location" type="System.Drawing.Point, System.Drawing">
+    <value>111, 180</value>
+  </data>
+  <data name="ITOPODRecoverHP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>85, 17</value>
+  </data>
+  <data name="ITOPODRecoverHP.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="ITOPODRecoverHP.Text" xml:space="preserve">
+    <value>Recover HP</value>
+  </data>
+  <data name="&gt;&gt;ITOPODRecoverHP.Name" xml:space="preserve">
+    <value>ITOPODRecoverHP</value>
+  </data>
+  <data name="&gt;&gt;ITOPODRecoverHP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ITOPODRecoverHP.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;ITOPODRecoverHP.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="ITOPODFastCombat.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ITOPODFastCombat.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ITOPODFastCombat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>202, 180</value>
+  </data>
+  <data name="ITOPODFastCombat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>85, 17</value>
+  </data>
+  <data name="ITOPODFastCombat.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="ITOPODFastCombat.Text" xml:space="preserve">
+    <value>Fast Combat</value>
+  </data>
+  <data name="&gt;&gt;ITOPODFastCombat.Name" xml:space="preserve">
+    <value>ITOPODFastCombat</value>
+  </data>
+  <data name="&gt;&gt;ITOPODFastCombat.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ITOPODFastCombat.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;ITOPODFastCombat.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="ITOPODPrecastBuffs.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ITOPODPrecastBuffs.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ITOPODPrecastBuffs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 180</value>
+  </data>
+  <data name="ITOPODPrecastBuffs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 17</value>
+  </data>
+  <data name="ITOPODPrecastBuffs.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="ITOPODPrecastBuffs.Text" xml:space="preserve">
+    <value>Precast Buffs</value>
+  </data>
+  <data name="&gt;&gt;ITOPODPrecastBuffs.Name" xml:space="preserve">
+    <value>ITOPODPrecastBuffs</value>
+  </data>
+  <data name="&gt;&gt;ITOPODPrecastBuffs.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ITOPODPrecastBuffs.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;ITOPODPrecastBuffs.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label24.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label24.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label24.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 152</value>
+  </data>
+  <data name="label24.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 13</value>
+  </data>
+  <data name="label24.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="label24.Text" xml:space="preserve">
+    <value>Combat Mode</value>
+  </data>
+  <data name="&gt;&gt;label24.Name" xml:space="preserve">
+    <value>label24</value>
+  </data>
+  <data name="&gt;&gt;label24.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label24.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;label24.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="ITOPODCombatMode.Items" xml:space="preserve">
+    <value>Idle</value>
+  </data>
+  <data name="ITOPODCombatMode.Items1" xml:space="preserve">
+    <value>Manual</value>
+  </data>
+  <data name="ITOPODCombatMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>107, 149</value>
+  </data>
+  <data name="ITOPODCombatMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 21</value>
+  </data>
+  <data name="ITOPODCombatMode.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;ITOPODCombatMode.Name" xml:space="preserve">
+    <value>ITOPODCombatMode</value>
+  </data>
+  <data name="&gt;&gt;ITOPODCombatMode.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ITOPODCombatMode.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;ITOPODCombatMode.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label22.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label22.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 141</value>
+  </data>
+  <data name="label22.Size" type="System.Drawing.Size, System.Drawing">
+    <value>525, 1</value>
+  </data>
+  <data name="label22.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="&gt;&gt;label22.Name" xml:space="preserve">
+    <value>label22</value>
+  </data>
+  <data name="&gt;&gt;label22.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label22.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;label22.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="label23.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label23.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label23.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 123</value>
+  </data>
+  <data name="label23.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 13</value>
+  </data>
+  <data name="label23.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="label23.Text" xml:space="preserve">
+    <value>ITOPOD Settings</value>
+  </data>
+  <data name="&gt;&gt;label23.Name" xml:space="preserve">
+    <value>label23</value>
+  </data>
+  <data name="&gt;&gt;label23.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label23.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;label23.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
   <data name="TargetITOPOD.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2353,7 +2584,7 @@
     <value>NoControl</value>
   </data>
   <data name="TargetITOPOD.Location" type="System.Drawing.Point, System.Drawing">
-    <value>108, 110</value>
+    <value>357, 86</value>
   </data>
   <data name="TargetITOPOD.Size" type="System.Drawing.Size, System.Drawing">
     <value>67, 17</value>
@@ -2374,7 +2605,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;TargetITOPOD.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>8</value>
   </data>
   <data name="OptimizeITOPOD.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2383,7 +2614,7 @@
     <value>NoControl</value>
   </data>
   <data name="OptimizeITOPOD.Location" type="System.Drawing.Point, System.Drawing">
-    <value>381, 30</value>
+    <value>383, 180</value>
   </data>
   <data name="OptimizeITOPOD.Size" type="System.Drawing.Size, System.Drawing">
     <value>136, 17</value>
@@ -2404,7 +2635,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;OptimizeITOPOD.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>9</value>
   </data>
   <data name="BeastMode.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2434,7 +2665,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;BeastMode.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>10</value>
   </data>
   <data name="AllowFallthrough.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2464,7 +2695,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;AllowFallthrough.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>11</value>
   </data>
   <data name="RecoverHealth.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2494,7 +2725,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;RecoverHealth.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>12</value>
   </data>
   <data name="FastCombat.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2524,7 +2755,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;FastCombat.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>13</value>
   </data>
   <data name="PrecastBuffs.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2554,7 +2785,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;PrecastBuffs.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>14</value>
   </data>
   <data name="label6.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2584,7 +2815,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>15</value>
   </data>
   <data name="CombatTargetZone.Items" xml:space="preserve">
     <value>Idle</value>
@@ -2611,7 +2842,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;CombatTargetZone.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>16</value>
   </data>
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2641,7 +2872,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>17</value>
   </data>
   <data name="CombatMode.Items" xml:space="preserve">
     <value>Idle</value>
@@ -2668,7 +2899,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;CombatMode.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>18</value>
   </data>
   <data name="BossesOnly.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2698,7 +2929,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;BossesOnly.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>19</value>
   </data>
   <data name="CombatActive.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2707,7 +2938,7 @@
     <value>NoControl</value>
   </data>
   <data name="CombatActive.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 7</value>
+    <value>6, 7</value>
   </data>
   <data name="CombatActive.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 17</value>
@@ -2728,7 +2959,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;CombatActive.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>20</value>
   </data>
   <data name="tabPage6.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>

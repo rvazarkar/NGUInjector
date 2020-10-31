@@ -865,6 +865,20 @@ namespace NGUInjector
                     }
                 }
             }
+
+            if (tempZone >= 1000)
+            {
+                if (Settings.ITOPODCombatMode == 0)
+                {
+                    _combManager.ManualZone(tempZone, false, Settings.ITOPODRecoverHP, Settings.ITOPODPrecastBuffs, Settings.ITOPODFastCombat, Settings.ITOPODBeastMode);
+                }
+                else
+                {
+                    _combManager.IdleZone(tempZone, false, Settings.ITOPODRecoverHP);
+                }
+
+                return;
+            }
             
             if (Settings.CombatMode == 0)
             {

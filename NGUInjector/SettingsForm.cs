@@ -86,7 +86,6 @@ namespace NGUInjector
             ZoneList.Add(40, "DUCK DUCK ZONE");
             ZoneList.Add(41, "The Nether Regions");
             ZoneList.Add(42, "AMALGAMATE");
-            ZoneList.Add(1000, "ITOPOD");
 
             CombatModeList.Add(0, "Manual");
             CombatModeList.Add(1, "Idle");
@@ -107,6 +106,10 @@ namespace NGUInjector
             CombatMode.DataSource = new BindingSource(CombatModeList, null);
             CombatMode.ValueMember = "Key";
             CombatMode.DisplayMember = "Value";
+
+            ITOPODCombatMode.DataSource = new BindingSource(CombatModeList, null);
+            ITOPODCombatMode.ValueMember = "Key";
+            ITOPODCombatMode.DisplayMember = "Value";
 
             QuestCombatMode.DataSource = new BindingSource(CombatModeList, null);
             QuestCombatMode.ValueMember = "Key";
@@ -188,7 +191,7 @@ namespace NGUInjector
 
         internal void SetSnipeZone(ComboBox control, int setting)
         {
-            control.SelectedIndex = setting >= 1000 ? 44 : setting + 1;
+            control.SelectedIndex = setting >= 1000 ? 43 : setting + 1;
         }
         
         internal void UpdateFromSettings(SavedSettings newSettings)
@@ -245,6 +248,12 @@ namespace NGUInjector
             ResnipeInput.Value = newSettings.ResnipeTime;
             OptimizeITOPOD.Checked = newSettings.OptimizeITOPODFloor;
             TargetITOPOD.Checked = newSettings.AdventureTargetITOPOD;
+
+            ITOPODCombatMode.SelectedIndex = newSettings.ITOPODCombatMode;
+            ITOPODRecoverHP.Checked = newSettings.ITOPODRecoverHP;
+            ITOPODBeastMode.Checked = newSettings.ITOPODBeastMode;
+            ITOPODFastCombat.Checked = newSettings.ITOPODFastCombat;
+            ITOPODPrecastBuffs.Checked = newSettings.ITOPODPrecastBuffs;
 
             SetTitanGoldBox(newSettings);
             SetTitanSwapBox(newSettings);
@@ -1190,6 +1199,36 @@ namespace NGUInjector
         private void UnloadButton_Click(object sender, EventArgs e)
         {
             Loader.Unload();
+        }
+
+        private void ITOPODCombatMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.ITOPODCombatMode = ITOPODCombatMode.SelectedIndex;
+        }
+
+        private void ITOPODPrecastBuffs_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.ITOPODPrecastBuffs = ITOPODPrecastBuffs.Checked;
+        }
+
+        private void ITOPODRecoverHP_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.ITOPODRecoverHP = ITOPODRecoverHP.Checked;
+        }
+
+        private void ITOPODFastCombat_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.ITOPODFastCombat = ITOPODFastCombat.Checked;
+        }
+
+        private void ITOPODBeastMode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.ITOPODBeastMode = ITOPODBeastMode.Checked;
         }
     }
 }

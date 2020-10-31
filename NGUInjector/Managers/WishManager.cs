@@ -35,7 +35,7 @@ namespace NGUInjector.Managers
             {
                 if (isValidWish(Settings.WishPriorities[i]))
                 {
-                    if (Settings.wishSortPriorities)
+                    if (Settings.WishSortPriorities)
                     {
                         dictDouble.Add(Settings.WishPriorities[i], this.sortValue(Settings.WishPriorities[i]) + i);
                     } else
@@ -44,7 +44,7 @@ namespace NGUInjector.Managers
                     }
                 }
             }
-            if (Settings.wishSortPriorities)
+            if (Settings.WishSortPriorities)
             {
                 dictDouble = (from x in dictDouble
                               orderby x.Value
@@ -98,7 +98,7 @@ namespace NGUInjector.Managers
 
         public double sortValue(int wishId)
         {
-            if (Settings.wishSortOrder)
+            if (Settings.WishSortOrder)
             {
                 return _character.wishesController.wishSpeedDivider(wishId);
             }
