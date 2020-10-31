@@ -183,10 +183,18 @@ namespace NGUInjector.Managers
         internal static void UpgradeCheapestDigger()
         {
             if (!Main.Settings.UpgradeDiggers) return;
-            if ((Main.Character.allDiggers.upgradeCost(_cheapestDigger) + Main.Settings.MoneyPitThreshold) < Main.Character.realGold)
+            if (_cheapestDigger == -1) return;
+            if (Main.Character.diggers.diggers[_cheapestDigger].active)
             {
-                Main.Log("Upgrading Digger " + _cheapestDigger);
-                Main.Character.allDiggers.upgradeMaxLevel(_cheapestDigger);
+                if ((Main.Character.allDiggers.upgradeCost(_cheapestDigger) + Main.Settings.MoneyPitThreshold) < Main.Character.realGold)
+                {
+                    Main.Log("Upgrading Digger " + _cheapestDigger);
+                    Main.Character.allDiggers.upgradeMaxLevel(_cheapestDigger);
+                    UpdateCheapestDigger();
+                }
+            }
+            else
+            {
                 UpdateCheapestDigger();
             }
         }
