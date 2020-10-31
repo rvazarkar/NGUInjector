@@ -22,6 +22,7 @@ namespace NGUInjector
         [SerializeField] private bool _fastCombat;
         [SerializeField] private bool _manageGear;
         [SerializeField] private bool _manageDiggers;
+        [SerializeField] private bool _upgradeDiggers;
         [SerializeField] private bool _manageYggdrasil;
         [SerializeField] private int[] _titanLoadout;
         [SerializeField] private int[] _yggdrasilLoadout;
@@ -233,6 +234,7 @@ namespace NGUInjector
             _itopodPrecastBuffs = other.ITOPODPrecastBuffs;
             _itopodRecoverHp = other.ITOPODRecoverHP;
             _disableOverlay = other.DisableOverlay;
+            _upgradeDiggers = other._upgradeDiggers;
         }
 
         public int HighestAKZone
@@ -371,6 +373,16 @@ namespace NGUInjector
             {
                 if (value == _manageDiggers) return;
                 _manageDiggers = value; SaveSettings();
+            }
+        }
+
+        public bool UpgradeDiggers
+        {
+            get => _upgradeDiggers;
+            set
+            {
+                if (value == _upgradeDiggers) return;
+                _upgradeDiggers = value; SaveSettings();
             }
         }
 

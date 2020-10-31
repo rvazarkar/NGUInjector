@@ -8,6 +8,8 @@ namespace NGUInjector.Managers
     {
         private static int[] _savedDiggers;
         private static int[] _tempDiggers;
+        private static int _cheapestDigger;
+
         internal static LockType CurrentLock { get; set; }
         private static readonly int[] TitanDiggers = { 0, 3, 8, 11 };
         private static readonly int[] YggDiggers = {8, 11};
@@ -98,6 +100,7 @@ namespace NGUInjector.Managers
                     continue;
                 Main.Character.allDiggers.setLevelMaxAffordable(sorted[i]);
             }
+            UpdateCheapestDigger();
         }
 
         internal static void RecapDiggers()
@@ -109,6 +112,7 @@ namespace NGUInjector.Managers
                     SetLevelMaxAffordable(i);
                 }
             }
+            UpgradeCheapestDigger();
             Main.Character.allDiggers.refreshMenu();
         }
 
@@ -154,6 +158,37 @@ namespace NGUInjector.Managers
         {
             Main.Character.allDiggers.clearAllActiveDiggers();
             EquipDiggers(_savedDiggers);
+        }
+
+        internal static void UpdateCheapestDigger()
+        {
+            if (!Main.Settings.UpgradeDiggers) return;
+            _cheapestDigger = -1;
+            for (var i = 0; i < Main.Character.diggers.diggers.Count; i++)
+            {
+                if (Main.Character.diggers.diggers[i].active)
+                {
+                    if (_cheapestDigger == -1)
+                    {
+                        _cheapestDigger = i;
+                    }
+                    if (Main.Character.allDiggers.upgradeCost(i) < Main.Character.allDiggers.upgradeCost(_cheapestDigger))
+                    {
+                        _cheapestDigger = i;
+                    }
+                }
+            }
+        }
+
+        internal static void UpgradeCheapestDigger()
+        {
+        if (!Main.Settings.UpgradeDiggers) return;
+            if ((Main.Character.allDiggers.upgradeCost(_cheapestDigger) + Main.Settings.MoneyPitThreshold) < Main.Character.realGold)
+            {
+                Main.Log("Upgrading Digger " + _cheapestDigger);
+                Main.Character.allDiggers.upgradeMaxLevel(_cheapestDigger);
+                UpdateCheapestDigger();
+            }
         }
     }
 }
