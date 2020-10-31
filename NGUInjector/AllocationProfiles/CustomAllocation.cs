@@ -617,12 +617,12 @@ namespace NGUInjector.AllocationProfiles
 
             foreach (var prio in temp)
             {
-                if (hackAllocated && prio.StartsWith("HACK"))
+                if (prio.StartsWith("HACK") && (hackAllocated || HackTargetMet(prio)))
                 {
                     continue;
                 }
 
-                if (prio.StartsWith("HACK") && !HackTargetMet(prio))
+                if (prio.StartsWith("HACK"))
                 {
                     hackAllocated = true;
                 }
