@@ -23,77 +23,76 @@ namespace NGUInjector
         {
             InitializeComponent();
 
-            CubePriorityList = new Dictionary<int, string>();
-            CombatModeList = new Dictionary<int, string>();
-            ZoneList = new Dictionary<int, string>();
-            TitanList = new Dictionary<int, string>();
             // Populate our data sources
-            TitanList.Add(0, "None");
-            TitanList.Add(1, "GRB");
-            TitanList.Add(2, "GCT");
-            TitanList.Add(3, "Jake");
-            TitanList.Add(4, "UUG");
-            TitanList.Add(5, "Walderp");
-            TitanList.Add(6, "Beast");
-            TitanList.Add(7, "Greasy Nerd");
-            TitanList.Add(8, "Godmother");
-            TitanList.Add(9, "Exile");
-            TitanList.Add(10, "IT HUNGERS");
-            TitanList.Add(11, "Rock Lobster");
-            TitanList.Add(12, "Amalgamate");
-
-            ZoneList.Add(-1, "Safe Zone: Awakening Site");
-            ZoneList.Add(0, "Tutorial Zone");
-            ZoneList.Add(1, "Sewers");
-            ZoneList.Add(2, "Forest");
-            ZoneList.Add(3, "Cave of Many Things");
-            ZoneList.Add(4, "The Sky");
-            ZoneList.Add(5, "High Security Base");
-            ZoneList.Add(6, "Gordon Ramsay Bolton");
-            ZoneList.Add(7, "Clock Dimension");
-            ZoneList.Add(8, "Grand Corrupted Tree");
-            ZoneList.Add(9, "The 2D Universe");
-            ZoneList.Add(10, "Ancient Battlefield");
-            ZoneList.Add(11, "Jake From Accounting");
-            ZoneList.Add(12, "A Very Strange Place");
-            ZoneList.Add(13, "Mega Lands");
-            ZoneList.Add(14, "UUG THE UNMENTIONABLE");
-            ZoneList.Add(15, "The Beardverse");
-            ZoneList.Add(16, "WALDERP");
-            ZoneList.Add(17, "Badly Drawn World");
-            ZoneList.Add(18, "Boring-Ass Earth");
-            ZoneList.Add(19, "THE BEAST");
-            ZoneList.Add(20, "Chocolate World");
-            ZoneList.Add(21, "The Evilverse");
-            ZoneList.Add(22, "Pretty Pink Princess Land");
-            ZoneList.Add(23, "GREASY NERD");
-            ZoneList.Add(24, "Meta Land");
-            ZoneList.Add(25, "Interdimensional Party");
-            ZoneList.Add(26, "THE GODMOTHER");
-            ZoneList.Add(27, "Typo Zonw");
-            ZoneList.Add(28, "The Fad-Lands");
-            ZoneList.Add(29, "JRPGVille");
-            ZoneList.Add(30, "THE EXILE");
-            ZoneList.Add(31, "The Rad-lands");
-            ZoneList.Add(32, "Back To School");
-            ZoneList.Add(33, "The West World");
-            ZoneList.Add(34, "IT HUNGERS");
-            ZoneList.Add(35, "The Breadverse");
-            ZoneList.Add(36, "That 70's Zone");
-            ZoneList.Add(37, "The Halloweenies");
-            ZoneList.Add(38, "ROCK LOBSTER");
-            ZoneList.Add(39, "Construction Zone");
-            ZoneList.Add(40, "DUCK DUCK ZONE");
-            ZoneList.Add(41, "The Nether Regions");
-            ZoneList.Add(42, "AMALGAMATE");
-
-            CombatModeList.Add(0, "Manual");
-            CombatModeList.Add(1, "Idle");
-
-            CubePriorityList.Add(0, "None");
-            CubePriorityList.Add(1, "Balanced");
-            CubePriorityList.Add(2, "Power");
-            CubePriorityList.Add(3, "Toughness");
+            CubePriorityList = new Dictionary<int, string>
+            {
+                {0, "None"}, {1, "Balanced"}, {2, "Power"}, {3, "Toughness"}
+            };
+            CombatModeList = new Dictionary<int, string> {{0, "Manual"}, {1, "Idle"}};
+            TitanList = new Dictionary<int, string>
+            {
+                {0, "None"},
+                {1, "GRB"},
+                {2, "GCT"},
+                {3, "Jake"},
+                {4, "UUG"},
+                {5, "Walderp"},
+                {6, "Beast"},
+                {7, "Greasy Nerd"},
+                {8, "Godmother"},
+                {9, "Exile"},
+                {10, "IT HUNGERS"},
+                {11, "Rock Lobster"},
+                {12, "Amalgamate"}
+            };
+            
+            ZoneList = new Dictionary<int, string>
+            {
+                {-1, "Safe Zone: Awakening Site"},
+                {0, "Tutorial Zone"},
+                {1, "Sewers"},
+                {2, "Forest"},
+                {3, "Cave of Many Things"},
+                {4, "The Sky"},
+                {5, "High Security Base"},
+                {6, "Gordon Ramsay Bolton"},
+                {7, "Clock Dimension"},
+                {8, "Grand Corrupted Tree"},
+                {9, "The 2D Universe"},
+                {10, "Ancient Battlefield"},
+                {11, "Jake From Accounting"},
+                {12, "A Very Strange Place"},
+                {13, "Mega Lands"},
+                {14, "UUG THE UNMENTIONABLE"},
+                {15, "The Beardverse"},
+                {16, "WALDERP"},
+                {17, "Badly Drawn World"},
+                {18, "Boring-Ass Earth"},
+                {19, "THE BEAST"},
+                {20, "Chocolate World"},
+                {21, "The Evilverse"},
+                {22, "Pretty Pink Princess Land"},
+                {23, "GREASY NERD"},
+                {24, "Meta Land"},
+                {25, "Interdimensional Party"},
+                {26, "THE GODMOTHER"},
+                {27, "Typo Zonw"},
+                {28, "The Fad-Lands"},
+                {29, "JRPGVille"},
+                {30, "THE EXILE"},
+                {31, "The Rad-lands"},
+                {32, "Back To School"},
+                {33, "The West World"},
+                {34, "IT HUNGERS"},
+                {35, "The Breadverse"},
+                {36, "That 70's Zone"},
+                {37, "The Halloweenies"},
+                {38, "ROCK LOBSTER"},
+                {39, "Construction Zone"},
+                {40, "DUCK DUCK ZONE"},
+                {41, "The Nether Regions"},
+                {42, "AMALGAMATE"}
+            };
 
             CubePriority.DataSource = new BindingSource(CubePriorityList, null);
             CubePriority.ValueMember = "Key";
@@ -134,6 +133,7 @@ namespace NGUInjector
             titanAddItem.TextChanged += titanAddItem_TextChanged;
             GoldItemBox.TextChanged += GoldItemBox_TextChanged;
             WishAddInput.TextChanged += WishAddInput_TextChanged;
+            MoneyPitInput.TextChanged += MoneyPitLoadout_TextChanged;
 
             prioUpButton.Text = char.ConvertFromUtf32(8593);
             prioDownButton.Text = char.ConvertFromUtf32(8595);
@@ -255,6 +255,8 @@ namespace NGUInjector
             ITOPODFastCombat.Checked = newSettings.ITOPODFastCombat;
             ITOPODPrecastBuffs.Checked = newSettings.ITOPODPrecastBuffs;
 
+            DisableOverlay.Checked = newSettings.DisableOverlay;
+
             SetTitanGoldBox(newSettings);
             SetTitanSwapBox(newSettings);
 
@@ -297,9 +299,7 @@ namespace NGUInjector
             {
                 blacklistBox.Items.Clear();
             }
-            
 
-            
             temp = newSettings.TitanLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
             if (temp.Count > 0)
             {
@@ -312,9 +312,7 @@ namespace NGUInjector
             {
                 titanLoadout.Items.Clear();
             }
-            
 
-            
             temp = newSettings.GoldDropLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
             if (temp.Count > 0)
             {
@@ -327,8 +325,20 @@ namespace NGUInjector
             {
                 GoldLoadout.Items.Clear();
             }
-            
-            
+
+            temp = newSettings.MoneyPitLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
+            if (temp.Count > 0)
+            {
+                MoneyPitLoadout.DataSource = null;
+                MoneyPitLoadout.DataSource = new BindingSource(temp, null);
+                MoneyPitLoadout.ValueMember = "Key";
+                MoneyPitLoadout.DisplayMember = "Value";
+            }
+            else
+            {
+                MoneyPitLoadout.Items.Clear();
+            }
+
             temp = newSettings.WishPriorities.ToDictionary(x => x, x => Main.Character.wishesController.properties[x].wishName);
             if (temp.Count > 0)
             {
@@ -1229,6 +1239,49 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.ITOPODBeastMode = ITOPODBeastMode.Checked;
+        }
+
+        private void DisableOverlay_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.DisableOverlay = DisableOverlay.Checked;
+        }
+
+        private void MoneyPitRemove_Click(object sender, EventArgs e)
+        {
+            var item = MoneyPitLoadout.SelectedItem;
+            if (item == null)
+                return;
+
+            var id = (KeyValuePair<int, string>)item;
+
+            var temp = Main.Settings.MoneyPitLoadout.ToList();
+            temp.RemoveAll(x => x == id.Key);
+            Main.Settings.MoneyPitLoadout = temp.ToArray();
+        }
+
+        private void MoneyPitAdd_Click(object sender, EventArgs e)
+        {
+            var val = decimal.ToInt32(MoneyPitInput.Value);
+            if (val < 40 || val > 505)
+            {
+                return;
+            }
+
+            if (Main.Settings.MoneyPitLoadout.Contains(val))
+                return;
+            var temp = Main.Settings.MoneyPitLoadout.ToList();
+            temp.Add(val);
+            Main.Settings.MoneyPitLoadout = temp.ToArray();
+        }
+
+        private void MoneyPitLoadout_TextChanged(object sender, EventArgs e)
+        {
+            var val = decimal.ToInt32(MoneyPitInput.Value);
+            if (val < 40 || val > 505)
+                return;
+            var itemName = Main.Character.itemInfo.itemName[val];
+            MoneyPitLabel.Text = itemName;
         }
     }
 }

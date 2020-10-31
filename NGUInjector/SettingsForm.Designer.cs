@@ -40,16 +40,12 @@
             this.wishErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.DisableOverlay = new System.Windows.Forms.CheckBox();
             this.UnloadSafety = new System.Windows.Forms.CheckBox();
             this.UnloadButton = new System.Windows.Forms.Button();
             this.VersionLabel = new System.Windows.Forms.Label();
             this.AutoBuyEM = new System.Windows.Forms.CheckBox();
-            this.MoneyPitThresholdSave = new System.Windows.Forms.Button();
-            this.MoneyPitThreshold = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.MasterEnable = new System.Windows.Forms.CheckBox();
-            this.AutoMoneyPit = new System.Windows.Forms.CheckBox();
-            this.AutoDailySpin = new System.Windows.Forms.CheckBox();
             this.AutoFightBosses = new System.Windows.Forms.CheckBox();
             this.AutoITOPOD = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -119,6 +115,14 @@
             this.titanLoadout = new System.Windows.Forms.ListBox();
             this.SwapTitanLoadout = new System.Windows.Forms.CheckBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.ITOPODBeastMode = new System.Windows.Forms.CheckBox();
+            this.ITOPODRecoverHP = new System.Windows.Forms.CheckBox();
+            this.ITOPODFastCombat = new System.Windows.Forms.CheckBox();
+            this.ITOPODPrecastBuffs = new System.Windows.Forms.CheckBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.ITOPODCombatMode = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
             this.TargetITOPOD = new System.Windows.Forms.CheckBox();
             this.OptimizeITOPOD = new System.Windows.Forms.CheckBox();
             this.BeastMode = new System.Windows.Forms.CheckBox();
@@ -170,16 +174,20 @@
             this.AddWishLabel = new System.Windows.Forms.Label();
             this.AddWishButton = new System.Windows.Forms.Button();
             this.WishPriority = new System.Windows.Forms.ListBox();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.label25 = new System.Windows.Forms.Label();
+            this.MoneyPitRemove = new System.Windows.Forms.Button();
+            this.MoneyPitInput = new System.Windows.Forms.NumericUpDown();
+            this.MoneyPitLabel = new System.Windows.Forms.Label();
+            this.MoneyPitAdd = new System.Windows.Forms.Button();
+            this.MoneyPitLoadout = new System.Windows.Forms.ListBox();
+            this.MoneyPitThresholdSave = new System.Windows.Forms.Button();
+            this.MoneyPitThreshold = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.AutoMoneyPit = new System.Windows.Forms.CheckBox();
+            this.AutoDailySpin = new System.Windows.Forms.CheckBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.ITOPODCombatMode = new System.Windows.Forms.ComboBox();
-            this.ITOPODBeastMode = new System.Windows.Forms.CheckBox();
-            this.ITOPODRecoverHP = new System.Windows.Forms.CheckBox();
-            this.ITOPODFastCombat = new System.Windows.Forms.CheckBox();
-            this.ITOPODPrecastBuffs = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).BeginInit();
@@ -208,6 +216,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.AbandonMinorThreshold)).BeginInit();
             this.tabPage9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WishAddInput)).BeginInit();
+            this.tabPage10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MoneyPitInput)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -254,27 +264,31 @@
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Controls.Add(this.tabPage9);
+            this.tabControl1.Controls.Add(this.tabPage10);
             resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.DisableOverlay);
             this.tabPage1.Controls.Add(this.UnloadSafety);
             this.tabPage1.Controls.Add(this.UnloadButton);
             this.tabPage1.Controls.Add(this.VersionLabel);
             this.tabPage1.Controls.Add(this.AutoBuyEM);
-            this.tabPage1.Controls.Add(this.MoneyPitThresholdSave);
-            this.tabPage1.Controls.Add(this.MoneyPitThreshold);
-            this.tabPage1.Controls.Add(this.label7);
             this.tabPage1.Controls.Add(this.MasterEnable);
-            this.tabPage1.Controls.Add(this.AutoMoneyPit);
-            this.tabPage1.Controls.Add(this.AutoDailySpin);
             this.tabPage1.Controls.Add(this.AutoFightBosses);
             this.tabPage1.Controls.Add(this.AutoITOPOD);
             resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // DisableOverlay
+            // 
+            resources.ApplyResources(this.DisableOverlay, "DisableOverlay");
+            this.DisableOverlay.Name = "DisableOverlay";
+            this.DisableOverlay.UseVisualStyleBackColor = true;
+            this.DisableOverlay.CheckedChanged += new System.EventHandler(this.DisableOverlay_CheckedChanged);
             // 
             // UnloadSafety
             // 
@@ -302,44 +316,12 @@
             this.AutoBuyEM.UseVisualStyleBackColor = true;
             this.AutoBuyEM.CheckedChanged += new System.EventHandler(this.AutoBuyEM_CheckedChanged);
             // 
-            // MoneyPitThresholdSave
-            // 
-            resources.ApplyResources(this.MoneyPitThresholdSave, "MoneyPitThresholdSave");
-            this.MoneyPitThresholdSave.Name = "MoneyPitThresholdSave";
-            this.MoneyPitThresholdSave.UseVisualStyleBackColor = true;
-            this.MoneyPitThresholdSave.Click += new System.EventHandler(this.MoneyPitThresholdSave_Click);
-            // 
-            // MoneyPitThreshold
-            // 
-            resources.ApplyResources(this.MoneyPitThreshold, "MoneyPitThreshold");
-            this.MoneyPitThreshold.Name = "MoneyPitThreshold";
-            this.MoneyPitThreshold.TextChanged += new System.EventHandler(this.MoneyPitThreshold_TextChanged_1);
-            // 
-            // label7
-            // 
-            resources.ApplyResources(this.label7, "label7");
-            this.label7.Name = "label7";
-            // 
             // MasterEnable
             // 
             resources.ApplyResources(this.MasterEnable, "MasterEnable");
             this.MasterEnable.Name = "MasterEnable";
             this.MasterEnable.UseVisualStyleBackColor = true;
             this.MasterEnable.CheckedChanged += new System.EventHandler(this.MasterEnable_CheckedChanged);
-            // 
-            // AutoMoneyPit
-            // 
-            resources.ApplyResources(this.AutoMoneyPit, "AutoMoneyPit");
-            this.AutoMoneyPit.Name = "AutoMoneyPit";
-            this.AutoMoneyPit.UseVisualStyleBackColor = true;
-            this.AutoMoneyPit.CheckedChanged += new System.EventHandler(this.AutoMoneyPit_CheckedChanged);
-            // 
-            // AutoDailySpin
-            // 
-            resources.ApplyResources(this.AutoDailySpin, "AutoDailySpin");
-            this.AutoDailySpin.Name = "AutoDailySpin";
-            this.AutoDailySpin.UseVisualStyleBackColor = true;
-            this.AutoDailySpin.CheckedChanged += new System.EventHandler(this.AutoDailySpin_CheckedChanged);
             // 
             // AutoFightBosses
             // 
@@ -923,6 +905,60 @@
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
+            // ITOPODBeastMode
+            // 
+            resources.ApplyResources(this.ITOPODBeastMode, "ITOPODBeastMode");
+            this.ITOPODBeastMode.Name = "ITOPODBeastMode";
+            this.ITOPODBeastMode.UseVisualStyleBackColor = true;
+            this.ITOPODBeastMode.CheckedChanged += new System.EventHandler(this.ITOPODBeastMode_CheckedChanged);
+            // 
+            // ITOPODRecoverHP
+            // 
+            resources.ApplyResources(this.ITOPODRecoverHP, "ITOPODRecoverHP");
+            this.ITOPODRecoverHP.Name = "ITOPODRecoverHP";
+            this.ITOPODRecoverHP.UseVisualStyleBackColor = true;
+            this.ITOPODRecoverHP.CheckedChanged += new System.EventHandler(this.ITOPODRecoverHP_CheckedChanged);
+            // 
+            // ITOPODFastCombat
+            // 
+            resources.ApplyResources(this.ITOPODFastCombat, "ITOPODFastCombat");
+            this.ITOPODFastCombat.Name = "ITOPODFastCombat";
+            this.ITOPODFastCombat.UseVisualStyleBackColor = true;
+            this.ITOPODFastCombat.CheckedChanged += new System.EventHandler(this.ITOPODFastCombat_CheckedChanged);
+            // 
+            // ITOPODPrecastBuffs
+            // 
+            resources.ApplyResources(this.ITOPODPrecastBuffs, "ITOPODPrecastBuffs");
+            this.ITOPODPrecastBuffs.Name = "ITOPODPrecastBuffs";
+            this.ITOPODPrecastBuffs.UseVisualStyleBackColor = true;
+            this.ITOPODPrecastBuffs.CheckedChanged += new System.EventHandler(this.ITOPODPrecastBuffs_CheckedChanged);
+            // 
+            // label24
+            // 
+            resources.ApplyResources(this.label24, "label24");
+            this.label24.Name = "label24";
+            // 
+            // ITOPODCombatMode
+            // 
+            this.ITOPODCombatMode.FormattingEnabled = true;
+            this.ITOPODCombatMode.Items.AddRange(new object[] {
+            resources.GetString("ITOPODCombatMode.Items"),
+            resources.GetString("ITOPODCombatMode.Items1")});
+            resources.ApplyResources(this.ITOPODCombatMode, "ITOPODCombatMode");
+            this.ITOPODCombatMode.Name = "ITOPODCombatMode";
+            this.ITOPODCombatMode.SelectedIndexChanged += new System.EventHandler(this.ITOPODCombatMode_SelectedIndexChanged);
+            // 
+            // label22
+            // 
+            this.label22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.label22, "label22");
+            this.label22.Name = "label22";
+            // 
+            // label23
+            // 
+            resources.ApplyResources(this.label23, "label23");
+            this.label23.Name = "label23";
+            // 
             // TargetITOPOD
             // 
             resources.ApplyResources(this.TargetITOPOD, "TargetITOPOD");
@@ -1330,6 +1366,99 @@
             resources.ApplyResources(this.WishPriority, "WishPriority");
             this.WishPriority.Name = "WishPriority";
             // 
+            // tabPage10
+            // 
+            this.tabPage10.Controls.Add(this.label25);
+            this.tabPage10.Controls.Add(this.MoneyPitRemove);
+            this.tabPage10.Controls.Add(this.MoneyPitInput);
+            this.tabPage10.Controls.Add(this.MoneyPitLabel);
+            this.tabPage10.Controls.Add(this.MoneyPitAdd);
+            this.tabPage10.Controls.Add(this.MoneyPitLoadout);
+            this.tabPage10.Controls.Add(this.MoneyPitThresholdSave);
+            this.tabPage10.Controls.Add(this.MoneyPitThreshold);
+            this.tabPage10.Controls.Add(this.label7);
+            this.tabPage10.Controls.Add(this.AutoMoneyPit);
+            this.tabPage10.Controls.Add(this.AutoDailySpin);
+            resources.ApplyResources(this.tabPage10, "tabPage10");
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.UseVisualStyleBackColor = true;
+            // 
+            // label25
+            // 
+            resources.ApplyResources(this.label25, "label25");
+            this.label25.Name = "label25";
+            // 
+            // MoneyPitRemove
+            // 
+            resources.ApplyResources(this.MoneyPitRemove, "MoneyPitRemove");
+            this.MoneyPitRemove.Name = "MoneyPitRemove";
+            this.MoneyPitRemove.UseVisualStyleBackColor = true;
+            this.MoneyPitRemove.Click += new System.EventHandler(this.MoneyPitRemove_Click);
+            // 
+            // MoneyPitInput
+            // 
+            resources.ApplyResources(this.MoneyPitInput, "MoneyPitInput");
+            this.MoneyPitInput.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
+            this.MoneyPitInput.Name = "MoneyPitInput";
+            this.MoneyPitInput.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            // 
+            // MoneyPitLabel
+            // 
+            resources.ApplyResources(this.MoneyPitLabel, "MoneyPitLabel");
+            this.MoneyPitLabel.Name = "MoneyPitLabel";
+            // 
+            // MoneyPitAdd
+            // 
+            resources.ApplyResources(this.MoneyPitAdd, "MoneyPitAdd");
+            this.MoneyPitAdd.Name = "MoneyPitAdd";
+            this.MoneyPitAdd.UseVisualStyleBackColor = true;
+            this.MoneyPitAdd.Click += new System.EventHandler(this.MoneyPitAdd_Click);
+            // 
+            // MoneyPitLoadout
+            // 
+            this.MoneyPitLoadout.FormattingEnabled = true;
+            this.MoneyPitLoadout.Items.AddRange(new object[] {
+            resources.GetString("MoneyPitLoadout.Items"),
+            resources.GetString("MoneyPitLoadout.Items1")});
+            resources.ApplyResources(this.MoneyPitLoadout, "MoneyPitLoadout");
+            this.MoneyPitLoadout.Name = "MoneyPitLoadout";
+            // 
+            // MoneyPitThresholdSave
+            // 
+            resources.ApplyResources(this.MoneyPitThresholdSave, "MoneyPitThresholdSave");
+            this.MoneyPitThresholdSave.Name = "MoneyPitThresholdSave";
+            this.MoneyPitThresholdSave.UseVisualStyleBackColor = true;
+            // 
+            // MoneyPitThreshold
+            // 
+            resources.ApplyResources(this.MoneyPitThreshold, "MoneyPitThreshold");
+            this.MoneyPitThreshold.Name = "MoneyPitThreshold";
+            // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Name = "label7";
+            // 
+            // AutoMoneyPit
+            // 
+            resources.ApplyResources(this.AutoMoneyPit, "AutoMoneyPit");
+            this.AutoMoneyPit.Name = "AutoMoneyPit";
+            this.AutoMoneyPit.UseVisualStyleBackColor = true;
+            // 
+            // AutoDailySpin
+            // 
+            resources.ApplyResources(this.AutoDailySpin, "AutoDailySpin");
+            this.AutoDailySpin.Name = "AutoDailySpin";
+            this.AutoDailySpin.UseVisualStyleBackColor = true;
+            // 
             // progressBar1
             // 
             resources.ApplyResources(this.progressBar1, "progressBar1");
@@ -1341,60 +1470,6 @@
             this.flowLayoutPanel1.Controls.Add(this.tabControl1);
             resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            // 
-            // label22
-            // 
-            this.label22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.label22, "label22");
-            this.label22.Name = "label22";
-            // 
-            // label23
-            // 
-            resources.ApplyResources(this.label23, "label23");
-            this.label23.Name = "label23";
-            // 
-            // label24
-            // 
-            resources.ApplyResources(this.label24, "label24");
-            this.label24.Name = "label24";
-            // 
-            // ITOPODCombatMode
-            // 
-            this.ITOPODCombatMode.FormattingEnabled = true;
-            this.ITOPODCombatMode.Items.AddRange(new object[] {
-            resources.GetString("ITOPODCombatMode.Items"),
-            resources.GetString("ITOPODCombatMode.Items1")});
-            resources.ApplyResources(this.ITOPODCombatMode, "ITOPODCombatMode");
-            this.ITOPODCombatMode.Name = "ITOPODCombatMode";
-            this.ITOPODCombatMode.SelectedIndexChanged += new System.EventHandler(this.ITOPODCombatMode_SelectedIndexChanged);
-            // 
-            // ITOPODBeastMode
-            // 
-            resources.ApplyResources(this.ITOPODBeastMode, "ITOPODBeastMode");
-            this.ITOPODBeastMode.Name = "ITOPODBeastMode";
-            this.ITOPODBeastMode.UseVisualStyleBackColor = true;
-            this.ITOPODBeastMode.CheckedChanged += new System.EventHandler(this.ITOPODBeastMode_CheckedChanged);
-            // 
-            // ITOPODRecoverHP
-            // 
-            resources.ApplyResources(this.ITOPODRecoverHP, "ITOPODRecoverHP");
-            this.ITOPODRecoverHP.Name = "ITOPODRecoverHP";
-            this.ITOPODRecoverHP.UseVisualStyleBackColor = true;
-            this.ITOPODRecoverHP.CheckedChanged += new System.EventHandler(this.ITOPODRecoverHP_CheckedChanged);
-            // 
-            // ITOPODFastCombat
-            // 
-            resources.ApplyResources(this.ITOPODFastCombat, "ITOPODFastCombat");
-            this.ITOPODFastCombat.Name = "ITOPODFastCombat";
-            this.ITOPODFastCombat.UseVisualStyleBackColor = true;
-            this.ITOPODFastCombat.CheckedChanged += new System.EventHandler(this.ITOPODFastCombat_CheckedChanged);
-            // 
-            // ITOPODPrecastBuffs
-            // 
-            resources.ApplyResources(this.ITOPODPrecastBuffs, "ITOPODPrecastBuffs");
-            this.ITOPODPrecastBuffs.Name = "ITOPODPrecastBuffs";
-            this.ITOPODPrecastBuffs.UseVisualStyleBackColor = true;
-            this.ITOPODPrecastBuffs.CheckedChanged += new System.EventHandler(this.ITOPODPrecastBuffs_CheckedChanged);
             // 
             // SettingsForm
             // 
@@ -1442,6 +1517,9 @@
             this.tabPage9.ResumeLayout(false);
             this.tabPage9.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WishAddInput)).EndInit();
+            this.tabPage10.ResumeLayout(false);
+            this.tabPage10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MoneyPitInput)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -1464,12 +1542,7 @@
         private System.Windows.Forms.Button UnloadButton;
         private System.Windows.Forms.Label VersionLabel;
         private System.Windows.Forms.CheckBox AutoBuyEM;
-        private System.Windows.Forms.Button MoneyPitThresholdSave;
-        private System.Windows.Forms.TextBox MoneyPitThreshold;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox MasterEnable;
-        private System.Windows.Forms.CheckBox AutoMoneyPit;
-        private System.Windows.Forms.CheckBox AutoDailySpin;
         private System.Windows.Forms.CheckBox AutoFightBosses;
         private System.Windows.Forms.CheckBox AutoITOPOD;
         private System.Windows.Forms.TabPage tabPage2;
@@ -1598,5 +1671,18 @@
         private System.Windows.Forms.CheckBox ITOPODPrecastBuffs;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.ComboBox ITOPODCombatMode;
+        private System.Windows.Forms.CheckBox DisableOverlay;
+        private System.Windows.Forms.TabPage tabPage10;
+        private System.Windows.Forms.CheckBox AutoMoneyPit;
+        private System.Windows.Forms.CheckBox AutoDailySpin;
+        private System.Windows.Forms.Button MoneyPitThresholdSave;
+        private System.Windows.Forms.TextBox MoneyPitThreshold;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button MoneyPitRemove;
+        private System.Windows.Forms.NumericUpDown MoneyPitInput;
+        private System.Windows.Forms.Label MoneyPitLabel;
+        private System.Windows.Forms.Button MoneyPitAdd;
+        private System.Windows.Forms.ListBox MoneyPitLoadout;
     }
 }

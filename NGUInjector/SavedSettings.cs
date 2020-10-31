@@ -87,10 +87,12 @@ namespace NGUInjector
         [SerializeField] private bool _itopodRecoverHp;
         [SerializeField] private bool _itopodPrecastBuffs;
         [SerializeField] private bool _adventureTargetItopod;
+        [SerializeField] private bool _disableOverlay;
 
         private readonly string _savePath;
         private bool _disableSave;
         
+
 
         public SavedSettings(string dir)
         {
@@ -230,6 +232,7 @@ namespace NGUInjector
             _itopodFastCombat = other.ITOPODFastCombat;
             _itopodPrecastBuffs = other.ITOPODPrecastBuffs;
             _itopodRecoverHp = other.ITOPODRecoverHP;
+            _disableOverlay = other.DisableOverlay;
         }
 
         public int HighestAKZone
@@ -1029,6 +1032,12 @@ namespace NGUInjector
                 _itopodPrecastBuffs = value;
                 SaveSettings();
             }
+        }
+
+        public bool DisableOverlay
+        {
+            get => _disableOverlay;
+            set => _disableOverlay = value;
         }
     }
 }

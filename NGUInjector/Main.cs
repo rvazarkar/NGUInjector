@@ -938,8 +938,10 @@ namespace NGUInjector
 
         public void OnGUI()
         {
-            GUI.Label(new Rect(10, 10, 200, 40), $"Automation - {(Settings.GlobalEnabled ? "Active" : "Inactive")}");
-            GUI.Label(new Rect(10, 20, 200, 40), $"Next Loop - {_timeLeft:00.0}s");
+            if (Settings.DisableOverlay) return;
+            GUI.Label(new Rect(10, 0, 200, 40), $"Automation - {(Settings.GlobalEnabled ? "Active" : "Inactive")}");
+            GUI.Label(new Rect(10, 10, 200, 40), $"Next Loop - {_timeLeft:00.0}s");
+            GUI.Label(new Rect(10, 20, 200, 40), $"Profile - {Settings.AllocationFile}");
         }
 
         public void MonitorLog()

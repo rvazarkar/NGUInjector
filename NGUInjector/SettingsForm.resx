@@ -156,6 +156,33 @@
   <data name="&gt;&gt;progressBar1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="DisableOverlay.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="DisableOverlay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>106, 6</value>
+  </data>
+  <data name="DisableOverlay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 17</value>
+  </data>
+  <data name="DisableOverlay.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="DisableOverlay.Text" xml:space="preserve">
+    <value>Disable Overlay</value>
+  </data>
+  <data name="&gt;&gt;DisableOverlay.Name" xml:space="preserve">
+    <value>DisableOverlay</value>
+  </data>
+  <data name="&gt;&gt;DisableOverlay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DisableOverlay.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;DisableOverlay.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="UnloadSafety.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -181,7 +208,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;UnloadSafety.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="UnloadButton.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -211,7 +238,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;UnloadButton.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="VersionLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -241,7 +268,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;VersionLabel.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="AutoBuyEM.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -250,7 +277,7 @@
     <value>NoControl</value>
   </data>
   <data name="AutoBuyEM.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 120</value>
+    <value>5, 74</value>
   </data>
   <data name="AutoBuyEM.Size" type="System.Drawing.Size, System.Drawing">
     <value>158, 17</value>
@@ -271,85 +298,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;AutoBuyEM.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="MoneyPitThresholdSave.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="MoneyPitThresholdSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>243, 147</value>
-  </data>
-  <data name="MoneyPitThresholdSave.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 20</value>
-  </data>
-  <data name="MoneyPitThresholdSave.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="MoneyPitThresholdSave.Text" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="&gt;&gt;MoneyPitThresholdSave.Name" xml:space="preserve">
-    <value>MoneyPitThresholdSave</value>
-  </data>
-  <data name="&gt;&gt;MoneyPitThresholdSave.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MoneyPitThresholdSave.Parent" xml:space="preserve">
-    <value>tabPage1</value>
-  </data>
-  <data name="&gt;&gt;MoneyPitThresholdSave.ZOrder" xml:space="preserve">
     <value>4</value>
-  </data>
-  <data name="MoneyPitThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>113, 147</value>
-  </data>
-  <data name="MoneyPitThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 20</value>
-  </data>
-  <data name="MoneyPitThreshold.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;MoneyPitThreshold.Name" xml:space="preserve">
-    <value>MoneyPitThreshold</value>
-  </data>
-  <data name="&gt;&gt;MoneyPitThreshold.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MoneyPitThreshold.Parent" xml:space="preserve">
-    <value>tabPage1</value>
-  </data>
-  <data name="&gt;&gt;MoneyPitThreshold.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 150</value>
-  </data>
-  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>104, 13</value>
-  </data>
-  <data name="label7.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="label7.Text" xml:space="preserve">
-    <value>Money Pit Threshold</value>
-  </data>
-  <data name="&gt;&gt;label7.Name" xml:space="preserve">
-    <value>label7</value>
-  </data>
-  <data name="&gt;&gt;label7.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
-    <value>tabPage1</value>
-  </data>
-  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>6</value>
   </data>
   <data name="MasterEnable.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -379,64 +328,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;MasterEnable.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="AutoMoneyPit.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="AutoMoneyPit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="AutoMoneyPit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 52</value>
-  </data>
-  <data name="AutoMoneyPit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>98, 17</value>
-  </data>
-  <data name="AutoMoneyPit.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="AutoMoneyPit.Text" xml:space="preserve">
-    <value>Auto Money Pit</value>
-  </data>
-  <data name="&gt;&gt;AutoMoneyPit.Name" xml:space="preserve">
-    <value>AutoMoneyPit</value>
-  </data>
-  <data name="&gt;&gt;AutoMoneyPit.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;AutoMoneyPit.Parent" xml:space="preserve">
-    <value>tabPage1</value>
-  </data>
-  <data name="&gt;&gt;AutoMoneyPit.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="AutoDailySpin.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="AutoDailySpin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 29</value>
-  </data>
-  <data name="AutoDailySpin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>98, 17</value>
-  </data>
-  <data name="AutoDailySpin.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
-  </data>
-  <data name="AutoDailySpin.Text" xml:space="preserve">
-    <value>Auto Daily Spin</value>
-  </data>
-  <data name="&gt;&gt;AutoDailySpin.Name" xml:space="preserve">
-    <value>AutoDailySpin</value>
-  </data>
-  <data name="&gt;&gt;AutoDailySpin.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;AutoDailySpin.Parent" xml:space="preserve">
-    <value>tabPage1</value>
-  </data>
-  <data name="&gt;&gt;AutoDailySpin.ZOrder" xml:space="preserve">
-    <value>9</value>
   </data>
   <data name="AutoFightBosses.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -445,7 +337,7 @@
     <value>NoControl</value>
   </data>
   <data name="AutoFightBosses.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 98</value>
+    <value>6, 52</value>
   </data>
   <data name="AutoFightBosses.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 17</value>
@@ -466,7 +358,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;AutoFightBosses.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>6</value>
   </data>
   <data name="AutoITOPOD.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -475,7 +367,7 @@
     <value>NoControl</value>
   </data>
   <data name="AutoITOPOD.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 75</value>
+    <value>6, 29</value>
   </data>
   <data name="AutoITOPOD.Size" type="System.Drawing.Size, System.Drawing">
     <value>134, 17</value>
@@ -496,7 +388,7 @@
     <value>tabPage1</value>
   </data>
   <data name="&gt;&gt;AutoITOPOD.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>7</value>
   </data>
   <data name="tabPage1.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -1120,7 +1012,7 @@
     <value>1</value>
   </data>
   <data name="tabPage2.Text" xml:space="preserve">
-    <value>Allocation Settings</value>
+    <value>Allocation</value>
   </data>
   <data name="&gt;&gt;tabPage2.Name" xml:space="preserve">
     <value>tabPage2</value>
@@ -4037,6 +3929,336 @@
   </data>
   <data name="&gt;&gt;tabPage9.ZOrder" xml:space="preserve">
     <value>8</value>
+  </data>
+  <data name="label25.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label25.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="label25.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label25.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 68</value>
+  </data>
+  <data name="label25.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 16</value>
+  </data>
+  <data name="label25.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="label25.Text" xml:space="preserve">
+    <value>Loadout</value>
+  </data>
+  <data name="&gt;&gt;label25.Name" xml:space="preserve">
+    <value>label25</value>
+  </data>
+  <data name="&gt;&gt;label25.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label25.Parent" xml:space="preserve">
+    <value>tabPage10</value>
+  </data>
+  <data name="&gt;&gt;label25.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="MoneyPitRemove.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="MoneyPitRemove.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="MoneyPitRemove.Location" type="System.Drawing.Point, System.Drawing">
+    <value>267, 159</value>
+  </data>
+  <data name="MoneyPitRemove.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 23</value>
+  </data>
+  <data name="MoneyPitRemove.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="MoneyPitRemove.Text" xml:space="preserve">
+    <value>Remove Item</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitRemove.Name" xml:space="preserve">
+    <value>MoneyPitRemove</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitRemove.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitRemove.Parent" xml:space="preserve">
+    <value>tabPage10</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitRemove.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="MoneyPitInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 263</value>
+  </data>
+  <data name="MoneyPitInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>251, 20</value>
+  </data>
+  <data name="MoneyPitInput.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitInput.Name" xml:space="preserve">
+    <value>MoneyPitInput</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitInput.Parent" xml:space="preserve">
+    <value>tabPage10</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitInput.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="MoneyPitLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="MoneyPitLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="MoneyPitLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 286</value>
+  </data>
+  <data name="MoneyPitLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>14, 13</value>
+  </data>
+  <data name="MoneyPitLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="MoneyPitLabel.Text" xml:space="preserve">
+    <value>A</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitLabel.Name" xml:space="preserve">
+    <value>MoneyPitLabel</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitLabel.Parent" xml:space="preserve">
+    <value>tabPage10</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitLabel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="MoneyPitAdd.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="MoneyPitAdd.Location" type="System.Drawing.Point, System.Drawing">
+    <value>267, 262</value>
+  </data>
+  <data name="MoneyPitAdd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 20</value>
+  </data>
+  <data name="MoneyPitAdd.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="MoneyPitAdd.Text" xml:space="preserve">
+    <value>Add Item</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitAdd.Name" xml:space="preserve">
+    <value>MoneyPitAdd</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitAdd.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitAdd.Parent" xml:space="preserve">
+    <value>tabPage10</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitAdd.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="MoneyPitLoadout.Items" xml:space="preserve">
+    <value>test</value>
+  </data>
+  <data name="MoneyPitLoadout.Items1" xml:space="preserve">
+    <value>test2</value>
+  </data>
+  <data name="MoneyPitLoadout.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 96</value>
+  </data>
+  <data name="MoneyPitLoadout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>252, 160</value>
+  </data>
+  <data name="MoneyPitLoadout.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitLoadout.Name" xml:space="preserve">
+    <value>MoneyPitLoadout</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitLoadout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitLoadout.Parent" xml:space="preserve">
+    <value>tabPage10</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitLoadout.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="MoneyPitThresholdSave.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="MoneyPitThresholdSave.Location" type="System.Drawing.Point, System.Drawing">
+    <value>246, 41</value>
+  </data>
+  <data name="MoneyPitThresholdSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 20</value>
+  </data>
+  <data name="MoneyPitThresholdSave.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="MoneyPitThresholdSave.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitThresholdSave.Name" xml:space="preserve">
+    <value>MoneyPitThresholdSave</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitThresholdSave.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitThresholdSave.Parent" xml:space="preserve">
+    <value>tabPage10</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitThresholdSave.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="MoneyPitThreshold.Location" type="System.Drawing.Point, System.Drawing">
+    <value>116, 41</value>
+  </data>
+  <data name="MoneyPitThreshold.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 20</value>
+  </data>
+  <data name="MoneyPitThreshold.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitThreshold.Name" xml:space="preserve">
+    <value>MoneyPitThreshold</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitThreshold.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitThreshold.Parent" xml:space="preserve">
+    <value>tabPage10</value>
+  </data>
+  <data name="&gt;&gt;MoneyPitThreshold.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="label7.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 44</value>
+  </data>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>104, 13</value>
+  </data>
+  <data name="label7.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Money Pit Threshold</value>
+  </data>
+  <data name="&gt;&gt;label7.Name" xml:space="preserve">
+    <value>label7</value>
+  </data>
+  <data name="&gt;&gt;label7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label7.Parent" xml:space="preserve">
+    <value>tabPage10</value>
+  </data>
+  <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="AutoMoneyPit.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="AutoMoneyPit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="AutoMoneyPit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>110, 15</value>
+  </data>
+  <data name="AutoMoneyPit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>98, 17</value>
+  </data>
+  <data name="AutoMoneyPit.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="AutoMoneyPit.Text" xml:space="preserve">
+    <value>Auto Money Pit</value>
+  </data>
+  <data name="&gt;&gt;AutoMoneyPit.Name" xml:space="preserve">
+    <value>AutoMoneyPit</value>
+  </data>
+  <data name="&gt;&gt;AutoMoneyPit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AutoMoneyPit.Parent" xml:space="preserve">
+    <value>tabPage10</value>
+  </data>
+  <data name="&gt;&gt;AutoMoneyPit.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="AutoDailySpin.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="AutoDailySpin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 15</value>
+  </data>
+  <data name="AutoDailySpin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>98, 17</value>
+  </data>
+  <data name="AutoDailySpin.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="AutoDailySpin.Text" xml:space="preserve">
+    <value>Auto Daily Spin</value>
+  </data>
+  <data name="&gt;&gt;AutoDailySpin.Name" xml:space="preserve">
+    <value>AutoDailySpin</value>
+  </data>
+  <data name="&gt;&gt;AutoDailySpin.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AutoDailySpin.Parent" xml:space="preserve">
+    <value>tabPage10</value>
+  </data>
+  <data name="&gt;&gt;AutoDailySpin.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="tabPage10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabPage10.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabPage10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>590, 334</value>
+  </data>
+  <data name="tabPage10.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="tabPage10.Text" xml:space="preserve">
+    <value>The Pit</value>
+  </data>
+  <data name="&gt;&gt;tabPage10.Name" xml:space="preserve">
+    <value>tabPage10</value>
+  </data>
+  <data name="&gt;&gt;tabPage10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPage10.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;tabPage10.ZOrder" xml:space="preserve">
+    <value>9</value>
   </data>
   <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 22</value>
