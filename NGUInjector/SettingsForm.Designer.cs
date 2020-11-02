@@ -188,6 +188,14 @@
             this.AutoDailySpin = new System.Windows.Forms.CheckBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.UpgradeDiggers = new System.Windows.Forms.CheckBox();
+            this.GuffBThreshold = new System.Windows.Forms.NumericUpDown();
+            this.label26 = new System.Windows.Forms.Label();
+            this.GuffAThreshold = new System.Windows.Forms.NumericUpDown();
+            this.label27 = new System.Windows.Forms.Label();
+            this.IronPillThreshold = new System.Windows.Forms.NumericUpDown();
+            this.label123 = new System.Windows.Forms.Label();
+            this.CastBloodSpells = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).BeginInit();
@@ -219,6 +227,9 @@
             this.tabPage10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MoneyPitInput)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GuffBThreshold)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GuffAThreshold)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IronPillThreshold)).BeginInit();
             this.SuspendLayout();
             // 
             // moneyPitError
@@ -339,6 +350,14 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.CastBloodSpells);
+            this.tabPage2.Controls.Add(this.IronPillThreshold);
+            this.tabPage2.Controls.Add(this.label123);
+            this.tabPage2.Controls.Add(this.GuffBThreshold);
+            this.tabPage2.Controls.Add(this.label26);
+            this.tabPage2.Controls.Add(this.GuffAThreshold);
+            this.tabPage2.Controls.Add(this.label27);
+            this.tabPage2.Controls.Add(this.UpgradeDiggers);
             this.tabPage2.Controls.Add(this.ManageNGUDiff);
             this.tabPage2.Controls.Add(this.ChangeProfileFile);
             this.tabPage2.Controls.Add(this.AllocationProfileFileLabel);
@@ -1475,6 +1494,65 @@
             resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             // 
+            // UpgradeDiggers
+            // 
+            resources.ApplyResources(this.UpgradeDiggers, "UpgradeDiggers");
+            this.UpgradeDiggers.Name = "UpgradeDiggers";
+            this.UpgradeDiggers.UseVisualStyleBackColor = true;
+            this.UpgradeDiggers.CheckedChanged += new System.EventHandler(this.UpgradeDiggers_CheckedChanged);
+            // 
+            // GuffBThreshold
+            // 
+            resources.ApplyResources(this.GuffBThreshold, "GuffBThreshold");
+            this.GuffBThreshold.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.GuffBThreshold.Name = "GuffBThreshold";
+            // 
+            // label26
+            // 
+            resources.ApplyResources(this.label26, "label26");
+            this.label26.Name = "label26";
+            // 
+            // GuffAThreshold
+            // 
+            resources.ApplyResources(this.GuffAThreshold, "GuffAThreshold");
+            this.GuffAThreshold.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.GuffAThreshold.Name = "GuffAThreshold";
+            // 
+            // label27
+            // 
+            resources.ApplyResources(this.label27, "label27");
+            this.label27.Name = "label27";
+            // 
+            // IronPillThreshold
+            // 
+            resources.ApplyResources(this.IronPillThreshold, "IronPillThreshold");
+            this.IronPillThreshold.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.IronPillThreshold.Name = "IronPillThreshold";
+            // 
+            // label123
+            // 
+            resources.ApplyResources(this.label123, "label123");
+            this.label123.Name = "label123";
+            // 
+            // CastBloodSpells
+            // 
+            resources.ApplyResources(this.CastBloodSpells, "CastBloodSpells");
+            this.CastBloodSpells.Name = "CastBloodSpells";
+            this.CastBloodSpells.UseVisualStyleBackColor = true;
+            this.CastBloodSpells.CheckedChanged += new System.EventHandler(this.CastBloodSpells_CheckedChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1525,6 +1603,9 @@
             this.tabPage10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MoneyPitInput)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.GuffBThreshold)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GuffAThreshold)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IronPillThreshold)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1688,5 +1769,13 @@
         private System.Windows.Forms.Label MoneyPitLabel;
         private System.Windows.Forms.Button MoneyPitAdd;
         private System.Windows.Forms.ListBox MoneyPitLoadout;
+        private System.Windows.Forms.CheckBox UpgradeDiggers;
+        private System.Windows.Forms.NumericUpDown GuffBThreshold;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.NumericUpDown GuffAThreshold;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.NumericUpDown IronPillThreshold;
+        private System.Windows.Forms.Label label123;
+        private System.Windows.Forms.CheckBox CastBloodSpells;
     }
 }

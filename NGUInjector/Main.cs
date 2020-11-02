@@ -221,7 +221,7 @@ namespace NGUInjector
                         SpaghettiThreshold = 30,
                         BloodNumberThreshold = 1e10,
                         CastBloodSpells = false,
-                        IronPillThreshold = 1e5,
+                        IronPillThreshold = 10000,
                         BloodMacGuffinAThreshold = 6,
                         BloodMacGuffinBThreshold = 6,
                         CubePriority = 0,

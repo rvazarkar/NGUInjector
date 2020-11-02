@@ -430,12 +430,12 @@ namespace NGUInjector.AllocationProfiles
             long mcguffB = 0;
             if (_character.adventure.itopod.perkLevel[73] >= 1L && _character.settings.rebirthDifficulty >= difficulty.evil)
             {
-                if (_character.bloodMagic.macguffin2Time.totalseconds > (double)_character.bloodSpells.macguffin2Cooldown)
+                if (_character.bloodMagic.macguffin2Time.totalseconds > _character.bloodSpells.macguffin2Cooldown)
                 {
                     if (_character.bloodMagic.bloodPoints >= _character.bloodSpells.minMacguffin2Blood())
                     {
-                        double a = _character.bloodMagic.bloodPoints / _character.bloodSpells.minMacguffin2Blood();
-                        mcguffB = (long)((int)(Math.Log(a, 20.0) + 1.0));
+                        var a = _character.bloodMagic.bloodPoints / _character.bloodSpells.minMacguffin2Blood();
+                        mcguffB = (int)(Math.Log(a, 20.0) + 1.0);
                     }
                     if (Main.Settings.BloodMacGuffinBThreshold <= mcguffB)
                     {
@@ -452,12 +452,12 @@ namespace NGUInjector.AllocationProfiles
 
             if (_character.adventure.itopod.perkLevel[72] >= 1L)
             {
-                if (_character.bloodMagic.macguffin1Time.totalseconds > (double)_character.bloodSpells.macguffin1Cooldown)
+                if (_character.bloodMagic.macguffin1Time.totalseconds > _character.bloodSpells.macguffin1Cooldown)
                 {
                     if (_character.bloodMagic.bloodPoints > _character.bloodSpells.minMacguffin1Blood())
                     {
-                        double a = _character.bloodMagic.bloodPoints / _character.bloodSpells.minMacguffin1Blood();
-                        mcguffA = (long)((int)((Math.Log(a, 10.0) + 1.0) * (double)_character.wishesController.totalBloodGuffbonus()));
+                        var a = _character.bloodMagic.bloodPoints / _character.bloodSpells.minMacguffin1Blood();
+                        mcguffA = (int)((Math.Log(a, 10.0) + 1.0) * _character.wishesController.totalBloodGuffbonus());
                     }
                     if (Main.Settings.BloodMacGuffinAThreshold <= mcguffA)
                     {
@@ -472,7 +472,7 @@ namespace NGUInjector.AllocationProfiles
                 }
             }
 
-            if (_character.bloodMagic.adventureSpellTime.totalseconds > (double)_character.bloodSpells.adventureSpellCooldown)
+            if (_character.bloodMagic.adventureSpellTime.totalseconds > _character.bloodSpells.adventureSpellCooldown)
             {
                 if (_character.bloodMagic.bloodPoints > _character.bloodSpells.minAdventureBlood())
                 {

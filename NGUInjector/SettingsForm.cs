@@ -256,6 +256,12 @@ namespace NGUInjector
             ITOPODPrecastBuffs.Checked = newSettings.ITOPODPrecastBuffs;
 
             DisableOverlay.Checked = newSettings.DisableOverlay;
+            UpgradeDiggers.Checked = newSettings.UpgradeDiggers;
+            CastBloodSpells.Checked = newSettings.CastBloodSpells;
+
+            IronPillThreshold.Value = newSettings.IronPillThreshold;
+            GuffAThreshold.Value = newSettings.BloodMacGuffinAThreshold;
+            GuffBThreshold.Value = newSettings.BloodMacGuffinBThreshold;
 
             SetTitanGoldBox(newSettings);
             SetTitanSwapBox(newSettings);
@@ -960,6 +966,10 @@ namespace NGUInjector
             {
                 numberErrProvider.SetError(BloodNumberThreshold, "Not a valid value");
             }
+
+            Main.Settings.IronPillThreshold = decimal.ToInt32(IronPillThreshold.Value);
+            Main.Settings.BloodMacGuffinAThreshold = decimal.ToInt32(GuffAThreshold.Value);
+            Main.Settings.BloodMacGuffinBThreshold = decimal.ToInt32(GuffBThreshold.Value);
         }
 
         private void TestButton_Click(object sender, EventArgs e)
@@ -1282,6 +1292,18 @@ namespace NGUInjector
                 return;
             var itemName = Main.Character.itemInfo.itemName[val];
             MoneyPitLabel.Text = itemName;
+        }
+
+        private void UpgradeDiggers_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.UpgradeDiggers = UpgradeDiggers.Checked;
+        }
+
+        private void CastBloodSpells_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.CastBloodSpells = CastBloodSpells.Checked;
         }
     }
 }

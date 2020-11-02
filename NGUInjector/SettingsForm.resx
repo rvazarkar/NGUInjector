@@ -417,6 +417,216 @@
   <data name="&gt;&gt;tabPage1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="CastBloodSpells.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="CastBloodSpells.Location" type="System.Drawing.Point, System.Drawing">
+    <value>277, 158</value>
+  </data>
+  <data name="CastBloodSpells.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 17</value>
+  </data>
+  <data name="CastBloodSpells.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="CastBloodSpells.Text" xml:space="preserve">
+    <value>Cast Blood Spells</value>
+  </data>
+  <data name="&gt;&gt;CastBloodSpells.Name" xml:space="preserve">
+    <value>CastBloodSpells</value>
+  </data>
+  <data name="&gt;&gt;CastBloodSpells.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CastBloodSpells.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;CastBloodSpells.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="IronPillThreshold.Location" type="System.Drawing.Point, System.Drawing">
+    <value>277, 188</value>
+  </data>
+  <data name="IronPillThreshold.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 20</value>
+  </data>
+  <data name="IronPillThreshold.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="&gt;&gt;IronPillThreshold.Name" xml:space="preserve">
+    <value>IronPillThreshold</value>
+  </data>
+  <data name="&gt;&gt;IronPillThreshold.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;IronPillThreshold.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;IronPillThreshold.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label123.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label123.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label123.Location" type="System.Drawing.Point, System.Drawing">
+    <value>225, 192</value>
+  </data>
+  <data name="label123.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 13</value>
+  </data>
+  <data name="label123.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="label123.Text" xml:space="preserve">
+    <value>Iron Pill</value>
+  </data>
+  <data name="&gt;&gt;label123.Name" xml:space="preserve">
+    <value>label123</value>
+  </data>
+  <data name="&gt;&gt;label123.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label123.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;label123.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="GuffBThreshold.Location" type="System.Drawing.Point, System.Drawing">
+    <value>277, 250</value>
+  </data>
+  <data name="GuffBThreshold.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 20</value>
+  </data>
+  <data name="GuffBThreshold.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="&gt;&gt;GuffBThreshold.Name" xml:space="preserve">
+    <value>GuffBThreshold</value>
+  </data>
+  <data name="&gt;&gt;GuffBThreshold.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GuffBThreshold.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;GuffBThreshold.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label26.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label26.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label26.Location" type="System.Drawing.Point, System.Drawing">
+    <value>229, 254</value>
+  </data>
+  <data name="label26.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 13</value>
+  </data>
+  <data name="label26.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="label26.Text" xml:space="preserve">
+    <value>Guff B</value>
+  </data>
+  <data name="&gt;&gt;label26.Name" xml:space="preserve">
+    <value>label26</value>
+  </data>
+  <data name="&gt;&gt;label26.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label26.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;label26.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="GuffAThreshold.Location" type="System.Drawing.Point, System.Drawing">
+    <value>277, 220</value>
+  </data>
+  <data name="GuffAThreshold.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 20</value>
+  </data>
+  <data name="GuffAThreshold.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;GuffAThreshold.Name" xml:space="preserve">
+    <value>GuffAThreshold</value>
+  </data>
+  <data name="&gt;&gt;GuffAThreshold.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GuffAThreshold.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;GuffAThreshold.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label27.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label27.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label27.Location" type="System.Drawing.Point, System.Drawing">
+    <value>229, 222</value>
+  </data>
+  <data name="label27.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 13</value>
+  </data>
+  <data name="label27.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="label27.Text" xml:space="preserve">
+    <value>Guff A</value>
+  </data>
+  <data name="&gt;&gt;label27.Name" xml:space="preserve">
+    <value>label27</value>
+  </data>
+  <data name="&gt;&gt;label27.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label27.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;label27.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="UpgradeDiggers.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="UpgradeDiggers.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="UpgradeDiggers.Location" type="System.Drawing.Point, System.Drawing">
+    <value>124, 89</value>
+  </data>
+  <data name="UpgradeDiggers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>131, 17</value>
+  </data>
+  <data name="UpgradeDiggers.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="UpgradeDiggers.Text" xml:space="preserve">
+    <value>Auto Upgrade Diggers</value>
+  </data>
+  <data name="&gt;&gt;UpgradeDiggers.Name" xml:space="preserve">
+    <value>UpgradeDiggers</value>
+  </data>
+  <data name="&gt;&gt;UpgradeDiggers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;UpgradeDiggers.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;UpgradeDiggers.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
   <data name="ManageNGUDiff.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -445,7 +655,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageNGUDiff.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>8</value>
   </data>
   <data name="ChangeProfileFile.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -472,7 +682,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ChangeProfileFile.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>9</value>
   </data>
   <data name="AllocationProfileFileLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -502,7 +712,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;AllocationProfileFileLabel.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>10</value>
   </data>
   <data name="AllocationProfileFile.Location" type="System.Drawing.Point, System.Drawing">
     <value>124, 14</value>
@@ -523,7 +733,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;AllocationProfileFile.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>11</value>
   </data>
   <data name="ManageR3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -553,13 +763,13 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageR3.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>12</value>
   </data>
   <data name="BloodNumberThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>305, 230</value>
+    <value>96, 246</value>
   </data>
   <data name="BloodNumberThreshold.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 20</value>
+    <value>110, 20</value>
   </data>
   <data name="BloodNumberThreshold.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -574,7 +784,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;BloodNumberThreshold.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>13</value>
   </data>
   <data name="label18.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -583,7 +793,7 @@
     <value>NoControl</value>
   </data>
   <data name="label18.Location" type="System.Drawing.Point, System.Drawing">
-    <value>222, 233</value>
+    <value>14, 249</value>
   </data>
   <data name="label18.Size" type="System.Drawing.Size, System.Drawing">
     <value>77, 13</value>
@@ -604,7 +814,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label18.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>14</value>
   </data>
   <data name="SaveSpellCapButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -631,7 +841,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;SaveSpellCapButton.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>15</value>
   </data>
   <data name="AutoSpellSwap.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -640,7 +850,7 @@
     <value>NoControl</value>
   </data>
   <data name="AutoSpellSwap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 202</value>
+    <value>96, 158</value>
   </data>
   <data name="AutoSpellSwap.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 17</value>
@@ -661,13 +871,13 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;AutoSpellSwap.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>16</value>
   </data>
   <data name="label17.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="label17.Location" type="System.Drawing.Point, System.Drawing">
-    <value>17, 187</value>
+    <value>17, 178</value>
   </data>
   <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
     <value>525, 1</value>
@@ -685,13 +895,13 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label17.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>17</value>
   </data>
   <data name="CounterfeitCap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>96, 261</value>
+    <value>96, 220</value>
   </data>
   <data name="CounterfeitCap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 20</value>
+    <value>110, 20</value>
   </data>
   <data name="CounterfeitCap.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -706,7 +916,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;CounterfeitCap.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>18</value>
   </data>
   <data name="label16.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -715,7 +925,7 @@
     <value>NoControl</value>
   </data>
   <data name="label16.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 263</value>
+    <value>16, 222</value>
   </data>
   <data name="label16.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 13</value>
@@ -736,13 +946,13 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label16.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>19</value>
   </data>
   <data name="SpaghettiCap.Location" type="System.Drawing.Point, System.Drawing">
-    <value>96, 231</value>
+    <value>96, 190</value>
   </data>
   <data name="SpaghettiCap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 20</value>
+    <value>110, 20</value>
   </data>
   <data name="SpaghettiCap.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -757,7 +967,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;SpaghettiCap.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>20</value>
   </data>
   <data name="label15.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -766,7 +976,7 @@
     <value>NoControl</value>
   </data>
   <data name="label15.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 233</value>
+    <value>16, 192</value>
   </data>
   <data name="label15.Size" type="System.Drawing.Size, System.Drawing">
     <value>63, 13</value>
@@ -787,7 +997,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label15.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>21</value>
   </data>
   <data name="label14.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -796,16 +1006,16 @@
     <value>NoControl</value>
   </data>
   <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 169</value>
+    <value>14, 160</value>
   </data>
   <data name="label14.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 13</value>
+    <value>35, 13</value>
   </data>
   <data name="label14.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
   <data name="label14.Text" xml:space="preserve">
-    <value>Spell Caps</value>
+    <value>Spells</value>
   </data>
   <data name="&gt;&gt;label14.Name" xml:space="preserve">
     <value>label14</value>
@@ -817,7 +1027,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>22</value>
   </data>
   <data name="AutoRebirth.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -847,7 +1057,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;AutoRebirth.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>23</value>
   </data>
   <data name="ManageWandoos.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -877,7 +1087,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageWandoos.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>24</value>
   </data>
   <data name="ManageDiggers.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -907,7 +1117,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageDiggers.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>25</value>
   </data>
   <data name="ManageGear.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -937,7 +1147,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageGear.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>26</value>
   </data>
   <data name="ManageMagic.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -967,7 +1177,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageMagic.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>27</value>
   </data>
   <data name="ManageEnergy.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -997,7 +1207,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageEnergy.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>28</value>
   </data>
   <data name="tabPage2.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>

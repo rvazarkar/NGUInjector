@@ -53,9 +53,9 @@ namespace NGUInjector
         [SerializeField] private int _spaghettiThreshold;
         [SerializeField] private int _counterfeitThreshold;
         [SerializeField] private bool _castBloodSpells;
-        [SerializeField] private double _ironPillThreshold;
-        [SerializeField] private double _bloodMacGuffinAThreshold;
-        [SerializeField] private double _bloodMacGuffinBThreshold;
+        [SerializeField] private int _ironPillThreshold;
+        [SerializeField] private int _bloodMacGuffinAThreshold;
+        [SerializeField] private int _bloodMacGuffinBThreshold;
         [SerializeField] private bool _autoBuyEm;
         [SerializeField] private double _bloodNumberThreshold;
         [SerializeField] private int[] _quickLoadout;
@@ -92,8 +92,6 @@ namespace NGUInjector
 
         private readonly string _savePath;
         private bool _disableSave;
-        
-
 
         public SavedSettings(string dir)
         {
@@ -666,7 +664,7 @@ namespace NGUInjector
             }
         }
 
-        public double IronPillThreshold
+        public int IronPillThreshold
         {
             get => _ironPillThreshold;
             set
@@ -677,7 +675,7 @@ namespace NGUInjector
             }
         }
 
-        public double BloodMacGuffinAThreshold
+        public int BloodMacGuffinAThreshold
         {
             get => _bloodMacGuffinAThreshold;
             set
@@ -688,7 +686,7 @@ namespace NGUInjector
             }
         }
 
-        public double BloodMacGuffinBThreshold
+        public int BloodMacGuffinBThreshold
         {
             get => _bloodMacGuffinBThreshold;
             set
@@ -1049,7 +1047,12 @@ namespace NGUInjector
         public bool DisableOverlay
         {
             get => _disableOverlay;
-            set => _disableOverlay = value;
+            set
+            {
+                if (value == _disableOverlay) return;
+                _disableOverlay = value;
+                SaveSettings();
+            }
         }
     }
 }
