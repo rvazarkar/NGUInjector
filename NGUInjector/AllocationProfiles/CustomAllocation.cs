@@ -406,7 +406,7 @@ namespace NGUInjector.AllocationProfiles
 
             if (Main.Settings.CastBloodSpells)
             {
-                CastBloodSpells();
+                CastBloodSpells(true);
             }
 
             _currentDiggerBreakpoint = null;
@@ -425,6 +425,15 @@ namespace NGUInjector.AllocationProfiles
 
         public void CastBloodSpells()
         {
+            CastBloodSpells(false);
+        }
+
+        public void CastBloodSpells(bool rebirth)
+        {
+            if (((_wrapper.Breakpoints.RebirthTime - _character.rebirthTime.totalseconds) < (30*60)) && !rebirth)
+            {
+                return;
+            }
             float iron = 0;
             long mcguffA = 0;
             long mcguffB = 0;
@@ -492,6 +501,7 @@ namespace NGUInjector.AllocationProfiles
                     Main.Log("Casting Failed Iron Blood Spell - Insufficient Power " + iron + " of " + Main.Settings.IronPillThreshold);
                 }
             }
+
         }
 
         public override void AllocateEnergy()
