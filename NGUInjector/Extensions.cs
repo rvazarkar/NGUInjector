@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using NGUInjector.AllocationProfiles;
 using NGUInjector.Managers;
 using UnityEngine;
 using static NGUInjector.Main;
@@ -44,6 +45,11 @@ namespace NGUInjector
             }).Where(x => x.id != 0);
         }
 
+        public static bool HasBoosts(this Inventory inv)
+        {
+            return inv.inventory.Any(x => x.id < 40 && x.id > 0);
+        }
+
         public static IEnumerable<ih> GetConvertedEquips(this Inventory inv)
         {
             var list = new List<ih>
@@ -54,7 +60,7 @@ namespace NGUInjector
 
             if (Controller.weapon2Unlocked())
             {
-                list.Add(inv.weapon.GetInventoryHelper(-6));
+                list.Add(inv.weapon2.GetInventoryHelper(-6));
             }
 
             list.AddRange(inv.accs.Select((t, i) => t.GetInventoryHelper(i + 10000)));
@@ -75,48 +81,112 @@ namespace NGUInjector
             var n = new BoostsNeeded();
 
             if (eq.capAttack != 0.0)
-                n.Power += CalcCap(eq.capAttack, eq.level) - eq.curAttack;
+                n.Power += CalcCap(eq.capAttack, eq.level) - (decimal)eq.curAttack;
 
             if (eq.capDefense != 0.0)
-                n.Toughness += CalcCap(eq.capDefense, eq.level) - eq.curDefense;
+                n.Toughness += CalcCap(eq.capDefense, eq.level) - (decimal)eq.curDefense;
 
             if (eq.spec1Type != specType.None)
-                n.Special += CalcCap(eq.spec1Cap, eq.level) - eq.spec1Cur;
+                n.Special += CalcCap(eq.spec1Cap, eq.level) - (decimal)eq.spec1Cur;
 
             if (eq.spec2Type != specType.None)
-                n.Special += CalcCap(eq.spec2Cap, eq.level) - eq.spec2Cur;
+                n.Special += CalcCap(eq.spec2Cap, eq.level) - (decimal)eq.spec2Cur;
 
             if (eq.spec3Type != specType.None)
-                n.Special += CalcCap(eq.spec3Cap, eq.level) - eq.spec3Cur;
+                n.Special += CalcCap(eq.spec3Cap, eq.level) - (decimal)eq.spec3Cur;
 
             return n;
         }
 
-        private static float CalcCap(float cap, float level)
+        private static decimal CalcCap(float cap, float level)
         {
-            return Mathf.Floor(cap * (float)(1.0 + level / 100.0));
+            return (decimal)Mathf.Floor(cap * (float)(1.0 + level / 100.0));
         }
 
-        public static void CopyPropertiesTo<T, TU>(this T source, TU dest)
+        internal static void DoAllocations(this CustomAllocation allocation)
         {
-            var sourceProps = typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic).Where(x => x.CanRead).ToList();
-            var destProps = typeof(TU).GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic)
-                .Where(x => x.CanWrite)
-                .ToList();
+            if (allocation.IsAllocationRunning)
+                return;
 
-            foreach (var sourceProp in sourceProps)
+            allocation.IsAllocationRunning = true;
+
+            if (Settings.ManageNGUDiff)
+                allocation.SwapNGUDiff();
+            if (Settings.ManageGear)
+                allocation.EquipGear();
+            if (Settings.ManageEnergy)
+                allocation.AllocateEnergy();
+            if (Settings.ManageMagic)
+                allocation.AllocateMagic();
+            if (Settings.ManageR3)
+                allocation.AllocateR3();
+
+            if (Settings.ManageDiggers && Main.Character.buttons.diggers.interactable)
             {
-                if (destProps.Any(x => x.Name == sourceProp.Name))
-                {
-                    var p = destProps.First(x => x.Name == sourceProp.Name);
-                    if (p.CanWrite)
-                    { // check if the property can be set or no.
-                        p.SetValue(dest, sourceProp.GetValue(source, null), null);
-                    }
-                }
-
+                allocation.EquipDiggers();
+                DiggerManager.RecapDiggers();
             }
 
+            if (Settings.ManageWandoos && Main.Character.buttons.wandoos.interactable)
+                allocation.SwapOS();
+
+            allocation.IsAllocationRunning = false;
+        }
+
+        //Function from https://www.dotnetperls.com/pretty-date
+        internal static string GetPrettyDate(this DateTime d)
+        {
+            // 1.
+            // Get time span elapsed since the date.
+            var s = DateTime.Now.Subtract(d);
+
+            // 2.
+            // Get total number of days elapsed.
+            var dayDiff = (int)s.TotalDays;
+
+            // 3.
+            // Get total number of seconds elapsed.
+            var secDiff = (int)s.TotalSeconds;
+
+            // 4.
+            // Don't allow out of range values.
+            if (dayDiff < 0 || dayDiff >= 31)
+                return null;
+
+            // 5.
+            // Handle same-day times.
+            if (dayDiff == 0)
+            {
+                // A.
+                // Less than one minute ago.
+                if (secDiff < 60)
+                    return "just now";
+                // B.
+                // Less than 2 minutes ago.
+                if (secDiff < 120)
+                    return "1 minute ago";
+                // C.
+                // Less than one hour ago.
+                if (secDiff < 3600)
+                    return $"{Math.Floor((double) secDiff / 60)} minutes ago";
+                // D.
+                // Less than 2 hours ago.
+                if (secDiff < 7200)
+                    return "1 hour ago";
+                // E.
+                // Less than one day ago.
+                if (secDiff < 86400)
+                    return $"{Math.Floor((double) secDiff / 3600)} hours ago";
+            }
+            // 6.
+            // Handle previous days.
+            if (dayDiff == 1)
+                return "yesterday";
+            if (dayDiff < 7)
+                return $"{dayDiff} days ago";
+            if (dayDiff < 31)
+                return $"{Math.Ceiling((double) dayDiff / 7)} weeks ago";
+            return null;
         }
     }
 }

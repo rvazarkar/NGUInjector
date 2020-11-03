@@ -22,6 +22,7 @@ namespace NGUInjector
         [SerializeField] private bool _fastCombat;
         [SerializeField] private bool _manageGear;
         [SerializeField] private bool _manageDiggers;
+        [SerializeField] private bool _upgradeDiggers;
         [SerializeField] private bool _manageYggdrasil;
         [SerializeField] private int[] _titanLoadout;
         [SerializeField] private int[] _yggdrasilLoadout;
@@ -37,10 +38,8 @@ namespace NGUInjector
         [SerializeField] private int[] _moneyPitLoadout;
         [SerializeField] private bool _autoRebirth;
         [SerializeField] private bool _manageWandoos;
-        [SerializeField] private int _initialGoldZone = -1;
         [SerializeField] private double _moneyPitThreshold;
-        [SerializeField] private bool _nextGoldSwap;
-        [SerializeField] private int _goldZone = -1;
+        [SerializeField] private bool _doGoldSwap;
         [SerializeField] private int[] _boostBlacklist;
         [SerializeField] private bool _snipeBossOnly;
         [SerializeField] private bool _recoverHealth;
@@ -53,6 +52,10 @@ namespace NGUInjector
         [SerializeField] private bool _autoSpellSwap;
         [SerializeField] private int _spaghettiThreshold;
         [SerializeField] private int _counterfeitThreshold;
+        [SerializeField] private bool _castBloodSpells;
+        [SerializeField] private int _ironPillThreshold;
+        [SerializeField] private int _bloodMacGuffinAThreshold;
+        [SerializeField] private int _bloodMacGuffinBThreshold;
         [SerializeField] private bool _autoBuyEm;
         [SerializeField] private double _bloodNumberThreshold;
         [SerializeField] private int[] _quickLoadout;
@@ -65,11 +68,30 @@ namespace NGUInjector
         [SerializeField] private bool _manageR3;
         [SerializeField] private bool _activateFruits;
         [SerializeField] private int[] _wishPriorities;
+        [SerializeField] private bool _wishSortPriorities;
+        [SerializeField] private bool _wishSortOrder;        
         [SerializeField] private bool _beastMode;
         [SerializeField] private int _cubePriority;
+        [SerializeField] private bool _manageNguDiff;
+        [SerializeField] private string _allocationFile;
+        [SerializeField] private bool _manageGoldLoadouts;
+        [SerializeField] private int _resnipeTime;
+        [SerializeField] private bool[] _titanMoneyDone;
+        [SerializeField] private bool[] _titanGoldTargets;
+        [SerializeField] private bool[] _titanSwapTargets;
+        [SerializeField] private bool _goldCBlockMode;
+        [SerializeField] private bool _debugAllocation;
+        [SerializeField] private bool _optimizeItopodFloor;
+        [SerializeField] private int _itopodCombatMode;
+        [SerializeField] private bool _itopodBeastMode;
+        [SerializeField] private bool _itopodFastCombat;
+        [SerializeField] private bool _itopodRecoverHp;
+        [SerializeField] private bool _itopodPrecastBuffs;
+        [SerializeField] private bool _adventureTargetItopod;
+        [SerializeField] private bool _disableOverlay;
 
         private readonly string _savePath;
-        
+        private bool _disableSave;
 
         public SavedSettings(string dir)
         {
@@ -80,6 +102,7 @@ namespace NGUInjector
         internal void SaveSettings()
         {
             if (_savePath == null) return;
+            if (_disableSave) return;
             Main.Log("Saving Settings");
             Main.IgnoreNextChange = true;
             var serialized = JsonUtility.ToJson(this, true);
@@ -88,6 +111,12 @@ namespace NGUInjector
                 writer.Write(serialized);
                 writer.Flush();
             }
+            Main.UpdateForm(this);
+        }
+
+        internal void SetSaveDisabled(bool disabled)
+        {
+            _disableSave = disabled;
         }
 
         internal bool LoadSettings()
@@ -153,9 +182,7 @@ namespace NGUInjector
 
             _autoRebirth = other.AutoRebirth;
             _manageWandoos = other.ManageWandoos;
-            _initialGoldZone = other.InitialGoldZone;
-            _nextGoldSwap = other.NextGoldSwap;
-            _goldZone = other.GoldZone;
+            _doGoldSwap = other.DoGoldSwap;
 
             _combatMode = other.CombatMode;
             _recoverHealth = other.RecoverHealth;
@@ -168,6 +195,10 @@ namespace NGUInjector
             _autoSpellSwap = other.AutoSpellSwap;
             _counterfeitThreshold = other.CounterfeitThreshold;
             _spaghettiThreshold = other.SpaghettiThreshold;
+            _castBloodSpells = other.CastBloodSpells;
+            _ironPillThreshold = other.IronPillThreshold;
+            _bloodMacGuffinAThreshold = other.BloodMacGuffinAThreshold;
+            _bloodMacGuffinBThreshold = other.BloodMacGuffinBThreshold;
             _autoBuyEm = other.AutoBuyEM;
             _bloodNumberThreshold = other.BloodNumberThreshold;
             _quickDiggers = other.QuickDiggers;
@@ -180,8 +211,28 @@ namespace NGUInjector
             _manageR3 = other.ManageR3;
             _activateFruits = other.ActivateFruits;
             _wishPriorities = other.WishPriorities;
+            _wishSortPriorities = other.WishSortPriorities;
+            _wishSortOrder = other.WishSortOrder;
             _beastMode = other.BeastMode;
             _cubePriority = other.CubePriority;
+            _manageNguDiff = other.ManageNGUDiff;
+            _allocationFile = other.AllocationFile;
+            _manageGoldLoadouts = other.ManageGoldLoadouts;
+            _titanGoldTargets = other.TitanGoldTargets;
+            _titanSwapTargets = other.TitanSwapTargets;
+            _titanMoneyDone = other.TitanMoneyDone;
+            _resnipeTime = other.ResnipeTime;
+            _goldCBlockMode = other.GoldCBlockMode;
+            _debugAllocation = other.DebugAllocation;
+            _optimizeItopodFloor = other.OptimizeITOPODFloor;
+            _adventureTargetItopod = other.AdventureTargetITOPOD;
+            _itopodBeastMode = other.ITOPODBeastMode;
+            _itopodCombatMode = other.ITOPODCombatMode;
+            _itopodFastCombat = other.ITOPODFastCombat;
+            _itopodPrecastBuffs = other.ITOPODPrecastBuffs;
+            _itopodRecoverHp = other.ITOPODRecoverHP;
+            _disableOverlay = other.DisableOverlay;
+            _upgradeDiggers = other._upgradeDiggers;
         }
 
         public int HighestAKZone
@@ -323,6 +374,16 @@ namespace NGUInjector
             }
         }
 
+        public bool UpgradeDiggers
+        {
+            get => _upgradeDiggers;
+            set
+            {
+                if (value == _upgradeDiggers) return;
+                _upgradeDiggers = value; SaveSettings();
+            }
+        }
+
         public bool ManageInventory
         {
             get => _manageInventory;
@@ -451,17 +512,6 @@ namespace NGUInjector
             }
         }
 
-        public int InitialGoldZone
-        {
-            get => _initialGoldZone;
-            set
-            {
-                if (value == _initialGoldZone) return;
-                _initialGoldZone = value;
-                SaveSettings();
-            }
-        }
-
         public double MoneyPitThreshold
         {
             get => _moneyPitThreshold;
@@ -472,28 +522,17 @@ namespace NGUInjector
             }
         }
 
-        public bool NextGoldSwap
+        public bool DoGoldSwap
         {
-            get => _nextGoldSwap;
+            get => _doGoldSwap;
             set
             {
-                if (value == _nextGoldSwap) return;
-                _nextGoldSwap = value;
+                if (value == _doGoldSwap) return;
+                _doGoldSwap = value;
                 SaveSettings();
             }
         }
-
-        public int GoldZone
-        {
-            get => _goldZone;
-            set
-            {
-                if (value == _goldZone) return;
-                _goldZone = value;
-                SaveSettings();
-            }
-        }
-
+        
         public bool SnipeBossOnly
         {
             get => _snipeBossOnly;
@@ -610,6 +649,50 @@ namespace NGUInjector
             {
                 if (value == _spaghettiThreshold) return;
                 _spaghettiThreshold = value;
+                SaveSettings();
+            }
+        }
+
+        public bool CastBloodSpells
+        {
+            get => _castBloodSpells;
+            set
+            {
+                if (value == _castBloodSpells) return;
+                _castBloodSpells = value;
+                SaveSettings();
+            }
+        }
+
+        public int IronPillThreshold
+        {
+            get => _ironPillThreshold;
+            set
+            {
+                if (value == _ironPillThreshold) return;
+                _ironPillThreshold = value;
+                SaveSettings();
+            }
+        }
+
+        public int BloodMacGuffinAThreshold
+        {
+            get => _bloodMacGuffinAThreshold;
+            set
+            {
+                if (value == _bloodMacGuffinAThreshold) return;
+                _bloodMacGuffinAThreshold = value;
+                SaveSettings();
+            }
+        }
+
+        public int BloodMacGuffinBThreshold
+        {
+            get => _bloodMacGuffinBThreshold;
+            set
+            {
+                if (value == _bloodMacGuffinBThreshold) return;
+                _bloodMacGuffinBThreshold = value;
                 SaveSettings();
             }
         }
@@ -746,6 +829,28 @@ namespace NGUInjector
             }
         }
 
+        public bool WishSortPriorities
+        {
+            get => _wishSortPriorities;
+            set
+            {
+                if (value == _wishSortPriorities) return;
+                _wishSortPriorities = value;
+                SaveSettings();
+            }
+        }
+
+        public bool WishSortOrder
+        {
+            get => _wishSortOrder;
+            set
+            {
+                if (value == _wishSortOrder) return;
+                _wishSortOrder = value;
+                SaveSettings();
+            }
+        }
+
         public bool BeastMode
         {
             get => _beastMode;
@@ -764,6 +869,188 @@ namespace NGUInjector
             {
                 if (value == _cubePriority) return;
                 _cubePriority = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ManageNGUDiff
+        {
+            get => _manageNguDiff;
+            set
+            {
+                if (value == _manageNguDiff) return;
+                _manageNguDiff = value;
+                SaveSettings();
+            }
+        }
+
+        public string AllocationFile
+        {
+            get => _allocationFile;
+            set
+            {
+                if (value == _allocationFile) return;
+                _allocationFile = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ManageGoldLoadouts
+        {
+            get => _manageGoldLoadouts;
+            set
+            {
+                if (value == _manageGoldLoadouts) return;
+                _manageGoldLoadouts = value;
+                SaveSettings();
+            }
+        }
+
+        public int ResnipeTime
+        {
+            get => _resnipeTime;
+            set
+            {
+                if (value == _resnipeTime) return;
+                _resnipeTime = value;
+                SaveSettings();
+            }
+        }
+
+        public bool[] TitanMoneyDone
+        {
+            get => _titanMoneyDone;
+            set
+            {
+                if (_titanMoneyDone != null && _titanMoneyDone.SequenceEqual(value)) return;
+                _titanMoneyDone = value;
+                SaveSettings();
+            }
+        }
+
+        public bool[] TitanGoldTargets
+        {
+            get => _titanGoldTargets;
+            set
+            {
+                if (_titanGoldTargets != null && _titanGoldTargets.SequenceEqual(value)) return;
+                _titanGoldTargets = value;
+                SaveSettings();
+            }
+        }
+
+        public bool[] TitanSwapTargets
+        {
+            get => _titanSwapTargets;
+            set
+            {
+                if (_titanSwapTargets != null && _titanSwapTargets.SequenceEqual(value)) return;
+                _titanSwapTargets = value;
+                SaveSettings();
+            }
+        }
+
+        public bool GoldCBlockMode
+        {
+            get => _goldCBlockMode;
+            set
+            {
+                if (value == _goldCBlockMode) return;
+                _goldCBlockMode = value;
+                SaveSettings();
+            }
+        }
+
+        public bool DebugAllocation
+        {
+            get => _debugAllocation;
+            set => _debugAllocation = value;
+        }
+
+        public bool OptimizeITOPODFloor
+        {
+            get => _optimizeItopodFloor;
+            set
+            {
+                if (value == _optimizeItopodFloor) return;
+                _optimizeItopodFloor = value;
+                SaveSettings();
+            }
+        }
+
+        public bool AdventureTargetITOPOD
+        {
+            get => _adventureTargetItopod;
+            set
+            {
+                if (value == _adventureTargetItopod) return;
+                _adventureTargetItopod = value;
+                SaveSettings();
+            }
+        }
+
+        public int ITOPODCombatMode
+        {
+            get => _itopodCombatMode;
+            set
+            {
+                if (value == _itopodCombatMode) return;
+                _itopodCombatMode = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ITOPODBeastMode
+        {
+            get => _itopodBeastMode;
+            set
+            {
+                if (value == _itopodBeastMode) return;
+                _itopodBeastMode = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ITOPODFastCombat
+        {
+            get => _itopodFastCombat;
+            set
+            {
+                if (value == _itopodFastCombat) return;
+                _itopodFastCombat = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ITOPODRecoverHP
+        {
+            get => _itopodRecoverHp;
+            set
+            {
+                if (value == _itopodRecoverHp) return;
+                _itopodRecoverHp = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ITOPODPrecastBuffs
+        {
+            get => _itopodPrecastBuffs;
+            set
+            {
+                if (value == _itopodPrecastBuffs) return;
+                _itopodPrecastBuffs = value;
+                SaveSettings();
+            }
+        }
+
+        public bool DisableOverlay
+        {
+            get => _disableOverlay;
+            set
+            {
+                if (value == _disableOverlay) return;
+                _disableOverlay = value;
                 SaveSettings();
             }
         }

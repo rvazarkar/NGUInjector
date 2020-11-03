@@ -30,21 +30,29 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.moneyPitError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.yggErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.invPrioErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.invBlacklistErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.titanErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.goldErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.numberErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.wishErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.DisableOverlay = new System.Windows.Forms.CheckBox();
+            this.UnloadSafety = new System.Windows.Forms.CheckBox();
+            this.UnloadButton = new System.Windows.Forms.Button();
             this.VersionLabel = new System.Windows.Forms.Label();
             this.AutoBuyEM = new System.Windows.Forms.CheckBox();
-            this.MoneyPitThresholdSave = new System.Windows.Forms.Button();
-            this.MoneyPitThreshold = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.MasterEnable = new System.Windows.Forms.CheckBox();
-            this.AutoMoneyPit = new System.Windows.Forms.CheckBox();
-            this.AutoDailySpin = new System.Windows.Forms.CheckBox();
             this.AutoFightBosses = new System.Windows.Forms.CheckBox();
             this.AutoITOPOD = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ManageNGUDiff = new System.Windows.Forms.CheckBox();
+            this.ChangeProfileFile = new System.Windows.Forms.Button();
+            this.AllocationProfileFileLabel = new System.Windows.Forms.Label();
+            this.AllocationProfileFile = new System.Windows.Forms.ComboBox();
             this.ManageR3 = new System.Windows.Forms.CheckBox();
             this.BloodNumberThreshold = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -63,6 +71,8 @@
             this.ManageMagic = new System.Windows.Forms.CheckBox();
             this.ManageEnergy = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.HarvestSafety = new System.Windows.Forms.CheckBox();
+            this.HarvestAllButton = new System.Windows.Forms.Button();
             this.ActivateFruits = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.yggRemoveButton = new System.Windows.Forms.Button();
@@ -73,6 +83,8 @@
             this.YggdrasilSwap = new System.Windows.Forms.CheckBox();
             this.ManageYggdrasil = new System.Windows.Forms.CheckBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.CubePriority = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
             this.prioDownButton = new System.Windows.Forms.Button();
             this.prioUpButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -90,6 +102,9 @@
             this.ManageInventory = new System.Windows.Forms.CheckBox();
             this.ManageBoostConvert = new System.Windows.Forms.CheckBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.label9 = new System.Windows.Forms.Label();
+            this.TitanSwapTargets = new System.Windows.Forms.ListView();
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label1 = new System.Windows.Forms.Label();
             this.HighestTitanDropdown = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -100,6 +115,17 @@
             this.titanLoadout = new System.Windows.Forms.ListBox();
             this.SwapTitanLoadout = new System.Windows.Forms.CheckBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.ITOPODBeastMode = new System.Windows.Forms.CheckBox();
+            this.ITOPODRecoverHP = new System.Windows.Forms.CheckBox();
+            this.ITOPODFastCombat = new System.Windows.Forms.CheckBox();
+            this.ITOPODPrecastBuffs = new System.Windows.Forms.CheckBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.ITOPODCombatMode = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.TargetITOPOD = new System.Windows.Forms.CheckBox();
+            this.OptimizeITOPOD = new System.Windows.Forms.CheckBox();
+            this.BeastMode = new System.Windows.Forms.CheckBox();
             this.AllowFallthrough = new System.Windows.Forms.CheckBox();
             this.RecoverHealth = new System.Windows.Forms.CheckBox();
             this.FastCombat = new System.Windows.Forms.CheckBox();
@@ -111,6 +137,15 @@
             this.BossesOnly = new System.Windows.Forms.CheckBox();
             this.CombatActive = new System.Windows.Forms.CheckBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.CBlockMode = new System.Windows.Forms.CheckBox();
+            this.ResetTitanStatus = new System.Windows.Forms.Button();
+            this.label21 = new System.Windows.Forms.Label();
+            this.TitanGoldTargets = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.SaveResnipeButton = new System.Windows.Forms.Button();
+            this.ResnipeInput = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
+            this.ManageGoldLoadouts = new System.Windows.Forms.CheckBox();
             this.UseGoldLoadout = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.GoldLoadoutRemove = new System.Windows.Forms.Button();
@@ -118,10 +153,6 @@
             this.GoldItemLabel = new System.Windows.Forms.Label();
             this.GoldLoadoutAdd = new System.Windows.Forms.Button();
             this.GoldLoadout = new System.Windows.Forms.ListBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.InitialGoldTarget = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.GoldLoadoutZone = new System.Windows.Forms.ComboBox();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.ButterMinors = new System.Windows.Forms.CheckBox();
             this.ButterMajors = new System.Windows.Forms.CheckBox();
@@ -134,27 +165,45 @@
             this.QuestCombatMode = new System.Windows.Forms.ComboBox();
             this.AllowMajor = new System.Windows.Forms.CheckBox();
             this.ManageQuests = new System.Windows.Forms.CheckBox();
-            this.moneyPitError = new System.Windows.Forms.ErrorProvider(this.components);
-            this.yggErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.invPrioErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.invBlacklistErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.titanErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.goldErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.numberErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.WishDownButton = new System.Windows.Forms.Button();
+            this.WishUpButton = new System.Windows.Forms.Button();
+            this.RemoveWishButton = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.WishAddInput = new System.Windows.Forms.NumericUpDown();
             this.AddWishLabel = new System.Windows.Forms.Label();
             this.AddWishButton = new System.Windows.Forms.Button();
             this.WishPriority = new System.Windows.Forms.ListBox();
-            this.WishDownButton = new System.Windows.Forms.Button();
-            this.WishUpButton = new System.Windows.Forms.Button();
-            this.RemoveWishButton = new System.Windows.Forms.Button();
-            this.wishErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.BeastMode = new System.Windows.Forms.CheckBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.CubePriority = new System.Windows.Forms.ComboBox();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.label25 = new System.Windows.Forms.Label();
+            this.MoneyPitRemove = new System.Windows.Forms.Button();
+            this.MoneyPitInput = new System.Windows.Forms.NumericUpDown();
+            this.MoneyPitLabel = new System.Windows.Forms.Label();
+            this.MoneyPitAdd = new System.Windows.Forms.Button();
+            this.MoneyPitLoadout = new System.Windows.Forms.ListBox();
+            this.MoneyPitThresholdSave = new System.Windows.Forms.Button();
+            this.MoneyPitThreshold = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.AutoMoneyPit = new System.Windows.Forms.CheckBox();
+            this.AutoDailySpin = new System.Windows.Forms.CheckBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.UpgradeDiggers = new System.Windows.Forms.CheckBox();
+            this.GuffBThreshold = new System.Windows.Forms.NumericUpDown();
+            this.label26 = new System.Windows.Forms.Label();
+            this.GuffAThreshold = new System.Windows.Forms.NumericUpDown();
+            this.label27 = new System.Windows.Forms.Label();
+            this.IronPillThreshold = new System.Windows.Forms.NumericUpDown();
+            this.label123 = new System.Windows.Forms.Label();
+            this.CastBloodSpells = new System.Windows.Forms.CheckBox();
+            ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.invBlacklistErrProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.titanErrProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goldErrorProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numberErrProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wishErrorProvider)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -169,33 +218,51 @@
             ((System.ComponentModel.ISupportInitialize)(this.titanAddItem)).BeginInit();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ResnipeInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GoldItemBox)).BeginInit();
             this.tabPage8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AbandonMinorThreshold)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.invBlacklistErrProvider)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.titanErrProvider)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goldErrorProvider)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numberErrProvider)).BeginInit();
             this.tabPage9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WishAddInput)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.wishErrorProvider)).BeginInit();
+            this.tabPage10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MoneyPitInput)).BeginInit();
+            this.flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GuffBThreshold)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GuffAThreshold)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IronPillThreshold)).BeginInit();
             this.SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // moneyPitError
             // 
-            resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
-            this.tableLayoutPanel1.Controls.Add(this.progressBar1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 1);
-            this.tableLayoutPanel1.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.moneyPitError.ContainerControl = this;
             // 
-            // progressBar1
+            // yggErrorProvider
             // 
-            resources.ApplyResources(this.progressBar1, "progressBar1");
-            this.progressBar1.Name = "progressBar1";
+            this.yggErrorProvider.ContainerControl = this;
+            // 
+            // invPrioErrorProvider
+            // 
+            this.invPrioErrorProvider.ContainerControl = this;
+            // 
+            // invBlacklistErrProvider
+            // 
+            this.invBlacklistErrProvider.ContainerControl = this;
+            // 
+            // titanErrProvider
+            // 
+            this.titanErrProvider.ContainerControl = this;
+            // 
+            // goldErrorProvider
+            // 
+            this.goldErrorProvider.ContainerControl = this;
+            // 
+            // numberErrProvider
+            // 
+            this.numberErrProvider.ContainerControl = this;
+            // 
+            // wishErrorProvider
+            // 
+            this.wishErrorProvider.ContainerControl = this;
             // 
             // tabControl1
             // 
@@ -208,25 +275,45 @@
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Controls.Add(this.tabPage9);
+            this.tabControl1.Controls.Add(this.tabPage10);
             resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.DisableOverlay);
+            this.tabPage1.Controls.Add(this.UnloadSafety);
+            this.tabPage1.Controls.Add(this.UnloadButton);
             this.tabPage1.Controls.Add(this.VersionLabel);
             this.tabPage1.Controls.Add(this.AutoBuyEM);
-            this.tabPage1.Controls.Add(this.MoneyPitThresholdSave);
-            this.tabPage1.Controls.Add(this.MoneyPitThreshold);
-            this.tabPage1.Controls.Add(this.label7);
             this.tabPage1.Controls.Add(this.MasterEnable);
-            this.tabPage1.Controls.Add(this.AutoMoneyPit);
-            this.tabPage1.Controls.Add(this.AutoDailySpin);
             this.tabPage1.Controls.Add(this.AutoFightBosses);
             this.tabPage1.Controls.Add(this.AutoITOPOD);
             resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // DisableOverlay
+            // 
+            resources.ApplyResources(this.DisableOverlay, "DisableOverlay");
+            this.DisableOverlay.Name = "DisableOverlay";
+            this.DisableOverlay.UseVisualStyleBackColor = true;
+            this.DisableOverlay.CheckedChanged += new System.EventHandler(this.DisableOverlay_CheckedChanged);
+            // 
+            // UnloadSafety
+            // 
+            resources.ApplyResources(this.UnloadSafety, "UnloadSafety");
+            this.UnloadSafety.Name = "UnloadSafety";
+            this.UnloadSafety.UseVisualStyleBackColor = true;
+            this.UnloadSafety.CheckedChanged += new System.EventHandler(this.UnloadSafety_CheckedChanged);
+            // 
+            // UnloadButton
+            // 
+            resources.ApplyResources(this.UnloadButton, "UnloadButton");
+            this.UnloadButton.Name = "UnloadButton";
+            this.UnloadButton.UseVisualStyleBackColor = true;
+            this.UnloadButton.Click += new System.EventHandler(this.UnloadButton_Click);
             // 
             // VersionLabel
             // 
@@ -240,44 +327,12 @@
             this.AutoBuyEM.UseVisualStyleBackColor = true;
             this.AutoBuyEM.CheckedChanged += new System.EventHandler(this.AutoBuyEM_CheckedChanged);
             // 
-            // MoneyPitThresholdSave
-            // 
-            resources.ApplyResources(this.MoneyPitThresholdSave, "MoneyPitThresholdSave");
-            this.MoneyPitThresholdSave.Name = "MoneyPitThresholdSave";
-            this.MoneyPitThresholdSave.UseVisualStyleBackColor = true;
-            this.MoneyPitThresholdSave.Click += new System.EventHandler(this.MoneyPitThresholdSave_Click);
-            // 
-            // MoneyPitThreshold
-            // 
-            resources.ApplyResources(this.MoneyPitThreshold, "MoneyPitThreshold");
-            this.MoneyPitThreshold.Name = "MoneyPitThreshold";
-            this.MoneyPitThreshold.TextChanged += new System.EventHandler(this.MoneyPitThreshold_TextChanged_1);
-            // 
-            // label7
-            // 
-            resources.ApplyResources(this.label7, "label7");
-            this.label7.Name = "label7";
-            // 
             // MasterEnable
             // 
             resources.ApplyResources(this.MasterEnable, "MasterEnable");
             this.MasterEnable.Name = "MasterEnable";
             this.MasterEnable.UseVisualStyleBackColor = true;
             this.MasterEnable.CheckedChanged += new System.EventHandler(this.MasterEnable_CheckedChanged);
-            // 
-            // AutoMoneyPit
-            // 
-            resources.ApplyResources(this.AutoMoneyPit, "AutoMoneyPit");
-            this.AutoMoneyPit.Name = "AutoMoneyPit";
-            this.AutoMoneyPit.UseVisualStyleBackColor = true;
-            this.AutoMoneyPit.CheckedChanged += new System.EventHandler(this.AutoMoneyPit_CheckedChanged);
-            // 
-            // AutoDailySpin
-            // 
-            resources.ApplyResources(this.AutoDailySpin, "AutoDailySpin");
-            this.AutoDailySpin.Name = "AutoDailySpin";
-            this.AutoDailySpin.UseVisualStyleBackColor = true;
-            this.AutoDailySpin.CheckedChanged += new System.EventHandler(this.AutoDailySpin_CheckedChanged);
             // 
             // AutoFightBosses
             // 
@@ -295,6 +350,18 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.CastBloodSpells);
+            this.tabPage2.Controls.Add(this.IronPillThreshold);
+            this.tabPage2.Controls.Add(this.label123);
+            this.tabPage2.Controls.Add(this.GuffBThreshold);
+            this.tabPage2.Controls.Add(this.label26);
+            this.tabPage2.Controls.Add(this.GuffAThreshold);
+            this.tabPage2.Controls.Add(this.label27);
+            this.tabPage2.Controls.Add(this.UpgradeDiggers);
+            this.tabPage2.Controls.Add(this.ManageNGUDiff);
+            this.tabPage2.Controls.Add(this.ChangeProfileFile);
+            this.tabPage2.Controls.Add(this.AllocationProfileFileLabel);
+            this.tabPage2.Controls.Add(this.AllocationProfileFile);
             this.tabPage2.Controls.Add(this.ManageR3);
             this.tabPage2.Controls.Add(this.BloodNumberThreshold);
             this.tabPage2.Controls.Add(this.label18);
@@ -315,6 +382,31 @@
             resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // ManageNGUDiff
+            // 
+            resources.ApplyResources(this.ManageNGUDiff, "ManageNGUDiff");
+            this.ManageNGUDiff.Name = "ManageNGUDiff";
+            this.ManageNGUDiff.UseVisualStyleBackColor = true;
+            this.ManageNGUDiff.CheckedChanged += new System.EventHandler(this.ManageNGUDiff_CheckedChanged);
+            // 
+            // ChangeProfileFile
+            // 
+            resources.ApplyResources(this.ChangeProfileFile, "ChangeProfileFile");
+            this.ChangeProfileFile.Name = "ChangeProfileFile";
+            this.ChangeProfileFile.UseVisualStyleBackColor = true;
+            this.ChangeProfileFile.Click += new System.EventHandler(this.ChangeProfileFile_Click);
+            // 
+            // AllocationProfileFileLabel
+            // 
+            resources.ApplyResources(this.AllocationProfileFileLabel, "AllocationProfileFileLabel");
+            this.AllocationProfileFileLabel.Name = "AllocationProfileFileLabel";
+            // 
+            // AllocationProfileFile
+            // 
+            this.AllocationProfileFile.FormattingEnabled = true;
+            resources.ApplyResources(this.AllocationProfileFile, "AllocationProfileFile");
+            this.AllocationProfileFile.Name = "AllocationProfileFile";
             // 
             // ManageR3
             // 
@@ -432,6 +524,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.HarvestSafety);
+            this.tabPage3.Controls.Add(this.HarvestAllButton);
             this.tabPage3.Controls.Add(this.ActivateFruits);
             this.tabPage3.Controls.Add(this.label3);
             this.tabPage3.Controls.Add(this.yggRemoveButton);
@@ -444,6 +538,20 @@
             resources.ApplyResources(this.tabPage3, "tabPage3");
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // HarvestSafety
+            // 
+            resources.ApplyResources(this.HarvestSafety, "HarvestSafety");
+            this.HarvestSafety.Name = "HarvestSafety";
+            this.HarvestSafety.UseVisualStyleBackColor = true;
+            this.HarvestSafety.CheckedChanged += new System.EventHandler(this.HarvestSafety_CheckedChanged);
+            // 
+            // HarvestAllButton
+            // 
+            resources.ApplyResources(this.HarvestAllButton, "HarvestAllButton");
+            this.HarvestAllButton.Name = "HarvestAllButton";
+            this.HarvestAllButton.UseVisualStyleBackColor = true;
+            this.HarvestAllButton.Click += new System.EventHandler(this.HarvestAllButton_Click);
             // 
             // ActivateFruits
             // 
@@ -544,6 +652,18 @@
             resources.ApplyResources(this.tabPage4, "tabPage4");
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // CubePriority
+            // 
+            this.CubePriority.FormattingEnabled = true;
+            resources.ApplyResources(this.CubePriority, "CubePriority");
+            this.CubePriority.Name = "CubePriority";
+            this.CubePriority.SelectedIndexChanged += new System.EventHandler(this.CubePriority_SelectedIndexChanged);
+            // 
+            // label20
+            // 
+            resources.ApplyResources(this.label20, "label20");
+            this.label20.Name = "label20";
             // 
             // prioDownButton
             // 
@@ -673,6 +793,8 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.label9);
+            this.tabPage5.Controls.Add(this.TitanSwapTargets);
             this.tabPage5.Controls.Add(this.label1);
             this.tabPage5.Controls.Add(this.HighestTitanDropdown);
             this.tabPage5.Controls.Add(this.label8);
@@ -685,6 +807,27 @@
             resources.ApplyResources(this.tabPage5, "tabPage5");
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            resources.ApplyResources(this.label9, "label9");
+            this.label9.Name = "label9";
+            // 
+            // TitanSwapTargets
+            // 
+            this.TitanSwapTargets.CheckBoxes = true;
+            this.TitanSwapTargets.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader2});
+            this.TitanSwapTargets.HideSelection = false;
+            resources.ApplyResources(this.TitanSwapTargets, "TitanSwapTargets");
+            this.TitanSwapTargets.Name = "TitanSwapTargets";
+            this.TitanSwapTargets.UseCompatibleStateImageBehavior = false;
+            this.TitanSwapTargets.View = System.Windows.Forms.View.Details;
+            this.TitanSwapTargets.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.TitanSwapTargets_ItemChecked);
+            // 
+            // columnHeader2
+            // 
+            resources.ApplyResources(this.columnHeader2, "columnHeader2");
             // 
             // label1
             // 
@@ -756,6 +899,16 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.ITOPODBeastMode);
+            this.tabPage6.Controls.Add(this.ITOPODRecoverHP);
+            this.tabPage6.Controls.Add(this.ITOPODFastCombat);
+            this.tabPage6.Controls.Add(this.ITOPODPrecastBuffs);
+            this.tabPage6.Controls.Add(this.label24);
+            this.tabPage6.Controls.Add(this.ITOPODCombatMode);
+            this.tabPage6.Controls.Add(this.label22);
+            this.tabPage6.Controls.Add(this.label23);
+            this.tabPage6.Controls.Add(this.TargetITOPOD);
+            this.tabPage6.Controls.Add(this.OptimizeITOPOD);
             this.tabPage6.Controls.Add(this.BeastMode);
             this.tabPage6.Controls.Add(this.AllowFallthrough);
             this.tabPage6.Controls.Add(this.RecoverHealth);
@@ -770,6 +923,81 @@
             resources.ApplyResources(this.tabPage6, "tabPage6");
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // ITOPODBeastMode
+            // 
+            resources.ApplyResources(this.ITOPODBeastMode, "ITOPODBeastMode");
+            this.ITOPODBeastMode.Name = "ITOPODBeastMode";
+            this.ITOPODBeastMode.UseVisualStyleBackColor = true;
+            this.ITOPODBeastMode.CheckedChanged += new System.EventHandler(this.ITOPODBeastMode_CheckedChanged);
+            // 
+            // ITOPODRecoverHP
+            // 
+            resources.ApplyResources(this.ITOPODRecoverHP, "ITOPODRecoverHP");
+            this.ITOPODRecoverHP.Name = "ITOPODRecoverHP";
+            this.ITOPODRecoverHP.UseVisualStyleBackColor = true;
+            this.ITOPODRecoverHP.CheckedChanged += new System.EventHandler(this.ITOPODRecoverHP_CheckedChanged);
+            // 
+            // ITOPODFastCombat
+            // 
+            resources.ApplyResources(this.ITOPODFastCombat, "ITOPODFastCombat");
+            this.ITOPODFastCombat.Name = "ITOPODFastCombat";
+            this.ITOPODFastCombat.UseVisualStyleBackColor = true;
+            this.ITOPODFastCombat.CheckedChanged += new System.EventHandler(this.ITOPODFastCombat_CheckedChanged);
+            // 
+            // ITOPODPrecastBuffs
+            // 
+            resources.ApplyResources(this.ITOPODPrecastBuffs, "ITOPODPrecastBuffs");
+            this.ITOPODPrecastBuffs.Name = "ITOPODPrecastBuffs";
+            this.ITOPODPrecastBuffs.UseVisualStyleBackColor = true;
+            this.ITOPODPrecastBuffs.CheckedChanged += new System.EventHandler(this.ITOPODPrecastBuffs_CheckedChanged);
+            // 
+            // label24
+            // 
+            resources.ApplyResources(this.label24, "label24");
+            this.label24.Name = "label24";
+            // 
+            // ITOPODCombatMode
+            // 
+            this.ITOPODCombatMode.FormattingEnabled = true;
+            this.ITOPODCombatMode.Items.AddRange(new object[] {
+            resources.GetString("ITOPODCombatMode.Items"),
+            resources.GetString("ITOPODCombatMode.Items1")});
+            resources.ApplyResources(this.ITOPODCombatMode, "ITOPODCombatMode");
+            this.ITOPODCombatMode.Name = "ITOPODCombatMode";
+            this.ITOPODCombatMode.SelectedIndexChanged += new System.EventHandler(this.ITOPODCombatMode_SelectedIndexChanged);
+            // 
+            // label22
+            // 
+            this.label22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.label22, "label22");
+            this.label22.Name = "label22";
+            // 
+            // label23
+            // 
+            resources.ApplyResources(this.label23, "label23");
+            this.label23.Name = "label23";
+            // 
+            // TargetITOPOD
+            // 
+            resources.ApplyResources(this.TargetITOPOD, "TargetITOPOD");
+            this.TargetITOPOD.Name = "TargetITOPOD";
+            this.TargetITOPOD.UseVisualStyleBackColor = true;
+            this.TargetITOPOD.CheckedChanged += new System.EventHandler(this.TargetITOPOD_CheckedChanged);
+            // 
+            // OptimizeITOPOD
+            // 
+            resources.ApplyResources(this.OptimizeITOPOD, "OptimizeITOPOD");
+            this.OptimizeITOPOD.Name = "OptimizeITOPOD";
+            this.OptimizeITOPOD.UseVisualStyleBackColor = true;
+            this.OptimizeITOPOD.CheckedChanged += new System.EventHandler(this.OptimizeITOPOD_CheckedChanged);
+            // 
+            // BeastMode
+            // 
+            resources.ApplyResources(this.BeastMode, "BeastMode");
+            this.BeastMode.Name = "BeastMode";
+            this.BeastMode.UseVisualStyleBackColor = true;
+            this.BeastMode.CheckedChanged += new System.EventHandler(this.BeastMode_CheckedChanged);
             // 
             // AllowFallthrough
             // 
@@ -845,6 +1073,14 @@
             // 
             // tabPage7
             // 
+            this.tabPage7.Controls.Add(this.CBlockMode);
+            this.tabPage7.Controls.Add(this.ResetTitanStatus);
+            this.tabPage7.Controls.Add(this.label21);
+            this.tabPage7.Controls.Add(this.TitanGoldTargets);
+            this.tabPage7.Controls.Add(this.SaveResnipeButton);
+            this.tabPage7.Controls.Add(this.ResnipeInput);
+            this.tabPage7.Controls.Add(this.label10);
+            this.tabPage7.Controls.Add(this.ManageGoldLoadouts);
             this.tabPage7.Controls.Add(this.UseGoldLoadout);
             this.tabPage7.Controls.Add(this.label11);
             this.tabPage7.Controls.Add(this.GoldLoadoutRemove);
@@ -852,13 +1088,73 @@
             this.tabPage7.Controls.Add(this.GoldItemLabel);
             this.tabPage7.Controls.Add(this.GoldLoadoutAdd);
             this.tabPage7.Controls.Add(this.GoldLoadout);
-            this.tabPage7.Controls.Add(this.label10);
-            this.tabPage7.Controls.Add(this.InitialGoldTarget);
-            this.tabPage7.Controls.Add(this.label9);
-            this.tabPage7.Controls.Add(this.GoldLoadoutZone);
             resources.ApplyResources(this.tabPage7, "tabPage7");
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // CBlockMode
+            // 
+            resources.ApplyResources(this.CBlockMode, "CBlockMode");
+            this.CBlockMode.Name = "CBlockMode";
+            this.CBlockMode.UseVisualStyleBackColor = true;
+            this.CBlockMode.CheckedChanged += new System.EventHandler(this.CBlockMode_CheckedChanged);
+            // 
+            // ResetTitanStatus
+            // 
+            resources.ApplyResources(this.ResetTitanStatus, "ResetTitanStatus");
+            this.ResetTitanStatus.Name = "ResetTitanStatus";
+            this.ResetTitanStatus.UseVisualStyleBackColor = true;
+            this.ResetTitanStatus.Click += new System.EventHandler(this.ResetTitanStatus_Click);
+            // 
+            // label21
+            // 
+            resources.ApplyResources(this.label21, "label21");
+            this.label21.Name = "label21";
+            // 
+            // TitanGoldTargets
+            // 
+            this.TitanGoldTargets.CheckBoxes = true;
+            this.TitanGoldTargets.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.TitanGoldTargets.HideSelection = false;
+            resources.ApplyResources(this.TitanGoldTargets, "TitanGoldTargets");
+            this.TitanGoldTargets.Name = "TitanGoldTargets";
+            this.TitanGoldTargets.UseCompatibleStateImageBehavior = false;
+            this.TitanGoldTargets.View = System.Windows.Forms.View.Details;
+            this.TitanGoldTargets.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.TitanGoldTargets_ItemChecked);
+            // 
+            // columnHeader1
+            // 
+            resources.ApplyResources(this.columnHeader1, "columnHeader1");
+            // 
+            // SaveResnipeButton
+            // 
+            resources.ApplyResources(this.SaveResnipeButton, "SaveResnipeButton");
+            this.SaveResnipeButton.Name = "SaveResnipeButton";
+            this.SaveResnipeButton.UseVisualStyleBackColor = true;
+            this.SaveResnipeButton.Click += new System.EventHandler(this.SaveResnipeButton_Click);
+            // 
+            // ResnipeInput
+            // 
+            resources.ApplyResources(this.ResnipeInput, "ResnipeInput");
+            this.ResnipeInput.Maximum = new decimal(new int[] {
+            1410065408,
+            2,
+            0,
+            0});
+            this.ResnipeInput.Name = "ResnipeInput";
+            // 
+            // label10
+            // 
+            resources.ApplyResources(this.label10, "label10");
+            this.label10.Name = "label10";
+            // 
+            // ManageGoldLoadouts
+            // 
+            resources.ApplyResources(this.ManageGoldLoadouts, "ManageGoldLoadouts");
+            this.ManageGoldLoadouts.Name = "ManageGoldLoadouts";
+            this.ManageGoldLoadouts.UseVisualStyleBackColor = true;
+            this.ManageGoldLoadouts.CheckedChanged += new System.EventHandler(this.ManageGoldLoadouts_CheckedChanged);
             // 
             // UseGoldLoadout
             // 
@@ -915,36 +1211,6 @@
             resources.GetString("GoldLoadout.Items1")});
             resources.ApplyResources(this.GoldLoadout, "GoldLoadout");
             this.GoldLoadout.Name = "GoldLoadout";
-            // 
-            // label10
-            // 
-            resources.ApplyResources(this.label10, "label10");
-            this.label10.Name = "label10";
-            // 
-            // InitialGoldTarget
-            // 
-            this.InitialGoldTarget.FormattingEnabled = true;
-            this.InitialGoldTarget.Items.AddRange(new object[] {
-            resources.GetString("InitialGoldTarget.Items"),
-            resources.GetString("InitialGoldTarget.Items1")});
-            resources.ApplyResources(this.InitialGoldTarget, "InitialGoldTarget");
-            this.InitialGoldTarget.Name = "InitialGoldTarget";
-            this.InitialGoldTarget.SelectedIndexChanged += new System.EventHandler(this.InitialGoldTarget_SelectedIndexChanged);
-            // 
-            // label9
-            // 
-            resources.ApplyResources(this.label9, "label9");
-            this.label9.Name = "label9";
-            // 
-            // GoldLoadoutZone
-            // 
-            this.GoldLoadoutZone.FormattingEnabled = true;
-            this.GoldLoadoutZone.Items.AddRange(new object[] {
-            resources.GetString("GoldLoadoutZone.Items"),
-            resources.GetString("GoldLoadoutZone.Items1")});
-            resources.ApplyResources(this.GoldLoadoutZone, "GoldLoadoutZone");
-            this.GoldLoadoutZone.Name = "GoldLoadoutZone";
-            this.GoldLoadoutZone.SelectedIndexChanged += new System.EventHandler(this.GoldLoadoutZone_SelectedIndexChanged);
             // 
             // tabPage8
             // 
@@ -1042,34 +1308,6 @@
             this.ManageQuests.UseVisualStyleBackColor = true;
             this.ManageQuests.CheckedChanged += new System.EventHandler(this.ManageQuests_CheckedChanged);
             // 
-            // moneyPitError
-            // 
-            this.moneyPitError.ContainerControl = this;
-            // 
-            // yggErrorProvider
-            // 
-            this.yggErrorProvider.ContainerControl = this;
-            // 
-            // invPrioErrorProvider
-            // 
-            this.invPrioErrorProvider.ContainerControl = this;
-            // 
-            // invBlacklistErrProvider
-            // 
-            this.invBlacklistErrProvider.ContainerControl = this;
-            // 
-            // titanErrProvider
-            // 
-            this.titanErrProvider.ContainerControl = this;
-            // 
-            // goldErrorProvider
-            // 
-            this.goldErrorProvider.ContainerControl = this;
-            // 
-            // numberErrProvider
-            // 
-            this.numberErrProvider.ContainerControl = this;
-            // 
             // tabPage9
             // 
             this.tabPage9.Controls.Add(this.WishDownButton);
@@ -1083,6 +1321,27 @@
             resources.ApplyResources(this.tabPage9, "tabPage9");
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // WishDownButton
+            // 
+            resources.ApplyResources(this.WishDownButton, "WishDownButton");
+            this.WishDownButton.Name = "WishDownButton";
+            this.WishDownButton.UseVisualStyleBackColor = true;
+            this.WishDownButton.Click += new System.EventHandler(this.WishDownButton_Click);
+            // 
+            // WishUpButton
+            // 
+            resources.ApplyResources(this.WishUpButton, "WishUpButton");
+            this.WishUpButton.Name = "WishUpButton";
+            this.WishUpButton.UseVisualStyleBackColor = true;
+            this.WishUpButton.Click += new System.EventHandler(this.WishUpButton_Click);
+            // 
+            // RemoveWishButton
+            // 
+            resources.ApplyResources(this.RemoveWishButton, "RemoveWishButton");
+            this.RemoveWishButton.Name = "RemoveWishButton";
+            this.RemoveWishButton.UseVisualStyleBackColor = true;
+            this.RemoveWishButton.Click += new System.EventHandler(this.RemoveWishButton_Click);
             // 
             // label19
             // 
@@ -1126,58 +1385,191 @@
             resources.ApplyResources(this.WishPriority, "WishPriority");
             this.WishPriority.Name = "WishPriority";
             // 
-            // WishDownButton
+            // tabPage10
             // 
-            resources.ApplyResources(this.WishDownButton, "WishDownButton");
-            this.WishDownButton.Name = "WishDownButton";
-            this.WishDownButton.UseVisualStyleBackColor = true;
-            this.WishDownButton.Click += new System.EventHandler(this.WishDownButton_Click);
+            this.tabPage10.Controls.Add(this.label25);
+            this.tabPage10.Controls.Add(this.MoneyPitRemove);
+            this.tabPage10.Controls.Add(this.MoneyPitInput);
+            this.tabPage10.Controls.Add(this.MoneyPitLabel);
+            this.tabPage10.Controls.Add(this.MoneyPitAdd);
+            this.tabPage10.Controls.Add(this.MoneyPitLoadout);
+            this.tabPage10.Controls.Add(this.MoneyPitThresholdSave);
+            this.tabPage10.Controls.Add(this.MoneyPitThreshold);
+            this.tabPage10.Controls.Add(this.label7);
+            this.tabPage10.Controls.Add(this.AutoMoneyPit);
+            this.tabPage10.Controls.Add(this.AutoDailySpin);
+            resources.ApplyResources(this.tabPage10, "tabPage10");
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.UseVisualStyleBackColor = true;
             // 
-            // WishUpButton
+            // label25
             // 
-            resources.ApplyResources(this.WishUpButton, "WishUpButton");
-            this.WishUpButton.Name = "WishUpButton";
-            this.WishUpButton.UseVisualStyleBackColor = true;
-            this.WishUpButton.Click += new System.EventHandler(this.WishUpButton_Click);
+            resources.ApplyResources(this.label25, "label25");
+            this.label25.Name = "label25";
             // 
-            // RemoveWishButton
+            // MoneyPitRemove
             // 
-            resources.ApplyResources(this.RemoveWishButton, "RemoveWishButton");
-            this.RemoveWishButton.Name = "RemoveWishButton";
-            this.RemoveWishButton.UseVisualStyleBackColor = true;
-            this.RemoveWishButton.Click += new System.EventHandler(this.RemoveWishButton_Click);
+            resources.ApplyResources(this.MoneyPitRemove, "MoneyPitRemove");
+            this.MoneyPitRemove.Name = "MoneyPitRemove";
+            this.MoneyPitRemove.UseVisualStyleBackColor = true;
+            this.MoneyPitRemove.Click += new System.EventHandler(this.MoneyPitRemove_Click);
             // 
-            // wishErrorProvider
+            // MoneyPitInput
             // 
-            this.wishErrorProvider.ContainerControl = this;
+            resources.ApplyResources(this.MoneyPitInput, "MoneyPitInput");
+            this.MoneyPitInput.Maximum = new decimal(new int[] {
+            999999999,
+            0,
+            0,
+            0});
+            this.MoneyPitInput.Name = "MoneyPitInput";
+            this.MoneyPitInput.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
             // 
-            // BeastMode
+            // MoneyPitLabel
             // 
-            resources.ApplyResources(this.BeastMode, "BeastMode");
-            this.BeastMode.Name = "BeastMode";
-            this.BeastMode.UseVisualStyleBackColor = true;
-            this.BeastMode.CheckedChanged += new System.EventHandler(this.BeastMode_CheckedChanged);
+            resources.ApplyResources(this.MoneyPitLabel, "MoneyPitLabel");
+            this.MoneyPitLabel.Name = "MoneyPitLabel";
             // 
-            // label20
+            // MoneyPitAdd
             // 
-            resources.ApplyResources(this.label20, "label20");
-            this.label20.Name = "label20";
+            resources.ApplyResources(this.MoneyPitAdd, "MoneyPitAdd");
+            this.MoneyPitAdd.Name = "MoneyPitAdd";
+            this.MoneyPitAdd.UseVisualStyleBackColor = true;
+            this.MoneyPitAdd.Click += new System.EventHandler(this.MoneyPitAdd_Click);
             // 
-            // CubePriority
+            // MoneyPitLoadout
             // 
-            this.CubePriority.FormattingEnabled = true;
-            resources.ApplyResources(this.CubePriority, "CubePriority");
-            this.CubePriority.Name = "CubePriority";
-            this.CubePriority.SelectedIndexChanged += new System.EventHandler(this.CubePriority_SelectedIndexChanged);
+            this.MoneyPitLoadout.FormattingEnabled = true;
+            this.MoneyPitLoadout.Items.AddRange(new object[] {
+            resources.GetString("MoneyPitLoadout.Items"),
+            resources.GetString("MoneyPitLoadout.Items1")});
+            resources.ApplyResources(this.MoneyPitLoadout, "MoneyPitLoadout");
+            this.MoneyPitLoadout.Name = "MoneyPitLoadout";
+            // 
+            // MoneyPitThresholdSave
+            // 
+            resources.ApplyResources(this.MoneyPitThresholdSave, "MoneyPitThresholdSave");
+            this.MoneyPitThresholdSave.Name = "MoneyPitThresholdSave";
+            this.MoneyPitThresholdSave.UseVisualStyleBackColor = true;
+            this.MoneyPitThresholdSave.Click += new System.EventHandler(this.MoneyPitThresholdSave_Click);
+            // 
+            // MoneyPitThreshold
+            // 
+            resources.ApplyResources(this.MoneyPitThreshold, "MoneyPitThreshold");
+            this.MoneyPitThreshold.Name = "MoneyPitThreshold";
+            this.MoneyPitThreshold.TextChanged += new System.EventHandler(this.MoneyPitThreshold_TextChanged_1);
+            // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Name = "label7";
+            // 
+            // AutoMoneyPit
+            // 
+            resources.ApplyResources(this.AutoMoneyPit, "AutoMoneyPit");
+            this.AutoMoneyPit.Name = "AutoMoneyPit";
+            this.AutoMoneyPit.UseVisualStyleBackColor = true;
+            this.AutoMoneyPit.CheckedChanged += new System.EventHandler(this.AutoMoneyPit_CheckedChanged);
+            // 
+            // AutoDailySpin
+            // 
+            resources.ApplyResources(this.AutoDailySpin, "AutoDailySpin");
+            this.AutoDailySpin.Name = "AutoDailySpin";
+            this.AutoDailySpin.UseVisualStyleBackColor = true;
+            this.AutoDailySpin.CheckedChanged += new System.EventHandler(this.AutoDailySpin_CheckedChanged);
+            // 
+            // progressBar1
+            // 
+            resources.ApplyResources(this.progressBar1, "progressBar1");
+            this.progressBar1.Name = "progressBar1";
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.progressBar1);
+            this.flowLayoutPanel1.Controls.Add(this.tabControl1);
+            resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            // 
+            // UpgradeDiggers
+            // 
+            resources.ApplyResources(this.UpgradeDiggers, "UpgradeDiggers");
+            this.UpgradeDiggers.Name = "UpgradeDiggers";
+            this.UpgradeDiggers.UseVisualStyleBackColor = true;
+            this.UpgradeDiggers.CheckedChanged += new System.EventHandler(this.UpgradeDiggers_CheckedChanged);
+            // 
+            // GuffBThreshold
+            // 
+            resources.ApplyResources(this.GuffBThreshold, "GuffBThreshold");
+            this.GuffBThreshold.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.GuffBThreshold.Name = "GuffBThreshold";
+            // 
+            // label26
+            // 
+            resources.ApplyResources(this.label26, "label26");
+            this.label26.Name = "label26";
+            // 
+            // GuffAThreshold
+            // 
+            resources.ApplyResources(this.GuffAThreshold, "GuffAThreshold");
+            this.GuffAThreshold.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.GuffAThreshold.Name = "GuffAThreshold";
+            // 
+            // label27
+            // 
+            resources.ApplyResources(this.label27, "label27");
+            this.label27.Name = "label27";
+            // 
+            // IronPillThreshold
+            // 
+            resources.ApplyResources(this.IronPillThreshold, "IronPillThreshold");
+            this.IronPillThreshold.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.IronPillThreshold.Name = "IronPillThreshold";
+            // 
+            // label123
+            // 
+            resources.ApplyResources(this.label123, "label123");
+            this.label123.Name = "label123";
+            // 
+            // CastBloodSpells
+            // 
+            resources.ApplyResources(this.CastBloodSpells, "CastBloodSpells");
+            this.CastBloodSpells.Name = "CastBloodSpells";
+            this.CastBloodSpells.UseVisualStyleBackColor = true;
+            this.CastBloodSpells.CheckedChanged += new System.EventHandler(this.CastBloodSpells_CheckedChanged);
             // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.flowLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "SettingsForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsForm_FormClosing);
-            this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.invBlacklistErrProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.titanErrProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.goldErrorProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numberErrProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wishErrorProvider)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -1199,38 +1591,61 @@
             this.tabPage6.PerformLayout();
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ResnipeInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GoldItemBox)).EndInit();
             this.tabPage8.ResumeLayout(false);
             this.tabPage8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AbandonMinorThreshold)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.invBlacklistErrProvider)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.titanErrProvider)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.goldErrorProvider)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numberErrProvider)).EndInit();
             this.tabPage9.ResumeLayout(false);
             this.tabPage9.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WishAddInput)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.wishErrorProvider)).EndInit();
+            this.tabPage10.ResumeLayout(false);
+            this.tabPage10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MoneyPitInput)).EndInit();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.GuffBThreshold)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GuffAThreshold)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IronPillThreshold)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.ErrorProvider moneyPitError;
+        private System.Windows.Forms.ErrorProvider yggErrorProvider;
+        private System.Windows.Forms.ErrorProvider invPrioErrorProvider;
+        private System.Windows.Forms.ErrorProvider invBlacklistErrProvider;
+        private System.Windows.Forms.ErrorProvider titanErrProvider;
+        private System.Windows.Forms.ErrorProvider goldErrorProvider;
+        private System.Windows.Forms.ErrorProvider numberErrProvider;
+        private System.Windows.Forms.ErrorProvider wishErrorProvider;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.CheckBox UnloadSafety;
+        private System.Windows.Forms.Button UnloadButton;
+        private System.Windows.Forms.Label VersionLabel;
+        private System.Windows.Forms.CheckBox AutoBuyEM;
         private System.Windows.Forms.CheckBox MasterEnable;
-        private System.Windows.Forms.CheckBox AutoMoneyPit;
-        private System.Windows.Forms.CheckBox AutoDailySpin;
         private System.Windows.Forms.CheckBox AutoFightBosses;
         private System.Windows.Forms.CheckBox AutoITOPOD;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.CheckBox ManageNGUDiff;
+        private System.Windows.Forms.Button ChangeProfileFile;
+        private System.Windows.Forms.Label AllocationProfileFileLabel;
+        private System.Windows.Forms.ComboBox AllocationProfileFile;
+        private System.Windows.Forms.CheckBox ManageR3;
+        private System.Windows.Forms.TextBox BloodNumberThreshold;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Button SaveSpellCapButton;
+        private System.Windows.Forms.CheckBox AutoSpellSwap;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.NumericUpDown CounterfeitCap;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.NumericUpDown SpaghettiCap;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.CheckBox AutoRebirth;
         private System.Windows.Forms.CheckBox ManageWandoos;
         private System.Windows.Forms.CheckBox ManageDiggers;
@@ -1238,6 +1653,9 @@
         private System.Windows.Forms.CheckBox ManageMagic;
         private System.Windows.Forms.CheckBox ManageEnergy;
         private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.CheckBox HarvestSafety;
+        private System.Windows.Forms.Button HarvestAllButton;
+        private System.Windows.Forms.CheckBox ActivateFruits;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button yggRemoveButton;
         private System.Windows.Forms.NumericUpDown yggLoadoutItem;
@@ -1247,6 +1665,10 @@
         private System.Windows.Forms.CheckBox YggdrasilSwap;
         private System.Windows.Forms.CheckBox ManageYggdrasil;
         private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.ComboBox CubePriority;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Button prioDownButton;
+        private System.Windows.Forms.Button prioUpButton;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button blacklistRemove;
         private System.Windows.Forms.NumericUpDown blacklistAddItem;
@@ -1262,6 +1684,9 @@
         private System.Windows.Forms.CheckBox ManageInventory;
         private System.Windows.Forms.CheckBox ManageBoostConvert;
         private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ListView TitanSwapTargets;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox HighestTitanDropdown;
         private System.Windows.Forms.Label label8;
@@ -1272,77 +1697,85 @@
         private System.Windows.Forms.ListBox titanLoadout;
         private System.Windows.Forms.CheckBox SwapTitanLoadout;
         private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.CheckBox CombatActive;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox CombatMode;
-        private System.Windows.Forms.CheckBox BossesOnly;
+        private System.Windows.Forms.CheckBox TargetITOPOD;
+        private System.Windows.Forms.CheckBox OptimizeITOPOD;
+        private System.Windows.Forms.CheckBox BeastMode;
+        private System.Windows.Forms.CheckBox AllowFallthrough;
+        private System.Windows.Forms.CheckBox RecoverHealth;
+        private System.Windows.Forms.CheckBox FastCombat;
         private System.Windows.Forms.CheckBox PrecastBuffs;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox CombatTargetZone;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox CombatMode;
+        private System.Windows.Forms.CheckBox BossesOnly;
+        private System.Windows.Forms.CheckBox CombatActive;
         private System.Windows.Forms.TabPage tabPage7;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox GoldLoadoutZone;
-        private System.Windows.Forms.CheckBox FastCombat;
-        private System.Windows.Forms.CheckBox RecoverHealth;
+        private System.Windows.Forms.CheckBox CBlockMode;
+        private System.Windows.Forms.Button ResetTitanStatus;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.ListView TitanGoldTargets;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.Button SaveResnipeButton;
+        private System.Windows.Forms.NumericUpDown ResnipeInput;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ComboBox InitialGoldTarget;
+        private System.Windows.Forms.CheckBox ManageGoldLoadouts;
+        private System.Windows.Forms.CheckBox UseGoldLoadout;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button GoldLoadoutRemove;
         private System.Windows.Forms.NumericUpDown GoldItemBox;
         private System.Windows.Forms.Label GoldItemLabel;
         private System.Windows.Forms.Button GoldLoadoutAdd;
         private System.Windows.Forms.ListBox GoldLoadout;
-        private System.Windows.Forms.TextBox MoneyPitThreshold;
-        private System.Windows.Forms.Button MoneyPitThresholdSave;
-        private System.Windows.Forms.ErrorProvider moneyPitError;
-        private System.Windows.Forms.ErrorProvider yggErrorProvider;
-        private System.Windows.Forms.ErrorProvider invPrioErrorProvider;
-        private System.Windows.Forms.Button prioDownButton;
-        private System.Windows.Forms.Button prioUpButton;
-        private System.Windows.Forms.ErrorProvider invBlacklistErrProvider;
-        private System.Windows.Forms.ErrorProvider titanErrProvider;
-        private System.Windows.Forms.CheckBox AllowFallthrough;
-        private System.Windows.Forms.CheckBox UseGoldLoadout;
-        private System.Windows.Forms.ErrorProvider goldErrorProvider;
         private System.Windows.Forms.TabPage tabPage8;
-        private System.Windows.Forms.CheckBox AllowMajor;
-        private System.Windows.Forms.CheckBox ManageQuests;
+        private System.Windows.Forms.CheckBox ButterMinors;
+        private System.Windows.Forms.CheckBox ButterMajors;
+        private System.Windows.Forms.CheckBox ManualMinor;
+        private System.Windows.Forms.CheckBox QuestFastCombat;
         private System.Windows.Forms.CheckBox AbandonMinors;
         private System.Windows.Forms.NumericUpDown AbandonMinorThreshold;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox QuestCombatMode;
-        private System.Windows.Forms.CheckBox QuestFastCombat;
-        private System.Windows.Forms.NumericUpDown CounterfeitCap;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.NumericUpDown SpaghettiCap;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.CheckBox AutoSpellSwap;
-        private System.Windows.Forms.Button SaveSpellCapButton;
-        private System.Windows.Forms.CheckBox AutoBuyEM;
-        private System.Windows.Forms.Label VersionLabel;
-        private System.Windows.Forms.TextBox BloodNumberThreshold;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.ErrorProvider numberErrProvider;
-        private System.Windows.Forms.CheckBox ButterMajors;
-        private System.Windows.Forms.CheckBox ManualMinor;
-        private System.Windows.Forms.CheckBox ManageR3;
-        private System.Windows.Forms.CheckBox ButterMinors;
-        private System.Windows.Forms.CheckBox ActivateFruits;
+        private System.Windows.Forms.CheckBox AllowMajor;
+        private System.Windows.Forms.CheckBox ManageQuests;
         private System.Windows.Forms.TabPage tabPage9;
+        private System.Windows.Forms.Button WishDownButton;
+        private System.Windows.Forms.Button WishUpButton;
+        private System.Windows.Forms.Button RemoveWishButton;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.NumericUpDown WishAddInput;
         private System.Windows.Forms.Label AddWishLabel;
         private System.Windows.Forms.Button AddWishButton;
         private System.Windows.Forms.ListBox WishPriority;
-        private System.Windows.Forms.Button WishDownButton;
-        private System.Windows.Forms.Button WishUpButton;
-        private System.Windows.Forms.Button RemoveWishButton;
-        private System.Windows.Forms.ErrorProvider wishErrorProvider;
-        private System.Windows.Forms.CheckBox BeastMode;
-        private System.Windows.Forms.ComboBox CubePriority;
-        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.CheckBox ITOPODBeastMode;
+        private System.Windows.Forms.CheckBox ITOPODRecoverHP;
+        private System.Windows.Forms.CheckBox ITOPODFastCombat;
+        private System.Windows.Forms.CheckBox ITOPODPrecastBuffs;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.ComboBox ITOPODCombatMode;
+        private System.Windows.Forms.CheckBox DisableOverlay;
+        private System.Windows.Forms.TabPage tabPage10;
+        private System.Windows.Forms.CheckBox AutoMoneyPit;
+        private System.Windows.Forms.CheckBox AutoDailySpin;
+        private System.Windows.Forms.Button MoneyPitThresholdSave;
+        private System.Windows.Forms.TextBox MoneyPitThreshold;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button MoneyPitRemove;
+        private System.Windows.Forms.NumericUpDown MoneyPitInput;
+        private System.Windows.Forms.Label MoneyPitLabel;
+        private System.Windows.Forms.Button MoneyPitAdd;
+        private System.Windows.Forms.ListBox MoneyPitLoadout;
+        private System.Windows.Forms.CheckBox UpgradeDiggers;
+        private System.Windows.Forms.NumericUpDown GuffBThreshold;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.NumericUpDown GuffAThreshold;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.NumericUpDown IronPillThreshold;
+        private System.Windows.Forms.Label label123;
+        private System.Windows.Forms.CheckBox CastBloodSpells;
     }
 }

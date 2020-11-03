@@ -13,9 +13,8 @@ namespace NGUInjector.Managers
 
         internal void CheckQuestTurnin()
         {
-            if (_character.beastQuestController.readyToHandIn())
+            if (_character.beastQuest.curDrops >= _character.beastQuest.targetDrops - 2)
             {
-                Log("Turning in quest");
                 if (!_character.beastQuest.usedButter)
                 {
                     if (_character.beastQuest.reducedRewards && Settings.UseButterMinor)
@@ -30,7 +29,11 @@ namespace NGUInjector.Managers
                         _character.beastQuestController.tryUseButter();
                     }
                 }
-                
+            }
+
+            if (_character.beastQuestController.readyToHandIn())
+            {
+                Log("Turning in quest");
                 _character.beastQuestController.completeQuest();
             }
         }
@@ -73,7 +76,7 @@ namespace NGUInjector.Managers
             //First logic: not in a quest
             if (!_character.beastQuest.inQuest)
             {
-                //If we're allowing major quests and 
+                //If we're allowing major quests and we have a quest available
                 if (Settings.AllowMajorQuests && _character.beastQuest.curBankedQuests > 0)
                 {
                     _character.settings.useMajorQuests = true;
@@ -82,6 +85,7 @@ namespace NGUInjector.Managers
                 }
                 else
                 {
+                    _character.settings.useMajorQuests = false;
                     SetIdleMode(!Settings.ManualMinors);
                     _character.beastQuestController.startQuest();
                 }
@@ -106,8 +110,16 @@ namespace NGUInjector.Managers
                         return;
                     }
                 }
+                else
+                {
+                    _character.settings.useMajorQuests = false;
+                }
 
                 SetIdleMode(!Settings.ManualMinors);
+            }
+            else
+            {
+                SetIdleMode(false);
             }
         }
     }

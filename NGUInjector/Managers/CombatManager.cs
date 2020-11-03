@@ -20,7 +20,7 @@ namespace NGUInjector.Managers
 
         bool HasFullHP()
         {
-            return (Math.Abs(_character.totalAdvHP() - _character.adventure.curHP) < 5);
+            return Math.Abs(_character.totalAdvHP() - _character.adventure.curHP) < 5;
         }
 
         float GetHPPercentage()
@@ -53,20 +53,29 @@ namespace NGUInjector.Managers
 
             if (ai == AI.charger && eai.GetPV<int>("chargeCooldown") >= 3)
             {
+                if (ac.blockMove.button.IsInteractable() && !_pc.isParrying)
+                {
+                    ac.blockMove.doMove();
+                    return true;
+                }
+
                 if (ac.parryMove.button.IsInteractable() && !_pc.isBlocking)
                 {
                     ac.parryMove.doMove();
                     return true;
                 }
+            }
 
-                if (ac.blockMove.button.IsInteractable() && !_pc.isParrying)
+            if (ai == AI.rapid && eai.GetPV<int>("rapidEffect") >= 6)
+            {
+                if (ac.blockMove.button.IsInteractable())
                 {
                     ac.blockMove.doMove();
                     return true;
                 }
             }
 
-            if (ai == AI.rapid && eai.GetPV<int>("rapidEffect") >= 6)
+            if (ai == AI.exploder && ac.currentEnemy.attackRate - eai.GetPV<float>("enemyAttackTimer") < 1)
             {
                 if (ac.blockMove.button.IsInteractable())
                 {
@@ -121,17 +130,17 @@ namespace NGUInjector.Managers
                     return true;
             }
 
-            if (ai != AI.charger && ai != AI.rapid && !UltimateBuffActive() && !DefenseBuffActive())
+            if (ai != AI.charger && ai != AI.rapid && ai != AI.exploder && !UltimateBuffActive() && !DefenseBuffActive())
             {
-                if (!BlockActive())
-                {
-                    if (CastParry())
-                        return true;
-                }
-
                 if (!ParryActive())
                 {
                     if (CastBlock())
+                        return true;
+                }
+
+                if (!BlockActive())
+                {
+                    if (CastParry())
                         return true;
                 }
             }
@@ -276,10 +285,9 @@ namespace NGUInjector.Managers
                 return;
 
             //Check if we're in the right zone, if not move there
-            if (IsZoneUnlocked(zone) && _character.adventure.zone != zone)
+            if (_character.adventure.zone != zone && _character.adventure.zone != -1)
             {
-                MoveToZone(zone);
-                return;
+                MoveToZone(-1);
             }
 
             //Wait for an enemy to spawn
@@ -299,7 +307,7 @@ namespace NGUInjector.Managers
             }
         }
 
-        internal void ManualZone(int zone, bool bossOnly, bool recoverHealth, bool precastBuffs, bool fastCombat)
+        internal void ManualZone(int zone, bool bossOnly, bool recoverHealth, bool precastBuffs, bool fastCombat, bool beastMode)
         {
             //Start by turning off auto attack if its on unless we can only idle attack
             if (!_character.adventure.autoattacking)
@@ -318,13 +326,13 @@ namespace NGUInjector.Managers
                 }
             }
 
-            if (_character.adventure.beastModeOn && !Settings.BeastMode && _character.adventureController.beastModeMove.button.interactable)
+            if (_character.adventure.beastModeOn && !beastMode && _character.adventureController.beastModeMove.button.interactable)
             {
                 _character.adventureController.beastModeMove.doMove();
                 return;
             }
 
-            if (!_character.adventure.beastModeOn && Settings.BeastMode &&
+            if (!_character.adventure.beastModeOn && beastMode &&
                 _character.adventureController.beastModeMove.button.interactable)
             {
                 _character.adventureController.beastModeMove.doMove();
@@ -384,6 +392,7 @@ namespace NGUInjector.Managers
             //Move to the zone
             if (_character.adventure.zone != zone)
             {
+                isFighting = false;
                 MoveToZone(zone);
                 return;
             }
@@ -416,29 +425,39 @@ namespace NGUInjector.Managers
                     }
                 }
 
+                if (fastCombat)
+                {
+                    if (GetHPPercentage() < .75)
+                    {
+                        if (CastHeal())
+                            return;
+                    }
+                }
+
                 if (isFighting)
                 {
                     isFighting = false;
-                    if (precastBuffs)
+                    if (LoadoutManager.CurrentLock == LockType.Gold)
                     {
+                        Log("Gold Loadout kill done. Turning off setting and swapping gear");
+                        Settings.DoGoldSwap = false;
+                        LoadoutManager.RestoreGear();
+                        LoadoutManager.ReleaseLock();
                         MoveToZone(-1);
                         return;
                     }
 
-                    if (LoadoutManager.CurrentLock == LockType.Gold)
+                    if (precastBuffs || recoverHealth && !HasFullHP())
                     {
-                        Settings.NextGoldSwap = false;
-                        settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
-                        LoadoutManager.RestoreGear();
-                        LoadoutManager.ReleaseLock();
                         MoveToZone(-1);
+                        return;
                     }
                 }
                 return;
             }
 
             //We have an enemy. Lets check if we're in bossOnly mode
-            if (bossOnly)
+            if (bossOnly && zone < 1000)
             {
                 var ec = _character.adventureController.currentEnemy.enemyType;
                 if (ec != enemyType.boss && !ec.ToString().Contains("bigBoss"))

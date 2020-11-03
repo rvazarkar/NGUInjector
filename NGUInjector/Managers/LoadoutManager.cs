@@ -53,7 +53,7 @@ namespace NGUInjector.Managers
             if (CurrentLock == LockType.Titan)
             {
                 //If we haven't AKed yet, just return
-                if (TitansSpawningSoon().SpawningSoon)
+                if (ZoneHelpers.TitansSpawningSoon().SpawningSoon)
                     return;
 
                 //Titans have been AKed, restore back to original gear
@@ -63,7 +63,7 @@ namespace NGUInjector.Managers
             }
 
             //No lock currently, check if titans are spawning
-            var ts = TitansSpawningSoon();
+            var ts = ZoneHelpers.TitansSpawningSoon();
             if (ts.SpawningSoon)
             {
                 Log("Equipping Loadout for Titans");
@@ -72,12 +72,11 @@ namespace NGUInjector.Managers
                 AcquireLock(LockType.Titan);
                 SaveCurrentLoadout();
 
-                if (Settings.NextGoldSwap && ts.IsHighest)
+                if (Settings.ManageGoldLoadouts && ts.RunMoneyLoadout)
                 {
                     Log("Equipping Gold Drop Loadout");
                     ChangeGear(Settings.GoldDropLoadout);
-                    Settings.NextGoldSwap = false;
-                    settingsForm.UpdateGoldLoadout(Settings.NextGoldSwap);
+                    Settings.DoGoldSwap = false;
                 }
                 else
                 {
@@ -107,7 +106,7 @@ namespace NGUInjector.Managers
             Log("Equipping Money Pit");
             AcquireLock(LockType.MoneyPit);
             SaveCurrentLoadout();
-            ChangeGear(Settings.MoneyPitLoadout);
+            ChangeGear(Settings.MoneyPitLoadout, true);
             return true;
         }
 
@@ -145,144 +144,132 @@ namespace NGUInjector.Managers
             return false;
         }
 
-        internal static void ChangeGear(int[] gearIds)
+        internal static void ChangeGear(int[] gearIds, bool moneyPit = false)
         {
             Log($"Received New Gear: {string.Join(",", gearIds.Select(x => x.ToString()).ToArray())}");
-            var accSlots = new List<int>();
-            var inv = Main.Character.inventory;
-            var controller = Controller;
-            var ci = inv.GetConvertedInventory().ToArray();
             var weaponSlot = -5;
+            var accSlot = 10000;
+            var controller = Controller;
+
             Main.Character.removeMostEnergy();
             Main.Character.removeMostMagic();
             Main.Character.removeAllRes3();
-            foreach (var itemId in gearIds)
+
+            try
             {
-                var slot = FindItemSlot(ci, itemId);
-                //We dont have the item. Dummy.
-                if (slot == -1000)
-                    continue;
-
-                //Item is already equipped
-                if (slot < 0)
-                    continue;
-
-                if (slot >= 10000)
+                foreach (var itemId in gearIds)
                 {
-                    accSlots.Add(slot);
-                    continue;
-                }
+                    var inv = Main.Character.inventory;
 
-                var type = inv.inventory[slot].type;
+                    var equip = FindItemSlot(itemId, moneyPit);
 
-                inv.item2 = slot;
-                switch (type)
-                {
-                    case part.Head:
-                        inv.item1 = -1;
-                        controller.swapHead();
-                        controller.updateBonuses();
-                        break;
-                    case part.Chest:
-                        inv.item1 = -2;
-                        controller.swapChest();
-                        controller.updateBonuses();
-                        break;
-                    case part.Legs:
-                        inv.item1 = -3;
-                        controller.swapLegs();
-                        controller.updateBonuses();
-                        break;
-                    case part.Boots:
-                        inv.item1 = -4;
-                        controller.swapBoots();
-                        controller.updateBonuses();
-                        break;
-                    case part.Weapon:
-                        inv.item1 = weaponSlot;
-                        if (weaponSlot == -5)
+                    if (equip == null)
+                    {
+                        try
                         {
-                            controller.swapWeapon();
+                            Log($"Missing item {Controller.itemInfo.itemName[itemId]} with ID {itemId}");
                         }
-                        else if (weaponSlot == -6)
+                        catch (Exception)
                         {
-                            if (controller.weapon2Unlocked())
+                            //pass
+                        }
+
+                        continue;
+                    }
+
+                    var type = equip.equipment.type;
+
+                    inv.item2 = equip.slot;
+                    switch (type)
+                    {
+                        case part.Head:
+                            inv.item1 = -1;
+                            controller.swapHead();
+                            break;
+                        case part.Chest:
+                            inv.item1 = -2;
+                            controller.swapChest();
+                            break;
+                        case part.Legs:
+                            inv.item1 = -3;
+                            controller.swapLegs();
+                            break;
+                        case part.Boots:
+                            inv.item1 = -4;
+                            controller.swapBoots();
+                            break;
+                        case part.Weapon:
+                            if (weaponSlot == -5)
                             {
+                                inv.item1 = -5;
+                                controller.swapWeapon();
+                            }
+                            else if (weaponSlot == -6 && controller.weapon2Unlocked())
+                            {
+                                inv.item1 = -6;
                                 controller.swapWeapon2();
                             }
-                        }
-                        else
-                        {
+
+                            weaponSlot--;
                             break;
-                        }
-                        controller.updateBonuses();
-                        weaponSlot--;
-                        break;
-                    case part.Accessory:
-                        accSlots.Add(slot);
-                        break;
+                        case part.Accessory:
+                            if (controller.accessoryID(accSlot) < controller.accessorySpaces() && accSlot != equip.slot)
+                            {
+                                inv.item1 = accSlot;
+                                controller.swapAcc();
+                            }
+
+                            accSlot++;
+
+                            break;
+                    }
                 }
             }
-
-            var usedSlots = accSlots.Where(x => x >= 10000).ToList();
-            accSlots = accSlots.Where(x => x < 10000).ToList();
-
-            foreach (var acc in accSlots)
+            catch (Exception e)
             {
-                for (var i = 10000; controller.accessoryID(i) < inv.accs.Count; i++)
-                {
-                    if (usedSlots.Contains(i))
-                        continue;
-
-                    inv.item1 = i;
-                    inv.item2 = acc;
-                    controller.swapAcc();
-                    usedSlots.Add(i);
-                    break;
-                }
+                Log(e.Message);
+                Log(e.StackTrace);
             }
+            
 
             controller.updateBonuses();
             controller.updateInventory();
-            Main.Character.removeMostEnergy();
-            Main.Character.removeMostMagic();
-            Main.Character.removeAllRes3();
-            Log($"Done equipping new gear");
+            Log("Finished equipping gear");
         }
 
-        private static int FindItemSlot(IEnumerable<ih> ci, int id)
+        private static ih FindItemSlot(int id, bool moneyPit = false)
         {
             var inv = Main.Character.inventory;
             if (inv.head.id == id)
             {
-                return -1;
+                return inv.head.GetInventoryHelper(-1);
             }
 
             if (inv.chest.id == id)
             {
-                return -2;
+                return inv.chest.GetInventoryHelper(-2);
             }
 
             if (inv.legs.id == id)
             {
-                return -3;
+                return inv.legs.GetInventoryHelper(-3);
             }
 
             if (inv.boots.id == id)
             {
-                return -4;
+                return inv.boots.GetInventoryHelper(-4);
             }
 
             if (inv.weapon.id == id)
             {
-                return -5;
+                return inv.weapon.GetInventoryHelper(-5);
             }
 
             if (Controller.weapon2Unlocked())
             {
                 if (inv.weapon2.id == id)
                 {
-                    return -6;
+                    return inv.weapon2.GetInventoryHelper(-6);
                 }
             }
 
@@ -290,14 +277,18 @@ namespace NGUInjector.Managers
             {
                 if (inv.accs[i].id == id)
                 {
-                    return i + 10000;
+                    return inv.accs[i].GetInventoryHelper(i + 10000);
                 }
             }
 
-            var items = ci.Where(x => x.equipment.isEquipment()).Where(x => x.id == id).ToArray();
-            if (items.Length != 0) return items.MaxItem().slot;
+            var items = Main.Character.inventory.GetConvertedInventory()
+                .Where(x => x.id == id && x.equipment.isEquipment()).ToArray();
+            if (items.Length != 0)
+            {
+                return moneyPit ? items.OrderByDescending(x => x.level).First() : items.MaxItem();
+            }
 
-            return -1000;
+            return null;
         }
 
         private static void SaveCurrentLoadout()
@@ -323,6 +314,7 @@ namespace NGUInjector.Managers
                 var index = Controller.accessoryID(id);
                 loadout.Add(Main.Character.inventory.accs[index].id);
             }
+
             _savedLoadout = loadout.ToArray();
             Log($"Saved Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
         }
@@ -359,140 +351,6 @@ namespace NGUInjector.Managers
             ChangeGear(_tempLoadout);
         }
 
-        internal static TitanSpawn TitansSpawningSoon()
-        {
-            var result = new TitanSpawn
-            {
-                IsHighest = false,
-                SpawningSoon = false
-            };
-
-            if (!Main.Character.buttons.adventure.IsInteractable())
-            {
-                result.SpawningSoon = false;
-                return result;
-            }
-
-            if (Main.Character.bossID >= 58)
-            {
-                result.Merge(GetTitanSpawn(1));
-            }
-
-            if (Main.Character.bossID >= 66)
-            {
-                result.Merge(GetTitanSpawn(2));
-            }
-
-            if (Main.Character.bossID >= 82)
-            {
-                result.Merge(GetTitanSpawn(3));
-            }
-
-            if (Main.Character.bossID >= 100)
-            {
-                result.Merge(GetTitanSpawn(4));
-            }
-
-            if (Main.Character.bossID >= 116)
-            {
-                result.Merge(GetTitanSpawn(5));
-            }
-
-            if (Main.Character.bossID >= 132)
-            {
-                result.Merge(GetTitanSpawn(6));
-            }
-
-            if (Main.Character.effectiveBossID() >= 426)
-            {
-                result.Merge(GetTitanSpawn(7));
-            }
-
-            if (Main.Character.effectiveBossID() >= 467)
-            {
-                result.Merge(GetTitanSpawn(8));
-            }
-
-            if (Main.Character.effectiveBossID() >= 491)
-            {
-                result.Merge(GetTitanSpawn(9));
-            }
-
-            if (Main.Character.effectiveBossID() >= 727)
-            {
-                result.Merge(GetTitanSpawn(10));
-            }
-
-            if (Main.Character.effectiveBossID() >= 826)
-            {
-                result.Merge(GetTitanSpawn(11));
-            }
-
-            if (Main.Character.effectiveBossID() >= 848)
-            {
-                result.Merge(GetTitanSpawn(12));
-            }
-
-            return result;
-        }
-
-        private static TitanSpawn GetTitanSpawn(int bossId)
-        {
-            var result = new TitanSpawn
-            {
-                SpawningSoon = false,
-                IsHighest = false
-            };
-
-            if (Test)
-            {
-                result.SpawningSoon = true;
-            }
-
-            if (bossId > Settings.HighestAKZone)
-            {
-                return result;
-            }
-
-            var controller = Main.Character.adventureController;
-            var adventure = Main.Character.adventure;
-
-            var spawnMethod = controller.GetType().GetMethod($"boss{bossId}SpawnTime",
-                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            var spawnTimeObj = spawnMethod?.Invoke(controller, null);
-            if (spawnTimeObj == null)
-                return result;
-            var spawnTime = (float)spawnTimeObj;
-
-            var spawnField = adventure.GetType().GetField($"boss{bossId}Spawn",
-                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            var spawnObj = spawnField?.GetValue(adventure);
-
-            if (spawnObj == null)
-                return result;
-            var spawn = (PlayerTime)spawnObj;
-
-            if (Math.Abs(spawnTime - spawn.totalseconds) < 20)
-            {
-                result.SpawningSoon = true;
-            }
-            else
-            {
-                return result;
-            }
-
-            if (ZoneIsTitan(Settings.GoldZone))
-            {
-                var id = Array.IndexOf(TitanZones, Settings.GoldZone) + 1;
-                if (id == bossId)
-                    result.IsHighest = true;
-            }
-
-            return result;
-        }
-
-
-
         //private static float GetSeedGain(Equipment e)
         //{
         //    var amount =
@@ -515,17 +373,5 @@ namespace NGUInjector.Managers
 
         //    return 0;
         //}
-    }
-
-    public class TitanSpawn
-    {
-        internal bool SpawningSoon { get; set; }
-        internal bool IsHighest { get; set; }
-
-        internal void Merge(TitanSpawn other)
-        {
-            SpawningSoon = SpawningSoon || other.SpawningSoon;
-            IsHighest = IsHighest || other.IsHighest;
-        }
     }
 }

@@ -32,6 +32,12 @@
         "Priorities": ["NGU-4", "NGU-6"]
       }
     ],
+    "R3": [
+      {
+        "Time": 0,
+        "Priorities": ["HACK-1"]
+      }
+    ],
     "Gear": [
       {
         "Time": 0,
@@ -70,6 +76,16 @@
         "List": [4, 5, 6, 8, 11]
       }
     ],
-    "RebirthTime": -1
+    "NGUDiff": [
+      {
+        "Time": 0,
+        "Diff": 0
+      },
+      {
+        "Time": 75600,
+        "Diff": 1
+      }
+    ],
+    "RebirthTime": 86460
   }
 }

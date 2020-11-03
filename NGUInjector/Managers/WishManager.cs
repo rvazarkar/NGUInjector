@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
@@ -34,8 +35,25 @@ namespace NGUInjector.Managers
             {
                 if (isValidWish(Settings.WishPriorities[i]))
                 {
-                    _curValidUpgradesList.Add(Settings.WishPriorities[i]);
+                    if (Settings.WishSortPriorities)
+                    {
+                        dictDouble.Add(Settings.WishPriorities[i], this.sortValue(Settings.WishPriorities[i]) + i);
+                    } else
+                    {
+                        _curValidUpgradesList.Add(Settings.WishPriorities[i]);
+                    }
                 }
+            }
+            if (Settings.WishSortPriorities)
+            {
+                dictDouble = (from x in dictDouble
+                              orderby x.Value
+                              select x).ToDictionary(x => x.Key, x => x.Value);
+                for (var j = 0; j < dictDouble.Count; j++)
+                {
+                    _curValidUpgradesList.Add(dictDouble.ElementAt(j).Key);
+                }
+                dictDouble = new Dictionary<int, double>();
             }
             for (var i = 0; i < _character.wishes.wishes.Count; i++)
             {
@@ -45,7 +63,7 @@ namespace NGUInjector.Managers
                 }
                 if (isValidWish(i))
                 {
-                    dictDouble.Add(i, _character.wishesController.properties[i].wishSpeedDivider);
+                    dictDouble.Add(i, this.sortValue(i) + i);
                 }
             }            
             dictDouble = (from x in dictDouble
@@ -76,6 +94,15 @@ namespace NGUInjector.Managers
                 return false;
             }
             return true;          
+        }
+
+        public double sortValue(int wishId)
+        {
+            if (Settings.WishSortOrder)
+            {
+                return _character.wishesController.wishSpeedDivider(wishId);
+            }
+            return _character.wishesController.properties[wishId].wishSpeedDivider;
         }
     }
 }

@@ -8,6 +8,8 @@ namespace NGUInjector.Managers
     {
         private static int[] _savedDiggers;
         private static int[] _tempDiggers;
+        private static int _cheapestDigger;
+
         internal static LockType CurrentLock { get; set; }
         private static readonly int[] TitanDiggers = { 0, 3, 8, 11 };
         private static readonly int[] YggDiggers = {8, 11};
@@ -19,7 +21,7 @@ namespace NGUInjector.Managers
 
         internal static void TryTitanSwap()
         {
-            var ts = LoadoutManager.TitansSpawningSoon();
+            var ts = ZoneHelpers.TitansSpawningSoon();
             if (CurrentLock == LockType.Titan)
             {
                 if (ts.SpawningSoon)
@@ -63,7 +65,6 @@ namespace NGUInjector.Managers
                 {
                     temp.Add(i);
                 }
-                    
             }
 
             _savedDiggers = temp.ToArray();
@@ -92,13 +93,14 @@ namespace NGUInjector.Managers
         {
             Main.Log($"Equipping Diggers: {string.Join(",", diggers.Select(x => x.ToString()).ToArray())}");
             Main.Character.allDiggers.clearAllActiveDiggers();
-            var sorted = diggers.OrderByDescending(x => x).ToArray();
+            var sorted = diggers.OrderByDescending(x => x).Where(x => x <= 11 && x >= 0).ToArray();
             for (var i = 0; i < sorted.Length; i++)
             {
                 if (Main.Character.diggers.diggers[i].maxLevel <= 0)
                     continue;
                 Main.Character.allDiggers.setLevelMaxAffordable(sorted[i]);
             }
+            UpdateCheapestDigger();
         }
 
         internal static void RecapDiggers()
@@ -110,6 +112,8 @@ namespace NGUInjector.Managers
                     SetLevelMaxAffordable(i);
                 }
             }
+            UpgradeCheapestDigger();
+            Main.Character.allDiggers.refreshMenu();
         }
 
         private static void SetLevelMaxAffordable(int id)
@@ -147,8 +151,6 @@ namespace NGUInjector.Managers
                 }
                 else if (!Main.Character.diggers.diggers[id].active && Main.Character.diggers.diggers[id].curLevel > 0L && Main.Character.diggers.activeDiggers.Count < Main.Character.allDiggers.maxDiggerSlots())
                     Main.Character.allDiggers.activateDigger(id);
-
-                Main.Character.allDiggers.refreshMenu();
             }
         }
 
@@ -156,6 +158,45 @@ namespace NGUInjector.Managers
         {
             Main.Character.allDiggers.clearAllActiveDiggers();
             EquipDiggers(_savedDiggers);
+        }
+
+        internal static void UpdateCheapestDigger()
+        {
+            if (!Main.Settings.UpgradeDiggers) return;
+            _cheapestDigger = -1;
+            for (var i = 0; i < Main.Character.diggers.diggers.Count; i++)
+            {
+                if (Main.Character.diggers.diggers[i].active)
+                {
+                    if (_cheapestDigger == -1)
+                    {
+                        _cheapestDigger = i;
+                    }
+                    if (Main.Character.allDiggers.upgradeCost(i) < Main.Character.allDiggers.upgradeCost(_cheapestDigger))
+                    {
+                        _cheapestDigger = i;
+                    }
+                }
+            }
+        }
+
+        internal static void UpgradeCheapestDigger()
+        {
+            if (!Main.Settings.UpgradeDiggers) return;
+            if (_cheapestDigger == -1) return;
+            if (Main.Character.diggers.diggers[_cheapestDigger].active)
+            {
+                if ((Main.Character.allDiggers.upgradeCost(_cheapestDigger) + Main.Settings.MoneyPitThreshold) < Main.Character.realGold)
+                {
+                    Main.Log("Upgrading Digger " + _cheapestDigger);
+                    Main.Character.allDiggers.upgradeMaxLevel(_cheapestDigger);
+                    UpdateCheapestDigger();
+                }
+            }
+            else
+            {
+                UpdateCheapestDigger();
+            }
         }
     }
 }

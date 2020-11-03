@@ -9,7 +9,7 @@ namespace NGUInjector.Managers
 
     public class FixedSizedQueue
     {
-        private Queue<int> queue = new Queue<int>();
+        private Queue<decimal> queue = new Queue<decimal>();
 
         public int Size { get; private set; }
 
@@ -18,7 +18,7 @@ namespace NGUInjector.Managers
             Size = size;
         }
 
-        public void Enqueue(int obj)
+        public void Enqueue(decimal obj)
         {
             queue.Enqueue(obj);
 
@@ -28,9 +28,35 @@ namespace NGUInjector.Managers
             }
         }
 
-        public double Avg()
+        public decimal Avg()
         {
             return queue.Average(x => x);
+        }
+    }
+
+    public class Cube
+    {
+        internal float Power { get; set; }
+        internal float Toughness { get; set; }
+        protected bool Equals(Cube other)
+        {
+            return Power.Equals(other.Power) && Toughness.Equals(other.Toughness);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Cube) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (Power.GetHashCode() * 397) ^ Toughness.GetHashCode();
+            }
         }
     }
 
@@ -44,10 +70,11 @@ namespace NGUInjector.Managers
         private readonly int[] _convertibles;
         private readonly int[] _wandoos = {66, 169};
         private readonly int[] _guffs = {198, 200, 199, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 228, 211, 250, 291, 289, 290, 298, 299, 300};
-        private int counter = 0;
-        private BoostsNeeded _previousBoostsNeeded;
-        private FixedSizedQueue avg = new FixedSizedQueue(60);
-        private int lastNeededCount = 0;
+        private readonly int[] _mergeBlacklist = { 367, 368, 369, 370, 371, 372 };
+        private BoostsNeeded _previousBoostsNeeded = null;
+        private Cube _lastCube = null;
+        private readonly FixedSizedQueue _invBoostAvg = new FixedSizedQueue(60);
+        private readonly FixedSizedQueue _cubeBoostAvg = new FixedSizedQueue(60);
 
 
         //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane, Guffs
@@ -86,13 +113,15 @@ namespace NGUInjector.Managers
             result = result.Concat(invItems).ToList();
 
             //Make sure we filter out non-equips again, just in case one snuck into priorityboosts
-            return result.Where(x => x.equipment.isEquipment()).ToArray();
+            return result.Where(x => x.equipment.isEquipment()).Where(x => x.equipment.GetNeededBoosts().Total() > 0).ToArray();
         }
 
         internal void BoostInventory(ih[] boostSlots)
         {
             foreach (var item in boostSlots)
             {
+                if (!_character.inventory.HasBoosts())
+                    break;
                 _controller.applyAllBoosts(item.slot);
             }
         }
@@ -147,55 +176,6 @@ namespace NGUInjector.Managers
             return null;
         }
 
-        private static Equipment FindItemEquip(IEnumerable<ih> ci, int id)
-        {
-            var inv = Main.Character.inventory;
-            if (inv.head.id == id)
-            {
-                return inv.head;
-            }
-
-            if (inv.chest.id == id)
-            {
-                return inv.chest;
-            }
-
-            if (inv.legs.id == id)
-            {
-                return inv.legs;
-            }
-
-            if (inv.boots.id == id)
-            {
-                return inv.boots;
-            }
-
-            if (inv.weapon.id == id)
-            {
-                return inv.weapon;
-            }
-
-            if (Controller.weapon2Unlocked())
-            {
-                if (inv.weapon2.id == id)
-                {
-                    return inv.weapon2;
-                }
-            }
-
-            for (var i = 0; i < inv.accs.Count; i++)
-            {
-                if (inv.accs[i].id == id)
-                {
-                    return inv.accs[i];
-                }
-            }
-
-            var items = ci.Where(x => x.id == id).ToArray();
-            if (items.Length != 0) return items.MaxItem().equipment;
-
-            return null;
-        }
         private int ChangePage(int slot)
         {
             var page = (int)Math.Floor((double)slot / 60);
@@ -205,28 +185,54 @@ namespace NGUInjector.Managers
 
         internal void BoostInfinityCube()
         {
+            if (!_character.inventory.HasBoosts())
+                return;
             _controller.infinityCubeAll();
             _controller.updateInventory();
         }
 
-        internal void MergeEquipped()
+        internal void MergeEquipped(ih[] ci)
         {
-            // Boost Equipped Slots
-            _controller.mergeAll(-1);
-            _controller.mergeAll(-2);
-            _controller.mergeAll(-3);
-            _controller.mergeAll(-4);
-            _controller.mergeAll(-5);
+            if (ci.Any(x => x.id == _character.inventory.head.id))
+            {
+                _controller.mergeAll(-1);
+            }
+
+            if (ci.Any(x => x.id == _character.inventory.chest.id))
+            {
+                _controller.mergeAll(-2);
+            }
+
+            if (ci.Any(x => x.id == _character.inventory.legs.id))
+            {
+                _controller.mergeAll(-3);
+            }
+
+            if (ci.Any(x => x.id == _character.inventory.boots.id))
+            {
+                _controller.mergeAll(-4);
+            }
+
+            if (ci.Any(x => x.id == _character.inventory.weapon.id))
+            {
+                _controller.mergeAll(-5);
+            }
 
             if (_controller.weapon2Unlocked())
             {
-                _controller.mergeAll(-6);
+                if (ci.Any(x => x.id == _character.inventory.weapon2.id))
+                {
+                    _controller.mergeAll(-6);
+                }
             }
 
             //Boost Accessories
             for (var i = 10000; _controller.accessoryID(i) < _controller.accessorySpaces(); i++)
             {
-                _controller.mergeAll(i);
+                if (ci.Any(x => x.id == _character.inventory.accs[_controller.accessoryID(i)].id))
+                {
+                    _controller.mergeAll(i);
+                }
             }
         }
 
@@ -244,6 +250,16 @@ namespace NGUInjector.Managers
             }
         }
 
+        private string SanitizeName(string name)
+        {
+            if (name.Contains("\n"))
+            {
+                name = name.Split('\n').Last();
+            }
+
+            return name;
+        }
+
         internal void ManageQuestItems(ih[] ci)
         {
             //Merge quest items first
@@ -254,7 +270,7 @@ namespace NGUInjector.Managers
             foreach (var target in toMerge)
             {
                 if (ci.Count(x => x.id == target.id) <= 1) continue;
-                Log($"Merging {target.name} in slot {target.slot}");
+                Log($"Merging {SanitizeName(target.name)} in slot {target.slot}");
                 _controller.mergeAll(target.slot);
             }
 
@@ -266,7 +282,7 @@ namespace NGUInjector.Managers
             {
                 var newSlot = ChangePage(target.slot);
                 var ic = _controller.inventory[newSlot];
-                Log($"Using quest item {target.name} in slot {target.slot}");
+                Log($"Using quest item {SanitizeName(target.name)} in slot {target.slot}");
                 typeof(ItemController).GetMethod("consumeItem", BindingFlags.NonPublic | BindingFlags.Instance)
                     ?.Invoke(ic, null);
             }
@@ -275,21 +291,25 @@ namespace NGUInjector.Managers
         internal void MergeInventory(ih[] ci)
         {
             var grouped =
-                ci.Where(x => x.id > 40 && x.level < 100 && !_guffs.Contains(x.id) && (x.id < 278 || x.id > 287)).GroupBy(x => x.id).Where(x => x.Count() > 1);
+                ci.Where(x => x.id >= 40 && x.level < 100 && !_mergeBlacklist.Contains(x.id) && !_guffs.Contains(x.id) && (x.id < 278 || x.id > 287)).GroupBy(x => x.id).Where(x => x.Count() > 1);
 
             foreach (var item in grouped)
             {
                 var target = item.MaxItem();
 
-                Log($"Merging {target.name} in slot {target.slot}");
+                Log($"Merging {SanitizeName(target.name)} in slot {target.slot}");
                 _controller.mergeAll(target.slot);
             }
         }
 
         internal void MergeGuffs(ih[] ci)
         {
-            for (var id = 1000000; id - 1000000 < _character.inventory.macguffins.Count; ++id)
-                _controller.mergeAll(id);
+            for (var id = 0; id < _character.inventory.macguffins.Count; ++id)
+            {
+                var guffId = _character.inventory.macguffins[id].id;
+                if (ci.Any(x => x.id == guffId))
+                    _controller.mergeAll(_controller.globalMacguffinID(id));
+            }
 
             var invGuffs = ci.Where(x => _guffs.Contains(x.id)).GroupBy(x => x.id).Where(x => x.Count() > 1);
             foreach (var guff in invGuffs)
@@ -301,6 +321,7 @@ namespace NGUInjector.Managers
 
         internal void ManageConvertibles(ih[] ci)
         {
+            var curPage = (int)Math.Floor((double)_controller.inventory[0].id / 60);
             var grouped = ci.Where(x => _convertibles.Contains(x.id));
             foreach (var item in grouped)
             {
@@ -311,6 +332,83 @@ namespace NGUInjector.Managers
                 var ic = _controller.inventory[newSlot];
                 typeof(ItemController).GetMethod("consumeItem", BindingFlags.NonPublic | BindingFlags.Instance)
                     ?.Invoke(ic, null);
+            }
+            _controller.changePage(curPage);
+        }
+
+        internal void ShowBoostProgress(ih[] boostSlots)
+        {
+            var needed = new BoostsNeeded();
+            var cube = new Cube
+            {
+                Power = _character.inventory.cubePower,
+                Toughness = _character.inventory.cubeToughness
+            };
+
+            foreach (var item in boostSlots)
+            {
+                needed.Add(item.equipment.GetNeededBoosts());
+            }
+
+            var current = needed.Power + needed.Toughness + needed.Special;
+
+            if (current > 0)
+            {
+                if (_previousBoostsNeeded == null)
+                {
+                    Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
+                    _previousBoostsNeeded = needed;
+                }
+                else
+                {
+                    var old = _previousBoostsNeeded.Power + _previousBoostsNeeded.Toughness +
+                              _previousBoostsNeeded.Special;
+
+                    var diff = current - old;
+                    //If diff is > 0, then we either added another item to boost or we levelled something. Don't add the diff to average
+                    if (diff <= 0)
+                    {
+                        _invBoostAvg.Enqueue(diff * -1);
+                    }
+
+                    Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
+                    var average = _invBoostAvg.Avg();
+                    if (average > 0)
+                    {
+                        var eta = current / average;
+                        Log($"Last Minute: {diff}. Average Per Minute: {average:0}. ETA: {eta:0} minutes.");
+                    }
+                    else
+                    {
+                        Log($"Last Minute: {diff}.");
+                    }
+
+                    _previousBoostsNeeded = needed;
+                }
+            }
+
+            if (_lastCube == null)
+            {
+                _lastCube = cube;
+            }
+            else
+            {
+                if (!_lastCube.Equals(cube))
+                {
+                    var output = $"Cube Progress:";
+                    var toughnessDiff = cube.Toughness - _lastCube.Toughness;
+                    var powerDiff = cube.Power - _lastCube.Power;
+
+                    output = toughnessDiff > 0 ? $"{output} {toughnessDiff} Toughness." : output;
+                    output = powerDiff > 0 ? $"{output} {powerDiff} Power." : output;
+
+                    _cubeBoostAvg.Enqueue((decimal)(toughnessDiff + powerDiff));
+                    output = $"{output} Average Per Minute: {_cubeBoostAvg.Avg():0}";
+                    Log(output);
+                    Log($"Cube Power: {cube.Power} ({_character.inventoryController.cubePowerSoftcap()} softcap). Cube Toughness: {cube.Toughness} ({_character.inventoryController.cubeToughnessSoftcap()} softcap)");
+                }
+
+                _lastCube = cube;
             }
         }
 
@@ -359,43 +457,6 @@ namespace NGUInjector.Managers
                 needed.Add(item.equipment.GetNeededBoosts());
             }
 
-            if (counter == 0)
-            {
-                if (_previousBoostsNeeded != null)
-                {
-                    var current = needed.Power + needed.Toughness + needed.Special;
-                    var old = _previousBoostsNeeded.Power + _previousBoostsNeeded.Toughness +
-                              _previousBoostsNeeded.Special;
-
-                    var diff = old - current;
-                    var total = needed.Power + needed.Toughness + needed.Special;
-                    //Throw out values where we've added or removed a piece of gear or we've lost boost progress (usually because of levelling gear)
-                    if (diff > 0 && lastNeededCount == boostSlots.Length)
-                    {
-                        avg.Enqueue((int)diff);
-
-                        var average = Math.Floor(avg.Avg());
-                        var eta = Math.Ceiling(total / avg.Avg());
-
-                        Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
-                        Log($"Last Minute: {current - old}. Hourly Avg: {average}. ETA: {eta} minutes.");
-                    }
-
-                    lastNeededCount = boostSlots.Length;
-                }
-                else
-                {
-                    lastNeededCount = boostSlots.Length;
-                    Log($"Boosts Needed to Green: {needed.Power} Power, {needed.Toughness} Toughness, {needed.Special} Special");
-                }
-
-                _previousBoostsNeeded = needed;
-            }
-                
-
-            counter++;
-            if (counter == 6) counter = 0;
-
             if (needed.Power > 0)
             {
                 _controller.selectAutoPowerTransform();
@@ -414,15 +475,21 @@ namespace NGUInjector.Managers
                 return;
             }
 
+            var cube = new Cube
+            {
+                Power = _character.inventory.cubePower,
+                Toughness = _character.inventory.cubeToughness
+            };
+
             if (Settings.CubePriority > 0)
             {
                 if (Settings.CubePriority == 1)
                 {
-                    if (_controller.cubePower() > _controller.cubeToughness())
+                    if (cube.Power > cube.Toughness)
                     {
                         _controller.selectAutoToughTransform();
                     }
-                    else if (_controller.cubeToughness() > _controller.cubePower())
+                    else if (cube.Toughness > cube.Power)
                     {
                         _controller.selectAutoPowerTransform();
                     }
@@ -474,7 +541,7 @@ namespace NGUInjector.Managers
         void FilterItem(int id)
         {
             if (_pendants.Contains(id) || _lootys.Contains(id) || _wandoos.Contains(id) ||
-                _filterExcludes.Contains(id) || _guffs.Contains(id) || id < 40)
+                _filterExcludes.Contains(id) || _guffs.Contains(id) || id < 40 || _mergeBlacklist.Contains(id))
                 return;
 
             //Dont filter quest items
@@ -507,9 +574,9 @@ namespace NGUInjector.Managers
 
     public class BoostsNeeded
     {
-        internal float Power { get; set; }
-        internal float Toughness { get; set; }
-        internal float Special { get; set; }
+        internal decimal Power { get; set; }
+        internal decimal Toughness { get; set; }
+        internal decimal Special { get; set; }
 
         public BoostsNeeded()
         {
@@ -523,6 +590,11 @@ namespace NGUInjector.Managers
             Power += other.Power;
             Toughness += other.Toughness;
             Special += other.Special;
+        }
+
+        public decimal Total()
+        {
+            return Power + Toughness + Special;
         }
     }
 }
