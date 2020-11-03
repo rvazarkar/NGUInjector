@@ -100,13 +100,27 @@ namespace NGUInjector.Managers
             if (Main.Character.adventure.zone < 1000) return;
             var controller = Main.Character.adventureController;
             var level = controller.itopodLevel;
-            var optimal = Main.Character.calculateBestItopodLevel();
+            var optimal = CalculateBestItopodLevel();
             if (level == optimal) return;
             controller.itopodStartInput.text = optimal.ToString();
             controller.itopodEndInput.text = optimal.ToString();
             controller.verifyItopodInputs();
             controller.zoneSelector.changeZone(1000);
             controller.log.AddEvent($"The CHEATER Floor Shifter changed your current floor from {level} to {optimal}");
+        }
+
+        internal static int CalculateBestItopodLevel()
+        {
+            var c = Main.Character;
+            var num1 = c.totalAdvAttack() / 765f * (Main.Settings.ITOPODCombatMode == 1 || c.training.attackTraining[1] == 0 ? c.idleAttackPower() : c.regAttackPower());
+            if (c.totalAdvAttack() < 700.0)
+                return 0;
+            var num2 = Convert.ToInt32(Math.Floor(Math.Log(num1, 1.05)));
+            if (num2 < 1)
+                return 1;
+            if (num2 > c.adventure.highestItopodLevel)
+                num2 = c.adventure.highestItopodLevel;
+            return num2;
         }
 
     }
