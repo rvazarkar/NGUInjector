@@ -754,6 +754,8 @@ namespace NGUInjector
 
                 _profile.DoAllocations();
 
+                _profile.CastBloodSpells();
+
                 if (Settings.AutoQuest && Character.buttons.beast.interactable)
                 {
                     var converted = Character.inventory.GetConvertedInventory().ToArray();
