@@ -45,15 +45,17 @@ namespace NGUInjector.Managers
             if (TitanZones[bossId] > GetMaxReachableZone(true))
                 return result;
 
-            if (CheckTitanSpawnTime(bossId))
-            {
-                result.SpawningSoon = Main.Settings.TitanSwapTargets[bossId];
-                // Run money once for each boss
-                result.RunMoneyLoadout = Main.Settings.TitanGoldTargets[bossId] && !Main.Settings.TitanMoneyDone[bossId];
-                var temp = Main.Settings.TitanMoneyDone;
-                temp[bossId] = true;
-                Main.Settings.TitanMoneyDone = temp;
-            }
+            if (!CheckTitanSpawnTime(bossId)) return result;
+
+            result.SpawningSoon = Main.Settings.TitanSwapTargets[bossId];
+            // Run money once for each boss
+            result.RunMoneyLoadout = Main.Settings.TitanGoldTargets[bossId] && !Main.Settings.TitanMoneyDone[bossId];
+
+            if (!result.RunMoneyLoadout) return result;
+
+            var temp = Main.Settings.TitanMoneyDone;
+            temp[bossId] = true;
+            Main.Settings.TitanMoneyDone = temp;
 
             return result;
         }
@@ -122,10 +124,7 @@ namespace NGUInjector.Managers
                 num2 = c.adventure.highestItopodLevel;
             return num2;
         }
-
     }
-
-    
 
     public class TitanSpawn
     {
