@@ -92,7 +92,7 @@ namespace NGUInjector.AllocationProfiles
             }
 
             priorities.RemoveAll(x => x.Contains("AUG") && !IsAUGUnlocked(ParseIndex(x)));
-            priorities.RemoveAll(x => x.Contains("BT") && !IsBTUnlocked(ParseIndex(x)));
+            priorities.RemoveAll(x => x.Contains("BT") && !x.Contains("ALL") && !IsBTUnlocked(ParseIndex(x)));
             priorities.RemoveAll(x => x.Contains("AT") && ATTargetMet(ParseIndex(x)));
 
             return priorities;
@@ -398,10 +398,8 @@ namespace NGUInjector.AllocationProfiles
                 }
 
                 YggdrasilManager.HarvestAll();
-                LoadoutManager.RestoreGear();
-                LoadoutManager.ReleaseLock();
-                DiggerManager.RestoreDiggers();
-                DiggerManager.ReleaseLock();
+                Main.Log("Delaying rebirth 1 loop to allow fruit effects");
+                return;
             }
 
             if (Main.Settings.CastBloodSpells)
@@ -1073,7 +1071,7 @@ namespace NGUInjector.AllocationProfiles
             if (breakpoint.StartsWith("TM"))
             {
                 if (_character.machine.multiTarget > 0 &&
-                    _character.machine.goldMultiLevel >= _character.machine.multiTarget)
+                    _character.machine.levelGoldMulti >= _character.machine.multiTarget)
                 {
                     Main.LogAllocation($"Skipping {breakpoint} because target is met");
                     return true;
@@ -1088,7 +1086,7 @@ namespace NGUInjector.AllocationProfiles
             if (breakpoint.StartsWith("CAPTM"))
             {
                 if (_character.machine.multiTarget > 0 &&
-                    _character.machine.goldMultiLevel >= _character.machine.multiTarget)
+                    _character.machine.levelGoldMulti >= _character.machine.multiTarget)
                 {
                     Main.LogAllocation($"Skipping {breakpoint} because target is met");
                     return true;
@@ -1310,7 +1308,7 @@ namespace NGUInjector.AllocationProfiles
             if (breakpoint.StartsWith("TM"))
             {
                 if (_character.machine.speedTarget > 0 &&
-                    _character.machine.speedLevel >= _character.machine.speedTarget)
+                    _character.machine.levelSpeed >= _character.machine.speedTarget)
                 {
                     Main.LogAllocation($"Skipping {breakpoint} because target is met");
                     return true;
@@ -1323,7 +1321,7 @@ namespace NGUInjector.AllocationProfiles
 
             if (breakpoint.StartsWith("CAPTM"))
             {
-                if (_character.machine.speedTarget > 0 && _character.machine.speedLevel >= _character.machine.speedTarget)
+                if (_character.machine.speedTarget > 0 && _character.machine.levelSpeed >= _character.machine.speedTarget)
                     return true;
                 var cap = _calcs.CalculateTMEnergyCap(false);
                 SetInput(cap);
