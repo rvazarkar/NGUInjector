@@ -76,10 +76,6 @@ namespace NGUInjector.Managers
                 Log("Equipping Loadout for Yggdrasil and Harvesting");
                 //We swapped so harvest
                 ActuallyHarvest();
-                LoadoutManager.RestoreGear();
-                LoadoutManager.ReleaseLock();
-                DiggerManager.RestoreDiggers();
-                DiggerManager.ReleaseLock();
             }
         }
 
