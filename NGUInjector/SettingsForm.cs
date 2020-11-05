@@ -1183,10 +1183,6 @@ namespace NGUInjector
                 }
 
                 YggdrasilManager.HarvestAll();
-                LoadoutManager.RestoreGear();
-                LoadoutManager.ReleaseLock();
-                DiggerManager.RestoreDiggers();
-                DiggerManager.ReleaseLock();
             }
         }
 
@@ -1304,6 +1300,12 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.CastBloodSpells = CastBloodSpells.Checked;
+        }
+
+        private void QuestCombatMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.QuestCombatMode = QuestCombatMode.SelectedIndex;
         }
     }
 }

@@ -49,6 +49,14 @@
             this.AutoFightBosses = new System.Windows.Forms.CheckBox();
             this.AutoITOPOD = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.CastBloodSpells = new System.Windows.Forms.CheckBox();
+            this.IronPillThreshold = new System.Windows.Forms.NumericUpDown();
+            this.label123 = new System.Windows.Forms.Label();
+            this.GuffBThreshold = new System.Windows.Forms.NumericUpDown();
+            this.label26 = new System.Windows.Forms.Label();
+            this.GuffAThreshold = new System.Windows.Forms.NumericUpDown();
+            this.label27 = new System.Windows.Forms.Label();
+            this.UpgradeDiggers = new System.Windows.Forms.CheckBox();
             this.ManageNGUDiff = new System.Windows.Forms.CheckBox();
             this.ChangeProfileFile = new System.Windows.Forms.Button();
             this.AllocationProfileFileLabel = new System.Windows.Forms.Label();
@@ -188,14 +196,6 @@
             this.AutoDailySpin = new System.Windows.Forms.CheckBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.UpgradeDiggers = new System.Windows.Forms.CheckBox();
-            this.GuffBThreshold = new System.Windows.Forms.NumericUpDown();
-            this.label26 = new System.Windows.Forms.Label();
-            this.GuffAThreshold = new System.Windows.Forms.NumericUpDown();
-            this.label27 = new System.Windows.Forms.Label();
-            this.IronPillThreshold = new System.Windows.Forms.NumericUpDown();
-            this.label123 = new System.Windows.Forms.Label();
-            this.CastBloodSpells = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).BeginInit();
@@ -207,6 +207,9 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.IronPillThreshold)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GuffBThreshold)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GuffAThreshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CounterfeitCap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpaghettiCap)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -227,9 +230,6 @@
             this.tabPage10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MoneyPitInput)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.GuffBThreshold)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GuffAThreshold)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IronPillThreshold)).BeginInit();
             this.SuspendLayout();
             // 
             // moneyPitError
@@ -382,6 +382,65 @@
             resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // CastBloodSpells
+            // 
+            resources.ApplyResources(this.CastBloodSpells, "CastBloodSpells");
+            this.CastBloodSpells.Name = "CastBloodSpells";
+            this.CastBloodSpells.UseVisualStyleBackColor = true;
+            this.CastBloodSpells.CheckedChanged += new System.EventHandler(this.CastBloodSpells_CheckedChanged);
+            // 
+            // IronPillThreshold
+            // 
+            resources.ApplyResources(this.IronPillThreshold, "IronPillThreshold");
+            this.IronPillThreshold.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.IronPillThreshold.Name = "IronPillThreshold";
+            // 
+            // label123
+            // 
+            resources.ApplyResources(this.label123, "label123");
+            this.label123.Name = "label123";
+            // 
+            // GuffBThreshold
+            // 
+            resources.ApplyResources(this.GuffBThreshold, "GuffBThreshold");
+            this.GuffBThreshold.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.GuffBThreshold.Name = "GuffBThreshold";
+            // 
+            // label26
+            // 
+            resources.ApplyResources(this.label26, "label26");
+            this.label26.Name = "label26";
+            // 
+            // GuffAThreshold
+            // 
+            resources.ApplyResources(this.GuffAThreshold, "GuffAThreshold");
+            this.GuffAThreshold.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.GuffAThreshold.Name = "GuffAThreshold";
+            // 
+            // label27
+            // 
+            resources.ApplyResources(this.label27, "label27");
+            this.label27.Name = "label27";
+            // 
+            // UpgradeDiggers
+            // 
+            resources.ApplyResources(this.UpgradeDiggers, "UpgradeDiggers");
+            this.UpgradeDiggers.Name = "UpgradeDiggers";
+            this.UpgradeDiggers.UseVisualStyleBackColor = true;
+            this.UpgradeDiggers.CheckedChanged += new System.EventHandler(this.UpgradeDiggers_CheckedChanged);
             // 
             // ManageNGUDiff
             // 
@@ -1293,6 +1352,7 @@
             resources.GetString("QuestCombatMode.Items1")});
             resources.ApplyResources(this.QuestCombatMode, "QuestCombatMode");
             this.QuestCombatMode.Name = "QuestCombatMode";
+            this.QuestCombatMode.SelectedIndexChanged += new System.EventHandler(this.QuestCombatMode_SelectedIndexChanged);
             // 
             // AllowMajor
             // 
@@ -1494,65 +1554,6 @@
             resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             // 
-            // UpgradeDiggers
-            // 
-            resources.ApplyResources(this.UpgradeDiggers, "UpgradeDiggers");
-            this.UpgradeDiggers.Name = "UpgradeDiggers";
-            this.UpgradeDiggers.UseVisualStyleBackColor = true;
-            this.UpgradeDiggers.CheckedChanged += new System.EventHandler(this.UpgradeDiggers_CheckedChanged);
-            // 
-            // GuffBThreshold
-            // 
-            resources.ApplyResources(this.GuffBThreshold, "GuffBThreshold");
-            this.GuffBThreshold.Maximum = new decimal(new int[] {
-            9999999,
-            0,
-            0,
-            0});
-            this.GuffBThreshold.Name = "GuffBThreshold";
-            // 
-            // label26
-            // 
-            resources.ApplyResources(this.label26, "label26");
-            this.label26.Name = "label26";
-            // 
-            // GuffAThreshold
-            // 
-            resources.ApplyResources(this.GuffAThreshold, "GuffAThreshold");
-            this.GuffAThreshold.Maximum = new decimal(new int[] {
-            9999999,
-            0,
-            0,
-            0});
-            this.GuffAThreshold.Name = "GuffAThreshold";
-            // 
-            // label27
-            // 
-            resources.ApplyResources(this.label27, "label27");
-            this.label27.Name = "label27";
-            // 
-            // IronPillThreshold
-            // 
-            resources.ApplyResources(this.IronPillThreshold, "IronPillThreshold");
-            this.IronPillThreshold.Maximum = new decimal(new int[] {
-            9999999,
-            0,
-            0,
-            0});
-            this.IronPillThreshold.Name = "IronPillThreshold";
-            // 
-            // label123
-            // 
-            resources.ApplyResources(this.label123, "label123");
-            this.label123.Name = "label123";
-            // 
-            // CastBloodSpells
-            // 
-            resources.ApplyResources(this.CastBloodSpells, "CastBloodSpells");
-            this.CastBloodSpells.Name = "CastBloodSpells";
-            this.CastBloodSpells.UseVisualStyleBackColor = true;
-            this.CastBloodSpells.CheckedChanged += new System.EventHandler(this.CastBloodSpells_CheckedChanged);
-            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1575,6 +1576,9 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.IronPillThreshold)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GuffBThreshold)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GuffAThreshold)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CounterfeitCap)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpaghettiCap)).EndInit();
             this.tabPage3.ResumeLayout(false);
@@ -1603,9 +1607,6 @@
             this.tabPage10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MoneyPitInput)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.GuffBThreshold)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GuffAThreshold)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IronPillThreshold)).EndInit();
             this.ResumeLayout(false);
 
         }
