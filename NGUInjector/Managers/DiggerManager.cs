@@ -166,16 +166,13 @@ namespace NGUInjector.Managers
             _cheapestDigger = -1;
             for (var i = 0; i < Main.Character.diggers.diggers.Count; i++)
             {
-                if (Main.Character.diggers.diggers[i].active)
+                if (_cheapestDigger == -1)
                 {
-                    if (_cheapestDigger == -1)
-                    {
-                        _cheapestDigger = i;
-                    }
-                    if (Main.Character.allDiggers.upgradeCost(i) < Main.Character.allDiggers.upgradeCost(_cheapestDigger))
-                    {
-                        _cheapestDigger = i;
-                    }
+                    _cheapestDigger = i;
+                }
+                if (Main.Character.allDiggers.upgradeCost(i) < Main.Character.allDiggers.upgradeCost(_cheapestDigger))
+                {
+                    _cheapestDigger = i;
                 }
             }
         }
@@ -184,19 +181,18 @@ namespace NGUInjector.Managers
         {
             if (!Main.Settings.UpgradeDiggers) return;
             if (_cheapestDigger == -1) return;
-            if (Main.Character.diggers.diggers[_cheapestDigger].active)
+            if (Main.Character.allDiggers.upgradeCost(_cheapestDigger) + Main.Settings.MoneyPitThreshold < Main.Character.realGold)
             {
-                if ((Main.Character.allDiggers.upgradeCost(_cheapestDigger) + Main.Settings.MoneyPitThreshold) < Main.Character.realGold)
-                {
-                    Main.Log("Upgrading Digger " + _cheapestDigger);
-                    Main.Character.allDiggers.upgradeMaxLevel(_cheapestDigger);
-                    UpdateCheapestDigger();
-                }
+                Main.Log("Upgrading Digger " + _cheapestDigger);
+                Main.Character.allDiggers.upgradeMaxLevel(_cheapestDigger);
             }
             else
             {
-                UpdateCheapestDigger();
+                return;
             }
+
+            UpdateCheapestDigger();
+            UpgradeCheapestDigger();
         }
     }
 }
