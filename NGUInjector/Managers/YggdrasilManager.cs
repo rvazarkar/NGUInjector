@@ -33,6 +33,17 @@ namespace NGUInjector.Managers
             return _character.yggdrasilController.anyFruitMaxxed();
         }
 
+        internal bool NeedsSwap()
+        {
+            for (var i = 0; i < Main.Character.yggdrasil.fruits.Count; i++)
+            {
+                if (Main.Character.yggdrasilController.fruits[0].harvestTier(i) > Settings.YggSwapThreshold && Main.Character.yggdrasilController.fruits[0].fruitMaxxed(i))
+                    return true;
+            }
+
+            return false;
+        }
+
         internal void ManageYggHarvest()
         {
             //We need to harvest but we dont have a loadout to manage OR we're not managing loadout
@@ -70,11 +81,19 @@ namespace NGUInjector.Managers
             //We're managing loadouts
             if (NeedsHarvest())
             {
-                if (!LoadoutManager.TryYggdrasilSwap() || !DiggerManager.TryYggSwap())
-                    return;
+                if (NeedsSwap())
+                {
+                    if (!LoadoutManager.TryYggdrasilSwap() || !DiggerManager.TryYggSwap())
+                        return;
 
-                Log("Equipping Loadout for Yggdrasil and Harvesting");
-                //We swapped so harvest
+                    Log("Equipping Loadout for Yggdrasil and Harvesting");
+                }
+                else
+                {
+                    Log("Harvesting without swap");
+                }
+
+                //Harvest stuff
                 ActuallyHarvest();
             }
         }

@@ -196,6 +196,8 @@
             this.AutoDailySpin = new System.Windows.Forms.CheckBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label28 = new System.Windows.Forms.Label();
+            this.YggSwapThreshold = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).BeginInit();
@@ -230,6 +232,7 @@
             this.tabPage10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MoneyPitInput)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.YggSwapThreshold)).BeginInit();
             this.SuspendLayout();
             // 
             // moneyPitError
@@ -583,6 +586,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.YggSwapThreshold);
+            this.tabPage3.Controls.Add(this.label28);
             this.tabPage3.Controls.Add(this.HarvestSafety);
             this.tabPage3.Controls.Add(this.HarvestAllButton);
             this.tabPage3.Controls.Add(this.ActivateFruits);
@@ -1554,6 +1559,27 @@
             resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             // 
+            // label28
+            // 
+            resources.ApplyResources(this.label28, "label28");
+            this.label28.Name = "label28";
+            // 
+            // YggSwapThreshold
+            // 
+            resources.ApplyResources(this.YggSwapThreshold, "YggSwapThreshold");
+            this.YggSwapThreshold.Maximum = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
+            this.YggSwapThreshold.Name = "YggSwapThreshold";
+            this.YggSwapThreshold.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.YggSwapThreshold.ValueChanged += new System.EventHandler(this.YggSwapThreshold_ValueChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1607,6 +1633,7 @@
             this.tabPage10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MoneyPitInput)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.YggSwapThreshold)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1778,5 +1805,7 @@
         private System.Windows.Forms.NumericUpDown IronPillThreshold;
         private System.Windows.Forms.Label label123;
         private System.Windows.Forms.CheckBox CastBloodSpells;
+        private System.Windows.Forms.NumericUpDown YggSwapThreshold;
+        private System.Windows.Forms.Label label28;
     }
 }

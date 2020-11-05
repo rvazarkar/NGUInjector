@@ -262,6 +262,7 @@ namespace NGUInjector
             IronPillThreshold.Value = newSettings.IronPillThreshold;
             GuffAThreshold.Value = newSettings.BloodMacGuffinAThreshold;
             GuffBThreshold.Value = newSettings.BloodMacGuffinBThreshold;
+            YggSwapThreshold.Value = newSettings.YggSwapThreshold;
 
             SetTitanGoldBox(newSettings);
             SetTitanSwapBox(newSettings);
@@ -1306,6 +1307,12 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.QuestCombatMode = QuestCombatMode.SelectedIndex;
+        }
+
+        private void YggSwapThreshold_ValueChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.YggSwapThreshold = decimal.ToInt32(YggSwapThreshold.Value);
         }
     }
 }
