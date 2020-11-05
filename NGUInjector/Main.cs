@@ -245,7 +245,16 @@ namespace NGUInjector
                         TitanSwapTargets = new bool[ZoneHelpers.TitanZones.Length],
                         GoldCBlockMode = false,
                         DebugAllocation = false,
-                        AdventureTargetITOPOD = false
+                        AdventureTargetITOPOD = false,
+                        ITOPODRecoverHP = false,
+                        ITOPODCombatMode = 0,
+                        ITOPODBeastMode = true,
+                        ITOPODFastCombat = true,
+                        ITOPODPrecastBuffs = false,
+                        DisableOverlay = false,
+                        OptimizeITOPODFloor = false,
+                        YggSwapThreshold = 1,
+                        UpgradeDiggers = true
                     };
 
                     Settings.MassUpdate(temp);
@@ -832,19 +841,26 @@ namespace NGUInjector
             }
 
             var questZone = _questManager.IsQuesting();
-            if (questZone > 0)
+            if (!Settings.CombatEnabled || !ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) ||
+                ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) &&
+                !ZoneHelpers.TitanSpawningSoon(Array.IndexOf(ZoneHelpers.TitanZones, Settings.SnipeZone)))
             {
-                if (Settings.QuestCombatMode == 0)
+                if (questZone > 0)
                 {
-                    _combManager.ManualZone(questZone, false, false, false, Settings.QuestFastCombat, Settings.BeastMode);
-                }
-                else
-                {
-                    _combManager.IdleZone(questZone, false, false);
-                }
+                    if (Settings.QuestCombatMode == 0)
+                    {
+                        _combManager.ManualZone(questZone, false, false, false, Settings.QuestFastCombat, Settings.BeastMode);
+                    }
+                    else
+                    {
+                        _combManager.IdleZone(questZone, false, false);
+                    }
 
-                return;
+                    return;
+                }
             }
+
+            
 
             if (!Settings.CombatEnabled)
                 return;
