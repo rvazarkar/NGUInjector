@@ -18,6 +18,10 @@ namespace NGUInjector.Managers
             {
                 if (!LoadoutManager.TryMoneyPitSwap()) return;
             }
+            for (var i = Main.Character.bloodMagic.ritual.Count - 1; i >= 0; i--)
+            {
+                Main.Character.bloodMagicController.bloodMagics[i].cap();
+            }
             var controller = Main.Character.pitController;
             typeof(PitController).GetMethod("engage", BindingFlags.NonPublic | BindingFlags.Instance)
                 ?.Invoke(controller, null);
