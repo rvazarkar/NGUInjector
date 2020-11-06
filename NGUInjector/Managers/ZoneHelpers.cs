@@ -35,11 +35,6 @@ namespace NGUInjector.Managers
         {
             var result = new TitanSpawn();
 
-            if (Main.Test)
-            {
-                result.SpawningSoon = true;
-            }
-
             if (bossId + 1 > Main.Settings.HighestAKZone)
                 return result;
             if (TitanZones[bossId] > GetMaxReachableZone(true))
@@ -49,11 +44,11 @@ namespace NGUInjector.Managers
 
             result.SpawningSoon = Main.Settings.TitanSwapTargets[bossId];
             // Run money once for each boss
-            result.RunMoneyLoadout = Main.Settings.TitanGoldTargets[bossId] && !Main.Settings.TitanMoneyDone[bossId];
+            result.RunMoneyLoadout = Main.Settings.ManageGoldLoadouts && Main.Settings.TitanGoldTargets[bossId] && !Main.Settings.TitanMoneyDone[bossId];
 
             if (!result.RunMoneyLoadout) return result;
-
-            var temp = Main.Settings.TitanMoneyDone;
+            Main.Log($"Running money loadout for {bossId}");
+            var temp = Main.Settings.TitanMoneyDone.ToArray();
             temp[bossId] = true;
             Main.Settings.TitanMoneyDone = temp;
 
@@ -62,6 +57,7 @@ namespace NGUInjector.Managers
 
         private static bool CheckTitanSpawnTime(int bossId)
         {
+            if (Main.Test) return true;
             var controller = Main.Character.adventureController;
             var adventure = Main.Character.adventure;
 
