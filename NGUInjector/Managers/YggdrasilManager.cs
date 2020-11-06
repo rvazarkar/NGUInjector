@@ -35,9 +35,10 @@ namespace NGUInjector.Managers
 
         internal bool NeedsSwap()
         {
+            var thresh = Math.Max(1, Settings.YggSwapThreshold);
             for (var i = 0; i < Main.Character.yggdrasil.fruits.Count; i++)
             {
-                if (Main.Character.yggdrasilController.fruits[0].harvestTier(i) > Settings.YggSwapThreshold && Main.Character.yggdrasilController.fruits[0].fruitMaxxed(i))
+                if (Main.Character.yggdrasilController.fruits[0].harvestTier(i) >= thresh && Main.Character.yggdrasilController.fruits[0].fruitMaxxed(i))
                     return true;
             }
 
@@ -90,7 +91,7 @@ namespace NGUInjector.Managers
                 }
                 else
                 {
-                    Log("Harvesting without swap");
+                    Log("Harvesting without swap because threshold not met");
                 }
 
                 //Harvest stuff
