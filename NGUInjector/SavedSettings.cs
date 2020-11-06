@@ -89,6 +89,9 @@ namespace NGUInjector
         [SerializeField] private bool _itopodPrecastBuffs;
         [SerializeField] private bool _adventureTargetItopod;
         [SerializeField] private bool _disableOverlay;
+        [SerializeField] private bool _balanceMayo;
+        [SerializeField] private bool _trashCards;
+        [SerializeField] private int _cardsTrashQuality;
 
         private readonly string _savePath;
         private bool _disableSave;
@@ -233,6 +236,9 @@ namespace NGUInjector
             _itopodRecoverHp = other.ITOPODRecoverHP;
             _disableOverlay = other.DisableOverlay;
             _upgradeDiggers = other._upgradeDiggers;
+            _balanceMayo = other._balanceMayo;
+            _trashCards = other._trashCards;
+            _cardsTrashQuality = other._cardsTrashQuality;
         }
 
         public int HighestAKZone
@@ -1054,5 +1060,36 @@ namespace NGUInjector
                 SaveSettings();
             }
         }
+        public bool BalanceMayo
+        {
+            get => _balanceMayo;
+            set
+            {
+                if (value == _balanceMayo) return;
+                _balanceMayo = value;
+                SaveSettings();
+            }
+        }
+        public bool TrashCards
+        {
+            get => _trashCards;
+            set
+            {
+                if (value == _trashCards) return;
+                _trashCards = value;
+                SaveSettings();
+            }
+        }
+        public int CardsTrashQuality
+        {
+            get => _cardsTrashQuality;
+            set
+            {
+                if (value == _cardsTrashQuality) return;
+                _cardsTrashQuality = value;
+                SaveSettings();
+            }
+        }
+
     }
 }

@@ -49,6 +49,14 @@
             this.AutoFightBosses = new System.Windows.Forms.CheckBox();
             this.AutoITOPOD = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.CastBloodSpells = new System.Windows.Forms.CheckBox();
+            this.IronPillThreshold = new System.Windows.Forms.NumericUpDown();
+            this.label123 = new System.Windows.Forms.Label();
+            this.GuffBThreshold = new System.Windows.Forms.NumericUpDown();
+            this.label26 = new System.Windows.Forms.Label();
+            this.GuffAThreshold = new System.Windows.Forms.NumericUpDown();
+            this.label27 = new System.Windows.Forms.Label();
+            this.UpgradeDiggers = new System.Windows.Forms.CheckBox();
             this.ManageNGUDiff = new System.Windows.Forms.CheckBox();
             this.ChangeProfileFile = new System.Windows.Forms.Button();
             this.AllocationProfileFileLabel = new System.Windows.Forms.Label();
@@ -186,16 +194,14 @@
             this.label7 = new System.Windows.Forms.Label();
             this.AutoMoneyPit = new System.Windows.Forms.CheckBox();
             this.AutoDailySpin = new System.Windows.Forms.CheckBox();
+            this.tabPage11 = new System.Windows.Forms.TabPage();
+            this.balanceMayo = new System.Windows.Forms.CheckBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.UpgradeDiggers = new System.Windows.Forms.CheckBox();
-            this.GuffBThreshold = new System.Windows.Forms.NumericUpDown();
-            this.label26 = new System.Windows.Forms.Label();
-            this.GuffAThreshold = new System.Windows.Forms.NumericUpDown();
-            this.label27 = new System.Windows.Forms.Label();
-            this.IronPillThreshold = new System.Windows.Forms.NumericUpDown();
-            this.label123 = new System.Windows.Forms.Label();
-            this.CastBloodSpells = new System.Windows.Forms.CheckBox();
+            this.TrashCards = new System.Windows.Forms.CheckBox();
+            this.TrashQuality = new System.Windows.Forms.ComboBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).BeginInit();
@@ -207,6 +213,9 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.IronPillThreshold)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GuffBThreshold)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GuffAThreshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CounterfeitCap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpaghettiCap)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -226,10 +235,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.WishAddInput)).BeginInit();
             this.tabPage10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MoneyPitInput)).BeginInit();
+            this.tabPage11.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.GuffBThreshold)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GuffAThreshold)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IronPillThreshold)).BeginInit();
             this.SuspendLayout();
             // 
             // moneyPitError
@@ -276,6 +283,7 @@
             this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Controls.Add(this.tabPage9);
             this.tabControl1.Controls.Add(this.tabPage10);
+            this.tabControl1.Controls.Add(this.tabPage11);
             resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -382,6 +390,65 @@
             resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // CastBloodSpells
+            // 
+            resources.ApplyResources(this.CastBloodSpells, "CastBloodSpells");
+            this.CastBloodSpells.Name = "CastBloodSpells";
+            this.CastBloodSpells.UseVisualStyleBackColor = true;
+            this.CastBloodSpells.CheckedChanged += new System.EventHandler(this.CastBloodSpells_CheckedChanged);
+            // 
+            // IronPillThreshold
+            // 
+            resources.ApplyResources(this.IronPillThreshold, "IronPillThreshold");
+            this.IronPillThreshold.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.IronPillThreshold.Name = "IronPillThreshold";
+            // 
+            // label123
+            // 
+            resources.ApplyResources(this.label123, "label123");
+            this.label123.Name = "label123";
+            // 
+            // GuffBThreshold
+            // 
+            resources.ApplyResources(this.GuffBThreshold, "GuffBThreshold");
+            this.GuffBThreshold.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.GuffBThreshold.Name = "GuffBThreshold";
+            // 
+            // label26
+            // 
+            resources.ApplyResources(this.label26, "label26");
+            this.label26.Name = "label26";
+            // 
+            // GuffAThreshold
+            // 
+            resources.ApplyResources(this.GuffAThreshold, "GuffAThreshold");
+            this.GuffAThreshold.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.GuffAThreshold.Name = "GuffAThreshold";
+            // 
+            // label27
+            // 
+            resources.ApplyResources(this.label27, "label27");
+            this.label27.Name = "label27";
+            // 
+            // UpgradeDiggers
+            // 
+            resources.ApplyResources(this.UpgradeDiggers, "UpgradeDiggers");
+            this.UpgradeDiggers.Name = "UpgradeDiggers";
+            this.UpgradeDiggers.UseVisualStyleBackColor = true;
+            this.UpgradeDiggers.CheckedChanged += new System.EventHandler(this.UpgradeDiggers_CheckedChanged);
             // 
             // ManageNGUDiff
             // 
@@ -1482,6 +1549,24 @@
             this.AutoDailySpin.UseVisualStyleBackColor = true;
             this.AutoDailySpin.CheckedChanged += new System.EventHandler(this.AutoDailySpin_CheckedChanged);
             // 
+            // tabPage11
+            // 
+            this.tabPage11.Controls.Add(this.label29);
+            this.tabPage11.Controls.Add(this.label28);
+            this.tabPage11.Controls.Add(this.TrashQuality);
+            this.tabPage11.Controls.Add(this.TrashCards);
+            this.tabPage11.Controls.Add(this.balanceMayo);
+            resources.ApplyResources(this.tabPage11, "tabPage11");
+            this.tabPage11.Name = "tabPage11";
+            this.tabPage11.UseVisualStyleBackColor = true;
+            // 
+            // balanceMayo
+            // 
+            resources.ApplyResources(this.balanceMayo, "balanceMayo");
+            this.balanceMayo.Name = "balanceMayo";
+            this.balanceMayo.UseVisualStyleBackColor = true;
+            this.balanceMayo.CheckedChanged += new System.EventHandler(this.balanceMayo_CheckedChanged);
+            // 
             // progressBar1
             // 
             resources.ApplyResources(this.progressBar1, "progressBar1");
@@ -1494,64 +1579,29 @@
             resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             // 
-            // UpgradeDiggers
+            // TrashCards
             // 
-            resources.ApplyResources(this.UpgradeDiggers, "UpgradeDiggers");
-            this.UpgradeDiggers.Name = "UpgradeDiggers";
-            this.UpgradeDiggers.UseVisualStyleBackColor = true;
-            this.UpgradeDiggers.CheckedChanged += new System.EventHandler(this.UpgradeDiggers_CheckedChanged);
+            resources.ApplyResources(this.TrashCards, "TrashCards");
+            this.TrashCards.Name = "TrashCards";
+            this.TrashCards.UseVisualStyleBackColor = true;
+            this.TrashCards.CheckedChanged += new System.EventHandler(this.TrashCards_CheckedChanged);
             // 
-            // GuffBThreshold
+            // TrashQuality
             // 
-            resources.ApplyResources(this.GuffBThreshold, "GuffBThreshold");
-            this.GuffBThreshold.Maximum = new decimal(new int[] {
-            9999999,
-            0,
-            0,
-            0});
-            this.GuffBThreshold.Name = "GuffBThreshold";
+            this.TrashQuality.FormattingEnabled = true;
+            resources.ApplyResources(this.TrashQuality, "TrashQuality");
+            this.TrashQuality.Name = "TrashQuality";
+            this.TrashQuality.SelectedIndexChanged += new System.EventHandler(this.TrashQuality_SelectedIndexChanged);
             // 
-            // label26
+            // label28
             // 
-            resources.ApplyResources(this.label26, "label26");
-            this.label26.Name = "label26";
+            resources.ApplyResources(this.label28, "label28");
+            this.label28.Name = "label28";
             // 
-            // GuffAThreshold
+            // label29
             // 
-            resources.ApplyResources(this.GuffAThreshold, "GuffAThreshold");
-            this.GuffAThreshold.Maximum = new decimal(new int[] {
-            9999999,
-            0,
-            0,
-            0});
-            this.GuffAThreshold.Name = "GuffAThreshold";
-            // 
-            // label27
-            // 
-            resources.ApplyResources(this.label27, "label27");
-            this.label27.Name = "label27";
-            // 
-            // IronPillThreshold
-            // 
-            resources.ApplyResources(this.IronPillThreshold, "IronPillThreshold");
-            this.IronPillThreshold.Maximum = new decimal(new int[] {
-            9999999,
-            0,
-            0,
-            0});
-            this.IronPillThreshold.Name = "IronPillThreshold";
-            // 
-            // label123
-            // 
-            resources.ApplyResources(this.label123, "label123");
-            this.label123.Name = "label123";
-            // 
-            // CastBloodSpells
-            // 
-            resources.ApplyResources(this.CastBloodSpells, "CastBloodSpells");
-            this.CastBloodSpells.Name = "CastBloodSpells";
-            this.CastBloodSpells.UseVisualStyleBackColor = true;
-            this.CastBloodSpells.CheckedChanged += new System.EventHandler(this.CastBloodSpells_CheckedChanged);
+            resources.ApplyResources(this.label29, "label29");
+            this.label29.Name = "label29";
             // 
             // SettingsForm
             // 
@@ -1575,6 +1625,9 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.IronPillThreshold)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GuffBThreshold)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GuffAThreshold)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CounterfeitCap)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpaghettiCap)).EndInit();
             this.tabPage3.ResumeLayout(false);
@@ -1602,10 +1655,9 @@
             this.tabPage10.ResumeLayout(false);
             this.tabPage10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MoneyPitInput)).EndInit();
+            this.tabPage11.ResumeLayout(false);
+            this.tabPage11.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.GuffBThreshold)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GuffAThreshold)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IronPillThreshold)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1777,5 +1829,11 @@
         private System.Windows.Forms.NumericUpDown IronPillThreshold;
         private System.Windows.Forms.Label label123;
         private System.Windows.Forms.CheckBox CastBloodSpells;
+        private System.Windows.Forms.TabPage tabPage11;
+        private System.Windows.Forms.CheckBox balanceMayo;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.ComboBox TrashQuality;
+        private System.Windows.Forms.CheckBox TrashCards;
     }
 }

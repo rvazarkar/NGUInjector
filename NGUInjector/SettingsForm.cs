@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -93,6 +93,8 @@ namespace NGUInjector
                 {41, "The Nether Regions"},
                 {42, "AMALGAMATE"}
             };
+
+            TrashQuality.Items.AddRange(Enum.GetNames(typeof(rarity)));
 
             CubePriority.DataSource = new BindingSource(CubePriorityList, null);
             CubePriority.ValueMember = "Key";
@@ -265,6 +267,10 @@ namespace NGUInjector
 
             SetTitanGoldBox(newSettings);
             SetTitanSwapBox(newSettings);
+
+            balanceMayo.Checked = newSettings.BalanceMayo;
+            TrashCards.Checked = newSettings.TrashCards;
+            TrashQuality.SelectedIndex = (int)newSettings.CardsTrashQuality;
 
             var temp = newSettings.YggdrasilLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
             if (temp.Count > 0)
@@ -1304,6 +1310,21 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.CastBloodSpells = CastBloodSpells.Checked;
+        }
+
+        private void balanceMayo_CheckedChanged(object sender, EventArgs e)
+        {
+            Main.Settings.BalanceMayo = balanceMayo.Checked;
+        }
+
+        private void TrashCards_CheckedChanged(object sender, EventArgs e)
+        {
+            Main.Settings.TrashCards = TrashCards.Checked;
+        }
+
+        private void TrashQuality_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Main.Settings.CardsTrashQuality = TrashQuality.SelectedIndex;
         }
     }
 }

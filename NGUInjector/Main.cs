@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -35,6 +35,7 @@ namespace NGUInjector
         private InventoryManager _invManager;
         private CombatManager _combManager;
         private QuestManager _questManager;
+        private CardManager _cardManager;
         private static CustomAllocation _profile;
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
@@ -169,6 +170,7 @@ namespace NGUInjector
                 _yggManager = new YggdrasilManager();
                 _questManager = new QuestManager();
                 _combManager = new CombatManager();
+                _cardManager = new CardManager();
                 LoadoutManager.ReleaseLock();
                 DiggerManager.ReleaseLock();
 
@@ -245,7 +247,10 @@ namespace NGUInjector
                         TitanSwapTargets = new bool[ZoneHelpers.TitanZones.Length],
                         GoldCBlockMode = false,
                         DebugAllocation = false,
-                        AdventureTargetITOPOD = false
+                        AdventureTargetITOPOD = false,
+                        BalanceMayo = false,
+                        TrashCards = false,
+                        CardsTrashQuality = 0
                     };
 
                     Settings.MassUpdate(temp);
@@ -773,6 +778,16 @@ namespace NGUInjector
                     {
                         Log("Delaying rebirth while boss fight is in progress");
                     }
+                }
+
+                if (Settings.BalanceMayo)
+                {
+                    _cardManager.CheckManas();
+                }
+
+                if (Settings.TrashCards)
+                {
+                    _cardManager.TrashCards();
                 }
             }
             catch (Exception e)
