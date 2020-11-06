@@ -91,6 +91,9 @@ namespace NGUInjector.Managers
             if (!CanAcquireOrHasLock(LockType.Yggdrasil))
                 return false;
 
+            if (CurrentLock == LockType.Yggdrasil)
+                return true;
+
             Log("Equipping Yggdrasil Loadout");
             AcquireLock(LockType.Yggdrasil);
             SaveCurrentLoadout();

@@ -45,6 +45,9 @@ namespace NGUInjector.Managers
             if (CurrentLock == LockType.Titan)
                 return false;
 
+            if (CurrentLock == LockType.Yggdrasil)
+                return true;
+
             CurrentLock = LockType.Yggdrasil;
             SaveDiggers();
             EquipDiggers(YggDiggers);
