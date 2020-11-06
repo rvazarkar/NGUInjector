@@ -18,7 +18,7 @@ namespace NGUInjector.Managers
             {
                 if (!LoadoutManager.TryMoneyPitSwap()) return;
             }
-            if (Main.Character.realGold >= 1e50 && Main.Settings.ManageMagic)
+            if (Main.Character.realGold >= 1e50 && Main.Settings.ManageMagic && Main.Character.wishes.wishes[4].level > 0)
             {
                 Main.Character.removeMostMagic();
                 for (var i = Main.Character.bloodMagic.ritual.Count - 1; i >= 0; i--)
