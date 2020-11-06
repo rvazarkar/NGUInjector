@@ -377,6 +377,7 @@ namespace NGUInjector
         public void Update()
         {
             _timeLeft -= Time.deltaTime;
+            _combManager.UpdateFightTimer(Time.deltaTime);
 
             settingsForm.UpdateProgressBar((int)Math.Floor(_timeLeft / 10 * 100));
 

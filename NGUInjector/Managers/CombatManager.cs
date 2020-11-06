@@ -10,12 +10,19 @@ namespace NGUInjector.Managers
     {
         private readonly Character _character;
         private readonly PlayerController _pc;
-        private bool isFighting = false;
+        private bool _isFighting = false;
+        private float _fightTimer = 0;
+        private string _enemyName;
 
         public CombatManager()
         {
             _character = Main.Character;
             _pc = Main.PlayerController;
+        }
+
+        internal void UpdateFightTimer(float diff)
+        {
+            _fightTimer += diff;
         }
 
         bool HasFullHP()
@@ -392,7 +399,7 @@ namespace NGUInjector.Managers
             //Move to the zone
             if (_character.adventure.zone != zone)
             {
-                isFighting = false;
+                _isFighting = false;
                 MoveToZone(zone);
                 return;
             }
@@ -400,6 +407,30 @@ namespace NGUInjector.Managers
             //Wait for an enemy to spawn
             if (_character.adventureController.currentEnemy == null)
             {
+                if (_isFighting)
+                {
+                    _isFighting = false;
+                    if (_fightTimer > 1)
+                        LogCombat($"{_enemyName} killed in {_fightTimer:00.0}s");
+
+                    _fightTimer = 0;
+                    if (LoadoutManager.CurrentLock == LockType.Gold)
+                    {
+                        Log("Gold Loadout kill done. Turning off setting and swapping gear");
+                        Settings.DoGoldSwap = false;
+                        LoadoutManager.RestoreGear();
+                        LoadoutManager.ReleaseLock();
+                        MoveToZone(-1);
+                        return;
+                    }
+
+                    if (precastBuffs || recoverHealth && !HasFullHP())
+                    {
+                        MoveToZone(-1);
+                        return;
+                    }
+                }
+                _fightTimer = 0;
                 if (!precastBuffs && bossOnly)
                 {
                     if (!ChargeActive())
@@ -432,27 +463,15 @@ namespace NGUInjector.Managers
                         if (CastHeal())
                             return;
                     }
-                }
 
-                if (isFighting)
-                {
-                    isFighting = false;
-                    if (LoadoutManager.CurrentLock == LockType.Gold)
+                    if (GetHPPercentage() < .60)
                     {
-                        Log("Gold Loadout kill done. Turning off setting and swapping gear");
-                        Settings.DoGoldSwap = false;
-                        LoadoutManager.RestoreGear();
-                        LoadoutManager.ReleaseLock();
-                        MoveToZone(-1);
-                        return;
-                    }
-
-                    if (precastBuffs || recoverHealth && !HasFullHP())
-                    {
-                        MoveToZone(-1);
-                        return;
+                        if (CastHyperRegen())
+                            return;
                     }
                 }
+
+                
                 return;
             }
 
@@ -468,7 +487,8 @@ namespace NGUInjector.Managers
                 }
             }
 
-            isFighting = true;
+            _isFighting = true;
+            _enemyName = _character.adventureController.currentEnemy.name;
             //We have an enemy and we're ready to fight. Run through our combat routine
             if (_character.training.attackTraining[1] > 0)
                 DoCombat(fastCombat);
