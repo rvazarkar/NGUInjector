@@ -264,6 +264,8 @@ namespace NGUInjector
             GuffBThreshold.Value = newSettings.BloodMacGuffinBThreshold;
             YggSwapThreshold.Value = newSettings.YggSwapThreshold;
 
+            MoreBlockParry.Checked = newSettings.MoreBlockParry;
+
             SetTitanGoldBox(newSettings);
             SetTitanSwapBox(newSettings);
 
@@ -1313,6 +1315,12 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.YggSwapThreshold = decimal.ToInt32(YggSwapThreshold.Value);
+        }
+
+        private void MoreBlockParry_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.MoreBlockParry = MoreBlockParry.Checked;
         }
     }
 }

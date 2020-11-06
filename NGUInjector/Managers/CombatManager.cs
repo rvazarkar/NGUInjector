@@ -137,7 +137,7 @@ namespace NGUInjector.Managers
                     return true;
             }
 
-            if (ai != AI.charger && ai != AI.rapid && ai != AI.exploder && !UltimateBuffActive() && !DefenseBuffActive())
+            if (ai != AI.charger && ai != AI.rapid && ai != AI.exploder && (Settings.MoreBlockParry || !UltimateBuffActive() && !DefenseBuffActive()))
             {
                 if (!ParryActive())
                 {

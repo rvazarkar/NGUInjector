@@ -198,6 +198,7 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label28 = new System.Windows.Forms.Label();
             this.YggSwapThreshold = new System.Windows.Forms.NumericUpDown();
+            this.MoreBlockParry = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).BeginInit();
@@ -963,6 +964,7 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.MoreBlockParry);
             this.tabPage6.Controls.Add(this.ITOPODBeastMode);
             this.tabPage6.Controls.Add(this.ITOPODRecoverHP);
             this.tabPage6.Controls.Add(this.ITOPODFastCombat);
@@ -1580,6 +1582,13 @@
             0});
             this.YggSwapThreshold.ValueChanged += new System.EventHandler(this.YggSwapThreshold_ValueChanged);
             // 
+            // MoreBlockParry
+            // 
+            resources.ApplyResources(this.MoreBlockParry, "MoreBlockParry");
+            this.MoreBlockParry.Name = "MoreBlockParry";
+            this.MoreBlockParry.UseVisualStyleBackColor = true;
+            this.MoreBlockParry.CheckedChanged += new System.EventHandler(this.MoreBlockParry_CheckedChanged);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1807,5 +1816,6 @@
         private System.Windows.Forms.CheckBox CastBloodSpells;
         private System.Windows.Forms.NumericUpDown YggSwapThreshold;
         private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.CheckBox MoreBlockParry;
     }
 }

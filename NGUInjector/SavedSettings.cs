@@ -90,10 +90,12 @@ namespace NGUInjector
         [SerializeField] private bool _adventureTargetItopod;
         [SerializeField] private bool _disableOverlay;
         [SerializeField] private int _yggSwapThreshold;
+        [SerializeField] private bool _moreBlockParry;
 
         private readonly string _savePath;
         private bool _disableSave;
         
+
 
         public SavedSettings(string dir)
         {
@@ -236,6 +238,7 @@ namespace NGUInjector
             _disableOverlay = other.DisableOverlay;
             _upgradeDiggers = other._upgradeDiggers;
             _yggSwapThreshold = other.YggSwapThreshold;
+            _moreBlockParry = other.MoreBlockParry;
         }
 
         public int HighestAKZone
@@ -1065,6 +1068,17 @@ namespace NGUInjector
             {
                 if (value == _yggSwapThreshold) return;
                 _yggSwapThreshold = value;
+                SaveSettings();
+            }
+        }
+
+        public bool MoreBlockParry
+        {
+            get => _moreBlockParry;
+            set
+            {
+                if (value == _moreBlockParry) return;
+                _moreBlockParry = value;
                 SaveSettings();
             }
         }
