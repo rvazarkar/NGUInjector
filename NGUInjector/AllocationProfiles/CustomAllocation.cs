@@ -402,6 +402,8 @@ namespace NGUInjector.AllocationProfiles
                 return;
             }
 
+            DiggerManager.UpgradeCheapestDigger();
+
             if (Main.Settings.CastBloodSpells)
             {
                 CastBloodSpells(true);
