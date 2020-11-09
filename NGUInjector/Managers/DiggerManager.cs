@@ -21,6 +21,9 @@ namespace NGUInjector.Managers
 
         internal static void TryTitanSwap()
         {
+            if (!CanAcquireOrHasLock(LockType.Titan))
+                return;
+
             var ts = ZoneHelpers.TitansSpawningSoon();
             if (CurrentLock == LockType.Titan)
             {
@@ -42,7 +45,7 @@ namespace NGUInjector.Managers
 
         internal static bool TryYggSwap()
         {
-            if (CurrentLock == LockType.Titan)
+            if (!CanAcquireOrHasLock(LockType.Yggdrasil)) 
                 return false;
 
             if (CurrentLock == LockType.Yggdrasil)
@@ -104,6 +107,21 @@ namespace NGUInjector.Managers
                 Main.Character.allDiggers.setLevelMaxAffordable(sorted[i]);
             }
             UpdateCheapestDigger();
+        }
+
+        private static bool CanAcquireOrHasLock(LockType requestor)
+        {
+            if (CurrentLock == requestor)
+            {
+                return true;
+            }
+
+            if (CurrentLock == LockType.None)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         internal static void RecapDiggers()
