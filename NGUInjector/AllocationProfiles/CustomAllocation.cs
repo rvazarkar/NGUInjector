@@ -262,7 +262,7 @@ namespace NGUInjector.AllocationProfiles
                     }
                 }
             }
-           if (timeNode.IsNumber)
+            if (timeNode.IsNumber)
             {
                 time = timeNode.AsInt;
             }

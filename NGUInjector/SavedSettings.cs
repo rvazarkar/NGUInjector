@@ -91,6 +91,7 @@ namespace NGUInjector
         [SerializeField] private bool _disableOverlay;
         [SerializeField] private int _yggSwapThreshold;
         [SerializeField] private bool _moreBlockParry;
+        [SerializeField] private int[] _specialBoostBlacklist;
 
         private readonly string _savePath;
         private bool _disableSave;
@@ -239,6 +240,7 @@ namespace NGUInjector
             _upgradeDiggers = other._upgradeDiggers;
             _yggSwapThreshold = other.YggSwapThreshold;
             _moreBlockParry = other.MoreBlockParry;
+            _specialBoostBlacklist = other.SpecialBoostBlacklist;
         }
 
         public int HighestAKZone
@@ -1079,6 +1081,17 @@ namespace NGUInjector
             {
                 if (value == _moreBlockParry) return;
                 _moreBlockParry = value;
+                SaveSettings();
+            }
+        }
+
+        public int[] SpecialBoostBlacklist
+        {
+            get => _specialBoostBlacklist;
+            set
+            {
+                if (_specialBoostBlacklist != null && _specialBoostBlacklist.SequenceEqual(value)) return;
+                _specialBoostBlacklist = value;
                 SaveSettings();
             }
         }

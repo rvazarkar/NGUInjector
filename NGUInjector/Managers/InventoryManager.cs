@@ -30,7 +30,15 @@ namespace NGUInjector.Managers
 
         public decimal Avg()
         {
-            return queue.Average(x => x);
+            try
+            {
+                return queue.Average(x => x);
+            }
+            catch (Exception e)
+            {
+                Log(e.Message);
+                return 0;
+            }
         }
     }
 

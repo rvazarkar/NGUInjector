@@ -86,6 +86,9 @@ namespace NGUInjector
             if (eq.capDefense != 0.0)
                 n.Toughness += CalcCap(eq.capDefense, eq.level) - (decimal)eq.curDefense;
 
+            if (Settings.SpecialBoostBlacklist.Contains(eq.id))
+                return n;
+
             if (eq.spec1Type != specType.None)
                 n.Special += CalcCap(eq.spec1Cap, eq.level) - (decimal)eq.spec1Cur;
 
