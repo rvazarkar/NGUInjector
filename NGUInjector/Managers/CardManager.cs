@@ -37,19 +37,44 @@ namespace NGUInjector.Managers
             {
                 List<Mana> manas = _character.cards.manas;
                 int lowestCount = int.MaxValue;
+                Mana lowestProgress = manas[0];
 
+                //Main.Log(manas[0].progress.ToString() + " " + manas[2].progress.ToString());
                 foreach (Mana mana in manas)
                 {
-                    lowestCount = Math.Min(lowestCount, mana.amount);
+
+                    if (lowestCount > mana.amount)
+                    {
+                        lowestCount = mana.amount;
+                        lowestProgress = mana;
+                    }
+                    else if (lowestCount == mana.amount && mana.progress < lowestProgress.progress) lowestProgress = mana;
                 }
 
                 for (int i = 0; i < manas.Count; i++)
                 {
-                    if (manas[i].amount > lowestCount && manas[i].running && manas[i].amount - lowestCount > 1 && manas[i].progress > 0.1f ||
-                        manas[i].amount <= lowestCount && !manas[i].running && _character.cardsController.curManaToggleCount() < _maxManas)
+                    //Main.Log(lowestProgress.progress.ToString() + " " + manas[2].progress.ToString());
+                    float progressPerSec = _cardsController.manaGenProgressPerTick() * 50;
+                    Mana mana = manas[i];
+
+                    if (mana.running)
                     {
-                        _character.cardsController.toggleManaGen(i);
+                        if (mana.amount - lowestCount == 1 && Math.Abs(mana.progress / progressPerSec - (1f - lowestProgress.progress) / progressPerSec) <= 10) continue;
+                        else if (mana.amount == lowestCount && Math.Abs((mana.progress - lowestProgress.progress) / progressPerSec) <= 10) continue;
+                        else if (mana.amount == lowestCount && mana.progress == lowestProgress.progress) continue;
                     }
+                    else
+                    {
+                        //Main.Log("");
+                        //Main.Log("id: " + i + " check: " + (mana.amount == lowestCount && Math.Abs((mana.progress - lowestProgress.progress) / progressPerSec) > 10));
+                        //Main.Log("Mana Progress: mana.progress: " + mana.progress + " lowest progress: " + lowestProgress.progress);
+                        //Main.Log("Calc: " + (Math.Abs(mana.progress - lowestProgress.progress) / progressPerSec));
+                        if (mana.amount == lowestCount && Math.Abs(mana.progress - lowestProgress.progress) / progressPerSec > 10) continue;
+                        else if (mana.amount - lowestCount == 1 && Math.Abs((mana.progress - (1f - lowestProgress.progress)) / progressPerSec) > 10) continue;
+                        else if (mana.amount - lowestCount > 1) continue;
+                    }
+                    _cardsController.toggleManaGen(i);
+                    Main.Log("toggled " + i);
                 }
             }
             catch (Exception e)
@@ -58,6 +83,7 @@ namespace NGUInjector.Managers
                 Main.Log(e.StackTrace);
             }
         }
+        
         public void TrashCards()
         {
             try
@@ -65,10 +91,6 @@ namespace NGUInjector.Managers
                 if (Main.Settings.TrashCards)
                 {
                     int currentSpawnTime = CardSpawnTimeToInt(_cardsController);
-
-                    //if (currentSpawnTime > lastCardSpawnTime)
-                    //{
-                    //lastCardSpawnTime = currentSpawnTime;
 
                     if (_cards.cards.Count > 0)
                     {
@@ -82,7 +104,6 @@ namespace NGUInjector.Managers
                             id++;
                         }
                     }
-                    //}
                 }
             }
             catch (Exception e)
@@ -106,5 +127,7 @@ namespace NGUInjector.Managers
             string[] spawnStrings = cc.timeToCardSpawn().Split(':');
             return Convert.ToInt32(spawnStrings[0]) * 60 + Convert.ToInt32(spawnStrings[1]);
         }
+
+      
     }
 }
