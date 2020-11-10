@@ -115,6 +115,8 @@ namespace NGUInjector
             if (allocation.IsAllocationRunning)
                 return;
 
+            var originalInput = Main.Character.energyMagicPanel.energyMagicInput;
+
             allocation.IsAllocationRunning = true;
 
             if (Settings.ManageNGUDiff)
@@ -137,6 +139,9 @@ namespace NGUInjector
             if (Settings.ManageWandoos && Main.Character.buttons.wandoos.interactable)
                 allocation.SwapOS();
 
+            Main.Character.energyMagicPanel.energyRequested.text = originalInput.ToString();
+            Main.Character.energyMagicPanel.validateInput();
+            
             allocation.IsAllocationRunning = false;
         }
 
