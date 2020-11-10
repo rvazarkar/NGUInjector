@@ -275,12 +275,14 @@ namespace NGUInjector.Managers
                 return;
             }
 
+            //Turn on beast mode depending
             if (_character.adventure.beastModeOn && !Settings.BeastMode && _character.adventureController.beastModeMove.button.interactable)
             {
                 _character.adventureController.beastModeMove.doMove();
                 return;
             }
 
+            //Turn off beast mode depending
             if (!_character.adventure.beastModeOn && Settings.BeastMode &&
                 _character.adventureController.beastModeMove.button.interactable)
             {
@@ -295,6 +297,13 @@ namespace NGUInjector.Managers
             if (_character.adventure.zone != zone && _character.adventure.zone != -1)
             {
                 MoveToZone(-1);
+            }
+
+            //Move to the zone
+            if (_character.adventure.zone != zone)
+            {
+                MoveToZone(zone);
+                return;
             }
 
             //Wait for an enemy to spawn
