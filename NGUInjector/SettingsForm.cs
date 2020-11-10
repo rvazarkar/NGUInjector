@@ -18,6 +18,7 @@ namespace NGUInjector
         internal readonly Dictionary<int, string> ZoneList;
         internal readonly Dictionary<int, string> CombatModeList;
         internal readonly Dictionary<int, string> CubePriorityList;
+        internal readonly Dictionary<int, string> SpriteEnemyList;
         private bool _initializing = true;
         public SettingsForm()
         {
@@ -94,6 +95,24 @@ namespace NGUInjector
                 {42, "AMALGAMATE"}
             };
 
+            SpriteEnemyList = new Dictionary<int, string>();
+            foreach (var x in Main.Character.adventureController.enemyList)
+            {
+                foreach (var enemy in x)
+                {
+                    try
+                    {
+                        SpriteEnemyList.Add(enemy.spriteID, enemy.name);
+                    }
+                    catch
+                    {
+                        Main.Log($"{enemy.spriteID} - {enemy.name}");
+                        Main.Log($"{SpriteEnemyList[enemy.spriteID]}");
+                    }
+                    
+                }
+            }
+
             CubePriority.DataSource = new BindingSource(CubePriorityList, null);
             CubePriority.ValueMember = "Key";
             CubePriority.DisplayMember = "Value";
@@ -117,9 +136,16 @@ namespace NGUInjector
             CombatTargetZone.DataSource = new BindingSource(ZoneList, null);
             CombatTargetZone.ValueMember = "Key";
             CombatTargetZone.DisplayMember = "Value";
-
+            
             //Remove ITOPOD for non combat zones
             ZoneList.Remove(1000);
+            ZoneList.Remove(-1);
+
+            EnemyBlacklistZone.ValueMember = "Key";
+            EnemyBlacklistZone.DisplayMember = "Value";
+            EnemyBlacklistZone.DataSource = new BindingSource(ZoneList, null);
+            EnemyBlacklistZone.SelectedIndex = 0;
+
 
             blacklistLabel.Text = "";
             yggItemLabel.Text = "";
@@ -359,6 +385,19 @@ namespace NGUInjector
             else
             {
                 WishPriority.Items.Clear();
+            }
+
+            temp = newSettings.BlacklistedBosses.ToDictionary(x => x, x => SpriteEnemyList[x]);
+            if (temp.Count > 0)
+            {
+                BlacklistedBosses.DataSource = null;
+                BlacklistedBosses.DataSource = new BindingSource(temp, null);
+                BlacklistedBosses.ValueMember = "Key";
+                BlacklistedBosses.DisplayMember = "Value";
+            }
+            else
+            {
+                BlacklistedBosses.Items.Clear();
             }
 
             Refresh();
@@ -1321,6 +1360,42 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.MoreBlockParry = MoreBlockParry.Checked;
+        }
+
+        private void EnemyBlacklistZone_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selected = EnemyBlacklistZone.SelectedItem;
+            var item = (KeyValuePair<int, string>) selected;
+            var values = Main.Character.adventureController.enemyList[item.Key]
+                .Select(x => new KeyValuePair<int, string>(x.spriteID, x.name)).ToList();
+            EnemyBlacklistNames.DataSource = null;
+            EnemyBlacklistNames.ValueMember = "Key";
+            EnemyBlacklistNames.DisplayMember = "Value";
+            EnemyBlacklistNames.DataSource = values;
+        }
+
+        private void BlacklistRemoveEnemyButton_Click(object sender, EventArgs e)
+        {
+            var item = BlacklistedBosses.SelectedItem;
+            if (item == null)
+                return;
+
+            var id = (KeyValuePair<int, string>)item;
+
+            var temp = Main.Settings.BlacklistedBosses.ToList();
+            temp.RemoveAll(x => x == id.Key);
+            Main.Settings.BlacklistedBosses = temp.ToArray();
+        }
+
+        private void BlacklistAddEnemyButton_Click(object sender, EventArgs e)
+        {
+            var item = EnemyBlacklistNames.SelectedItem;
+            if (item == null) return;
+
+            var id = (KeyValuePair<int, string>)item;
+            var temp = Main.Settings.BlacklistedBosses.ToList();
+            temp.Add(id.Key);
+            Main.Settings.BlacklistedBosses = temp.ToArray();
         }
     }
 }

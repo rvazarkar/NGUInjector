@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using static NGUInjector.Main;
 using static NGUInjector.Managers.CombatHelpers;
@@ -293,7 +294,7 @@ namespace NGUInjector.Managers
             if (_character.adventure.zone == -1 && !HasFullHP() && recoverHealth)
                 return;
 
-            //Check if we're in the right zone, if not move there
+            //Check if we're in not in the right zone and not in safe zone, if not move to safe zone first
             if (_character.adventure.zone != zone && _character.adventure.zone != -1)
             {
                 MoveToZone(-1);
@@ -309,7 +310,14 @@ namespace NGUInjector.Managers
             //Wait for an enemy to spawn
             if (_character.adventureController.currentEnemy == null)
                 return;
-            
+
+            if (Settings.BlacklistedBosses.Contains(_character.adventureController.currentEnemy.spriteID))
+            {
+                MoveToZone(-1);
+                MoveToZone(zone);
+                return;
+            }
+
             //If we only want boss enemies
             if (bossOnly)
             {
@@ -481,6 +489,13 @@ namespace NGUInjector.Managers
                 }
 
                 
+                return;
+            }
+
+            if (Settings.BlacklistedBosses.Contains(_character.adventureController.currentEnemy.spriteID))
+            {
+                MoveToZone(-1);
+                MoveToZone(zone);
                 return;
             }
 

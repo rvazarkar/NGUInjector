@@ -79,6 +79,8 @@
             this.ManageMagic = new System.Windows.Forms.CheckBox();
             this.ManageEnergy = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.YggSwapThreshold = new System.Windows.Forms.NumericUpDown();
+            this.label28 = new System.Windows.Forms.Label();
             this.HarvestSafety = new System.Windows.Forms.CheckBox();
             this.HarvestAllButton = new System.Windows.Forms.Button();
             this.ActivateFruits = new System.Windows.Forms.CheckBox();
@@ -123,6 +125,16 @@
             this.titanLoadout = new System.Windows.Forms.ListBox();
             this.SwapTitanLoadout = new System.Windows.Forms.CheckBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.label32 = new System.Windows.Forms.Label();
+            this.BlacklistAddEnemyButton = new System.Windows.Forms.Button();
+            this.label31 = new System.Windows.Forms.Label();
+            this.EnemyBlacklistNames = new System.Windows.Forms.ComboBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.BlacklistRemoveEnemyButton = new System.Windows.Forms.Button();
+            this.EnemyBlacklistZone = new System.Windows.Forms.ComboBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.BlacklistedBosses = new System.Windows.Forms.ListBox();
+            this.MoreBlockParry = new System.Windows.Forms.CheckBox();
             this.ITOPODBeastMode = new System.Windows.Forms.CheckBox();
             this.ITOPODRecoverHP = new System.Windows.Forms.CheckBox();
             this.ITOPODFastCombat = new System.Windows.Forms.CheckBox();
@@ -196,9 +208,6 @@
             this.AutoDailySpin = new System.Windows.Forms.CheckBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.label28 = new System.Windows.Forms.Label();
-            this.YggSwapThreshold = new System.Windows.Forms.NumericUpDown();
-            this.MoreBlockParry = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).BeginInit();
@@ -216,6 +225,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.CounterfeitCap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpaghettiCap)).BeginInit();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.YggSwapThreshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggLoadoutItem)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blacklistAddItem)).BeginInit();
@@ -233,7 +243,6 @@
             this.tabPage10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MoneyPitInput)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.YggSwapThreshold)).BeginInit();
             this.SuspendLayout();
             // 
             // moneyPitError
@@ -604,6 +613,27 @@
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // YggSwapThreshold
+            // 
+            resources.ApplyResources(this.YggSwapThreshold, "YggSwapThreshold");
+            this.YggSwapThreshold.Maximum = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
+            this.YggSwapThreshold.Name = "YggSwapThreshold";
+            this.YggSwapThreshold.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.YggSwapThreshold.ValueChanged += new System.EventHandler(this.YggSwapThreshold_ValueChanged);
+            // 
+            // label28
+            // 
+            resources.ApplyResources(this.label28, "label28");
+            this.label28.Name = "label28";
+            // 
             // HarvestSafety
             // 
             resources.ApplyResources(this.HarvestSafety, "HarvestSafety");
@@ -964,6 +994,15 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.label32);
+            this.tabPage6.Controls.Add(this.BlacklistAddEnemyButton);
+            this.tabPage6.Controls.Add(this.label31);
+            this.tabPage6.Controls.Add(this.EnemyBlacklistNames);
+            this.tabPage6.Controls.Add(this.label30);
+            this.tabPage6.Controls.Add(this.BlacklistRemoveEnemyButton);
+            this.tabPage6.Controls.Add(this.EnemyBlacklistZone);
+            this.tabPage6.Controls.Add(this.label29);
+            this.tabPage6.Controls.Add(this.BlacklistedBosses);
             this.tabPage6.Controls.Add(this.MoreBlockParry);
             this.tabPage6.Controls.Add(this.ITOPODBeastMode);
             this.tabPage6.Controls.Add(this.ITOPODRecoverHP);
@@ -989,6 +1028,67 @@
             resources.ApplyResources(this.tabPage6, "tabPage6");
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // label32
+            // 
+            this.label32.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.label32, "label32");
+            this.label32.Name = "label32";
+            // 
+            // BlacklistAddEnemyButton
+            // 
+            resources.ApplyResources(this.BlacklistAddEnemyButton, "BlacklistAddEnemyButton");
+            this.BlacklistAddEnemyButton.Name = "BlacklistAddEnemyButton";
+            this.BlacklistAddEnemyButton.UseVisualStyleBackColor = true;
+            this.BlacklistAddEnemyButton.Click += new System.EventHandler(this.BlacklistAddEnemyButton_Click);
+            // 
+            // label31
+            // 
+            resources.ApplyResources(this.label31, "label31");
+            this.label31.Name = "label31";
+            // 
+            // EnemyBlacklistNames
+            // 
+            this.EnemyBlacklistNames.FormattingEnabled = true;
+            resources.ApplyResources(this.EnemyBlacklistNames, "EnemyBlacklistNames");
+            this.EnemyBlacklistNames.Name = "EnemyBlacklistNames";
+            // 
+            // label30
+            // 
+            resources.ApplyResources(this.label30, "label30");
+            this.label30.Name = "label30";
+            // 
+            // BlacklistRemoveEnemyButton
+            // 
+            resources.ApplyResources(this.BlacklistRemoveEnemyButton, "BlacklistRemoveEnemyButton");
+            this.BlacklistRemoveEnemyButton.Name = "BlacklistRemoveEnemyButton";
+            this.BlacklistRemoveEnemyButton.UseVisualStyleBackColor = true;
+            this.BlacklistRemoveEnemyButton.Click += new System.EventHandler(this.BlacklistRemoveEnemyButton_Click);
+            // 
+            // EnemyBlacklistZone
+            // 
+            this.EnemyBlacklistZone.FormattingEnabled = true;
+            resources.ApplyResources(this.EnemyBlacklistZone, "EnemyBlacklistZone");
+            this.EnemyBlacklistZone.Name = "EnemyBlacklistZone";
+            this.EnemyBlacklistZone.SelectedIndexChanged += new System.EventHandler(this.EnemyBlacklistZone_SelectedIndexChanged);
+            // 
+            // label29
+            // 
+            resources.ApplyResources(this.label29, "label29");
+            this.label29.Name = "label29";
+            // 
+            // BlacklistedBosses
+            // 
+            this.BlacklistedBosses.FormattingEnabled = true;
+            resources.ApplyResources(this.BlacklistedBosses, "BlacklistedBosses");
+            this.BlacklistedBosses.Name = "BlacklistedBosses";
+            // 
+            // MoreBlockParry
+            // 
+            resources.ApplyResources(this.MoreBlockParry, "MoreBlockParry");
+            this.MoreBlockParry.Name = "MoreBlockParry";
+            this.MoreBlockParry.UseVisualStyleBackColor = true;
+            this.MoreBlockParry.CheckedChanged += new System.EventHandler(this.MoreBlockParry_CheckedChanged);
             // 
             // ITOPODBeastMode
             // 
@@ -1561,34 +1661,6 @@
             resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             // 
-            // label28
-            // 
-            resources.ApplyResources(this.label28, "label28");
-            this.label28.Name = "label28";
-            // 
-            // YggSwapThreshold
-            // 
-            resources.ApplyResources(this.YggSwapThreshold, "YggSwapThreshold");
-            this.YggSwapThreshold.Maximum = new decimal(new int[] {
-            24,
-            0,
-            0,
-            0});
-            this.YggSwapThreshold.Name = "YggSwapThreshold";
-            this.YggSwapThreshold.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.YggSwapThreshold.ValueChanged += new System.EventHandler(this.YggSwapThreshold_ValueChanged);
-            // 
-            // MoreBlockParry
-            // 
-            resources.ApplyResources(this.MoreBlockParry, "MoreBlockParry");
-            this.MoreBlockParry.Name = "MoreBlockParry";
-            this.MoreBlockParry.UseVisualStyleBackColor = true;
-            this.MoreBlockParry.CheckedChanged += new System.EventHandler(this.MoreBlockParry_CheckedChanged);
-            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1618,6 +1690,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SpaghettiCap)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.YggSwapThreshold)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggLoadoutItem)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
@@ -1642,7 +1715,6 @@
             this.tabPage10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MoneyPitInput)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.YggSwapThreshold)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1817,5 +1889,14 @@
         private System.Windows.Forms.NumericUpDown YggSwapThreshold;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.CheckBox MoreBlockParry;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.ListBox BlacklistedBosses;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.ComboBox EnemyBlacklistNames;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Button BlacklistRemoveEnemyButton;
+        private System.Windows.Forms.ComboBox EnemyBlacklistZone;
+        private System.Windows.Forms.Button BlacklistAddEnemyButton;
+        private System.Windows.Forms.Label label32;
     }
 }

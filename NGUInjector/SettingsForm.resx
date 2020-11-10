@@ -2496,6 +2496,237 @@
   <data name="&gt;&gt;tabPage5.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="label32.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label32.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 206</value>
+  </data>
+  <data name="label32.Size" type="System.Drawing.Size, System.Drawing">
+    <value>525, 1</value>
+  </data>
+  <data name="label32.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="&gt;&gt;label32.Name" xml:space="preserve">
+    <value>label32</value>
+  </data>
+  <data name="&gt;&gt;label32.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label32.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;label32.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="BlacklistAddEnemyButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="BlacklistAddEnemyButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BlacklistAddEnemyButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>422, 242</value>
+  </data>
+  <data name="BlacklistAddEnemyButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 23</value>
+  </data>
+  <data name="BlacklistAddEnemyButton.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="BlacklistAddEnemyButton.Text" xml:space="preserve">
+    <value>Add Enemy</value>
+  </data>
+  <data name="&gt;&gt;BlacklistAddEnemyButton.Name" xml:space="preserve">
+    <value>BlacklistAddEnemyButton</value>
+  </data>
+  <data name="&gt;&gt;BlacklistAddEnemyButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BlacklistAddEnemyButton.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;BlacklistAddEnemyButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label31.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label31.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label31.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 247</value>
+  </data>
+  <data name="label31.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 13</value>
+  </data>
+  <data name="label31.TabIndex" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
+  <data name="label31.Text" xml:space="preserve">
+    <value>Enemies</value>
+  </data>
+  <data name="&gt;&gt;label31.Name" xml:space="preserve">
+    <value>label31</value>
+  </data>
+  <data name="&gt;&gt;label31.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label31.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;label31.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="EnemyBlacklistNames.Location" type="System.Drawing.Point, System.Drawing">
+    <value>247, 244</value>
+  </data>
+  <data name="EnemyBlacklistNames.Size" type="System.Drawing.Size, System.Drawing">
+    <value>169, 21</value>
+  </data>
+  <data name="EnemyBlacklistNames.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="&gt;&gt;EnemyBlacklistNames.Name" xml:space="preserve">
+    <value>EnemyBlacklistNames</value>
+  </data>
+  <data name="&gt;&gt;EnemyBlacklistNames.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EnemyBlacklistNames.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;EnemyBlacklistNames.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label30.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label30.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 220</value>
+  </data>
+  <data name="label30.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 13</value>
+  </data>
+  <data name="label30.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="label30.Text" xml:space="preserve">
+    <value>Zone</value>
+  </data>
+  <data name="&gt;&gt;label30.Name" xml:space="preserve">
+    <value>label30</value>
+  </data>
+  <data name="&gt;&gt;label30.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label30.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;label30.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="BlacklistRemoveEnemyButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="BlacklistRemoveEnemyButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BlacklistRemoveEnemyButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>203, 305</value>
+  </data>
+  <data name="BlacklistRemoveEnemyButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 23</value>
+  </data>
+  <data name="BlacklistRemoveEnemyButton.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="BlacklistRemoveEnemyButton.Text" xml:space="preserve">
+    <value>Remove Enemy</value>
+  </data>
+  <data name="&gt;&gt;BlacklistRemoveEnemyButton.Name" xml:space="preserve">
+    <value>BlacklistRemoveEnemyButton</value>
+  </data>
+  <data name="&gt;&gt;BlacklistRemoveEnemyButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BlacklistRemoveEnemyButton.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;BlacklistRemoveEnemyButton.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="EnemyBlacklistZone.Location" type="System.Drawing.Point, System.Drawing">
+    <value>247, 217</value>
+  </data>
+  <data name="EnemyBlacklistZone.Size" type="System.Drawing.Size, System.Drawing">
+    <value>169, 21</value>
+  </data>
+  <data name="EnemyBlacklistZone.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="&gt;&gt;EnemyBlacklistZone.Name" xml:space="preserve">
+    <value>EnemyBlacklistZone</value>
+  </data>
+  <data name="&gt;&gt;EnemyBlacklistZone.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EnemyBlacklistZone.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;EnemyBlacklistZone.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="label29.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label29.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 191</value>
+  </data>
+  <data name="label29.Size" type="System.Drawing.Size, System.Drawing">
+    <value>101, 13</value>
+  </data>
+  <data name="label29.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="label29.Text" xml:space="preserve">
+    <value>Blacklisted Enemies</value>
+  </data>
+  <data name="&gt;&gt;label29.Name" xml:space="preserve">
+    <value>label29</value>
+  </data>
+  <data name="&gt;&gt;label29.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label29.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;label29.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="BlacklistedBosses.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 220</value>
+  </data>
+  <data name="BlacklistedBosses.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 108</value>
+  </data>
+  <data name="BlacklistedBosses.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="&gt;&gt;BlacklistedBosses.Name" xml:space="preserve">
+    <value>BlacklistedBosses</value>
+  </data>
+  <data name="&gt;&gt;BlacklistedBosses.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BlacklistedBosses.Parent" xml:space="preserve">
+    <value>tabPage6</value>
+  </data>
+  <data name="&gt;&gt;BlacklistedBosses.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
   <data name="MoreBlockParry.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2521,7 +2752,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;MoreBlockParry.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>9</value>
   </data>
   <data name="ITOPODBeastMode.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2530,7 +2761,7 @@
     <value>NoControl</value>
   </data>
   <data name="ITOPODBeastMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>294, 180</value>
+    <value>291, 167</value>
   </data>
   <data name="ITOPODBeastMode.Size" type="System.Drawing.Size, System.Drawing">
     <value>83, 17</value>
@@ -2551,7 +2782,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;ITOPODBeastMode.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>10</value>
   </data>
   <data name="ITOPODRecoverHP.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2560,7 +2791,7 @@
     <value>NoControl</value>
   </data>
   <data name="ITOPODRecoverHP.Location" type="System.Drawing.Point, System.Drawing">
-    <value>111, 180</value>
+    <value>108, 167</value>
   </data>
   <data name="ITOPODRecoverHP.Size" type="System.Drawing.Size, System.Drawing">
     <value>85, 17</value>
@@ -2581,7 +2812,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;ITOPODRecoverHP.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>11</value>
   </data>
   <data name="ITOPODFastCombat.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2590,7 +2821,7 @@
     <value>NoControl</value>
   </data>
   <data name="ITOPODFastCombat.Location" type="System.Drawing.Point, System.Drawing">
-    <value>202, 180</value>
+    <value>199, 167</value>
   </data>
   <data name="ITOPODFastCombat.Size" type="System.Drawing.Size, System.Drawing">
     <value>85, 17</value>
@@ -2611,7 +2842,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;ITOPODFastCombat.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>12</value>
   </data>
   <data name="ITOPODPrecastBuffs.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2620,7 +2851,7 @@
     <value>NoControl</value>
   </data>
   <data name="ITOPODPrecastBuffs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 180</value>
+    <value>6, 167</value>
   </data>
   <data name="ITOPODPrecastBuffs.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 17</value>
@@ -2641,7 +2872,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;ITOPODPrecastBuffs.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>13</value>
   </data>
   <data name="label24.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2650,7 +2881,7 @@
     <value>NoControl</value>
   </data>
   <data name="label24.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 152</value>
+    <value>3, 139</value>
   </data>
   <data name="label24.Size" type="System.Drawing.Size, System.Drawing">
     <value>73, 13</value>
@@ -2671,7 +2902,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;label24.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>14</value>
   </data>
   <data name="ITOPODCombatMode.Items" xml:space="preserve">
     <value>Idle</value>
@@ -2680,7 +2911,7 @@
     <value>Manual</value>
   </data>
   <data name="ITOPODCombatMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>107, 149</value>
+    <value>104, 136</value>
   </data>
   <data name="ITOPODCombatMode.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 21</value>
@@ -2698,13 +2929,13 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;ITOPODCombatMode.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>15</value>
   </data>
   <data name="label22.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="label22.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 141</value>
+    <value>6, 128</value>
   </data>
   <data name="label22.Size" type="System.Drawing.Size, System.Drawing">
     <value>525, 1</value>
@@ -2722,7 +2953,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;label22.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>16</value>
   </data>
   <data name="label23.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2731,7 +2962,7 @@
     <value>NoControl</value>
   </data>
   <data name="label23.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 123</value>
+    <value>3, 110</value>
   </data>
   <data name="label23.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 13</value>
@@ -2752,7 +2983,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;label23.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>17</value>
   </data>
   <data name="TargetITOPOD.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2782,7 +3013,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;TargetITOPOD.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>18</value>
   </data>
   <data name="OptimizeITOPOD.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2791,7 +3022,7 @@
     <value>NoControl</value>
   </data>
   <data name="OptimizeITOPOD.Location" type="System.Drawing.Point, System.Drawing">
-    <value>383, 180</value>
+    <value>380, 167</value>
   </data>
   <data name="OptimizeITOPOD.Size" type="System.Drawing.Size, System.Drawing">
     <value>136, 17</value>
@@ -2812,7 +3043,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;OptimizeITOPOD.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>19</value>
   </data>
   <data name="BeastMode.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2842,7 +3073,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;BeastMode.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>20</value>
   </data>
   <data name="AllowFallthrough.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2872,7 +3103,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;AllowFallthrough.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>21</value>
   </data>
   <data name="RecoverHealth.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2902,7 +3133,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;RecoverHealth.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>22</value>
   </data>
   <data name="FastCombat.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2932,7 +3163,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;FastCombat.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>23</value>
   </data>
   <data name="PrecastBuffs.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2962,7 +3193,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;PrecastBuffs.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>24</value>
   </data>
   <data name="label6.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2971,7 +3202,7 @@
     <value>NoControl</value>
   </data>
   <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 85</value>
+    <value>3, 86</value>
   </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>66, 13</value>
@@ -2992,7 +3223,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>25</value>
   </data>
   <data name="CombatTargetZone.Items" xml:space="preserve">
     <value>Idle</value>
@@ -3019,7 +3250,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;CombatTargetZone.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>26</value>
   </data>
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3028,7 +3259,7 @@
     <value>NoControl</value>
   </data>
   <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 53</value>
+    <value>3, 53</value>
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>73, 13</value>
@@ -3049,7 +3280,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>27</value>
   </data>
   <data name="CombatMode.Items" xml:space="preserve">
     <value>Idle</value>
@@ -3076,7 +3307,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;CombatMode.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>28</value>
   </data>
   <data name="BossesOnly.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3106,7 +3337,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;BossesOnly.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>29</value>
   </data>
   <data name="CombatActive.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3136,7 +3367,7 @@
     <value>tabPage6</value>
   </data>
   <data name="&gt;&gt;CombatActive.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>30</value>
   </data>
   <data name="tabPage6.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
