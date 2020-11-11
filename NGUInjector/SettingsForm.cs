@@ -106,10 +106,8 @@ namespace NGUInjector
                     }
                     catch
                     {
-                        Main.Log($"{enemy.spriteID} - {enemy.name}");
-                        Main.Log($"{SpriteEnemyList[enemy.spriteID]}");
+                        //pass
                     }
-                    
                 }
             }
 
@@ -1396,6 +1394,11 @@ namespace NGUInjector
             var temp = Main.Settings.BlacklistedBosses.ToList();
             temp.Add(id.Key);
             Main.Settings.BlacklistedBosses = temp.ToArray();
+        }
+
+        private void BoostAvgReset_Click(object sender, EventArgs e)
+        {
+            Main.reference.ResetBoostProgress();
         }
     }
 }

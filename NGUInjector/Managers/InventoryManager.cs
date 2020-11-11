@@ -28,6 +28,11 @@ namespace NGUInjector.Managers
             }
         }
 
+        public void Reset()
+        {
+            queue.Clear();
+        }
+
         public decimal Avg()
         {
             try
@@ -95,6 +100,12 @@ namespace NGUInjector.Managers
             temp.Add(154);
             temp.Add(120);
             _convertibles = temp.ToArray();
+        }
+
+        internal void Reset()
+        {
+            _invBoostAvg.Reset();
+            _cubeBoostAvg.Reset();
         }
 
         internal ih[] GetBoostSlots(ih[] ci)

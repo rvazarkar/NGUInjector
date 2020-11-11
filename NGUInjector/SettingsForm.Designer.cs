@@ -208,6 +208,7 @@
             this.AutoDailySpin = new System.Windows.Forms.CheckBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.BoostAvgReset = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).BeginInit();
@@ -726,6 +727,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.BoostAvgReset);
             this.tabPage4.Controls.Add(this.CubePriority);
             this.tabPage4.Controls.Add(this.label20);
             this.tabPage4.Controls.Add(this.prioDownButton);
@@ -1661,6 +1663,13 @@
             resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             // 
+            // BoostAvgReset
+            // 
+            resources.ApplyResources(this.BoostAvgReset, "BoostAvgReset");
+            this.BoostAvgReset.Name = "BoostAvgReset";
+            this.BoostAvgReset.UseVisualStyleBackColor = true;
+            this.BoostAvgReset.Click += new System.EventHandler(this.BoostAvgReset_Click);
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1898,5 +1907,6 @@
         private System.Windows.Forms.ComboBox EnemyBlacklistZone;
         private System.Windows.Forms.Button BlacklistAddEnemyButton;
         private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Button BoostAvgReset;
     }
 }
