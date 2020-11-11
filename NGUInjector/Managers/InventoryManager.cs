@@ -384,6 +384,9 @@ namespace NGUInjector.Managers
                               _previousBoostsNeeded.Special;
 
                     var diff = current - old;
+
+                    if (diff == 0) return;
+
                     //If diff is > 0, then we either added another item to boost or we levelled something. Don't add the diff to average
                     if (diff <= 0)
                     {
