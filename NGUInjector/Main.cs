@@ -596,9 +596,9 @@ namespace NGUInjector
                 var spaghetti = (Character.bloodMagicController.lootBonus() - 1) * 100;
                 var counterfeit = ((Character.bloodMagicController.goldBonus() - 1)) * 100;
                 var number = Character.bloodMagic.rebirthPower;
-                Character.bloodMagic.rebirthAutoSpell = Settings.BloodNumberThreshold > 0 && Settings.BloodNumberThreshold >= number;
-                Character.bloodMagic.goldAutoSpell = Settings.CounterfeitThreshold > 0 && Settings.CounterfeitThreshold >= counterfeit;
-                Character.bloodMagic.lootAutoSpell = Settings.SpaghettiThreshold > 0 && Settings.SpaghettiThreshold >= spaghetti;
+                Character.bloodMagic.rebirthAutoSpell = Settings.BloodNumberThreshold > 0 && number < Settings.BloodNumberThreshold;
+                Character.bloodMagic.goldAutoSpell = Settings.CounterfeitThreshold > 0 && counterfeit < Settings.CounterfeitThreshold;
+                Character.bloodMagic.lootAutoSpell = Settings.SpaghettiThreshold > 0 && spaghetti < Settings.SpaghettiThreshold;
                 Character.bloodSpells.updateGoldToggleState();
                 Character.bloodSpells.updateLootToggleState();
                 Character.bloodSpells.updateRebirthToggleState();
@@ -1032,12 +1032,16 @@ namespace NGUInjector
                 Log(e.Message);
                 Log(e.StackTrace);
             }
-            
         }
 
         public void OnApplicationQuit()
         {
             Loader.Unload();
+        }
+
+        public void ResetBoostProgress()
+        {
+
         }
     }
 }
