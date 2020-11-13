@@ -55,13 +55,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllocationProfiles\AllocationCapCalculators.cs" />
     <Compile Include="AllocationProfiles\AllocationTargets.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\AdvancedTraining.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\Augment.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\BaseBreakpoint.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\BasicTraining.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\BR.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\CapCalc.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\HackBreakpoint.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\RitualBreakpoint.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\TimeMachine.cs" />

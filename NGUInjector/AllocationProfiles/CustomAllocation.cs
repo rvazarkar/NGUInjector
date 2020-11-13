@@ -23,7 +23,6 @@ namespace NGUInjector.AllocationProfiles
         private DiggerBreakpoint _currentDiggerBreakpoint;
         private WandoosBreakpoint _currentWandoosBreakpoint;
         private NGUDiffBreakpoint _currentNguBreakpoint;
-        private AllocationCapCalculators _calcs;
         private WishManager _wishManager;
         private bool _hasGearSwapped;
         private bool _hasDiggerSwapped;
@@ -32,26 +31,11 @@ namespace NGUInjector.AllocationProfiles
         private readonly string _allocationPath;
         private readonly string _profileName;
 
-        private string[] _validEnergyPriorities =
-        {
-            "WAN", "CAPWAN", "TM", "CAPTM", "CAPAT", "AT", "NGU", "CAPNGU", "AUG", "BT", "CAPBT", "CAPALLBT", "CAPAUG",
-            "CAPALLNGU", "ALLNGU", "BLANK", "WISH"
-        };
-
-        private string[] _validMagicPriorities =
-        {
-            "WAN", "CAPWAN", "BR", "RIT", "CAPRIT", "TM", "CAPTM", "NGU", "CAPNGU", "CAPALLNGU", "ALLNGU", "BLANK",
-            "WISH"
-        };
-
-        private string[] _validR3Priorities = {"HACK", "WISH"};
-
         internal bool IsAllocationRunning;
 
         public CustomAllocation(string profilesDir, string profile)
         {
             _allocationPath = Path.Combine(profilesDir, profile + ".json");
-            _calcs = new AllocationCapCalculators(_character);
             _profileName = profile;
             _wishManager = new WishManager();
         }
