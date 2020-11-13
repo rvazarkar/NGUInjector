@@ -43,20 +43,20 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             switch (Type)
             {
                 case ResourceType.Energy:
-                    capValue = IsCap ? input : character.idleEnergy;
+                    capValue = IsCap ? input : character.totalCapEnergy();
                     break;
                 case ResourceType.Magic:
-                    capValue = IsCap ? input : character.magic.idleMagic;
+                    capValue = IsCap ? input : character.totalCapMagic();
                     break;
                 case ResourceType.R3:
-                    capValue = character.res3.idleRes3;
+                    capValue = character.totalCapRes3();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
             var capMax = (long)Math.Ceiling(capValue * CapPercent);
-            return Math.Min(input, capMax); ;
+            return Math.Min(input, capMax);
         }
 
         protected void SetInput(float val)
