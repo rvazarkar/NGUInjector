@@ -115,10 +115,6 @@ namespace NGUInjector
             CubePriority.ValueMember = "Key";
             CubePriority.DisplayMember = "Value";
 
-            HighestTitanDropdown.DataSource = new BindingSource(TitanList, null);
-            HighestTitanDropdown.ValueMember = "Key";
-            HighestTitanDropdown.DisplayMember = "Value";
-
             CombatMode.DataSource = new BindingSource(CombatModeList, null);
             CombatMode.ValueMember = "Key";
             CombatMode.DisplayMember = "Value";
@@ -237,7 +233,6 @@ namespace NGUInjector
             ManageInventory.Checked = newSettings.ManageInventory;
             ManageBoostConvert.Checked = newSettings.AutoConvertBoosts;
             SwapTitanLoadout.Checked = newSettings.SwapTitanLoadouts;
-            HighestTitanDropdown.SelectedIndex = newSettings.HighestAKZone;
             BossesOnly.Checked = newSettings.SnipeBossOnly;
             PrecastBuffs.Checked = newSettings.PrecastBuffs;
             RecoverHealth.Checked = newSettings.RecoverHealth;
@@ -667,13 +662,6 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.SwapTitanLoadouts = SwapTitanLoadout.Checked;
-        }
-
-        private void HighestTitanDropdown_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (_initializing) return;
-            var selected = HighestTitanDropdown.SelectedIndex;
-            Main.Settings.HighestAKZone = selected;
         }
 
         private void titanAddItem_TextChanged(object sender, EventArgs e)

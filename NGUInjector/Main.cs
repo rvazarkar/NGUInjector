@@ -182,7 +182,6 @@ namespace NGUInjector
                         PriorityBoosts = new int[] { },
                         YggdrasilLoadout = new int[] { },
                         SwapYggdrasilLoadouts = false,
-                        HighestAKZone = 0,
                         SwapTitanLoadouts = false,
                         TitanLoadout = new int[] { },
                         ManageDiggers = true,

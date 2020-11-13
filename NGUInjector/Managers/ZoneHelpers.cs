@@ -35,8 +35,6 @@ namespace NGUInjector.Managers
         {
             var result = new TitanSpawn();
 
-            if (bossId + 1 > Main.Settings.HighestAKZone)
-                return result;
             if (TitanZones[bossId] > GetMaxReachableZone(true))
                 return result;
 

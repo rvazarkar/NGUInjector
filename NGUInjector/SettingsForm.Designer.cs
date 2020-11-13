@@ -93,6 +93,7 @@
             this.YggdrasilSwap = new System.Windows.Forms.CheckBox();
             this.ManageYggdrasil = new System.Windows.Forms.CheckBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.BoostAvgReset = new System.Windows.Forms.Button();
             this.CubePriority = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
             this.prioDownButton = new System.Windows.Forms.Button();
@@ -115,8 +116,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.TitanSwapTargets = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.label1 = new System.Windows.Forms.Label();
-            this.HighestTitanDropdown = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.titanRemove = new System.Windows.Forms.Button();
             this.titanAddItem = new System.Windows.Forms.NumericUpDown();
@@ -208,7 +207,6 @@
             this.AutoDailySpin = new System.Windows.Forms.CheckBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.BoostAvgReset = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).BeginInit();
@@ -750,6 +748,13 @@
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // BoostAvgReset
+            // 
+            resources.ApplyResources(this.BoostAvgReset, "BoostAvgReset");
+            this.BoostAvgReset.Name = "BoostAvgReset";
+            this.BoostAvgReset.UseVisualStyleBackColor = true;
+            this.BoostAvgReset.Click += new System.EventHandler(this.BoostAvgReset_Click);
+            // 
             // CubePriority
             // 
             this.CubePriority.FormattingEnabled = true;
@@ -892,8 +897,6 @@
             // 
             this.tabPage5.Controls.Add(this.label9);
             this.tabPage5.Controls.Add(this.TitanSwapTargets);
-            this.tabPage5.Controls.Add(this.label1);
-            this.tabPage5.Controls.Add(this.HighestTitanDropdown);
             this.tabPage5.Controls.Add(this.label8);
             this.tabPage5.Controls.Add(this.titanRemove);
             this.tabPage5.Controls.Add(this.titanAddItem);
@@ -925,18 +928,6 @@
             // columnHeader2
             // 
             resources.ApplyResources(this.columnHeader2, "columnHeader2");
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            // 
-            // HighestTitanDropdown
-            // 
-            this.HighestTitanDropdown.FormattingEnabled = true;
-            resources.ApplyResources(this.HighestTitanDropdown, "HighestTitanDropdown");
-            this.HighestTitanDropdown.Name = "HighestTitanDropdown";
-            this.HighestTitanDropdown.SelectedIndexChanged += new System.EventHandler(this.HighestTitanDropdown_SelectedIndexChanged);
             // 
             // label8
             // 
@@ -1663,13 +1654,6 @@
             resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             // 
-            // BoostAvgReset
-            // 
-            resources.ApplyResources(this.BoostAvgReset, "BoostAvgReset");
-            this.BoostAvgReset.Name = "BoostAvgReset";
-            this.BoostAvgReset.UseVisualStyleBackColor = true;
-            this.BoostAvgReset.Click += new System.EventHandler(this.BoostAvgReset_Click);
-            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1805,8 +1789,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ListView TitanSwapTargets;
         private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox HighestTitanDropdown;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button titanRemove;
         private System.Windows.Forms.NumericUpDown titanAddItem;

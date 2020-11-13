@@ -11,7 +11,6 @@ namespace NGUInjector
     [Serializable]
     public class SavedSettings
     {
-        [SerializeField] private int _highestAkZone;
         [SerializeField] private int _snipeZone = -1;
         [SerializeField] private bool _precastBuffs;
         [SerializeField] private bool _swapTitanLoadouts;
@@ -154,7 +153,6 @@ namespace NGUInjector
             _yggdrasilLoadout = other.YggdrasilLoadout;
             _swapYggdrasilLoadouts = other.SwapYggdrasilLoadouts;
 
-            _highestAkZone = other.HighestAKZone;
             _swapTitanLoadouts = other.SwapTitanLoadouts;
             _titanLoadout = other.TitanLoadout;
 
@@ -241,16 +239,6 @@ namespace NGUInjector
             _moreBlockParry = other.MoreBlockParry;
             _specialBoostBlacklist = other.SpecialBoostBlacklist;
             _blacklistedBosses = other.BlacklistedBosses;
-        }
-
-        public int HighestAKZone
-        {
-            get => _highestAkZone;
-            set
-            {
-                _highestAkZone = value;
-                SaveSettings();
-            }
         }
 
         public int SnipeZone
