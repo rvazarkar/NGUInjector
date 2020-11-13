@@ -501,9 +501,10 @@ namespace NGUInjector.AllocationProfiles
             }
 
             var temp = bp.Priorities.Where(x => x.IsValid()).ToList();
-            var prioCount = temp.Count(x => !x.IsCapPrio());
-            if (prioCount == 0)
+            if (temp.Count == 0)
                 return;
+            var prioCount = temp.Count(x => !x.IsCapPrio());
+            
 
             if (temp.Any(x => x is BasicTraining))
                 _character.removeAllEnergy();
@@ -515,6 +516,7 @@ namespace NGUInjector.AllocationProfiles
 
             foreach (var prio in temp)
             {
+                Main.Log(prio.ToString());
                 if (!prio.IsCapPrio())
                 {
                     prioCount--;
@@ -552,9 +554,9 @@ namespace NGUInjector.AllocationProfiles
             }
 
             var temp = bp.Priorities.Where(x => x.IsValid()).ToList();
-            var prioCount = temp.Count(x => !x.IsCapPrio());
-            if (prioCount == 0)
+            if (temp.Count == 0)
                 return;
+            var prioCount = temp.Count(x => !x.IsCapPrio());
 
             _character.removeMostMagic();
             var toAdd = (long)Math.Ceiling((double)_character.magic.idleMagic / prioCount);
@@ -596,9 +598,9 @@ namespace NGUInjector.AllocationProfiles
             }
 
             var temp = bp.Priorities.Where(x => x.IsValid()).ToList();
-            var prioCount = temp.Count(x => !x.IsCapPrio());
-            if (prioCount == 0)
+            if (temp.Count == 0)
                 return;
+            var prioCount = temp.Count(x => !x.IsCapPrio());
 
             var toAdd = (long) Math.Ceiling((double) _character.res3.idleRes3 / prioCount);
             SetInput(toAdd);
