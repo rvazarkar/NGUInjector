@@ -640,7 +640,7 @@ namespace NGUInjector.AllocationProfiles
 
                 if (prio.Allocate())
                 {
-                    toAdd = (long)Math.Ceiling((double)_character.magic.idleMagic / prioCount);
+                    toAdd = (long)Math.Ceiling((double)_character.res3.idleRes3 / prioCount);
                     SetInput(toAdd);
                 }
             }

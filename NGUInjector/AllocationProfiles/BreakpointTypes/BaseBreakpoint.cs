@@ -98,9 +98,10 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 }
 
                 cap /= 100;
+
                 if (temp.Contains("-"))
                 {
-                    var split = prio.Split('-');
+                    var split = temp.Split('-');
                     temp = split[0];
                     var success = int.TryParse(split[1], out index);
                     if (!success)
