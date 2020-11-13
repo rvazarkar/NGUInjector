@@ -90,8 +90,8 @@ namespace NGUInjector.Managers
         private readonly FixedSizedQueue _cubeBoostAvg = new FixedSizedQueue(60);
 
 
-        //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane, Guffs
-        private readonly int[] _filterExcludes = { 66, 92, 163, 120, 154, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287  };
+        //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane, Guffs, Lemmi
+        private readonly int[] _filterExcludes = { 66, 92, 163, 120, 154, 195, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287  };
         public InventoryManager()
         {
             _character = Main.Character;
