@@ -38,6 +38,7 @@ namespace NGUInjector
         private static CustomAllocation _profile;
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
+        internal static WishManager WishManager;
         internal const string Version = "3.3.0rc";
         private static int _furthestZone;
 
@@ -292,6 +293,20 @@ namespace NGUInjector
                     Settings.SetSaveDisabled(false);
                 }
 
+                if (Settings.SpecialBoostBlacklist == null)
+                {
+                    Settings.SetSaveDisabled(true);
+                    Settings.SpecialBoostBlacklist = new int[0];
+                    Settings.SetSaveDisabled(false);
+                }
+
+                if (Settings.BlacklistedBosses == null)
+                {
+                    Settings.SetSaveDisabled(true);
+                    Settings.BlacklistedBosses = new int[0];
+                    Settings.SetSaveDisabled(false);
+                }
+
                 LoadAllocation();
                 LoadAllocationProfiles();
 
@@ -358,6 +373,8 @@ namespace NGUInjector
                 InvokeRepeating("QuickStuff", 0.0f, .5f);
                 InvokeRepeating("ShowBoostProgress", 0.0f, 60.0f);
                 InvokeRepeating("SetResnipe", 0f,1f);
+
+                WishManager = new WishManager();
 
                 reference = this;
             }
