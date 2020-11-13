@@ -20,6 +20,11 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             Character = Main.Character;
         }
 
+        internal bool IsCapPrio()
+        {
+            return IsCap;
+        }
+
         internal bool IsValid()
         {
             return CorrectResourceType() && Unlocked() && !TargetMet();
@@ -38,13 +43,13 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             switch (Type)
             {
                 case ResourceType.Energy:
-                    capValue = IsCap ? character.capEnergy : character.idleEnergy;
+                    capValue = IsCap ? input : character.idleEnergy;
                     break;
                 case ResourceType.Magic:
-                    capValue = IsCap ? character.magic.capMagic : character.magic.idleMagic;
+                    capValue = IsCap ? input : character.magic.idleMagic;
                     break;
                 case ResourceType.R3:
-                    capValue = character.res3.capRes3;
+                    capValue = character.res3.idleRes3;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -60,31 +65,31 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             Character.energyMagicPanel.validateInput();
         }
 
-        internal static IEnumerable<BaseBreakpoint> ParseBreakpointArray(List<string> prios, ResourceType type)
+        internal static IEnumerable<BaseBreakpoint> ParseBreakpointArray(string[] prios, ResourceType type, int rebirthTime)
         {
             foreach (var prio in prios)
             {
-                int cap;
+                double cap;
                 int index;
                 var temp = prio;
                 if (temp.Contains(":"))
                 {
                     var split = prio.Split(':');
                     temp = split[0];
-                    var success = int.TryParse(split[1], out cap);
+                    var success = int.TryParse(split[1], out var tempCap);
                     if (!success)
                     {
                         cap = 100;
-                    }
-
-                    if (cap > 100)
+                    }else if (tempCap > 100)
                     {
                         cap = 100;
-                    }
-
-                    if (cap < 0)
+                    }else if (tempCap < 0)
                     {
                         cap = 0;
+                    }
+                    else
+                    {
+                        cap = tempCap;
                     }
                 }
                 else
@@ -92,6 +97,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     cap = 100;
                 }
 
+                cap /= 100;
                 if (temp.Contains("-"))
                 {
                     var split = prio.Split('-');
@@ -178,7 +184,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                         CapPercent = cap,
                         Character = Main.Character,
                         Index = index,
-                        IsCap = temp.Contains("CAP"),
+                        IsCap = false,
                         Type = type
                     };
                 }else if (temp.StartsWith("WISH"))
@@ -188,7 +194,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                         CapPercent = cap,
                         Character = Main.Character,
                         Index = index,
-                        IsCap = temp.Contains("CAP"),
+                        IsCap = false,
                         Type = type
                     };
                 }else if (temp.StartsWith("WAN") || temp.StartsWith("CAPWAN"))
@@ -214,8 +220,38 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                             Type = type
                         };
                     }
+                }else if (temp.StartsWith("BR"))
+                {
+                    yield return new BR
+                    {
+                        CapPercent = cap,
+                        Character = Main.Character,
+                        Index = index,
+                        IsCap = true,
+                        Type = type,
+                        RebirthTime = rebirthTime
+                    };
+                }else if (temp.StartsWith("TM") || temp.StartsWith("CAPTM"))
+                {
+                    yield return new TimeMachine
+                    {
+                        CapPercent = cap,
+                        Character = Main.Character,
+                        Index = index,
+                        IsCap = prio.Contains("CAP"),
+                        Type = type
+                    };
+                }
+                else
+                {
+                    yield return null;
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            return $"Breakpoint Type: {GetType()}, Index: {Index}, IsCap: {IsCap}, CapPercent: {CapPercent}, Type: {Type}, MaxAllocation: {MaxAllocation}";
         }
     }
 }

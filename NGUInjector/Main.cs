@@ -307,6 +307,8 @@ namespace NGUInjector
                     Settings.SetSaveDisabled(false);
                 }
 
+                WishManager = new WishManager();
+
                 LoadAllocation();
                 LoadAllocationProfiles();
 
@@ -374,7 +376,6 @@ namespace NGUInjector
                 InvokeRepeating("ShowBoostProgress", 0.0f, 60.0f);
                 InvokeRepeating("SetResnipe", 0f,1f);
 
-                WishManager = new WishManager();
 
                 reference = this;
             }
