@@ -516,7 +516,6 @@ namespace NGUInjector.AllocationProfiles
 
             foreach (var prio in temp)
             {
-                Main.Log(prio.ToString());
                 if (!prio.IsCapPrio())
                 {
                     prioCount--;

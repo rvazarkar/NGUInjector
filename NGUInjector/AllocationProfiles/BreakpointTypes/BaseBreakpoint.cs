@@ -40,23 +40,27 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             var input = Character.energyMagicPanel.energyMagicInput;
             var character = Main.Character;
             long capValue;
+            long idleValue;
             switch (Type)
             {
                 case ResourceType.Energy:
-                    capValue = IsCap ? input : character.totalCapEnergy();
+                    capValue = !IsCap ? character.idleEnergy : character.totalCapEnergy();
+                    idleValue = character.idleEnergy;
                     break;
                 case ResourceType.Magic:
-                    capValue = IsCap ? input : character.totalCapMagic();
+                    capValue = !IsCap ? character.magic.idleMagic : character.totalCapMagic();
+                    idleValue = character.magic.idleMagic;
                     break;
                 case ResourceType.R3:
-                    capValue = character.totalCapRes3();
+                    capValue = !IsCap ? character.res3.idleRes3 : character.totalCapRes3();
+                    idleValue = character.res3.idleRes3;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
             var capMax = (long)Math.Ceiling(capValue * CapPercent);
-            return Math.Min(input, capMax);
+            return !IsCap ? Math.Min(input, capMax) : Math.Min(capMax, idleValue);
         }
 
         protected void SetInput(float val)
@@ -178,24 +182,24 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                         IsCap = temp.Contains("CAP"),
                         Type = type
                     };
-                }else if (temp.StartsWith("HACK"))
+                }else if (temp.StartsWith("HACK") || temp.StartsWith("CAPHACK"))
                 {
                     yield return new HackBreakpoint
                     {
                         CapPercent = cap,
                         Character = Main.Character,
                         Index = index,
-                        IsCap = false,
+                        IsCap = temp.Contains("CAP"),
                         Type = type
                     };
-                }else if (temp.StartsWith("WISH"))
+                }else if (temp.StartsWith("WISH") || temp.StartsWith("CAPWISH"))
                 {
                     yield return new WishBreakpoint
                     {
                         CapPercent = cap,
                         Character = Main.Character,
                         Index = index,
-                        IsCap = false,
+                        IsCap = temp.Contains("CAP"),
                         Type = type
                     };
                 }else if (temp.StartsWith("WAN") || temp.StartsWith("CAPWAN"))
