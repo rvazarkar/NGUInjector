@@ -353,7 +353,7 @@ Pressing the F7 button will load the save created by the quicksave function
 
 ## Dump Equipment to Log
 
-Pressing the F5 buttonw will dump your current equipment to the log file for use in allocation files
+Pressing the F5 button will dump your current equipment to the log file for use in allocation files
 
 ## Monitor Loot Log File
 
@@ -368,8 +368,8 @@ The pitspin.log file will contain the results of each automatic money pit, daily
 Pressing the F2 button will globally disable all features of the app until re-enabled.
 
 ## Turn on Autoattack in ITOPOD
-
-Have you forgotten to turn on auto attack before and left yourself AFK in ITOPOD doing nothing? Me too! The script will automatically turn auto attack on if you're in ITOPOD and its not on.
+ 
+Have you forgotten to turn on auto attack before and left yourself AFK in ITOPOD doing nothing? Me too! Pressing the F4 button will toggle the script to automatically turn auto attack on if you're in ITOPOD and its not on.
 
 ## Auto Merge Boost to 100
 
