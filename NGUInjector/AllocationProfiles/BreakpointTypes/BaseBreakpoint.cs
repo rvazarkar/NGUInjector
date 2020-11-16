@@ -246,6 +246,16 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                         IsCap = prio.Contains("CAP"),
                         Type = type
                     };
+                }else if (temp.StartsWith("RIT") || temp.StartsWith("CAPRIT"))
+                {
+                    yield return new RitualBreakpoint
+                    {
+                        CapPercent = cap,
+                        Character = Main.Character,
+                        Index = index,
+                        IsCap = prio.Contains("CAP"),
+                        Type = type
+                    };
                 }
                 else
                 {
