@@ -599,7 +599,8 @@ namespace NGUInjector.AllocationProfiles
             var temp = bp.Priorities.Where(x => x.IsValid()).ToList();
             if (temp.Count == 0)
                 return;
-            var prioCount = temp.Count(x => !x.IsCapPrio());
+            
+            var prioCount = temp.Count(x => !x.IsCapPrio() && !(x is HackBreakpoint)) + (temp.Any(x => x is HackBreakpoint) ? 1 : 0);
 
             var toAdd = (long) Math.Ceiling((double) _character.res3.idleRes3 / prioCount);
             SetInput(toAdd);
