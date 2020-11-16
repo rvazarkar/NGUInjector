@@ -601,7 +601,7 @@ namespace NGUInjector.AllocationProfiles
                 return;
             
             var prioCount = temp.Count(x => !x.IsCapPrio() && !(x is HackBreakpoint)) + (temp.Any(x => x is HackBreakpoint) ? 1 : 0);
-
+            _character.removeAllRes3();
             var toAdd = (long) Math.Ceiling((double) _character.res3.idleRes3 / prioCount);
             SetInput(toAdd);
 

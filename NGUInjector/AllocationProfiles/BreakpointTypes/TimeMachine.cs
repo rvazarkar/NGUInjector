@@ -37,8 +37,6 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
         {
             var toAllocate = CalculateTMEnergyCap();
             SetInput(toAllocate);
-            Main.Log($"Max Allocation: {MaxAllocation}");
-            Main.Log($"Calculated TM Cap at {toAllocate}");
             Character.timeMachineController.addEnergy();
         }
 
