@@ -101,6 +101,11 @@ namespace NGUInjector
             return n;
         }
 
+        public static float AugTimeLeftEnergy(this AugmentController aug, long energy)
+        {
+            return (float)((1.0 - (double)aug.character.augments.augs[aug.id].augProgress) / (double)aug.getAugProgressPerTick(energy) / 50.0);
+        }
+
         private static decimal CalcCap(float cap, float level)
         {
             return (decimal)Mathf.Floor(cap * (float)(1.0 + level / 100.0));
@@ -108,7 +113,6 @@ namespace NGUInjector
 
         internal static void DoAllocations(this CustomAllocation allocation)
         {
-
             if (!Settings.GlobalEnabled)
                 return;
 

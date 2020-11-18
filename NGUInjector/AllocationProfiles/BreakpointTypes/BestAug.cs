@@ -5,55 +5,68 @@ using System.Text;
 
 namespace NGUInjector.AllocationProfiles.BreakpointTypes
 {
-    internal class Augment : BaseBreakpoint
+    internal class BestAug : BaseBreakpoint
     {
-        private int AugIndex => (int)Math.Floor((double)(Index / 2));
-
+        internal int RebirthTime { get; set; }
         protected override bool Unlocked()
         {
-            if (!Character.buttons.augmentation.interactable)
-                return false;
-
-            if (Index > 13)
-                return false;
-
-
-            if (Index % 2 == 0)
-            {
-                return Character.bossID > Character.augmentsController.augments[AugIndex].augBossRequired;
-            }
-
-            return Character.bossID > Character.augmentsController.augments[AugIndex].upgradeBossRequired;
+            return Character.buttons.augmentation.interactable;
         }
 
         protected override bool TargetMet()
         {
-            if (Index % 2 == 0)
-            {
-                var target = Character.augments.augs[AugIndex].augmentTarget;
-                return target != 0 && Character.augments.augs[AugIndex].augLevel >= target;
-            }
-            else
-            {
-                var target = Character.augments.augs[AugIndex].upgradeTarget;
-                return target != 0 && Character.augments.augs[AugIndex].upgradeLevel >= target;
-            }
+            return false;
         }
 
         internal override bool Allocate()
         {
-            var max = CalculateMaxAllocation();
-            var alloc = CalculateAugCap();
-            SetInput(alloc);
-            if (Index % 2 == 0)
+            if (Character.effectiveBossID() < 37)
             {
-                Character.augmentsController.augments[AugIndex].addEnergyAug();
+                AllocatePrePairs();
             }
             else
             {
-                Character.augmentsController.augments[AugIndex].addEnergyUpgrade();
+
             }
+
             return true;
+        }
+
+        private void AllocatePrePairs()
+        {
+            var gold = Character.realGold;
+            for (var i = 6; i >= 0; i--)
+            {
+                var aug = Character.augmentsController.augments[i];
+                var cost = aug.getAugCost();
+                if (cost > gold)
+                    continue;
+
+                var time = aug.AugTimeLeftEnergy((long)MaxAllocation);
+
+                // Limit at 20 minutes
+                if (time > 1200)
+                    continue;
+
+                if (RebirthTime > 0 && Main.Settings.AutoRebirth)
+                {
+                    if (Character.rebirthTime.totalseconds - time < 0)
+                        continue;
+                }
+
+                if (Index > 0)
+                {
+                    if (Character.rebirthTime.totalseconds + time > Index)
+                    {
+                        continue;;
+                    }
+                }
+
+                var index = i * 2;
+                var alloc = CalculateAugCap(index);
+                SetInput(alloc);
+                Character.augmentsController.augments[i].addEnergyAug();
+            }
         }
 
         protected override bool CorrectResourceType()
@@ -61,19 +74,19 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             return Type == ResourceType.Energy;
         }
 
-        internal float CalculateAugCap()
+        internal float CalculateAugCap(int index)
         {
-            var calcA = CalculateAugCapCalc(500);
+            var calcA = CalculateAugCapCalc(500, index);
             if (calcA.PPT < 1)
             {
-                var calcB = CalculateAugCapCalc(calcA.GetOffset());
+                var calcB = CalculateAugCapCalc(calcA.GetOffset(), index);
                 return calcB.Num;
             }
 
             return calcA.Num;
         }
 
-        internal CapCalc CalculateAugCapCalc(int offset)
+        internal CapCalc CalculateAugCapCalc(int offset, int augIndex)
         {
             var ret = new CapCalc
             {
@@ -83,7 +96,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             double formula = 0;
             if (Index % 2 == 0)
             {
-                formula = 50000 * (1f + Character.augments.augs[AugIndex].augLevel + offset) /
+                formula = 50000 * (1f + Character.augments.augs[augIndex].augLevel + offset) /
                     (Character.totalEnergyPower() *
                     (1 + Character.inventoryController.bonuses[specType.Augs]) *
                     Character.inventory.macguffinBonuses[12] *
@@ -102,24 +115,24 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 }
                 if (Character.settings.rebirthDifficulty >= difficulty.sadistic)
                 {
-                    formula *= Character.augmentsController.augments[AugIndex].sadisticDivider();
+                    formula *= Character.augmentsController.augments[augIndex].sadisticDivider();
                 }
                 if (Character.settings.rebirthDifficulty == difficulty.normal)
                 {
-                    formula *= Character.augmentsController.normalAugSpeedDividers[AugIndex];
+                    formula *= Character.augmentsController.normalAugSpeedDividers[augIndex];
                 }
                 else if (Character.settings.rebirthDifficulty == difficulty.evil)
                 {
-                    formula *= Character.augmentsController.evilAugSpeedDividers[AugIndex];
+                    formula *= Character.augmentsController.evilAugSpeedDividers[augIndex];
                 }
                 else if (Character.settings.rebirthDifficulty == difficulty.sadistic)
                 {
-                    formula *= Character.augmentsController.sadisticAugSpeedDividers[AugIndex];
+                    formula *= Character.augmentsController.sadisticAugSpeedDividers[augIndex];
                 }
             }
             else
             {
-                formula = 50000 * (1f + Character.augments.augs[AugIndex].upgradeLevel + offset) /
+                formula = 50000 * (1f + Character.augments.augs[augIndex].upgradeLevel + offset) /
                     (Character.totalEnergyPower() *
                     (1 + Character.inventoryController.bonuses[specType.Augs]) *
                     Character.inventory.macguffinBonuses[12] *
@@ -138,21 +151,21 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 }
                 if (Character.settings.rebirthDifficulty >= difficulty.sadistic)
                 {
-                    formula *= Character.augmentsController.augments[AugIndex].sadisticDivider();
+                    formula *= Character.augmentsController.augments[augIndex].sadisticDivider();
                 }
                 if (Character.settings.rebirthDifficulty == difficulty.normal)
                 {
-                    formula *= Character.augmentsController.normalUpgradeSpeedDividers[AugIndex];
+                    formula *= Character.augmentsController.normalUpgradeSpeedDividers[augIndex];
 
                 }
                 else if (Character.settings.rebirthDifficulty == difficulty.evil)
                 {
-                    formula *= Character.augmentsController.evilUpgradeSpeedDividers[AugIndex];
+                    formula *= Character.augmentsController.evilUpgradeSpeedDividers[augIndex];
 
                 }
                 else if (Character.settings.rebirthDifficulty == difficulty.sadistic)
                 {
-                    formula *= Character.augmentsController.sadisticUpgradeSpeedDividers[AugIndex];
+                    formula *= Character.augmentsController.sadisticUpgradeSpeedDividers[augIndex];
                 }
             }
 
@@ -160,7 +173,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 formula = Character.hardCap();
 
             var num4 = formula <= 1.0 ? 1L : (long)formula;
-            var num = (long)(num4 / (long)Math.Ceiling(num4 / (double) MaxAllocation) * 1.00000202655792);
+            var num = (long)(num4 / (long)Math.Ceiling(num4 / (double)MaxAllocation) * 1.00000202655792);
             if (num + 1L <= long.MaxValue)
                 ++num;
             if (num > Character.idleEnergy)

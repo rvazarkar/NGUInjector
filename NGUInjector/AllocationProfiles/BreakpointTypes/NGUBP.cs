@@ -2,7 +2,7 @@
 
 namespace NGUInjector.AllocationProfiles.BreakpointTypes
 {
-    internal class NGUBreakpoint : BaseBreakpoint
+    internal class NGUBP : BaseBreakpoint
     {
         protected override bool Unlocked()
         {

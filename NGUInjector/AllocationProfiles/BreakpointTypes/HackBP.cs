@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NGUInjector.AllocationProfiles.BreakpointTypes
 {
-    internal class HackBreakpoint : BaseBreakpoint
+    internal class HackBP : BaseBreakpoint
     {
         protected override bool Unlocked()
         {

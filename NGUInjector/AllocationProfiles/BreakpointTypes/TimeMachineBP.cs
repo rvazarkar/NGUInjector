@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NGUInjector.AllocationProfiles.BreakpointTypes
 {
-    internal class TimeMachine : BaseBreakpoint
+    internal class TimeMachineBP : BaseBreakpoint
     {
         protected override bool Unlocked()
         {

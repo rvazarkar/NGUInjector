@@ -120,7 +120,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
 
                 if (temp.StartsWith("NGU") || temp.StartsWith("CAPNGU"))
                 {
-                    yield return new NGUBreakpoint
+                    yield return new NGUBP
                     {
                         CapPercent = cap,
                         Character = Main.Character,
@@ -132,7 +132,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     if (type == ResourceType.Energy) {
                         for (var i = 0; i < 9; i++)
                         {
-                            yield return new NGUBreakpoint
+                            yield return new NGUBP
                             {
                                 CapPercent = cap,
                                 Character = Main.Character,
@@ -144,7 +144,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     }else if (type == ResourceType.Magic) {
                         for (var i = 0; i < 7; i++)
                         {
-                            yield return new NGUBreakpoint
+                            yield return new NGUBP
                             {
                                 CapPercent = cap,
                                 Character = Main.Character,
@@ -155,7 +155,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                         }
                     }
                 }else if (temp.StartsWith("CAPAT") || temp.StartsWith("AT")) {
-                    yield return new AdvancedTraining
+                    yield return new AdvancedTrainingBP
                     {
                         CapPercent = cap,
                         Character = Main.Character,
@@ -164,7 +164,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                         Type = type
                     };
                 }else if (temp.StartsWith("AUG") || temp.StartsWith("CAPAUG")) {
-                    yield return new Augment
+                    yield return new AugmentBP
                     {
                         CapPercent = cap,
                         Character = Main.Character,
@@ -174,7 +174,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     };
                 } else if (temp.StartsWith("BT") || temp.StartsWith("CAPBT"))
                 {
-                    yield return new BasicTraining
+                    yield return new BasicTrainingBP
                     {
                         CapPercent = cap,
                         Character = Main.Character,
@@ -184,7 +184,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     };
                 }else if (temp.StartsWith("HACK") || temp.StartsWith("CAPHACK"))
                 {
-                    yield return new HackBreakpoint
+                    yield return new HackBP
                     {
                         CapPercent = cap,
                         Character = Main.Character,
@@ -194,7 +194,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     };
                 }else if (temp.StartsWith("WISH") || temp.StartsWith("CAPWISH"))
                 {
-                    yield return new WishBreakpoint
+                    yield return new WishBP
                     {
                         CapPercent = cap,
                         Character = Main.Character,
@@ -204,7 +204,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     };
                 }else if (temp.StartsWith("WAN") || temp.StartsWith("CAPWAN"))
                 {
-                    yield return new Wandoos
+                    yield return new WandoosBP
                     {
                         CapPercent = cap,
                         Character = Main.Character,
@@ -216,7 +216,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 {
                     for (var i = 0; i < 12; i++)
                     {
-                        yield return new BasicTraining
+                        yield return new BasicTrainingBP
                         {
                             CapPercent = cap,
                             Character = Main.Character,
@@ -238,7 +238,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     };
                 }else if (temp.StartsWith("TM") || temp.StartsWith("CAPTM"))
                 {
-                    yield return new TimeMachine
+                    yield return new TimeMachineBP
                     {
                         CapPercent = cap,
                         Character = Main.Character,
@@ -248,7 +248,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     };
                 }else if (temp.StartsWith("RIT") || temp.StartsWith("CAPRIT"))
                 {
-                    yield return new RitualBreakpoint
+                    yield return new RitualBP
                     {
                         CapPercent = cap,
                         Character = Main.Character,
@@ -260,7 +260,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 {
                     for (var i = 0; i < 5; i++)
                     {
-                        yield return new AdvancedTraining
+                        yield return new AdvancedTrainingBP
                         {
                             CapPercent = cap,
                             Character = Main.Character,
@@ -273,7 +273,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 {
                     for (var i = 0; i < 15; i++)
                     {
-                        yield return new HackBreakpoint
+                        yield return new HackBP
                         {
                             CapPercent = cap,
                             Character = Main.Character,

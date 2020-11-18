@@ -356,10 +356,8 @@ namespace NGUInjector.AllocationProfiles
 
             DiggerManager.UpgradeCheapestDigger();
 
-            if (Main.Settings.CastBloodSpells)
-            {
-                CastBloodSpells(true);
-            }
+            CastBloodSpells(true);
+
 
             _currentDiggerBreakpoint = null;
             _currentEnergyBreakpoint = null;
@@ -382,6 +380,9 @@ namespace NGUInjector.AllocationProfiles
 
         public void CastBloodSpells(bool rebirth)
         {
+            if (!Main.Settings.CastBloodSpells)
+                return;
+
             if (_wrapper.Breakpoints.RebirthTime >= 180 && Main.Settings.AutoRebirth)
             {
                 if (((_wrapper.Breakpoints.RebirthTime - _character.rebirthTime.totalseconds) < (30 * 60)) && !rebirth)
@@ -506,7 +507,7 @@ namespace NGUInjector.AllocationProfiles
             var prioCount = temp.Count(x => !x.IsCapPrio());
             
 
-            if (temp.Any(x => x is BasicTraining))
+            if (temp.Any(x => x is BasicTrainingBP))
                 _character.removeAllEnergy();
             else
                 _character.removeMostEnergy();
@@ -600,7 +601,7 @@ namespace NGUInjector.AllocationProfiles
             if (temp.Count == 0)
                 return;
             
-            var prioCount = temp.Count(x => !x.IsCapPrio() && !(x is HackBreakpoint)) + (temp.Any(x => x is HackBreakpoint) ? 1 : 0);
+            var prioCount = temp.Count(x => !x.IsCapPrio() && !(x is HackBP)) + (temp.Any(x => x is HackBP) ? 1 : 0);
             _character.removeAllRes3();
             var toAdd = (long) Math.Ceiling((double) _character.res3.idleRes3 / prioCount);
             SetInput(toAdd);
@@ -611,9 +612,9 @@ namespace NGUInjector.AllocationProfiles
             {
                 switch (prio)
                 {
-                    case HackBreakpoint _ when hackAllocated:
+                    case HackBP _ when hackAllocated:
                         continue;
-                    case HackBreakpoint _:
+                    case HackBP _:
                         hackAllocated = true;
                         break;
                 }

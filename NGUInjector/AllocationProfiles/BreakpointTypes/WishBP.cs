@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NGUInjector.AllocationProfiles.BreakpointTypes
 {
-    internal class WishBreakpoint : BaseBreakpoint
+    internal class WishBP : BaseBreakpoint
     {
         protected override bool Unlocked()
         {

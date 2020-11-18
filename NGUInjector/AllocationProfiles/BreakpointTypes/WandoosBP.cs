@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NGUInjector.AllocationProfiles.BreakpointTypes
 {
-    internal class Wandoos : BaseBreakpoint
+    internal class WandoosBP : BaseBreakpoint
     {
         protected override bool Unlocked()
         {

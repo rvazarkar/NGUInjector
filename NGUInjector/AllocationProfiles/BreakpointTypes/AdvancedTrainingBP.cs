@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace NGUInjector.AllocationProfiles.BreakpointTypes
 {
-    internal class AdvancedTraining : BaseBreakpoint
+    internal class AdvancedTrainingBP : BaseBreakpoint
     {
         protected override bool Unlocked()
         {

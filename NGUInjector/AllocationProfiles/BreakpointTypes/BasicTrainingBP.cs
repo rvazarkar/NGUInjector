@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NGUInjector.AllocationProfiles.BreakpointTypes
 {
-    internal class BasicTraining : BaseBreakpoint
+    internal class BasicTrainingBP : BaseBreakpoint
     {
         private int BTIndex => Index <= 5 ? Index : Index -= 6;
 
