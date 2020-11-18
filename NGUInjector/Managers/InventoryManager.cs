@@ -314,6 +314,9 @@ namespace NGUInjector.Managers
 
             foreach (var item in grouped)
             {
+                if (item.All(x => x.locked))
+                    continue;
+
                 var target = item.MaxItem();
 
                 Log($"Merging {SanitizeName(target.name)} in slot {target.slot}");
