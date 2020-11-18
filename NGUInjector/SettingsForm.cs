@@ -284,6 +284,8 @@ namespace NGUInjector
             YggSwapThreshold.Value = newSettings.YggSwapThreshold;
 
             MoreBlockParry.Checked = newSettings.MoreBlockParry;
+            WishSortOrder.Checked = newSettings.WishSortOrder;
+            WishSortPriorities.Checked = newSettings.WishSortPriorities;
 
             SetTitanGoldBox(newSettings);
             SetTitanSwapBox(newSettings);
@@ -1387,6 +1389,18 @@ namespace NGUInjector
         private void BoostAvgReset_Click(object sender, EventArgs e)
         {
             Main.reference.ResetBoostProgress();
+        }
+
+        private void WishSortPriorities_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.WishSortPriorities = WishSortPriorities.Checked;
+        }
+
+        private void WishSortOrder_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.WishSortOrder = WishSortOrder.Checked;
         }
     }
 }

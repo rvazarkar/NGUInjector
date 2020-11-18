@@ -185,6 +185,8 @@
             this.AllowMajor = new System.Windows.Forms.CheckBox();
             this.ManageQuests = new System.Windows.Forms.CheckBox();
             this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.WishSortOrder = new System.Windows.Forms.CheckBox();
+            this.WishSortPriorities = new System.Windows.Forms.CheckBox();
             this.WishDownButton = new System.Windows.Forms.Button();
             this.WishUpButton = new System.Windows.Forms.Button();
             this.RemoveWishButton = new System.Windows.Forms.Button();
@@ -1470,6 +1472,8 @@
             // 
             // tabPage9
             // 
+            this.tabPage9.Controls.Add(this.WishSortOrder);
+            this.tabPage9.Controls.Add(this.WishSortPriorities);
             this.tabPage9.Controls.Add(this.WishDownButton);
             this.tabPage9.Controls.Add(this.WishUpButton);
             this.tabPage9.Controls.Add(this.RemoveWishButton);
@@ -1481,6 +1485,20 @@
             resources.ApplyResources(this.tabPage9, "tabPage9");
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // WishSortOrder
+            // 
+            resources.ApplyResources(this.WishSortOrder, "WishSortOrder");
+            this.WishSortOrder.Name = "WishSortOrder";
+            this.WishSortOrder.UseVisualStyleBackColor = true;
+            this.WishSortOrder.CheckedChanged += new System.EventHandler(this.WishSortOrder_CheckedChanged);
+            // 
+            // WishSortPriorities
+            // 
+            resources.ApplyResources(this.WishSortPriorities, "WishSortPriorities");
+            this.WishSortPriorities.Name = "WishSortPriorities";
+            this.WishSortPriorities.UseVisualStyleBackColor = true;
+            this.WishSortPriorities.CheckedChanged += new System.EventHandler(this.WishSortPriorities_CheckedChanged);
             // 
             // WishDownButton
             // 
@@ -1890,5 +1908,7 @@
         private System.Windows.Forms.Button BlacklistAddEnemyButton;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Button BoostAvgReset;
+        private System.Windows.Forms.CheckBox WishSortOrder;
+        private System.Windows.Forms.CheckBox WishSortPriorities;
     }
 }
