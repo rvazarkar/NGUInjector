@@ -256,6 +256,32 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                         IsCap = prio.Contains("CAP"),
                         Type = type
                     };
+                }else if (temp.StartsWith("ALLAT") || temp.StartsWith("CAPALLAT"))
+                {
+                    for (var i = 0; i < 5; i++)
+                    {
+                        yield return new AdvancedTraining
+                        {
+                            CapPercent = cap,
+                            Character = Main.Character,
+                            Index = i,
+                            IsCap = temp.Contains("CAP"),
+                            Type = type
+                        };
+                    }
+                }else if (temp.StartsWith("ALLHACK") || temp.StartsWith("CAPALLHACK"))
+                {
+                    for (var i = 0; i < 15; i++)
+                    {
+                        yield return new HackBreakpoint
+                        {
+                            CapPercent = cap,
+                            Character = Main.Character,
+                            Index = i,
+                            IsCap = temp.Contains("CAP"),
+                            Type = type
+                        };
+                    }
                 }
                 else
                 {
