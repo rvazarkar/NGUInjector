@@ -609,14 +609,13 @@ namespace NGUInjector.AllocationProfiles
 
             foreach (var prio in temp)
             {
-                if (prio is HackBreakpoint && hackAllocated)
+                switch (prio)
                 {
-                    continue;
-                }
-
-                if (prio is HackBreakpoint)
-                {
-                    hackAllocated = true;
+                    case HackBreakpoint _ when hackAllocated:
+                        continue;
+                    case HackBreakpoint _:
+                        hackAllocated = true;
+                        break;
                 }
 
                 if (!prio.IsCapPrio())
