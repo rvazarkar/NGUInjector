@@ -254,7 +254,12 @@ namespace NGUInjector
                         DisableOverlay = false,
                         OptimizeITOPODFloor = false,
                         YggSwapThreshold = 1,
-                        UpgradeDiggers = true
+                        UpgradeDiggers = true,
+                        BlacklistedBosses = new int[0],
+                        SpecialBoostBlacklist = new int[0],
+                        MoreBlockParry = false,
+                        WishSortOrder = false,
+                        WishSortPriorities = false
                     };
 
                     Settings.MassUpdate(temp);
