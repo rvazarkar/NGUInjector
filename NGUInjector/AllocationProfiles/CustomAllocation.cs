@@ -23,7 +23,6 @@ namespace NGUInjector.AllocationProfiles
         private DiggerBreakpoint _currentDiggerBreakpoint;
         private WandoosBreakpoint _currentWandoosBreakpoint;
         private NGUDiffBreakpoint _currentNguBreakpoint;
-        private WishManager _wishManager;
         private bool _hasGearSwapped;
         private bool _hasDiggerSwapped;
         private bool _hasWandoosSwapped;
@@ -37,7 +36,6 @@ namespace NGUInjector.AllocationProfiles
         {
             _allocationPath = Path.Combine(profilesDir, profile + ".json");
             _profileName = profile;
-            _wishManager = new WishManager();
         }
 
         internal void ReloadAllocation()
@@ -92,8 +90,6 @@ namespace NGUInjector.AllocationProfiles
                         .Select(bp => new WandoosBreakpoint {Time = ParseTime(bp["Time"]), OS = bp["OS"].AsInt})
                         .OrderByDescending(x => x.Time).ToArray();
 
-                    
-
                     _wrapper.Breakpoints.NGUBreakpoints = breakpoints["NGUDiff"].Children
                         .Select(bp => new NGUDiffBreakpoint {Time = ParseTime(bp["Time"]), Diff = bp["Diff"].AsInt})
                         .Where(x => x.Diff <= 2).OrderByDescending(x => x.Time).ToArray();
@@ -118,8 +114,11 @@ namespace NGUInjector.AllocationProfiles
                 }
                 catch (Exception e)
                 {
+                    Main.Log("Failed to load allocation file. Resave to reload");
                     Main.Log(e.Message);
                     Main.Log(e.StackTrace);
+                    _wrapper = new BreakpointWrapper {Breakpoints = {RebirthTime = -1}};
+
                 }
             }
             else
