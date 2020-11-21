@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace NGUInjector.AllocationProfiles.BreakpointTypes
 {
@@ -34,7 +35,20 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 case ResourceType.Magic:
                     c.addMagic(id);
                     break;
-                default:
+                case ResourceType.R3:
+                    var cap = Mathf.Ceil(Mathf.Pow(
+                        c.minimumWishTime() * c.wishSpeedDivider(id) /
+                        c.energyFactor(id) / c.magicFactor(id) /
+                        c.totalWishSpeedBonuses(), (float)(1.0 / 0.17)) / Character.totalRes3Power());
+                    Main.Log($"Calculated Wish R3 Cap: {cap}");
+                    if (Character.energyMagicPanel.energyMagicInput > cap)
+                    {
+                        Main.Log($"Input was: {MaxAllocation}");
+                        SetInput(cap);
+                        c.addRes3(id);
+                        return true;
+                    }
+
                     c.addRes3(id);
                     break;
             }
