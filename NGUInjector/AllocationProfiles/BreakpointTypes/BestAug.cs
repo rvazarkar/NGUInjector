@@ -69,7 +69,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 if (time < 0.01) { time = 0.01f; }
 
                 var value = AugmentValue(i);
-                Main.Log($"Pair ID {i}: time {time} - Value: {value} - ROI : {value / time}");
+                Main.LogAllocation($"Pair ID {i}: time {time} - Value: {value} - ROI : {value / time}");
 
                 if (value / time > bestAugmentValue)
                 {
@@ -77,7 +77,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     bestAugmentValue = value / time;
                 }
             }
-            Main.Log($"BestAug: ({bestAugment}) @ {MaxAllocation}");
+            Main.LogAllocation($"BestAug: ({bestAugment}) @ {MaxAllocation}");
             if (bestAugment != -1)
             {                
                 var index = bestAugment * 2;

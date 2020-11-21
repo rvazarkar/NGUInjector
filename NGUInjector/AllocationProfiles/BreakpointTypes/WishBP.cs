@@ -40,10 +40,10 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                         c.minimumWishTime() * c.wishSpeedDivider(id) /
                         c.energyFactor(id) / c.magicFactor(id) /
                         c.totalWishSpeedBonuses(), (float)(1.0 / 0.17)) / Character.totalRes3Power());
-                    Main.Log($"Calculated Wish R3 Cap: {cap}");
+                    Main.LogAllocation($"Calculated Wish R3 Cap: {cap}");
                     if (Character.energyMagicPanel.energyMagicInput > cap)
                     {
-                        Main.Log($"Input was: {MaxAllocation}");
+                        Main.LogAllocation($"Input was: {MaxAllocation}");
                         SetInput(cap);
                         c.addRes3(id);
                         return true;
