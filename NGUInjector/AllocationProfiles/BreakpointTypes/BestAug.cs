@@ -38,19 +38,18 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             for (var i = 0; i < 7; i++)
             {
                 var aug = Character.augmentsController.augments[i];
-                if (aug.augLocked())
-                {
+                if (aug.augLocked() || aug.hitAugmentTarget())
                     continue;
-                }
-                if (upgrades && aug.upgradeLocked())
-                {
+
+
+                if (upgrades && aug.upgradeLocked() || aug.hitUpgradeTarget())
                     continue;
-                }
+
                 var cost = aug.getAugCost();
                 if (cost > gold)
                     continue;
 
-                float time = aug.AugTimeLeftEnergyMax((long)(upgrades ? MaxAllocation/2 : MaxAllocation));
+                var time = aug.AugTimeLeftEnergyMax((long)(upgrades ? MaxAllocation/2 : MaxAllocation));
                 if (time > 1200)
                     continue;
 
@@ -69,7 +68,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 }
                 if (time < 0.01) { time = 0.01f; }
 
-                float value = AugmentValue(i);
+                var value = AugmentValue(i);
                 Main.Log($"Pair ID {i}: time {time} - Value: {value} - ROI : {value / time}");
 
                 if (value / time > bestAugmentValue)
