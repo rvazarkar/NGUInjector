@@ -97,8 +97,12 @@ namespace NGUInjector.Managers
             _character = Main.Character;
             _controller = Controller;
             var temp = _pendants.Concat(_lootys).ToList();
+            //Wanderer's Cane
             temp.Add(154);
+            //Lonely Flubber
             temp.Add(120);
+            //A Giant Seed
+            temp.Add(92);
             _convertibles = temp.ToArray();
         }
 
