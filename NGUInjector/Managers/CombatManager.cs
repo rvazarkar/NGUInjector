@@ -97,6 +97,14 @@ namespace NGUInjector.Managers
                 return false;
             }
 
+            if (OhShitUnlocked() && GetHPPercentage() < .5 && OhShitReady())
+            {
+                if (CastOhShit())
+                {
+                    return true;
+                }
+            }
+
             if (GetHPPercentage() < .5)
             {
                 if (CastHeal())

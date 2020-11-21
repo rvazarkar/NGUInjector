@@ -190,7 +190,7 @@
     <value>NoControl</value>
   </data>
   <data name="UnloadSafety.Location" type="System.Drawing.Point, System.Drawing">
-    <value>410, 308</value>
+    <value>396, 310</value>
   </data>
   <data name="UnloadSafety.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 14</value>
@@ -217,7 +217,7 @@
     <value>NoControl</value>
   </data>
   <data name="UnloadButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>431, 303</value>
+    <value>417, 305</value>
   </data>
   <data name="UnloadButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -247,7 +247,7 @@
     <value>NoControl</value>
   </data>
   <data name="VersionLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>512, 308</value>
+    <value>498, 310</value>
   </data>
   <data name="VersionLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 13</value>
@@ -2194,7 +2194,7 @@
     <value>NoControl</value>
   </data>
   <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>362, 56</value>
+    <value>362, 36</value>
   </data>
   <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 16</value>
@@ -2224,7 +2224,7 @@
     <value>203</value>
   </data>
   <data name="TitanSwapTargets.Location" type="System.Drawing.Point, System.Drawing">
-    <value>365, 84</value>
+    <value>365, 64</value>
   </data>
   <data name="TitanSwapTargets.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 186</value>
@@ -2244,57 +2244,6 @@
   <data name="&gt;&gt;TitanSwapTargets.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 31</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 13</value>
-  </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>20</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Highest Autokillable Titan</value>
-  </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>tabPage5</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="HighestTitanDropdown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>140, 28</value>
-  </data>
-  <data name="HighestTitanDropdown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 21</value>
-  </data>
-  <data name="HighestTitanDropdown.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="&gt;&gt;HighestTitanDropdown.Name" xml:space="preserve">
-    <value>HighestTitanDropdown</value>
-  </data>
-  <data name="&gt;&gt;HighestTitanDropdown.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;HighestTitanDropdown.Parent" xml:space="preserve">
-    <value>tabPage5</value>
-  </data>
-  <data name="&gt;&gt;HighestTitanDropdown.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="label8.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2305,7 +2254,7 @@
     <value>NoControl</value>
   </data>
   <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 56</value>
+    <value>6, 36</value>
   </data>
   <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
     <value>57, 16</value>
@@ -2326,7 +2275,7 @@
     <value>tabPage5</value>
   </data>
   <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>2</value>
   </data>
   <data name="titanRemove.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2335,7 +2284,7 @@
     <value>NoControl</value>
   </data>
   <data name="titanRemove.Location" type="System.Drawing.Point, System.Drawing">
-    <value>267, 147</value>
+    <value>267, 127</value>
   </data>
   <data name="titanRemove.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 23</value>
@@ -2356,10 +2305,10 @@
     <value>tabPage5</value>
   </data>
   <data name="&gt;&gt;titanRemove.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>3</value>
   </data>
   <data name="titanAddItem.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 251</value>
+    <value>10, 231</value>
   </data>
   <data name="titanAddItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>251, 20</value>
@@ -2377,7 +2326,7 @@
     <value>tabPage5</value>
   </data>
   <data name="&gt;&gt;titanAddItem.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>4</value>
   </data>
   <data name="titanLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2386,7 +2335,7 @@
     <value>NoControl</value>
   </data>
   <data name="titanLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 274</value>
+    <value>9, 254</value>
   </data>
   <data name="titanLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
@@ -2407,13 +2356,13 @@
     <value>tabPage5</value>
   </data>
   <data name="&gt;&gt;titanLabel.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>5</value>
   </data>
   <data name="titanAdd.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="titanAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>267, 250</value>
+    <value>267, 230</value>
   </data>
   <data name="titanAdd.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 20</value>
@@ -2434,7 +2383,7 @@
     <value>tabPage5</value>
   </data>
   <data name="&gt;&gt;titanAdd.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>6</value>
   </data>
   <data name="titanLoadout.Items" xml:space="preserve">
     <value>test</value>
@@ -2443,7 +2392,7 @@
     <value>test2</value>
   </data>
   <data name="titanLoadout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 84</value>
+    <value>9, 64</value>
   </data>
   <data name="titanLoadout.Size" type="System.Drawing.Size, System.Drawing">
     <value>252, 160</value>
@@ -2461,7 +2410,7 @@
     <value>tabPage5</value>
   </data>
   <data name="&gt;&gt;titanLoadout.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>7</value>
   </data>
   <data name="SwapTitanLoadout.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2491,7 +2440,7 @@
     <value>tabPage5</value>
   </data>
   <data name="&gt;&gt;SwapTitanLoadout.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>8</value>
   </data>
   <data name="tabPage5.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -4215,6 +4164,60 @@
   <data name="&gt;&gt;tabPage8.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
+  <data name="WishSortOrder.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="WishSortOrder.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 6</value>
+  </data>
+  <data name="WishSortOrder.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 17</value>
+  </data>
+  <data name="WishSortOrder.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="WishSortOrder.Text" xml:space="preserve">
+    <value>Sort Wishes by Completion Time</value>
+  </data>
+  <data name="&gt;&gt;WishSortOrder.Name" xml:space="preserve">
+    <value>WishSortOrder</value>
+  </data>
+  <data name="&gt;&gt;WishSortOrder.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;WishSortOrder.Parent" xml:space="preserve">
+    <value>tabPage9</value>
+  </data>
+  <data name="&gt;&gt;WishSortOrder.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="WishSortPriorities.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="WishSortPriorities.Location" type="System.Drawing.Point, System.Drawing">
+    <value>369, 232</value>
+  </data>
+  <data name="WishSortPriorities.Size" type="System.Drawing.Size, System.Drawing">
+    <value>117, 17</value>
+  </data>
+  <data name="WishSortPriorities.TabIndex" type="System.Int32, mscorlib">
+    <value>36</value>
+  </data>
+  <data name="WishSortPriorities.Text" xml:space="preserve">
+    <value>Sort Priority Wishes</value>
+  </data>
+  <data name="&gt;&gt;WishSortPriorities.Name" xml:space="preserve">
+    <value>WishSortPriorities</value>
+  </data>
+  <data name="&gt;&gt;WishSortPriorities.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;WishSortPriorities.Parent" xml:space="preserve">
+    <value>tabPage9</value>
+  </data>
+  <data name="&gt;&gt;WishSortPriorities.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="WishDownButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -4222,7 +4225,7 @@
     <value>NoControl</value>
   </data>
   <data name="WishDownButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>318, 131</value>
+    <value>313, 157</value>
   </data>
   <data name="WishDownButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
@@ -4243,7 +4246,7 @@
     <value>tabPage9</value>
   </data>
   <data name="&gt;&gt;WishDownButton.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="WishUpButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -4252,7 +4255,7 @@
     <value>NoControl</value>
   </data>
   <data name="WishUpButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>318, 73</value>
+    <value>313, 99</value>
   </data>
   <data name="WishUpButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 23</value>
@@ -4273,7 +4276,7 @@
     <value>tabPage9</value>
   </data>
   <data name="&gt;&gt;WishUpButton.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="RemoveWishButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -4282,7 +4285,7 @@
     <value>NoControl</value>
   </data>
   <data name="RemoveWishButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>288, 102</value>
+    <value>283, 128</value>
   </data>
   <data name="RemoveWishButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>84, 23</value>
@@ -4303,7 +4306,7 @@
     <value>tabPage9</value>
   </data>
   <data name="&gt;&gt;RemoveWishButton.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="label19.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -4315,7 +4318,7 @@
     <value>NoControl</value>
   </data>
   <data name="label19.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 13</value>
+    <value>6, 35</value>
   </data>
   <data name="label19.Size" type="System.Drawing.Size, System.Drawing">
     <value>97, 16</value>
@@ -4336,10 +4339,10 @@
     <value>tabPage9</value>
   </data>
   <data name="&gt;&gt;label19.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="WishAddInput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 207</value>
+    <value>9, 229</value>
   </data>
   <data name="WishAddInput.Size" type="System.Drawing.Size, System.Drawing">
     <value>246, 20</value>
@@ -4357,7 +4360,7 @@
     <value>tabPage9</value>
   </data>
   <data name="&gt;&gt;WishAddInput.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="AddWishLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -4366,7 +4369,7 @@
     <value>NoControl</value>
   </data>
   <data name="AddWishLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 230</value>
+    <value>8, 252</value>
   </data>
   <data name="AddWishLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>14, 13</value>
@@ -4387,13 +4390,13 @@
     <value>tabPage9</value>
   </data>
   <data name="&gt;&gt;AddWishLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="AddWishButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="AddWishButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>288, 207</value>
+    <value>288, 229</value>
   </data>
   <data name="AddWishButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 20</value>
@@ -4414,7 +4417,7 @@
     <value>tabPage9</value>
   </data>
   <data name="&gt;&gt;AddWishButton.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="WishPriority.Items" xml:space="preserve">
     <value>test</value>
@@ -4423,7 +4426,7 @@
     <value>test2</value>
   </data>
   <data name="WishPriority.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 41</value>
+    <value>8, 63</value>
   </data>
   <data name="WishPriority.Size" type="System.Drawing.Size, System.Drawing">
     <value>247, 160</value>
@@ -4441,7 +4444,7 @@
     <value>tabPage9</value>
   </data>
   <data name="&gt;&gt;WishPriority.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="tabPage9.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>

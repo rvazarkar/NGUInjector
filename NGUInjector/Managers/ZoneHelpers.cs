@@ -6,7 +6,7 @@ namespace NGUInjector.Managers
 {
     static class ZoneHelpers
     {
-        internal static readonly int[] TitanZones = { 6, 8, 11, 14, 16, 19, 23, 26, 30, 34, 38, 40, 42 };
+        internal static readonly int[] TitanZones = { 6, 8, 11, 14, 16, 19, 23, 26, 30, 34, 38, 42 };
 
         internal static bool ZoneIsTitan(int zone)
         {
@@ -35,8 +35,6 @@ namespace NGUInjector.Managers
         {
             var result = new TitanSpawn();
 
-            if (bossId + 1 > Main.Settings.HighestAKZone)
-                return result;
             if (TitanZones[bossId] > GetMaxReachableZone(true))
                 return result;
 

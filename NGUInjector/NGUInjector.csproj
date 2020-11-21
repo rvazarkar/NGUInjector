@@ -55,9 +55,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllocationProfiles\AllocationCapCalculators.cs" />
+    <Compile Include="AllocationProfiles\AllocationTargets.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\AdvancedTrainingBP.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\AugmentBP.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\BaseBreakpoint.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\BasicTrainingBP.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\BestAug.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\BR.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\CapCalc.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\HackBP.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\RitualBP.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\TimeMachineBP.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\WandoosBP.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\WishBP.cs" />
+    <Compile Include="AllocationProfiles\CBreakpoint.cs" />
     <Compile Include="AllocationProfiles\CustomAllocation.cs" />
     <Compile Include="AllocationProfiles\AllocationProfile.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\NGUBP.cs" />
     <Compile Include="Managers\ZoneStatHelper.cs" />
     <Compile Include="Managers\ZoneHelpers.cs" />
     <Compile Include="Managers\CombatHelpers.cs" />
@@ -105,6 +119,7 @@
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rmdir /S /Q dist

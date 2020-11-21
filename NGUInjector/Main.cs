@@ -38,6 +38,7 @@ namespace NGUInjector
         private static CustomAllocation _profile;
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
+        internal static WishManager WishManager;
         internal const string Version = "3.3.0rc";
         private static int _furthestZone;
 
@@ -181,7 +182,6 @@ namespace NGUInjector
                         PriorityBoosts = new int[] { },
                         YggdrasilLoadout = new int[] { },
                         SwapYggdrasilLoadouts = false,
-                        HighestAKZone = 0,
                         SwapTitanLoadouts = false,
                         TitanLoadout = new int[] { },
                         ManageDiggers = true,
@@ -254,7 +254,12 @@ namespace NGUInjector
                         DisableOverlay = false,
                         OptimizeITOPODFloor = false,
                         YggSwapThreshold = 1,
-                        UpgradeDiggers = true
+                        UpgradeDiggers = true,
+                        BlacklistedBosses = new int[0],
+                        SpecialBoostBlacklist = new int[0],
+                        MoreBlockParry = false,
+                        WishSortOrder = false,
+                        WishSortPriorities = false
                     };
 
                     Settings.MassUpdate(temp);
@@ -291,6 +296,22 @@ namespace NGUInjector
                     Settings.TitanSwapTargets = new bool[ZoneHelpers.TitanZones.Length];
                     Settings.SetSaveDisabled(false);
                 }
+
+                if (Settings.SpecialBoostBlacklist == null)
+                {
+                    Settings.SetSaveDisabled(true);
+                    Settings.SpecialBoostBlacklist = new int[0];
+                    Settings.SetSaveDisabled(false);
+                }
+
+                if (Settings.BlacklistedBosses == null)
+                {
+                    Settings.SetSaveDisabled(true);
+                    Settings.BlacklistedBosses = new int[0];
+                    Settings.SetSaveDisabled(false);
+                }
+
+                WishManager = new WishManager();
 
                 LoadAllocation();
                 LoadAllocationProfiles();
@@ -358,6 +379,7 @@ namespace NGUInjector
                 InvokeRepeating("QuickStuff", 0.0f, .5f);
                 InvokeRepeating("ShowBoostProgress", 0.0f, 60.0f);
                 InvokeRepeating("SetResnipe", 0f,1f);
+
 
                 reference = this;
             }

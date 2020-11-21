@@ -90,15 +90,19 @@ namespace NGUInjector.Managers
         private readonly FixedSizedQueue _cubeBoostAvg = new FixedSizedQueue(60);
 
 
-        //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane, Guffs
-        private readonly int[] _filterExcludes = { 66, 92, 163, 120, 154, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287  };
+        //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane, Guffs, Lemmi
+        private readonly int[] _filterExcludes = { 66, 92, 163, 120, 154, 195, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287  };
         public InventoryManager()
         {
             _character = Main.Character;
             _controller = Controller;
             var temp = _pendants.Concat(_lootys).ToList();
+            //Wanderer's Cane
             temp.Add(154);
+            //Lonely Flubber
             temp.Add(120);
+            //A Giant Seed
+            temp.Add(92);
             _convertibles = temp.ToArray();
         }
 
@@ -314,6 +318,9 @@ namespace NGUInjector.Managers
 
             foreach (var item in grouped)
             {
+                if (item.All(x => x.locked))
+                    continue;
+
                 var target = item.MaxItem();
 
                 Log($"Merging {SanitizeName(target.name)} in slot {target.slot}");
