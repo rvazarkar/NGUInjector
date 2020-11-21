@@ -720,7 +720,6 @@ namespace NGUInjector.AllocationProfiles
                 {
                     if (_currentR3Breakpoint == null)
                     {
-                        _character.removeAllRes3();
                         _currentR3Breakpoint = b;
                     }
 
