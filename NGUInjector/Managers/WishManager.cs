@@ -19,7 +19,7 @@ namespace NGUInjector.Managers
         public int GetSlot(int slotId)
         {
             BuildWishList();
-            if (slotId > _curValidUpgradesList.Count)
+            if (slotId + 1 > _curValidUpgradesList.Count)
             {
                 return -1;
             }
