@@ -8,6 +8,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
     internal class BestAug : BaseBreakpoint
     {
         internal int RebirthTime { get; set; }
+        internal bool upgrades = false;
         protected override bool Unlocked()
         {
             return Character.buttons.augmentation.interactable;
@@ -20,31 +21,35 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
 
         internal override bool Allocate()
         {
-            if (Character.effectiveBossID() < 37)
+            if (Character.bossID >= 37)
             {
-                AllocatePrePairs();
+                upgrades = true;
             }
-            else
-            {
-
-            }
-
+            AllocatePairs();
             return true;
         }
 
-        private void AllocatePrePairs()
+        private void AllocatePairs()
         {
             var gold = Character.realGold;
-            for (var i = 6; i >= 0; i--)
+            var bestAugment = -1;
+            var bestAugmentValue = 0f;
+            for (var i = 0; i < 7; i++)
             {
                 var aug = Character.augmentsController.augments[i];
+                if (aug.augLocked())
+                {
+                    continue;
+                }
+                if (upgrades && aug.upgradeLocked())
+                {
+                    continue;
+                }
                 var cost = aug.getAugCost();
                 if (cost > gold)
                     continue;
 
-                var time = aug.AugTimeLeftEnergy((long)MaxAllocation);
-
-                // Limit at 20 minutes
+                float time = aug.AugTimeLeftEnergy((long)(upgrades ? MaxAllocation/2 : MaxAllocation));
                 if (time > 1200)
                     continue;
 
@@ -58,15 +63,40 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 {
                     if (Character.rebirthTime.totalseconds + time > Index)
                     {
-                        continue;;
+                        continue; ;
                     }
                 }
+                if (time < 1) { time = 1f; }
 
-                var index = i * 2;
+                float value = AugmentValue(i);
+                //Main.Log($"Pair ID {i}: time {time} - Value: {value} - ROI : {value / time}");
+
+                if (value / time > bestAugmentValue)
+                {
+                    bestAugment = i;
+                    bestAugmentValue = value / time;
+                }
+            }
+            //Main.Log($"BestAug: ({bestAugment}) @ {MaxAllocation}");
+            if (bestAugment != -1)
+            {                
+                var index = bestAugment * 2;
                 var alloc = CalculateAugCap(index);
                 SetInput(alloc);
-                Character.augmentsController.augments[i].addEnergyAug();
+                Character.augmentsController.augments[bestAugment].addEnergyAug();
+                if (upgrades)
+                {
+                    alloc = CalculateAugCap(index+1);
+                    SetInput(alloc);
+                    Character.augmentsController.augments[bestAugment].addEnergyUpgrade();
+                }
             }
+        }
+
+        private float AugmentValue(int id)
+        {
+            var aug = Character.augmentsController.augments[id];
+            return (float)aug.baseBoost * aug.getUpgradeBoost() * Mathf.Pow(Character.augments.augs[aug.id].augLevel + 2f, (float)aug.augTierBonus()) - aug.baseBoost * aug.getUpgradeBoost() * Mathf.Pow(Character.augments.augs[aug.id].augLevel + 1f, (float)aug.augTierBonus());
         }
 
         protected override bool CorrectResourceType()
@@ -86,8 +116,9 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             return calcA.Num;
         }
 
-        internal CapCalc CalculateAugCapCalc(int offset, int augIndex)
+        internal CapCalc CalculateAugCapCalc(int offset, int index)
         {
+            int augIndex;
             var ret = new CapCalc
             {
                 Num = 0,
@@ -96,6 +127,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             double formula = 0;
             if (Index % 2 == 0)
             {
+                augIndex = index / 2;
                 formula = 50000 * (1f + Character.augments.augs[augIndex].augLevel + offset) /
                     (Character.totalEnergyPower() *
                     (1 + Character.inventoryController.bonuses[specType.Augs]) *
@@ -132,6 +164,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             }
             else
             {
+                augIndex = (index-1) / 2;
                 formula = 50000 * (1f + Character.augments.augs[augIndex].upgradeLevel + offset) /
                     (Character.totalEnergyPower() *
                     (1 + Character.inventoryController.bonuses[specType.Augs]) *
@@ -168,12 +201,10 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     formula *= Character.augmentsController.sadisticUpgradeSpeedDividers[augIndex];
                 }
             }
-
             if (formula >= Character.hardCap())
                 formula = Character.hardCap();
-
             var num4 = formula <= 1.0 ? 1L : (long)formula;
-            var num = (long)(num4 / (long)Math.Ceiling(num4 / (double)MaxAllocation) * 1.00000202655792);
+            var num = (long)(num4 / (long)Math.Ceiling(num4 / (double)(upgrades ? MaxAllocation / 2 : MaxAllocation)) * 1.00000202655792);
             if (num + 1L <= long.MaxValue)
                 ++num;
             if (num > Character.idleEnergy)
