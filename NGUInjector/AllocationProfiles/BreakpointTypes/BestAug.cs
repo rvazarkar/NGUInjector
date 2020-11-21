@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace NGUInjector.AllocationProfiles.BreakpointTypes
 {
@@ -49,7 +50,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 if (cost > gold)
                     continue;
 
-                float time = aug.AugTimeLeftEnergy((long)(upgrades ? MaxAllocation/2 : MaxAllocation));
+                float time = aug.AugTimeLeftEnergyMax((long)(upgrades ? MaxAllocation/2 : MaxAllocation));
                 if (time > 1200)
                     continue;
 
@@ -66,10 +67,10 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                         continue; ;
                     }
                 }
-                if (time < 1) { time = 1f; }
+                if (time < 0.01) { time = 0.01f; }
 
                 float value = AugmentValue(i);
-                //Main.Log($"Pair ID {i}: time {time} - Value: {value} - ROI : {value / time}");
+                Main.Log($"Pair ID {i}: time {time} - Value: {value} - ROI : {value / time}");
 
                 if (value / time > bestAugmentValue)
                 {
@@ -77,7 +78,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     bestAugmentValue = value / time;
                 }
             }
-            //Main.Log($"BestAug: ({bestAugment}) @ {MaxAllocation}");
+            Main.Log($"BestAug: ({bestAugment}) @ {MaxAllocation}");
             if (bestAugment != -1)
             {                
                 var index = bestAugment * 2;
@@ -96,6 +97,10 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
         private float AugmentValue(int id)
         {
             var aug = Character.augmentsController.augments[id];
+            if (upgrades)
+            {
+                return (float)aug.baseBoost * Mathf.Max(Mathf.Pow(Character.augments.augs[aug.id].upgradeLevel + 2, 2f) + 1f, 1f) * Mathf.Pow(Character.augments.augs[aug.id].augLevel + 2f, (float)aug.augTierBonus()) - aug.baseBoost * Mathf.Max(Mathf.Pow(Character.augments.augs[aug.id].upgradeLevel, 2f) + 1f, 1f) * Mathf.Pow(Character.augments.augs[aug.id].augLevel + 1f, (float)aug.augTierBonus());
+            }
             return (float)aug.baseBoost * aug.getUpgradeBoost() * Mathf.Pow(Character.augments.augs[aug.id].augLevel + 2f, (float)aug.augTierBonus()) - aug.baseBoost * aug.getUpgradeBoost() * Mathf.Pow(Character.augments.augs[aug.id].augLevel + 1f, (float)aug.augTierBonus());
         }
 
