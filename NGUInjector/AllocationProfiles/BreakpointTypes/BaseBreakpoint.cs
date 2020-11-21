@@ -44,15 +44,15 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             switch (Type)
             {
                 case ResourceType.Energy:
-                    capValue = !IsCap ? character.idleEnergy : character.totalCapEnergy();
+                    capValue = !IsCap ? character.idleEnergy : character.curEnergy;
                     idleValue = character.idleEnergy;
                     break;
                 case ResourceType.Magic:
-                    capValue = !IsCap ? character.magic.idleMagic : character.totalCapMagic();
+                    capValue = !IsCap ? character.magic.idleMagic : character.magic.curMagic;
                     idleValue = character.magic.idleMagic;
                     break;
                 case ResourceType.R3:
-                    capValue = !IsCap ? character.res3.idleRes3 : character.totalCapRes3();
+                    capValue = !IsCap ? character.res3.idleRes3 : character.res3.curRes3;
                     idleValue = character.res3.idleRes3;
                     break;
                 default:
