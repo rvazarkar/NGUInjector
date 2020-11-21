@@ -6,6 +6,13 @@ using UnityEngine;
 
 namespace NGUInjector.AllocationProfiles.BreakpointTypes
 {
+    internal enum ResourceType
+    {
+        Energy,
+        Magic,
+        R3
+    }
+
     internal abstract class BaseBreakpoint
     {
         protected double CapPercent { get; set; }

@@ -73,7 +73,9 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     bestAugmentValue = value / time;
                 }
             }
+
             Main.LogAllocation($"BestAug: ({bestAugment}) @ {MaxAllocation}");
+
             if (bestAugment != -1)
             {                
                 var index = bestAugment * 2;
