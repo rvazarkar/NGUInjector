@@ -172,8 +172,16 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                         IsCap = temp.Contains("CAP"),
                         Type = type
                     };
-                } else if (temp.StartsWith("BT") || temp.StartsWith("CAPBT"))
-                {
+                }else if (temp.StartsWith("BESTAUG")){
+                    yield return new BestAug
+                    {
+                        CapPercent = cap,
+                        Character = Main.Character,
+                        Index = index,
+                        IsCap = temp.Contains("CAP"),
+                        Type = type
+                    };
+                } else if (temp.StartsWith("BT") || temp.StartsWith("CAPBT")) {
                     yield return new BasicTrainingBP
                     {
                         CapPercent = cap,
