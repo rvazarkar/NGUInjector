@@ -25,18 +25,30 @@ namespace NGUInjector.Managers
                 {
                     Main.Character.bloodMagicController.bloodMagics[i].cap();
                 }
+                DiggerManager.SaveDiggers();
+                DiggerManager.EquipDiggers(new[] {10});
+                DoMoneyPit();
+                DiggerManager.RestoreDiggers();
             }
-            var controller = Main.Character.pitController;
-            typeof(PitController).GetMethod("engage", BindingFlags.NonPublic | BindingFlags.Instance)
-                ?.Invoke(controller, null);
-
-            Main.LogPitSpin($"Money Pit Reward: {controller.pitText.text}");
-
+            else
+            {
+                DoMoneyPit();
+            }
+            
             if (Main.Settings.MoneyPitLoadout.Length > 0)
             {
                 LoadoutManager.RestoreGear();
                 LoadoutManager.ReleaseLock();
             }
+        }
+
+        private static void DoMoneyPit()
+        {
+            var controller = Main.Character.pitController;
+            typeof(PitController).GetMethod("engage", BindingFlags.NonPublic | BindingFlags.Instance)
+                ?.Invoke(controller, null);
+
+            Main.LogPitSpin($"Money Pit Reward: {controller.pitText.text}");
         }
 
         internal static void DoDailySpin()
