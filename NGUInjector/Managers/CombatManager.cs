@@ -67,7 +67,7 @@ namespace NGUInjector.Managers
                     return true;
                 }
 
-                if (ac.parryMove.button.IsInteractable() && !_pc.isBlocking)
+                if (ac.parryMove.button.IsInteractable() && !_pc.isBlocking && !_pc.isParrying)
                 {
                     ac.parryMove.doMove();
                     return true;
@@ -126,35 +126,38 @@ namespace NGUInjector.Managers
                 return true;
             }
 
-            if (!DefenseBuffActive())
+            if (!MegaBuffUnlocked())
             {
-                if (CastUltimateBuff())
+                if (!DefenseBuffActive())
                 {
-                    return true;
+                    if (CastUltimateBuff())
+                    {
+                        return true;
+                    }
                 }
-            }
 
-            if (UltimateBuffActive())
-            {
-                if (CastOffensiveBuff())
-                    return true;
-            }
+                if (UltimateBuffActive())
+                {
+                    if (CastOffensiveBuff())
+                        return true;
+                }
 
-            if (GetHPPercentage() < .75 && !UltimateBuffActive() && !BlockActive())
-            {
-                if (CastDefensiveBuff())
-                    return true;
+                if (GetHPPercentage() < .75 && !UltimateBuffActive() && !BlockActive())
+                {
+                    if (CastDefensiveBuff())
+                        return true;
+                }
             }
 
             if (ai != AI.charger && ai != AI.rapid && ai != AI.exploder && (Settings.MoreBlockParry || !UltimateBuffActive() && !DefenseBuffActive()))
             {
-                if (!ParryActive())
+                if (!ParryActive() && !BlockActive())
                 {
                     if (CastBlock())
                         return true;
                 }
 
-                if (!BlockActive())
+                if (!BlockActive() && !ParryActive())
                 {
                     if (CastParry())
                         return true;
