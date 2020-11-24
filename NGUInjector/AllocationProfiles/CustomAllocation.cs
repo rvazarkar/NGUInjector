@@ -409,7 +409,7 @@ namespace NGUInjector.AllocationProfiles
                         if (Main.Settings.BloodMacGuffinBThreshold <= mcguffB)
                         {
                             _character.bloodSpells.castMacguffin2Spell();
-                            Main.Log("Casting Blood MacGuffin B Spell power @ " + mcguffB);
+                            Main.LogPitSpin("Casting Blood MacGuffin B Spell power @ " + mcguffB);
                             return;
                         }
                         else
@@ -440,7 +440,7 @@ namespace NGUInjector.AllocationProfiles
                         if (Main.Settings.BloodMacGuffinAThreshold <= mcguffA)
                         {
                             _character.bloodSpells.castMacguffin1Spell();
-                            Main.Log("Casting Blood MacGuffin A Spell power @ " + mcguffA);
+                            Main.LogPitSpin("Casting Blood MacGuffin A Spell power @ " + mcguffA);
                             return;
                         }
                         else
@@ -472,7 +472,7 @@ namespace NGUInjector.AllocationProfiles
                     if (Main.Settings.IronPillThreshold <= iron)
                     {
                         _character.bloodSpells.castAdventurePowerupSpell();
-                        Main.Log("Casting Iron Blood Spell power @ " + iron);
+                        Main.LogPitSpin("Casting Iron Blood Spell power @ " + iron);
                     }
                     else
                     {
