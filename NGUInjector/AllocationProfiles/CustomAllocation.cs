@@ -600,7 +600,7 @@ namespace NGUInjector.AllocationProfiles
             if (temp.Count == 0)
                 return;
             
-            var prioCount = temp.Count(x => !x.IsCapPrio() && !(x is HackBP)) + (temp.Any(x => x is HackBP) ? 1 : 0);
+            var prioCount = temp.Count(x => !x.IsCapPrio() && !(x is HackBP)) + (temp.Any(x => x is HackBP && !x.IsCapPrio()) ? 1 : 0);
             _character.removeAllRes3();
             var toAdd = (long) Math.Ceiling((double) _character.res3.idleRes3 / prioCount);
             SetInput(toAdd);
