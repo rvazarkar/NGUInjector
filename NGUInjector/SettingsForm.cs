@@ -95,6 +95,19 @@ namespace NGUInjector
             };
 
             TrashQuality.Items.AddRange(Enum.GetNames(typeof(rarity)));
+            CardTypes.Items.AddRange(Enum.GetNames(typeof(cardBonus)).Where(card => card != "none").ToArray());
+
+            //int autoCasts = newSettings.AutoCastCardType;
+            //string[] cardTypes = Enum.GetNames(typeof(cardBonus));
+            //List<string> activatedTypes = new List<string>();
+            //for (int i = 1; i < cardTypes.Length; i++)
+            //{
+            //    if ((autoCasts & 1 << (i - 1)) == 1)
+            //    {
+            //        activatedTypes.Add(cardTypes[i]);
+            //    }
+            //}
+            //CardTypeList.Items.AddRange(activatedTypes.ToArray());
 
             CubePriority.DataSource = new BindingSource(CubePriorityList, null);
             CubePriority.ValueMember = "Key";
@@ -270,7 +283,21 @@ namespace NGUInjector
 
             balanceMayo.Checked = newSettings.BalanceMayo;
             TrashCards.Checked = newSettings.TrashCards;
-            TrashQuality.SelectedIndex = (int)newSettings.CardsTrashQuality;
+            TrashQuality.SelectedIndex = newSettings.CardsTrashQuality;
+
+            CardTypeList.Items.Clear();
+            int autoCasts = newSettings.AutoCastCardType;
+            string[] cardTypes = Enum.GetNames(typeof(cardBonus));
+            List<string> activatedTypes = new List<string>();
+            for (int i = 1; i < cardTypes.Length; i++)
+            {
+                if ((autoCasts & 1 << (i - 1)) > 0)
+                {
+                    activatedTypes.Add(cardTypes[i]);
+                }
+            }
+            CardTypeList.Items.AddRange(activatedTypes.ToArray());
+
 
             var temp = newSettings.YggdrasilLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
             if (temp.Count > 0)
@@ -1325,6 +1352,35 @@ namespace NGUInjector
         private void TrashQuality_SelectedIndexChanged(object sender, EventArgs e)
         {
             Main.Settings.CardsTrashQuality = TrashQuality.SelectedIndex;
+        }
+
+        private void AutoCastCards_CheckedChanged(object sender, EventArgs e)
+        {
+            Main.Settings.AutoCastCards = AutoCastCards.Checked;
+        }
+
+        private void AddCardType_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (CardTypes.SelectedIndex != -1)
+                {
+                    string cardType = CardTypes.SelectedItem.ToString();
+                    if (!CardTypeList.Items.Contains(cardType))
+                    {
+                        CardTypeList.Items.Add(cardType);
+                        cardBonus enumCardType = (cardBonus)Enum.Parse(typeof(cardBonus), cardType); 
+                        int binary = 1 << ((int)enumCardType - 1);
+                        int saveValue = Main.Settings.AutoCastCardType;
+                        Main.Settings.AutoCastCardType = saveValue | binary;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Main.Log(ex.Message);
+                Main.Log(ex.StackTrace);
+            }
         }
     }
 }

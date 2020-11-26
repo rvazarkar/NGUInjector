@@ -30,6 +30,7 @@ namespace NGUInjector
         internal static StreamWriter CombatWriter;
         internal static StreamWriter AllocationWriter;
         internal static StreamWriter PitSpinWriter;
+        internal static StreamWriter CardsWriter;
         internal static Main reference;
         private YggdrasilManager _yggManager;
         private InventoryManager _invManager;
@@ -83,6 +84,10 @@ namespace NGUInjector
             AllocationWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
         }
 
+        internal static void LogCard(string msg)
+        {
+            CardsWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
+        }
         internal void Unload()
         {
             try
@@ -99,6 +104,7 @@ namespace NGUInjector
                 CombatWriter.Close();
                 AllocationWriter.Close();
                 PitSpinWriter.Close();
+                CardsWriter.Close();
                 settingsForm.Close();
                 settingsForm.Dispose();
 
@@ -129,11 +135,12 @@ namespace NGUInjector
                     Directory.CreateDirectory(logDir);
                 }
 
-                OutputWriter = new StreamWriter(Path.Combine(logDir, "inject.log")) {AutoFlush = true};
-                LootWriter = new StreamWriter(Path.Combine(logDir, "loot.log")) {AutoFlush = true};
-                CombatWriter = new StreamWriter(Path.Combine(logDir, "combat.log")) {AutoFlush = true};
-                AllocationWriter = new StreamWriter(Path.Combine(logDir, "allocation.log")) {AutoFlush = true};
-                PitSpinWriter = new StreamWriter(Path.Combine(logDir, "pitspin.log"), true) {AutoFlush = true};
+                OutputWriter = new StreamWriter(Path.Combine(logDir, "inject.log")) { AutoFlush = true };
+                LootWriter = new StreamWriter(Path.Combine(logDir, "loot.log")) { AutoFlush = true };
+                CombatWriter = new StreamWriter(Path.Combine(logDir, "combat.log")) { AutoFlush = true };
+                AllocationWriter = new StreamWriter(Path.Combine(logDir, "allocation.log")) { AutoFlush = true };
+                PitSpinWriter = new StreamWriter(Path.Combine(logDir, "pitspin.log"), true) { AutoFlush = true };
+                CardsWriter = new StreamWriter(Path.Combine(logDir, "cards.log")) { AutoFlush = true };
 
                 _profilesDir = Path.Combine(_dir, "profiles");
                 if (!Directory.Exists(_profilesDir))
@@ -156,7 +163,7 @@ namespace NGUInjector
                 Loader.Unload();
                 return;
             }
-            
+
             try
             {
                 Character = FindObjectOfType<Character>();
@@ -164,6 +171,7 @@ namespace NGUInjector
                 Log("Injected");
                 LogLoot("Starting Loot Writer");
                 LogCombat("Starting Combat Writer");
+                LogCard("Starting Card Writer");
                 Controller = Character.inventoryController;
                 PlayerController = FindObjectOfType<PlayerController>();
                 _invManager = new InventoryManager();
@@ -200,15 +208,15 @@ namespace NGUInjector
                         AutoQuest = false,
                         AutoQuestITOPOD = false,
                         AllowMajorQuests = false,
-                        GoldDropLoadout = new int[] {},
+                        GoldDropLoadout = new int[] { },
                         AutoMoneyPit = false,
                         AutoSpin = false,
-                        MoneyPitLoadout = new int[] {},
+                        MoneyPitLoadout = new int[] { },
                         AutoRebirth = false,
                         ManageWandoos = false,
                         MoneyPitThreshold = 1e5,
                         DoGoldSwap = false,
-                        BoostBlacklist = new int[] {},
+                        BoostBlacklist = new int[] { },
                         CombatMode = 0,
                         RecoverHealth = false,
                         SnipeBossOnly = true,
@@ -229,14 +237,14 @@ namespace NGUInjector
                         CubePriority = 0,
                         CombatEnabled = false,
                         GlobalEnabled = false,
-                        QuickDiggers = new int[] {},
-                        QuickLoadout = new int[] {},
+                        QuickDiggers = new int[] { },
+                        QuickLoadout = new int[] { },
                         UseButterMajor = false,
-                        ManualMinors =  false,
+                        ManualMinors = false,
                         UseButterMinor = false,
                         ActivateFruits = false,
                         ManageR3 = true,
-                        WishPriorities = new int[] {},
+                        WishPriorities = new int[] { },
                         BeastMode = true,
                         ManageNGUDiff = true,
                         AllocationFile = "default",
@@ -353,7 +361,7 @@ namespace NGUInjector
                 InvokeRepeating("MonitorLog", 0.0f, 1f);
                 InvokeRepeating("QuickStuff", 0.0f, .5f);
                 InvokeRepeating("ShowBoostProgress", 0.0f, 60.0f);
-                InvokeRepeating("SetResnipe", 0f,1f);
+                InvokeRepeating("SetResnipe", 0f, 1f);
 
                 reference = this;
             }
@@ -697,7 +705,7 @@ namespace NGUInjector
                     {
                         total += ePurchase.customAllCost();
                     }
-                    
+
                     if (magic)
                     {
                         total += mPurchase.customAllCost();
@@ -717,7 +725,7 @@ namespace NGUInjector
                         {
                             t += "/exp";
                         }
-                        
+
                         if (magic)
                         {
                             t += "/magic";
@@ -729,7 +737,7 @@ namespace NGUInjector
                         }
 
                         t = t.Substring(1);
-                        
+
                         Log($"Buying {numPurchases} {t} purchases");
                         for (var i = 0; i < numPurchases; i++)
                         {
@@ -789,6 +797,10 @@ namespace NGUInjector
                 {
                     _cardManager.TrashCards();
                 }
+                if (Settings.AutoCastCards)
+                {
+                    //_cardManager.CastCards();
+                }
             }
             catch (Exception e)
             {
@@ -804,7 +816,8 @@ namespace NGUInjector
             _profile.ReloadAllocation();
         }
 
-        private static void LoadAllocationProfiles() {
+        private static void LoadAllocationProfiles()
+        {
             var files = Directory.GetFiles(_profilesDir);
             settingsForm.UpdateProfileList(files.Select(Path.GetFileNameWithoutExtension).ToArray(), Settings.AllocationFile);
         }
@@ -837,7 +850,7 @@ namespace NGUInjector
                     {
                         var bestZone = ZoneStatHelper.GetBestZone();
                         _furthestZone = ZoneHelpers.GetMaxReachableZone(false);
-                        
+
                         _combManager.ManualZone(bestZone.Zone, true, bestZone.FightType == 1, false, bestZone.FightType == 2, false);
                         return;
                     }
@@ -894,7 +907,7 @@ namespace NGUInjector
 
                 return;
             }
-            
+
             if (Settings.CombatMode == 0)
             {
                 _combManager.ManualZone(tempZone, Settings.SnipeBossOnly, Settings.RecoverHealth, Settings.PrecastBuffs, Settings.FastCombat, Settings.BeastMode);
@@ -968,7 +981,7 @@ namespace NGUInjector
             if (val == null)
                 return;
 
-            var log = (List<string>) val;
+            var log = (List<string>)val;
             for (var i = log.Count - 1; i >= 0; i--)
             {
                 var line = log[i];
@@ -1030,7 +1043,7 @@ namespace NGUInjector
                 Log(e.Message);
                 Log(e.StackTrace);
             }
-            
+
         }
 
         public void OnApplicationQuit()

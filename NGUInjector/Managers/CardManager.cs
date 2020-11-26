@@ -10,7 +10,6 @@ namespace NGUInjector.Managers
     {
         private readonly Character _character;
         private readonly int _maxManas;
-        private int lastCardSpawnTime;
         private Cards _cards;
         private CardsController _cardsController;
         public CardManager()
@@ -22,7 +21,6 @@ namespace NGUInjector.Managers
                 _cards = _character.cards;
                 _cardsController = _character.cardsController;
                 _maxManas = _character.cardsController.maxManaGenSize();
-                lastCardSpawnTime = CardSpawnTimeToInt(_cardsController);
             }
             catch (Exception e)
             {
@@ -39,7 +37,6 @@ namespace NGUInjector.Managers
                 int lowestCount = int.MaxValue;
                 Mana lowestProgress = manas[0];
 
-                //Main.Log(manas[0].progress.ToString() + " " + manas[2].progress.ToString());
                 foreach (Mana mana in manas)
                 {
 
@@ -53,28 +50,32 @@ namespace NGUInjector.Managers
 
                 for (int i = 0; i < manas.Count; i++)
                 {
-                    //Main.Log(lowestProgress.progress.ToString() + " " + manas[2].progress.ToString());
                     float progressPerSec = _cardsController.manaGenProgressPerTick() * 50;
                     Mana mana = manas[i];
-
+                    
                     if (mana.running)
                     {
-                        if (mana.amount - lowestCount == 1 && Math.Abs(mana.progress / progressPerSec - (1f - lowestProgress.progress) / progressPerSec) <= 10) continue;
+                        if (mana.amount - lowestCount == 1 && Math.Abs((1f + mana.progress - lowestProgress.progress) / progressPerSec) <= 10) continue;
                         else if (mana.amount == lowestCount && Math.Abs((mana.progress - lowestProgress.progress) / progressPerSec) <= 10) continue;
-                        else if (mana.amount == lowestCount && mana.progress == lowestProgress.progress) continue;
                     }
                     else
                     {
-                        //Main.Log("");
-                        //Main.Log("id: " + i + " check: " + (mana.amount == lowestCount && Math.Abs((mana.progress - lowestProgress.progress) / progressPerSec) > 10));
-                        //Main.Log("Mana Progress: mana.progress: " + mana.progress + " lowest progress: " + lowestProgress.progress);
-                        //Main.Log("Calc: " + (Math.Abs(mana.progress - lowestProgress.progress) / progressPerSec));
-                        if (mana.amount == lowestCount && Math.Abs(mana.progress - lowestProgress.progress) / progressPerSec > 10) continue;
-                        else if (mana.amount - lowestCount == 1 && Math.Abs((mana.progress - (1f - lowestProgress.progress)) / progressPerSec) > 10) continue;
-                        else if (mana.amount - lowestCount > 1) continue;
+                        if (mana.amount == lowestCount && Math.Abs((mana.progress - lowestProgress.progress) / progressPerSec) > 10) continue;
+                        else if (mana.amount - lowestCount == 1 && Math.Abs((1f + mana.progress - lowestProgress.progress) / progressPerSec) > 10) continue;
+                        else if (mana.amount - lowestProgress.amount > 1) continue; 
                     }
                     _cardsController.toggleManaGen(i);
-                    Main.Log("toggled " + i);
+                    Main.LogCard($"Toggled {_cardsController.getManaName(i)} {(manas[i].running ? "On" : "Off")}");
+                    //Main.LogCard("#############################################################");
+                    //Main.LogCard($"Mana Amount: {mana.amount}");
+                    //Main.LogCard($"Mana Progress: {mana.progress}");
+                    //Main.LogCard($"Mana Progress in Seconds: {mana.progress / progressPerSec}\n");
+                    
+                    //Main.LogCard($"Lowest Amount: {lowestCount}");
+                    //Main.LogCard($"Lowest Remaining Progress: {lowestProgress.progress}");
+                    //Main.LogCard($"Lowest Remaining Progress in Seconds: {(1f - lowestProgress.progress) / progressPerSec}\n");
+                    //Main.LogCard($"Calculation {(1f - lowestProgress.progress + mana.progress) / progressPerSec}");
+                    //Main.LogCard("#############################################################");
                 }
             }
             catch (Exception e)
@@ -90,15 +91,18 @@ namespace NGUInjector.Managers
             {
                 if (Main.Settings.TrashCards)
                 {
-                    int currentSpawnTime = CardSpawnTimeToInt(_cardsController);
-
+                    //int currentSpawnTime = CardSpawnTimeToInt(_cardsController);
+                    _cards = Main.Character.cards;
                     if (_cards.cards.Count > 0)
                     {
                         int id = 0;
                         while (id < _cards.cards.Count)
                         {
-                            if (CheckAndTrashCard(id))
+                            if ((int)_cards.cards[id].cardRarity <= Main.Settings.CardsTrashQuality)
                             {
+                                Card _card = _cards.cards[id];
+                                Main.LogCard($"Trashed tier {_card.tier} {_card.cardRarity} {_card.bonusType} card");
+                                _cardsController.trashCard(id);
                                 continue;
                             }
                             id++;
@@ -112,22 +116,31 @@ namespace NGUInjector.Managers
                 Main.Log(e.StackTrace);
             }
         }
-        private bool CheckAndTrashCard(int id)
-        {
-            if ((int)_cards.cards[id].cardRarity <= Main.Settings.CardsTrashQuality)
-            {
-                _cardsController.trashCard(id);
-                return true;
-            }
-            return false;
-        }
 
-        private static int CardSpawnTimeToInt(CardsController cc)
-        {
-            string[] spawnStrings = cc.timeToCardSpawn().Split(':');
-            return Convert.ToInt32(spawnStrings[0]) * 60 + Convert.ToInt32(spawnStrings[1]);
-        }
+        //private static int CardSpawnTimeToInt(CardsController cc)
+        //{
+        //    //Main.LogCard(cc.timeToCardSpawn());
+        //    string[] spawnStrings = cc.timeToCardSpawn().Split(':', '.');
+            
+        //    if (spawnStrings[1].Contains("s"))
+        //    {
+        //        spawnStrings[1] = "0";
+        //    }
+        //    return Convert.ToInt32(spawnStrings[0]) * 60 + Convert.ToInt32(spawnStrings[1]);
+        //}
 
-      
+        //public bool CastCards()
+        //{
+        //    int i = 0;
+        //    int autoCastCardTypes = Main.Settings.AutoCastCardType;
+        //    while (autoCastCardTypes > 0)
+        //    {
+        //        if((autoCastCardTypes & 1) == 1) 
+        //        { 
+                    
+        //        }
+        //    }
+        //    return true;
+        //}
     }
 }

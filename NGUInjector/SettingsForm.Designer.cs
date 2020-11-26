@@ -195,13 +195,18 @@
             this.AutoMoneyPit = new System.Windows.Forms.CheckBox();
             this.AutoDailySpin = new System.Windows.Forms.CheckBox();
             this.tabPage11 = new System.Windows.Forms.TabPage();
+            this.AddCardType = new System.Windows.Forms.Button();
+            this.CardTypes = new System.Windows.Forms.ComboBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.CardTypeList = new System.Windows.Forms.ListBox();
+            this.AutoCastCards = new System.Windows.Forms.CheckBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.TrashQuality = new System.Windows.Forms.ComboBox();
+            this.TrashCards = new System.Windows.Forms.CheckBox();
             this.balanceMayo = new System.Windows.Forms.CheckBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.TrashCards = new System.Windows.Forms.CheckBox();
-            this.TrashQuality = new System.Windows.Forms.ComboBox();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).BeginInit();
@@ -1551,6 +1556,11 @@
             // 
             // tabPage11
             // 
+            this.tabPage11.Controls.Add(this.AddCardType);
+            this.tabPage11.Controls.Add(this.CardTypes);
+            this.tabPage11.Controls.Add(this.label30);
+            this.tabPage11.Controls.Add(this.CardTypeList);
+            this.tabPage11.Controls.Add(this.AutoCastCards);
             this.tabPage11.Controls.Add(this.label29);
             this.tabPage11.Controls.Add(this.label28);
             this.tabPage11.Controls.Add(this.TrashQuality);
@@ -1559,6 +1569,61 @@
             resources.ApplyResources(this.tabPage11, "tabPage11");
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.UseVisualStyleBackColor = true;
+            // 
+            // AddCardType
+            // 
+            resources.ApplyResources(this.AddCardType, "AddCardType");
+            this.AddCardType.Name = "AddCardType";
+            this.AddCardType.UseVisualStyleBackColor = true;
+            this.AddCardType.Click += new System.EventHandler(this.AddCardType_Click);
+            // 
+            // CardTypes
+            // 
+            this.CardTypes.FormattingEnabled = true;
+            resources.ApplyResources(this.CardTypes, "CardTypes");
+            this.CardTypes.Name = "CardTypes";
+            // 
+            // label30
+            // 
+            resources.ApplyResources(this.label30, "label30");
+            this.label30.Name = "label30";
+            // 
+            // CardTypeList
+            // 
+            this.CardTypeList.FormattingEnabled = true;
+            resources.ApplyResources(this.CardTypeList, "CardTypeList");
+            this.CardTypeList.Name = "CardTypeList";
+            // 
+            // AutoCastCards
+            // 
+            resources.ApplyResources(this.AutoCastCards, "AutoCastCards");
+            this.AutoCastCards.Name = "AutoCastCards";
+            this.AutoCastCards.UseVisualStyleBackColor = true;
+            this.AutoCastCards.CheckedChanged += new System.EventHandler(this.AutoCastCards_CheckedChanged);
+            // 
+            // label29
+            // 
+            resources.ApplyResources(this.label29, "label29");
+            this.label29.Name = "label29";
+            // 
+            // label28
+            // 
+            resources.ApplyResources(this.label28, "label28");
+            this.label28.Name = "label28";
+            // 
+            // TrashQuality
+            // 
+            this.TrashQuality.FormattingEnabled = true;
+            resources.ApplyResources(this.TrashQuality, "TrashQuality");
+            this.TrashQuality.Name = "TrashQuality";
+            this.TrashQuality.SelectedIndexChanged += new System.EventHandler(this.TrashQuality_SelectedIndexChanged);
+            // 
+            // TrashCards
+            // 
+            resources.ApplyResources(this.TrashCards, "TrashCards");
+            this.TrashCards.Name = "TrashCards";
+            this.TrashCards.UseVisualStyleBackColor = true;
+            this.TrashCards.CheckedChanged += new System.EventHandler(this.TrashCards_CheckedChanged);
             // 
             // balanceMayo
             // 
@@ -1578,30 +1643,6 @@
             this.flowLayoutPanel1.Controls.Add(this.tabControl1);
             resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            // 
-            // TrashCards
-            // 
-            resources.ApplyResources(this.TrashCards, "TrashCards");
-            this.TrashCards.Name = "TrashCards";
-            this.TrashCards.UseVisualStyleBackColor = true;
-            this.TrashCards.CheckedChanged += new System.EventHandler(this.TrashCards_CheckedChanged);
-            // 
-            // TrashQuality
-            // 
-            this.TrashQuality.FormattingEnabled = true;
-            resources.ApplyResources(this.TrashQuality, "TrashQuality");
-            this.TrashQuality.Name = "TrashQuality";
-            this.TrashQuality.SelectedIndexChanged += new System.EventHandler(this.TrashQuality_SelectedIndexChanged);
-            // 
-            // label28
-            // 
-            resources.ApplyResources(this.label28, "label28");
-            this.label28.Name = "label28";
-            // 
-            // label29
-            // 
-            resources.ApplyResources(this.label29, "label29");
-            this.label29.Name = "label29";
             // 
             // SettingsForm
             // 
@@ -1835,5 +1876,10 @@
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.ComboBox TrashQuality;
         private System.Windows.Forms.CheckBox TrashCards;
+        private System.Windows.Forms.CheckBox AutoCastCards;
+        private System.Windows.Forms.Button AddCardType;
+        private System.Windows.Forms.ComboBox CardTypes;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.ListBox CardTypeList;
     }
 }

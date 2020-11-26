@@ -69,7 +69,7 @@ namespace NGUInjector
         [SerializeField] private bool _activateFruits;
         [SerializeField] private int[] _wishPriorities;
         [SerializeField] private bool _wishSortPriorities;
-        [SerializeField] private bool _wishSortOrder;        
+        [SerializeField] private bool _wishSortOrder;
         [SerializeField] private bool _beastMode;
         [SerializeField] private int _cubePriority;
         [SerializeField] private bool _manageNguDiff;
@@ -92,6 +92,8 @@ namespace NGUInjector
         [SerializeField] private bool _balanceMayo;
         [SerializeField] private bool _trashCards;
         [SerializeField] private int _cardsTrashQuality;
+        [SerializeField] private bool _autoCastCards;
+        [SerializeField] private int _autoCastCardType;
 
         private readonly string _savePath;
         private bool _disableSave;
@@ -239,6 +241,8 @@ namespace NGUInjector
             _balanceMayo = other._balanceMayo;
             _trashCards = other._trashCards;
             _cardsTrashQuality = other._cardsTrashQuality;
+            _autoCastCards = other._autoCastCards;
+            _autoCastCardType = other._autoCastCardType;
         }
 
         public int HighestAKZone
@@ -538,7 +542,7 @@ namespace NGUInjector
                 SaveSettings();
             }
         }
-        
+
         public bool SnipeBossOnly
         {
             get => _snipeBossOnly;
@@ -1087,6 +1091,27 @@ namespace NGUInjector
             {
                 if (value == _cardsTrashQuality) return;
                 _cardsTrashQuality = value;
+                SaveSettings();
+            }
+        }
+        public bool AutoCastCards
+        {
+            get => _autoCastCards;
+            set
+            {
+                if (value == _autoCastCards) return;
+                _autoCastCards = value;
+                SaveSettings();
+            }
+        }
+
+        public int AutoCastCardType
+        {
+            get => _autoCastCardType;
+            set 
+            {
+                if (value == _autoCastCardType) return;
+                _autoCastCardType = value;
                 SaveSettings();
             }
         }
