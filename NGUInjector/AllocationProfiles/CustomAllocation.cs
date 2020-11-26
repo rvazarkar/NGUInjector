@@ -368,7 +368,7 @@ namespace NGUInjector.AllocationProfiles
 
             Main.Log("Rebirth time hit, performing rebirth");
             var controller = Main.Character.rebirth;
-            typeof(Rebirth).GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+            controller.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
                 .Single(x => x.Name == "engage" && x.GetParameters().Length == 0).Invoke(controller, null);
         }
 
@@ -398,7 +398,7 @@ namespace NGUInjector.AllocationProfiles
                 if (_character.adventure.itopod.perkLevel[73] >= 1L &&
                     _character.settings.rebirthDifficulty >= difficulty.evil)
                 {
-                    if (_character.bloodMagic.macguffin2Time.totalseconds > _character.bloodSpells.macguffin2Cooldown)
+                    if (_character.bloodMagic.macguffin2Time.totalseconds > _character.bloodMagicController.spells.macguffin2Cooldown)
                     {
                         if (_character.bloodMagic.bloodPoints >= _character.bloodSpells.minMacguffin2Blood())
                         {
@@ -428,7 +428,7 @@ namespace NGUInjector.AllocationProfiles
             {
                 if (_character.adventure.itopod.perkLevel[72] >= 1L)
                 {
-                    if (_character.bloodMagic.macguffin1Time.totalseconds > _character.bloodSpells.macguffin1Cooldown)
+                    if (_character.bloodMagic.macguffin1Time.totalseconds >= _character.bloodMagicController.spells.macguffin1Cooldown)
                     {
                         if (_character.bloodMagic.bloodPoints > _character.bloodSpells.minMacguffin1Blood())
                         {
@@ -436,7 +436,6 @@ namespace NGUInjector.AllocationProfiles
                             mcguffA = (int) ((Math.Log(a, 10.0) + 1.0) *
                                              _character.wishesController.totalBloodGuffbonus());
                         }
-
                         if (Main.Settings.BloodMacGuffinAThreshold <= mcguffA)
                         {
                             _character.bloodSpells.castMacguffin1Spell();
