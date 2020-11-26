@@ -11,7 +11,6 @@ namespace NGUInjector
     [Serializable]
     public class SavedSettings
     {
-        [SerializeField] private int _highestAkZone;
         [SerializeField] private int _snipeZone = -1;
         [SerializeField] private bool _precastBuffs;
         [SerializeField] private bool _swapTitanLoadouts;
@@ -89,6 +88,10 @@ namespace NGUInjector
         [SerializeField] private bool _itopodPrecastBuffs;
         [SerializeField] private bool _adventureTargetItopod;
         [SerializeField] private bool _disableOverlay;
+        [SerializeField] private int _yggSwapThreshold;
+        [SerializeField] private bool _moreBlockParry;
+        [SerializeField] private int[] _specialBoostBlacklist;
+        [SerializeField] private int[] _blacklistedBosses;
         [SerializeField] private bool _balanceMayo;
         [SerializeField] private bool _trashCards;
         [SerializeField] private int _cardsTrashQuality;
@@ -97,7 +100,7 @@ namespace NGUInjector
 
         private readonly string _savePath;
         private bool _disableSave;
-
+        
         public SavedSettings(string dir)
         {
             if (dir != null)
@@ -155,7 +158,6 @@ namespace NGUInjector
             _yggdrasilLoadout = other.YggdrasilLoadout;
             _swapYggdrasilLoadouts = other.SwapYggdrasilLoadouts;
 
-            _highestAkZone = other.HighestAKZone;
             _swapTitanLoadouts = other.SwapTitanLoadouts;
             _titanLoadout = other.TitanLoadout;
 
@@ -238,21 +240,15 @@ namespace NGUInjector
             _itopodRecoverHp = other.ITOPODRecoverHP;
             _disableOverlay = other.DisableOverlay;
             _upgradeDiggers = other._upgradeDiggers;
+            _yggSwapThreshold = other.YggSwapThreshold;
+            _moreBlockParry = other.MoreBlockParry;
+            _specialBoostBlacklist = other.SpecialBoostBlacklist;
+            _blacklistedBosses = other.BlacklistedBosses;
             _balanceMayo = other._balanceMayo;
             _trashCards = other._trashCards;
             _cardsTrashQuality = other._cardsTrashQuality;
             _autoCastCards = other._autoCastCards;
             _autoCastCardType = other._autoCastCardType;
-        }
-
-        public int HighestAKZone
-        {
-            get => _highestAkZone;
-            set
-            {
-                _highestAkZone = value;
-                SaveSettings();
-            }
         }
 
         public int SnipeZone
@@ -1061,6 +1057,50 @@ namespace NGUInjector
             {
                 if (value == _disableOverlay) return;
                 _disableOverlay = value;
+                SaveSettings();
+            }
+        }
+
+        public int YggSwapThreshold
+        {
+            get => _yggSwapThreshold;
+            set
+            {
+                if (value == _yggSwapThreshold) return;
+                _yggSwapThreshold = value;
+                SaveSettings();
+            }
+        }
+
+        public bool MoreBlockParry
+        {
+            get => _moreBlockParry;
+            set
+            {
+                if (value == _moreBlockParry) return;
+                _moreBlockParry = value;
+                SaveSettings();
+            }
+        }
+
+        public int[] SpecialBoostBlacklist
+        {
+            get => _specialBoostBlacklist;
+            set
+            {
+                if (_specialBoostBlacklist != null && _specialBoostBlacklist.SequenceEqual(value)) return;
+                _specialBoostBlacklist = value;
+                SaveSettings();
+            }
+        }
+
+        public int[] BlacklistedBosses
+        {
+            get => _blacklistedBosses;
+            set
+            {
+                if (_blacklistedBosses != null && _blacklistedBosses.SequenceEqual(value)) return;
+                _blacklistedBosses = value;
                 SaveSettings();
             }
         }

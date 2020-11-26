@@ -18,17 +18,37 @@ namespace NGUInjector.Managers
             {
                 if (!LoadoutManager.TryMoneyPitSwap()) return;
             }
-            var controller = Main.Character.pitController;
-            typeof(PitController).GetMethod("engage", BindingFlags.NonPublic | BindingFlags.Instance)
-                ?.Invoke(controller, null);
-
-            Main.LogPitSpin($"Money Pit Reward: {controller.pitText.text}");
-
+            if (Main.Character.realGold >= 1e50 && Main.Settings.ManageMagic && Main.Character.wishes.wishes[4].level > 0)
+            {
+                Main.Character.removeMostMagic();
+                for (var i = Main.Character.bloodMagic.ritual.Count - 1; i >= 0; i--)
+                {
+                    Main.Character.bloodMagicController.bloodMagics[i].cap();
+                }
+                DiggerManager.SaveDiggers();
+                DiggerManager.EquipDiggers(new[] {10});
+                DoMoneyPit();
+                DiggerManager.RestoreDiggers();
+            }
+            else
+            {
+                DoMoneyPit();
+            }
+            
             if (Main.Settings.MoneyPitLoadout.Length > 0)
             {
                 LoadoutManager.RestoreGear();
                 LoadoutManager.ReleaseLock();
             }
+        }
+
+        private static void DoMoneyPit()
+        {
+            var controller = Main.Character.pitController;
+            typeof(PitController).GetMethod("engage", BindingFlags.NonPublic | BindingFlags.Instance)
+                ?.Invoke(controller, null);
+
+            Main.LogPitSpin($"Money Pit Reward: {controller.pitText.text}");
         }
 
         internal static void DoDailySpin()

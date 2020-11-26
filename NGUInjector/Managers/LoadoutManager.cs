@@ -91,6 +91,9 @@ namespace NGUInjector.Managers
             if (!CanAcquireOrHasLock(LockType.Yggdrasil))
                 return false;
 
+            if (CurrentLock == LockType.Yggdrasil)
+                return true;
+
             Log("Equipping Yggdrasil Loadout");
             AcquireLock(LockType.Yggdrasil);
             SaveCurrentLoadout();
@@ -146,6 +149,8 @@ namespace NGUInjector.Managers
 
         internal static void ChangeGear(int[] gearIds, bool moneyPit = false)
         {
+            if (gearIds.Length == 0)
+                return;
             Log($"Received New Gear: {string.Join(",", gearIds.Select(x => x.ToString()).ToArray())}");
             var weaponSlot = -5;
             var accSlot = 10000;

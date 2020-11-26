@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using static NGUInjector.Main;
 using static NGUInjector.Managers.CombatHelpers;
@@ -10,12 +11,19 @@ namespace NGUInjector.Managers
     {
         private readonly Character _character;
         private readonly PlayerController _pc;
-        private bool isFighting = false;
+        private bool _isFighting = false;
+        private float _fightTimer = 0;
+        private string _enemyName;
 
         public CombatManager()
         {
             _character = Main.Character;
             _pc = Main.PlayerController;
+        }
+
+        internal void UpdateFightTimer(float diff)
+        {
+            _fightTimer += diff;
         }
 
         bool HasFullHP()
@@ -59,7 +67,7 @@ namespace NGUInjector.Managers
                     return true;
                 }
 
-                if (ac.parryMove.button.IsInteractable() && !_pc.isBlocking)
+                if (ac.parryMove.button.IsInteractable() && !_pc.isBlocking && !_pc.isParrying)
                 {
                     ac.parryMove.doMove();
                     return true;
@@ -89,6 +97,14 @@ namespace NGUInjector.Managers
                 return false;
             }
 
+            if (OhShitUnlocked() && GetHPPercentage() < .5 && OhShitReady())
+            {
+                if (CastOhShit())
+                {
+                    return true;
+                }
+            }
+
             if (GetHPPercentage() < .5)
             {
                 if (CastHeal())
@@ -110,35 +126,38 @@ namespace NGUInjector.Managers
                 return true;
             }
 
-            if (!DefenseBuffActive())
+            if (!MegaBuffUnlocked())
             {
-                if (CastUltimateBuff())
+                if (!DefenseBuffActive())
                 {
-                    return true;
+                    if (CastUltimateBuff())
+                    {
+                        return true;
+                    }
+                }
+
+                if (UltimateBuffActive())
+                {
+                    if (CastOffensiveBuff())
+                        return true;
+                }
+
+                if (GetHPPercentage() < .75 && !UltimateBuffActive() && !BlockActive())
+                {
+                    if (CastDefensiveBuff())
+                        return true;
                 }
             }
 
-            if (UltimateBuffActive())
+            if (ai != AI.charger && ai != AI.rapid && ai != AI.exploder && (Settings.MoreBlockParry || !UltimateBuffActive() && !DefenseBuffActive()))
             {
-                if (CastOffensiveBuff())
-                    return true;
-            }
-
-            if (GetHPPercentage() < .75 && !UltimateBuffActive() && !BlockActive())
-            {
-                if (CastDefensiveBuff())
-                    return true;
-            }
-
-            if (ai != AI.charger && ai != AI.rapid && ai != AI.exploder && !UltimateBuffActive() && !DefenseBuffActive())
-            {
-                if (!ParryActive())
+                if (!ParryActive() && !BlockActive())
                 {
                     if (CastBlock())
                         return true;
                 }
 
-                if (!BlockActive())
+                if (!BlockActive() && !ParryActive())
                 {
                     if (CastParry())
                         return true;
@@ -268,12 +287,14 @@ namespace NGUInjector.Managers
                 return;
             }
 
+            //Turn on beast mode depending
             if (_character.adventure.beastModeOn && !Settings.BeastMode && _character.adventureController.beastModeMove.button.interactable)
             {
                 _character.adventureController.beastModeMove.doMove();
                 return;
             }
 
+            //Turn off beast mode depending
             if (!_character.adventure.beastModeOn && Settings.BeastMode &&
                 _character.adventureController.beastModeMove.button.interactable)
             {
@@ -284,16 +305,30 @@ namespace NGUInjector.Managers
             if (_character.adventure.zone == -1 && !HasFullHP() && recoverHealth)
                 return;
 
-            //Check if we're in the right zone, if not move there
+            //Check if we're in not in the right zone and not in safe zone, if not move to safe zone first
             if (_character.adventure.zone != zone && _character.adventure.zone != -1)
             {
                 MoveToZone(-1);
             }
 
+            //Move to the zone
+            if (_character.adventure.zone != zone)
+            {
+                MoveToZone(zone);
+                return;
+            }
+
             //Wait for an enemy to spawn
             if (_character.adventureController.currentEnemy == null)
                 return;
-            
+
+            if (Settings.BlacklistedBosses.Contains(_character.adventureController.currentEnemy.spriteID))
+            {
+                MoveToZone(-1);
+                MoveToZone(zone);
+                return;
+            }
+
             //If we only want boss enemies
             if (bossOnly)
             {
@@ -392,7 +427,7 @@ namespace NGUInjector.Managers
             //Move to the zone
             if (_character.adventure.zone != zone)
             {
-                isFighting = false;
+                _isFighting = false;
                 MoveToZone(zone);
                 return;
             }
@@ -400,6 +435,30 @@ namespace NGUInjector.Managers
             //Wait for an enemy to spawn
             if (_character.adventureController.currentEnemy == null)
             {
+                if (_isFighting)
+                {
+                    _isFighting = false;
+                    if (_fightTimer > 1)
+                        LogCombat($"{_enemyName} killed in {_fightTimer:00.0}s");
+
+                    _fightTimer = 0;
+                    if (LoadoutManager.CurrentLock == LockType.Gold)
+                    {
+                        Log("Gold Loadout kill done. Turning off setting and swapping gear");
+                        Settings.DoGoldSwap = false;
+                        LoadoutManager.RestoreGear();
+                        LoadoutManager.ReleaseLock();
+                        MoveToZone(-1);
+                        return;
+                    }
+
+                    if (precastBuffs || recoverHealth && !HasFullHP())
+                    {
+                        MoveToZone(-1);
+                        return;
+                    }
+                }
+                _fightTimer = 0;
                 if (!precastBuffs && bossOnly)
                 {
                     if (!ChargeActive())
@@ -432,27 +491,22 @@ namespace NGUInjector.Managers
                         if (CastHeal())
                             return;
                     }
-                }
 
-                if (isFighting)
-                {
-                    isFighting = false;
-                    if (LoadoutManager.CurrentLock == LockType.Gold)
+                    if (GetHPPercentage() < .60)
                     {
-                        Log("Gold Loadout kill done. Turning off setting and swapping gear");
-                        Settings.DoGoldSwap = false;
-                        LoadoutManager.RestoreGear();
-                        LoadoutManager.ReleaseLock();
-                        MoveToZone(-1);
-                        return;
-                    }
-
-                    if (precastBuffs || recoverHealth && !HasFullHP())
-                    {
-                        MoveToZone(-1);
-                        return;
+                        if (CastHyperRegen())
+                            return;
                     }
                 }
+
+                
+                return;
+            }
+
+            if (Settings.BlacklistedBosses.Contains(_character.adventureController.currentEnemy.spriteID))
+            {
+                MoveToZone(-1);
+                MoveToZone(zone);
                 return;
             }
 
@@ -468,7 +522,8 @@ namespace NGUInjector.Managers
                 }
             }
 
-            isFighting = true;
+            _isFighting = true;
+            _enemyName = _character.adventureController.currentEnemy.name;
             //We have an enemy and we're ready to fight. Run through our combat routine
             if (_character.training.attackTraining[1] > 0)
                 DoCombat(fastCombat);

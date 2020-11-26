@@ -79,6 +79,8 @@
             this.ManageMagic = new System.Windows.Forms.CheckBox();
             this.ManageEnergy = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.YggSwapThreshold = new System.Windows.Forms.NumericUpDown();
+            this.label28 = new System.Windows.Forms.Label();
             this.HarvestSafety = new System.Windows.Forms.CheckBox();
             this.HarvestAllButton = new System.Windows.Forms.Button();
             this.ActivateFruits = new System.Windows.Forms.CheckBox();
@@ -91,6 +93,7 @@
             this.YggdrasilSwap = new System.Windows.Forms.CheckBox();
             this.ManageYggdrasil = new System.Windows.Forms.CheckBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.BoostAvgReset = new System.Windows.Forms.Button();
             this.CubePriority = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
             this.prioDownButton = new System.Windows.Forms.Button();
@@ -113,8 +116,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.TitanSwapTargets = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.label1 = new System.Windows.Forms.Label();
-            this.HighestTitanDropdown = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.titanRemove = new System.Windows.Forms.Button();
             this.titanAddItem = new System.Windows.Forms.NumericUpDown();
@@ -123,6 +124,16 @@
             this.titanLoadout = new System.Windows.Forms.ListBox();
             this.SwapTitanLoadout = new System.Windows.Forms.CheckBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.label32 = new System.Windows.Forms.Label();
+            this.BlacklistAddEnemyButton = new System.Windows.Forms.Button();
+            this.label31 = new System.Windows.Forms.Label();
+            this.EnemyBlacklistNames = new System.Windows.Forms.ComboBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.BlacklistRemoveEnemyButton = new System.Windows.Forms.Button();
+            this.EnemyBlacklistZone = new System.Windows.Forms.ComboBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.BlacklistedBosses = new System.Windows.Forms.ListBox();
+            this.MoreBlockParry = new System.Windows.Forms.CheckBox();
             this.ITOPODBeastMode = new System.Windows.Forms.CheckBox();
             this.ITOPODRecoverHP = new System.Windows.Forms.CheckBox();
             this.ITOPODFastCombat = new System.Windows.Forms.CheckBox();
@@ -174,6 +185,8 @@
             this.AllowMajor = new System.Windows.Forms.CheckBox();
             this.ManageQuests = new System.Windows.Forms.CheckBox();
             this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.WishSortOrder = new System.Windows.Forms.CheckBox();
+            this.WishSortPriorities = new System.Windows.Forms.CheckBox();
             this.WishDownButton = new System.Windows.Forms.Button();
             this.WishUpButton = new System.Windows.Forms.Button();
             this.RemoveWishButton = new System.Windows.Forms.Button();
@@ -224,6 +237,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.CounterfeitCap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SpaghettiCap)).BeginInit();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.YggSwapThreshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggLoadoutItem)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blacklistAddItem)).BeginInit();
@@ -596,6 +610,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.YggSwapThreshold);
+            this.tabPage3.Controls.Add(this.label28);
             this.tabPage3.Controls.Add(this.HarvestSafety);
             this.tabPage3.Controls.Add(this.HarvestAllButton);
             this.tabPage3.Controls.Add(this.ActivateFruits);
@@ -610,6 +626,27 @@
             resources.ApplyResources(this.tabPage3, "tabPage3");
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // YggSwapThreshold
+            // 
+            resources.ApplyResources(this.YggSwapThreshold, "YggSwapThreshold");
+            this.YggSwapThreshold.Maximum = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
+            this.YggSwapThreshold.Name = "YggSwapThreshold";
+            this.YggSwapThreshold.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.YggSwapThreshold.ValueChanged += new System.EventHandler(this.YggSwapThreshold_ValueChanged);
+            // 
+            // label28
+            // 
+            resources.ApplyResources(this.label28, "label28");
+            this.label28.Name = "label28";
             // 
             // HarvestSafety
             // 
@@ -703,6 +740,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.BoostAvgReset);
             this.tabPage4.Controls.Add(this.CubePriority);
             this.tabPage4.Controls.Add(this.label20);
             this.tabPage4.Controls.Add(this.prioDownButton);
@@ -724,6 +762,13 @@
             resources.ApplyResources(this.tabPage4, "tabPage4");
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // BoostAvgReset
+            // 
+            resources.ApplyResources(this.BoostAvgReset, "BoostAvgReset");
+            this.BoostAvgReset.Name = "BoostAvgReset";
+            this.BoostAvgReset.UseVisualStyleBackColor = true;
+            this.BoostAvgReset.Click += new System.EventHandler(this.BoostAvgReset_Click);
             // 
             // CubePriority
             // 
@@ -867,8 +912,6 @@
             // 
             this.tabPage5.Controls.Add(this.label9);
             this.tabPage5.Controls.Add(this.TitanSwapTargets);
-            this.tabPage5.Controls.Add(this.label1);
-            this.tabPage5.Controls.Add(this.HighestTitanDropdown);
             this.tabPage5.Controls.Add(this.label8);
             this.tabPage5.Controls.Add(this.titanRemove);
             this.tabPage5.Controls.Add(this.titanAddItem);
@@ -900,18 +943,6 @@
             // columnHeader2
             // 
             resources.ApplyResources(this.columnHeader2, "columnHeader2");
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
-            // 
-            // HighestTitanDropdown
-            // 
-            this.HighestTitanDropdown.FormattingEnabled = true;
-            resources.ApplyResources(this.HighestTitanDropdown, "HighestTitanDropdown");
-            this.HighestTitanDropdown.Name = "HighestTitanDropdown";
-            this.HighestTitanDropdown.SelectedIndexChanged += new System.EventHandler(this.HighestTitanDropdown_SelectedIndexChanged);
             // 
             // label8
             // 
@@ -971,6 +1002,16 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.label32);
+            this.tabPage6.Controls.Add(this.BlacklistAddEnemyButton);
+            this.tabPage6.Controls.Add(this.label31);
+            this.tabPage6.Controls.Add(this.EnemyBlacklistNames);
+            this.tabPage6.Controls.Add(this.label30);
+            this.tabPage6.Controls.Add(this.BlacklistRemoveEnemyButton);
+            this.tabPage6.Controls.Add(this.EnemyBlacklistZone);
+            this.tabPage6.Controls.Add(this.label29);
+            this.tabPage6.Controls.Add(this.BlacklistedBosses);
+            this.tabPage6.Controls.Add(this.MoreBlockParry);
             this.tabPage6.Controls.Add(this.ITOPODBeastMode);
             this.tabPage6.Controls.Add(this.ITOPODRecoverHP);
             this.tabPage6.Controls.Add(this.ITOPODFastCombat);
@@ -995,6 +1036,67 @@
             resources.ApplyResources(this.tabPage6, "tabPage6");
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // label32
+            // 
+            this.label32.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.label32, "label32");
+            this.label32.Name = "label32";
+            // 
+            // BlacklistAddEnemyButton
+            // 
+            resources.ApplyResources(this.BlacklistAddEnemyButton, "BlacklistAddEnemyButton");
+            this.BlacklistAddEnemyButton.Name = "BlacklistAddEnemyButton";
+            this.BlacklistAddEnemyButton.UseVisualStyleBackColor = true;
+            this.BlacklistAddEnemyButton.Click += new System.EventHandler(this.BlacklistAddEnemyButton_Click);
+            // 
+            // label31
+            // 
+            resources.ApplyResources(this.label31, "label31");
+            this.label31.Name = "label31";
+            // 
+            // EnemyBlacklistNames
+            // 
+            this.EnemyBlacklistNames.FormattingEnabled = true;
+            resources.ApplyResources(this.EnemyBlacklistNames, "EnemyBlacklistNames");
+            this.EnemyBlacklistNames.Name = "EnemyBlacklistNames";
+            // 
+            // label30
+            // 
+            resources.ApplyResources(this.label30, "label30");
+            this.label30.Name = "label30";
+            // 
+            // BlacklistRemoveEnemyButton
+            // 
+            resources.ApplyResources(this.BlacklistRemoveEnemyButton, "BlacklistRemoveEnemyButton");
+            this.BlacklistRemoveEnemyButton.Name = "BlacklistRemoveEnemyButton";
+            this.BlacklistRemoveEnemyButton.UseVisualStyleBackColor = true;
+            this.BlacklistRemoveEnemyButton.Click += new System.EventHandler(this.BlacklistRemoveEnemyButton_Click);
+            // 
+            // EnemyBlacklistZone
+            // 
+            this.EnemyBlacklistZone.FormattingEnabled = true;
+            resources.ApplyResources(this.EnemyBlacklistZone, "EnemyBlacklistZone");
+            this.EnemyBlacklistZone.Name = "EnemyBlacklistZone";
+            this.EnemyBlacklistZone.SelectedIndexChanged += new System.EventHandler(this.EnemyBlacklistZone_SelectedIndexChanged);
+            // 
+            // label29
+            // 
+            resources.ApplyResources(this.label29, "label29");
+            this.label29.Name = "label29";
+            // 
+            // BlacklistedBosses
+            // 
+            this.BlacklistedBosses.FormattingEnabled = true;
+            resources.ApplyResources(this.BlacklistedBosses, "BlacklistedBosses");
+            this.BlacklistedBosses.Name = "BlacklistedBosses";
+            // 
+            // MoreBlockParry
+            // 
+            resources.ApplyResources(this.MoreBlockParry, "MoreBlockParry");
+            this.MoreBlockParry.Name = "MoreBlockParry";
+            this.MoreBlockParry.UseVisualStyleBackColor = true;
+            this.MoreBlockParry.CheckedChanged += new System.EventHandler(this.MoreBlockParry_CheckedChanged);
             // 
             // ITOPODBeastMode
             // 
@@ -1365,6 +1467,7 @@
             resources.GetString("QuestCombatMode.Items1")});
             resources.ApplyResources(this.QuestCombatMode, "QuestCombatMode");
             this.QuestCombatMode.Name = "QuestCombatMode";
+            this.QuestCombatMode.SelectedIndexChanged += new System.EventHandler(this.QuestCombatMode_SelectedIndexChanged);
             // 
             // AllowMajor
             // 
@@ -1382,6 +1485,8 @@
             // 
             // tabPage9
             // 
+            this.tabPage9.Controls.Add(this.WishSortOrder);
+            this.tabPage9.Controls.Add(this.WishSortPriorities);
             this.tabPage9.Controls.Add(this.WishDownButton);
             this.tabPage9.Controls.Add(this.WishUpButton);
             this.tabPage9.Controls.Add(this.RemoveWishButton);
@@ -1393,6 +1498,20 @@
             resources.ApplyResources(this.tabPage9, "tabPage9");
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // WishSortOrder
+            // 
+            resources.ApplyResources(this.WishSortOrder, "WishSortOrder");
+            this.WishSortOrder.Name = "WishSortOrder";
+            this.WishSortOrder.UseVisualStyleBackColor = true;
+            this.WishSortOrder.CheckedChanged += new System.EventHandler(this.WishSortOrder_CheckedChanged);
+            // 
+            // WishSortPriorities
+            // 
+            resources.ApplyResources(this.WishSortPriorities, "WishSortPriorities");
+            this.WishSortPriorities.Name = "WishSortPriorities";
+            this.WishSortPriorities.UseVisualStyleBackColor = true;
+            this.WishSortPriorities.CheckedChanged += new System.EventHandler(this.WishSortPriorities_CheckedChanged);
             // 
             // WishDownButton
             // 
@@ -1673,6 +1792,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SpaghettiCap)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.YggSwapThreshold)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggLoadoutItem)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
@@ -1780,8 +1900,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ListView TitanSwapTargets;
         private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox HighestTitanDropdown;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button titanRemove;
         private System.Windows.Forms.NumericUpDown titanAddItem;
@@ -1870,6 +1988,21 @@
         private System.Windows.Forms.NumericUpDown IronPillThreshold;
         private System.Windows.Forms.Label label123;
         private System.Windows.Forms.CheckBox CastBloodSpells;
+        private System.Windows.Forms.NumericUpDown YggSwapThreshold;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.CheckBox MoreBlockParry;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.ListBox BlacklistedBosses;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.ComboBox EnemyBlacklistNames;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Button BlacklistRemoveEnemyButton;
+        private System.Windows.Forms.ComboBox EnemyBlacklistZone;
+        private System.Windows.Forms.Button BlacklistAddEnemyButton;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Button BoostAvgReset;
+        private System.Windows.Forms.CheckBox WishSortOrder;
+        private System.Windows.Forms.CheckBox WishSortPriorities;
         private System.Windows.Forms.TabPage tabPage11;
         private System.Windows.Forms.CheckBox balanceMayo;
         private System.Windows.Forms.Label label29;

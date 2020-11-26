@@ -6,7 +6,7 @@ namespace NGUInjector.Managers
 {
     static class ZoneHelpers
     {
-        internal static readonly int[] TitanZones = { 6, 8, 11, 14, 16, 19, 23, 26, 30, 34, 38, 40, 42 };
+        internal static readonly int[] TitanZones = { 6, 8, 11, 14, 16, 19, 23, 26, 30, 34, 38, 42 };
 
         internal static bool ZoneIsTitan(int zone)
         {
@@ -35,31 +35,27 @@ namespace NGUInjector.Managers
         {
             var result = new TitanSpawn();
 
-            if (Main.Test)
-            {
-                result.SpawningSoon = true;
-            }
-
-            if (bossId + 1 > Main.Settings.HighestAKZone)
-                return result;
             if (TitanZones[bossId] > GetMaxReachableZone(true))
                 return result;
 
-            if (CheckTitanSpawnTime(bossId))
-            {
-                result.SpawningSoon = Main.Settings.TitanSwapTargets[bossId];
-                // Run money once for each boss
-                result.RunMoneyLoadout = Main.Settings.TitanGoldTargets[bossId] && !Main.Settings.TitanMoneyDone[bossId];
-                var temp = Main.Settings.TitanMoneyDone;
-                temp[bossId] = true;
-                Main.Settings.TitanMoneyDone = temp;
-            }
+            if (!CheckTitanSpawnTime(bossId)) return result;
+
+            result.SpawningSoon = Main.Settings.TitanSwapTargets[bossId];
+            // Run money once for each boss
+            result.RunMoneyLoadout = Main.Settings.ManageGoldLoadouts && Main.Settings.TitanGoldTargets[bossId] && !Main.Settings.TitanMoneyDone[bossId];
+
+            if (!result.RunMoneyLoadout) return result;
+            Main.Log($"Running money loadout for {bossId}");
+            var temp = Main.Settings.TitanMoneyDone.ToArray();
+            temp[bossId] = true;
+            Main.Settings.TitanMoneyDone = temp;
 
             return result;
         }
 
         private static bool CheckTitanSpawnTime(int bossId)
         {
+            if (Main.Test) return true;
             var controller = Main.Character.adventureController;
             var adventure = Main.Character.adventure;
 
@@ -103,10 +99,16 @@ namespace NGUInjector.Managers
             var optimal = CalculateBestItopodLevel();
             if (level == optimal) return;
             controller.itopodStartInput.text = optimal.ToString();
+            if (optimal == Main.Character.adventure.highestItopodLevel)
+            {
+                optimal++;
+                Main.Log("Pushed optimal floor up by 1 because highest floor is hit");
+            }
+
             controller.itopodEndInput.text = optimal.ToString();
             controller.verifyItopodInputs();
             controller.zoneSelector.changeZone(1000);
-            controller.log.AddEvent($"The CHEATER Floor Shifter changed your current floor from {level} to {optimal}");
+            //controller.log.AddEvent($"The CHEATER Floor Shifter changed your current floor from {level} to {optimal}");
         }
 
         internal static int CalculateBestItopodLevel()
@@ -122,10 +124,7 @@ namespace NGUInjector.Managers
                 num2 = c.adventure.highestItopodLevel;
             return num2;
         }
-
     }
-
-    
 
     public class TitanSpawn
     {

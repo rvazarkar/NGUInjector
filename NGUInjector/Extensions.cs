@@ -86,6 +86,9 @@ namespace NGUInjector
             if (eq.capDefense != 0.0)
                 n.Toughness += CalcCap(eq.capDefense, eq.level) - (decimal)eq.curDefense;
 
+            if (Settings.SpecialBoostBlacklist.Contains(eq.id))
+                return n;
+
             if (eq.spec1Type != specType.None)
                 n.Special += CalcCap(eq.spec1Cap, eq.level) - (decimal)eq.spec1Cur;
 
@@ -98,6 +101,16 @@ namespace NGUInjector
             return n;
         }
 
+        public static float AugTimeLeftEnergy(this AugmentController aug, long energy)
+        {
+            return (float)((1.0 - (double)aug.character.augments.augs[aug.id].augProgress) / (double)aug.getAugProgressPerTick(energy) / 50.0);
+        }
+
+        public static float AugTimeLeftEnergyMax(this AugmentController aug, long energy)
+        {
+            return (float)(1.0 / (double)aug.getAugProgressPerTick(energy) / 50.0);
+        }
+
         private static decimal CalcCap(float cap, float level)
         {
             return (decimal)Mathf.Floor(cap * (float)(1.0 + level / 100.0));
@@ -105,8 +118,13 @@ namespace NGUInjector
 
         internal static void DoAllocations(this CustomAllocation allocation)
         {
+            if (!Settings.GlobalEnabled)
+                return;
+
             if (allocation.IsAllocationRunning)
                 return;
+
+            var originalInput = Main.Character.energyMagicPanel.energyMagicInput;
 
             allocation.IsAllocationRunning = true;
 
@@ -130,6 +148,9 @@ namespace NGUInjector
             if (Settings.ManageWandoos && Main.Character.buttons.wandoos.interactable)
                 allocation.SwapOS();
 
+            Main.Character.energyMagicPanel.energyRequested.text = originalInput.ToString();
+            Main.Character.energyMagicPanel.validateInput();
+            
             allocation.IsAllocationRunning = false;
         }
 

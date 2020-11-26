@@ -2,7 +2,7 @@
 
 namespace NGUInjector.AllocationProfiles
 {
-    abstract class AllocationProfile
+    internal abstract class AllocationProfile
     {
         protected Character _character;
         protected EnergyInputController _energyController;

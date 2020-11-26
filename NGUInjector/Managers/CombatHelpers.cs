@@ -251,5 +251,27 @@ namespace NGUInjector.Managers
         {
             return Main.Character.adventureController.megaBuffMove.button.IsInteractable();
         }
+
+        internal static bool OhShitUnlocked()
+        {
+            return Main.Character.wishes.wishes[58].level >= 1 && Main.Character.allChallenges.hasParalyze() &&
+                   Main.Character.training.defenseTraining[1] >= 10000L && Main.Character.settings.hasHyperRegen;
+        }
+
+        internal static bool OhShitReady()
+        {
+            return Main.Character.adventureController.ohShitMove.button.IsInteractable();
+        }
+
+        internal static bool CastOhShit()
+        {
+            if (Main.Character.adventureController.ohShitMove.button.IsInteractable())
+            {
+                Main.Character.adventureController.ohShitMove.doMove();
+                return true;
+            }
+
+            return false;
+        }
     }
 }

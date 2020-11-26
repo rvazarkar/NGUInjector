@@ -19,7 +19,7 @@ namespace NGUInjector.Managers
         public int GetSlot(int slotId)
         {
             BuildWishList();
-            if (slotId > _curValidUpgradesList.Count)
+            if (slotId + 1 > _curValidUpgradesList.Count)
             {
                 return -1;
             }
@@ -31,13 +31,13 @@ namespace NGUInjector.Managers
             var dictDouble = new Dictionary<int, double>();
 
             _curValidUpgradesList.Clear();
-            for (var i = 0; i < Settings.WishPriorities.Count(); i++)
+            for (var i = 0; i < Settings.WishPriorities.Length; i++)
             {
                 if (isValidWish(Settings.WishPriorities[i]))
                 {
                     if (Settings.WishSortPriorities)
                     {
-                        dictDouble.Add(Settings.WishPriorities[i], this.sortValue(Settings.WishPriorities[i]) + i);
+                        dictDouble.Add(Settings.WishPriorities[i], sortValue(Settings.WishPriorities[i]) + i);
                     } else
                     {
                         _curValidUpgradesList.Add(Settings.WishPriorities[i]);

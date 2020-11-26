@@ -18,6 +18,7 @@ namespace NGUInjector
         internal readonly Dictionary<int, string> ZoneList;
         internal readonly Dictionary<int, string> CombatModeList;
         internal readonly Dictionary<int, string> CubePriorityList;
+        internal readonly Dictionary<int, string> SpriteEnemyList;
         private bool _initializing = true;
         public SettingsForm()
         {
@@ -94,6 +95,22 @@ namespace NGUInjector
                 {42, "AMALGAMATE"}
             };
 
+            SpriteEnemyList = new Dictionary<int, string>();
+            foreach (var x in Main.Character.adventureController.enemyList)
+            {
+                foreach (var enemy in x)
+                {
+                    try
+                    {
+                        SpriteEnemyList.Add(enemy.spriteID, enemy.name);
+                    }
+                    catch
+                    {
+                        //pass
+                    }
+                }
+            }
+
             TrashQuality.Items.AddRange(Enum.GetNames(typeof(rarity)));
             CardTypes.Items.AddRange(Enum.GetNames(typeof(cardBonus)).Where(card => card != "none").ToArray());
 
@@ -113,10 +130,6 @@ namespace NGUInjector
             CubePriority.ValueMember = "Key";
             CubePriority.DisplayMember = "Value";
 
-            HighestTitanDropdown.DataSource = new BindingSource(TitanList, null);
-            HighestTitanDropdown.ValueMember = "Key";
-            HighestTitanDropdown.DisplayMember = "Value";
-
             CombatMode.DataSource = new BindingSource(CombatModeList, null);
             CombatMode.ValueMember = "Key";
             CombatMode.DisplayMember = "Value";
@@ -132,9 +145,16 @@ namespace NGUInjector
             CombatTargetZone.DataSource = new BindingSource(ZoneList, null);
             CombatTargetZone.ValueMember = "Key";
             CombatTargetZone.DisplayMember = "Value";
-
+            
             //Remove ITOPOD for non combat zones
             ZoneList.Remove(1000);
+            ZoneList.Remove(-1);
+
+            EnemyBlacklistZone.ValueMember = "Key";
+            EnemyBlacklistZone.DisplayMember = "Value";
+            EnemyBlacklistZone.DataSource = new BindingSource(ZoneList, null);
+            EnemyBlacklistZone.SelectedIndex = 0;
+
 
             blacklistLabel.Text = "";
             yggItemLabel.Text = "";
@@ -228,7 +248,6 @@ namespace NGUInjector
             ManageInventory.Checked = newSettings.ManageInventory;
             ManageBoostConvert.Checked = newSettings.AutoConvertBoosts;
             SwapTitanLoadout.Checked = newSettings.SwapTitanLoadouts;
-            HighestTitanDropdown.SelectedIndex = newSettings.HighestAKZone;
             BossesOnly.Checked = newSettings.SnipeBossOnly;
             PrecastBuffs.Checked = newSettings.PrecastBuffs;
             RecoverHealth.Checked = newSettings.RecoverHealth;
@@ -277,6 +296,11 @@ namespace NGUInjector
             IronPillThreshold.Value = newSettings.IronPillThreshold;
             GuffAThreshold.Value = newSettings.BloodMacGuffinAThreshold;
             GuffBThreshold.Value = newSettings.BloodMacGuffinBThreshold;
+            YggSwapThreshold.Value = newSettings.YggSwapThreshold;
+
+            MoreBlockParry.Checked = newSettings.MoreBlockParry;
+            WishSortOrder.Checked = newSettings.WishSortOrder;
+            WishSortPriorities.Checked = newSettings.WishSortPriorities;
 
             SetTitanGoldBox(newSettings);
             SetTitanSwapBox(newSettings);
@@ -389,6 +413,19 @@ namespace NGUInjector
             else
             {
                 WishPriority.Items.Clear();
+            }
+
+            temp = newSettings.BlacklistedBosses.ToDictionary(x => x, x => SpriteEnemyList[x]);
+            if (temp.Count > 0)
+            {
+                BlacklistedBosses.DataSource = null;
+                BlacklistedBosses.DataSource = new BindingSource(temp, null);
+                BlacklistedBosses.ValueMember = "Key";
+                BlacklistedBosses.DisplayMember = "Value";
+            }
+            else
+            {
+                BlacklistedBosses.Items.Clear();
             }
 
             Refresh();
@@ -660,13 +697,6 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.SwapTitanLoadouts = SwapTitanLoadout.Checked;
-        }
-
-        private void HighestTitanDropdown_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (_initializing) return;
-            var selected = HighestTitanDropdown.SelectedIndex;
-            Main.Settings.HighestAKZone = selected;
         }
 
         private void titanAddItem_TextChanged(object sender, EventArgs e)
@@ -1216,10 +1246,6 @@ namespace NGUInjector
                 }
 
                 YggdrasilManager.HarvestAll();
-                LoadoutManager.RestoreGear();
-                LoadoutManager.ReleaseLock();
-                DiggerManager.RestoreDiggers();
-                DiggerManager.ReleaseLock();
             }
         }
 
@@ -1337,6 +1363,77 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.CastBloodSpells = CastBloodSpells.Checked;
+        }
+
+        private void QuestCombatMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.QuestCombatMode = QuestCombatMode.SelectedIndex;
+        }
+
+        private void YggSwapThreshold_ValueChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.YggSwapThreshold = decimal.ToInt32(YggSwapThreshold.Value);
+        }
+
+        private void MoreBlockParry_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.MoreBlockParry = MoreBlockParry.Checked;
+        }
+
+        private void EnemyBlacklistZone_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selected = EnemyBlacklistZone.SelectedItem;
+            var item = (KeyValuePair<int, string>) selected;
+            var values = Main.Character.adventureController.enemyList[item.Key]
+                .Select(x => new KeyValuePair<int, string>(x.spriteID, x.name)).ToList();
+            EnemyBlacklistNames.DataSource = null;
+            EnemyBlacklistNames.ValueMember = "Key";
+            EnemyBlacklistNames.DisplayMember = "Value";
+            EnemyBlacklistNames.DataSource = values;
+        }
+
+        private void BlacklistRemoveEnemyButton_Click(object sender, EventArgs e)
+        {
+            var item = BlacklistedBosses.SelectedItem;
+            if (item == null)
+                return;
+
+            var id = (KeyValuePair<int, string>)item;
+
+            var temp = Main.Settings.BlacklistedBosses.ToList();
+            temp.RemoveAll(x => x == id.Key);
+            Main.Settings.BlacklistedBosses = temp.ToArray();
+        }
+
+        private void BlacklistAddEnemyButton_Click(object sender, EventArgs e)
+        {
+            var item = EnemyBlacklistNames.SelectedItem;
+            if (item == null) return;
+
+            var id = (KeyValuePair<int, string>)item;
+            var temp = Main.Settings.BlacklistedBosses.ToList();
+            temp.Add(id.Key);
+            Main.Settings.BlacklistedBosses = temp.ToArray();
+        }
+
+        private void BoostAvgReset_Click(object sender, EventArgs e)
+        {
+            Main.reference.ResetBoostProgress();
+        }
+
+        private void WishSortPriorities_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.WishSortPriorities = WishSortPriorities.Checked;
+        }
+
+        private void WishSortOrder_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.WishSortOrder = WishSortOrder.Checked;
         }
 
         private void balanceMayo_CheckedChanged(object sender, EventArgs e)

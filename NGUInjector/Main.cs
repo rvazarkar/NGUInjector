@@ -40,7 +40,8 @@ namespace NGUInjector
         private static CustomAllocation _profile;
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
-        internal const string Version = "3.1.0";
+        internal static WishManager WishManager;
+        internal const string Version = "3.3.0rc";
         private static int _furthestZone;
 
         internal static bool Test { get; set; }
@@ -191,7 +192,6 @@ namespace NGUInjector
                         PriorityBoosts = new int[] { },
                         YggdrasilLoadout = new int[] { },
                         SwapYggdrasilLoadouts = false,
-                        HighestAKZone = 0,
                         SwapTitanLoadouts = false,
                         TitanLoadout = new int[] { },
                         ManageDiggers = true,
@@ -256,6 +256,21 @@ namespace NGUInjector
                         GoldCBlockMode = false,
                         DebugAllocation = false,
                         AdventureTargetITOPOD = false,
+                        ITOPODRecoverHP = false,
+                        ITOPODCombatMode = 0,
+                        ITOPODBeastMode = true,
+                        ITOPODFastCombat = true,
+                        ITOPODPrecastBuffs = false,
+                        DisableOverlay = false,
+                        OptimizeITOPODFloor = false,
+                        YggSwapThreshold = 1,
+                        UpgradeDiggers = true,
+                        BlacklistedBosses = new int[0],
+                        SpecialBoostBlacklist = new int[0],
+                        MoreBlockParry = false,
+                        WishSortOrder = false,
+                        WishSortPriorities = false
+                        AdventureTargetITOPOD = false,
                         BalanceMayo = false,
                         TrashCards = false,
                         CardsTrashQuality = 0
@@ -295,6 +310,22 @@ namespace NGUInjector
                     Settings.TitanSwapTargets = new bool[ZoneHelpers.TitanZones.Length];
                     Settings.SetSaveDisabled(false);
                 }
+
+                if (Settings.SpecialBoostBlacklist == null)
+                {
+                    Settings.SetSaveDisabled(true);
+                    Settings.SpecialBoostBlacklist = new int[0];
+                    Settings.SetSaveDisabled(false);
+                }
+
+                if (Settings.BlacklistedBosses == null)
+                {
+                    Settings.SetSaveDisabled(true);
+                    Settings.BlacklistedBosses = new int[0];
+                    Settings.SetSaveDisabled(false);
+                }
+
+                WishManager = new WishManager();
 
                 LoadAllocation();
                 LoadAllocationProfiles();
@@ -363,6 +394,7 @@ namespace NGUInjector
                 InvokeRepeating("ShowBoostProgress", 0.0f, 60.0f);
                 InvokeRepeating("SetResnipe", 0f, 1f);
 
+
                 reference = this;
             }
             catch (Exception e)
@@ -381,6 +413,7 @@ namespace NGUInjector
         public void Update()
         {
             _timeLeft -= Time.deltaTime;
+            _combManager.UpdateFightTimer(Time.deltaTime);
 
             settingsForm.UpdateProgressBar((int)Math.Floor(_timeLeft / 10 * 100));
 
@@ -599,9 +632,9 @@ namespace NGUInjector
                 var spaghetti = (Character.bloodMagicController.lootBonus() - 1) * 100;
                 var counterfeit = ((Character.bloodMagicController.goldBonus() - 1)) * 100;
                 var number = Character.bloodMagic.rebirthPower;
-                Character.bloodMagic.rebirthAutoSpell = Settings.BloodNumberThreshold > 0 && Settings.BloodNumberThreshold >= number;
-                Character.bloodMagic.goldAutoSpell = Settings.CounterfeitThreshold > 0 && Settings.CounterfeitThreshold >= counterfeit;
-                Character.bloodMagic.lootAutoSpell = Settings.SpaghettiThreshold > 0 && Settings.SpaghettiThreshold >= spaghetti;
+                Character.bloodMagic.rebirthAutoSpell = Settings.BloodNumberThreshold > 0 && number < Settings.BloodNumberThreshold;
+                Character.bloodMagic.goldAutoSpell = Settings.CounterfeitThreshold > 0 && counterfeit < Settings.CounterfeitThreshold;
+                Character.bloodMagic.lootAutoSpell = Settings.SpaghettiThreshold > 0 && spaghetti < Settings.SpaghettiThreshold;
                 Character.bloodSpells.updateGoldToggleState();
                 Character.bloodSpells.updateLootToggleState();
                 Character.bloodSpells.updateRebirthToggleState();
@@ -767,6 +800,8 @@ namespace NGUInjector
 
                 _profile.DoAllocations();
 
+                _profile.CastBloodSpells();
+
                 if (Settings.AutoQuest && Character.buttons.beast.interactable)
                 {
                     var converted = Character.inventory.GetConvertedInventory().ToArray();
@@ -858,18 +893,23 @@ namespace NGUInjector
             }
 
             var questZone = _questManager.IsQuesting();
-            if (questZone > 0)
+            if (!Settings.CombatEnabled || !ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) ||
+                ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) &&
+                !ZoneHelpers.TitanSpawningSoon(Array.IndexOf(ZoneHelpers.TitanZones, Settings.SnipeZone)))
             {
-                if (Settings.QuestCombatMode == 0)
+                if (questZone > 0)
                 {
-                    _combManager.ManualZone(questZone, false, false, false, Settings.QuestFastCombat, Settings.BeastMode);
-                }
-                else
-                {
-                    _combManager.IdleZone(questZone, false, false);
-                }
+                    if (Settings.QuestCombatMode == 0)
+                    {
+                        _combManager.ManualZone(questZone, false, false, false, Settings.QuestFastCombat, Settings.BeastMode);
+                    }
+                    else
+                    {
+                        _combManager.IdleZone(questZone, false, false);
+                    }
 
-                return;
+                    return;
+                }
             }
 
             if (!Settings.CombatEnabled)
@@ -1049,6 +1089,11 @@ namespace NGUInjector
         public void OnApplicationQuit()
         {
             Loader.Unload();
+        }
+
+        public void ResetBoostProgress()
+        {
+
         }
     }
 }

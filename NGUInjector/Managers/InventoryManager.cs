@@ -28,9 +28,22 @@ namespace NGUInjector.Managers
             }
         }
 
+        public void Reset()
+        {
+            queue.Clear();
+        }
+
         public decimal Avg()
         {
-            return queue.Average(x => x);
+            try
+            {
+                return queue.Average(x => x);
+            }
+            catch (Exception e)
+            {
+                Log(e.Message);
+                return 0;
+            }
         }
     }
 
@@ -77,16 +90,26 @@ namespace NGUInjector.Managers
         private readonly FixedSizedQueue _cubeBoostAvg = new FixedSizedQueue(60);
 
 
-        //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane, Guffs
-        private readonly int[] _filterExcludes = { 66, 92, 163, 120, 154, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287  };
+        //Wandoos 98, Giant Seed, Wandoos XL, Lonely Flubber, Wanderer's Cane, Guffs, Lemmi
+        private readonly int[] _filterExcludes = { 66, 92, 163, 120, 154, 195, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287  };
         public InventoryManager()
         {
             _character = Main.Character;
             _controller = Controller;
             var temp = _pendants.Concat(_lootys).ToList();
+            //Wanderer's Cane
             temp.Add(154);
+            //Lonely Flubber
             temp.Add(120);
+            //A Giant Seed
+            temp.Add(92);
             _convertibles = temp.ToArray();
+        }
+
+        internal void Reset()
+        {
+            _invBoostAvg.Reset();
+            _cubeBoostAvg.Reset();
         }
 
         internal ih[] GetBoostSlots(ih[] ci)
@@ -295,6 +318,9 @@ namespace NGUInjector.Managers
 
             foreach (var item in grouped)
             {
+                if (item.All(x => x.locked))
+                    continue;
+
                 var target = item.MaxItem();
 
                 Log($"Merging {SanitizeName(target.name)} in slot {target.slot}");
@@ -365,6 +391,9 @@ namespace NGUInjector.Managers
                               _previousBoostsNeeded.Special;
 
                     var diff = current - old;
+
+                    if (diff == 0) return;
+
                     //If diff is > 0, then we either added another item to boost or we levelled something. Don't add the diff to average
                     if (diff <= 0)
                     {
