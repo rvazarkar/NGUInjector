@@ -103,6 +103,10 @@ namespace NGUInjector.Managers
                 controller.itopodEndInput.text = Main.Character.adventureController.maxItopodLevel().ToString();
                 Main.Log("Pushed optimal floor up by 1 because highest floor is hit");
                 controller.verifyItopodInputs();
+                if (level !== optimal)
+                {
+                    controller.zoneSelector.changeZone(1000);
+                }
             }
             else
             {
