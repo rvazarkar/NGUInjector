@@ -1084,7 +1084,7 @@ namespace NGUInjector
         {
             wishErrorProvider.SetError(WishAddInput, "");
             var val = decimal.ToInt32(WishAddInput.Value);
-            if (val < 0 || val > 224)
+            if (val < 0 || val > 225)
             {
                 wishErrorProvider.SetError(WishAddInput, "Not a valid Wish ID");
                 return;
@@ -1115,7 +1115,7 @@ namespace NGUInjector
         {
             wishErrorProvider.SetError(WishAddInput, "");
             var val = decimal.ToInt32(WishAddInput.Value);
-            if (val < 0 || val > 224)
+            if (val < 0 || val > 225)
                 return;
             var wishName = Main.Character.wishesController.properties[val].wishName;
             AddWishLabel.Text = wishName;
@@ -1127,7 +1127,7 @@ namespace NGUInjector
             {
                 wishErrorProvider.SetError(WishAddInput, "");
                 var val = decimal.ToInt32(WishAddInput.Value);
-                if (val < 0 || val > 224)
+                if (val < 0 || val > 225)
                 {
                     wishErrorProvider.SetError(WishAddInput, "Not a valid Wish ID");
                     return;
