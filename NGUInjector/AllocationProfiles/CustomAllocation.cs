@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Serialization;
 using NGUInjector.AllocationProfiles.BreakpointTypes;
+using NGUInjector.AllocationProfiles.RebirthStuff;
 using NGUInjector.Managers;
 using SimpleJSON;
 using UnityEngine;
@@ -48,8 +49,23 @@ namespace NGUInjector.AllocationProfiles
                     var parsed = JSON.Parse(text);
                     var breakpoints = parsed["Breakpoints"];
                     _wrapper = new BreakpointWrapper {Breakpoints = new Breakpoints()};
-                    var rbtime = ParseTime(breakpoints["RebirthTime"]);
-                    _wrapper.Breakpoints.RebirthTime = rbtime;
+                    var rb = breakpoints["Rebirth"];
+                    var rbtime = breakpoints["RebirthTime"];
+
+                    if (rb.IsNull)
+                    {
+                        _wrapper.Breakpoints.Rebirth = rbtime.IsNull ? new NoRebirth() : BaseRebirth.CreateRebirth(ParseTime(rbtime), "time", new string[0]);
+                    }
+                    else
+                    {
+                        if (rb["Type"].IsNull || rb["Target"].IsNull)
+                            _wrapper.Breakpoints.Rebirth = new NoRebirth();
+
+                        var type = rb["Type"].Value.ToUpper();
+                        var target = type == "TIME" ? ParseTime(rb["Target"].AsInt) : rb["Target"].AsInt;
+                        _wrapper.Breakpoints.Rebirth = BaseRebirth.CreateRebirth(target, type, rb["Challenges"].AsArray.Children.Select(x => x.Value.ToUpper()).ToArray());
+                    }
+
                     _wrapper.Breakpoints.Magic = breakpoints["Magic"].Children.Select(bp => new AllocationBreakPoint
                     {
                         Time = ParseTime(bp["Time"]),
@@ -94,11 +110,6 @@ namespace NGUInjector.AllocationProfiles
                         .Select(bp => new NGUDiffBreakpoint {Time = ParseTime(bp["Time"]), Diff = bp["Diff"].AsInt})
                         .Where(x => x.Diff <= 2).OrderByDescending(x => x.Time).ToArray();
 
-                    if (_wrapper.Breakpoints.RebirthTime < 180 && _wrapper.Breakpoints.RebirthTime != -1)
-                    {
-                        _wrapper.Breakpoints.RebirthTime = -1;
-                        Main.Log("Invalid rebirth time in allocation. Rebirth disabled");
-                    }
 
                     Main.Log(BuildAllocationString());
 
@@ -117,7 +128,7 @@ namespace NGUInjector.AllocationProfiles
                     Main.Log("Failed to load allocation file. Resave to reload");
                     Main.Log(e.Message);
                     Main.Log(e.StackTrace);
-                    _wrapper = new BreakpointWrapper {Breakpoints = {RebirthTime = -1}};
+                    _wrapper = new BreakpointWrapper {Breakpoints = {Rebirth = new NoRebirth()}};
 
                 }
             }
@@ -227,13 +238,16 @@ namespace NGUInjector.AllocationProfiles
             builder.AppendLine($"{_wrapper.Breakpoints.Diggers.Length} Digger Breakpoints");
             builder.AppendLine($"{_wrapper.Breakpoints.Wandoos.Length} Wandoos Breakpoints");
             builder.AppendLine($"{_wrapper.Breakpoints.NGUBreakpoints.Length} NGU Difficulty Breakpoints");
-            if (_wrapper.Breakpoints.RebirthTime > 0)
+            var rb = _wrapper.Breakpoints.Rebirth;
+            if (rb is NoRebirth)
             {
-                builder.AppendLine($"Rebirth at {_wrapper.Breakpoints.RebirthTime} seconds");
-            }
-            else
+                builder.AppendLine($"Rebirth Disabled.");
+            }else if (rb is NumberRebirth nrb)
             {
-                builder.AppendLine($"No auto rebirth.");
+                builder.AppendLine($"Rebirthing when number bonus is {nrb.MultTarget}x previous number");
+            }else if (rb is TimeRebirth trb)
+            {
+                builder.AppendLine($"Rebirthing at {trb.RebirthTime} seconds");
             }
 
             return builder.ToString();
@@ -333,43 +347,17 @@ namespace NGUInjector.AllocationProfiles
             if (_wrapper == null)
                 return;
 
-            if (_wrapper.Breakpoints.RebirthTime < 0)
-                return;
-
-            if (_character.rebirthTime.totalseconds < _wrapper.Breakpoints.RebirthTime)
-                return;
-
-            if (Main.Settings.SwapYggdrasilLoadouts && Main.Settings.YggdrasilLoadout.Length > 0 &&
-                YggdrasilManager.AnyHarvestable())
-            {
-                if (!LoadoutManager.TryYggdrasilSwap() || !DiggerManager.TryYggSwap())
+            if (_wrapper.Breakpoints.Rebirth.RebirthAvailable())
+                if (_wrapper.Breakpoints.Rebirth.DoRebirth())
                 {
-                    Main.Log("Delaying rebirth to wait for ygg loadout/diggers");
-                    return;
+                    _currentDiggerBreakpoint = null;
+                    _currentEnergyBreakpoint = null;
+                    _currentGearBreakpoint = null;
+                    _currentWandoosBreakpoint = null;
+                    _currentMagicBreakpoint = null;
+                    _currentR3Breakpoint = null;
+                    _currentNguBreakpoint = null;
                 }
-
-                YggdrasilManager.HarvestAll();
-                Main.Log("Delaying rebirth 1 loop to allow fruit effects");
-                return;
-            }
-
-            DiggerManager.UpgradeCheapestDigger();
-
-            CastBloodSpells(true);
-
-
-            _currentDiggerBreakpoint = null;
-            _currentEnergyBreakpoint = null;
-            _currentGearBreakpoint = null;
-            _currentWandoosBreakpoint = null;
-            _currentMagicBreakpoint = null;
-            _currentR3Breakpoint = null;
-            _currentNguBreakpoint = null;
-
-            Main.Log("Rebirth time hit, performing rebirth");
-            var controller = Main.Character.rebirth;
-            controller.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                .Single(x => x.Name == "engage" && x.GetParameters().Length == 0).Invoke(controller, null);
         }
 
         public void CastBloodSpells()
@@ -382,9 +370,9 @@ namespace NGUInjector.AllocationProfiles
             if (!Main.Settings.CastBloodSpells)
                 return;
 
-            if (_wrapper.Breakpoints.RebirthTime >= 180 && Main.Settings.AutoRebirth)
+            if (_wrapper.Breakpoints.Rebirth is TimeRebirth trb && Main.Settings.AutoRebirth)
             {
-                if (((_wrapper.Breakpoints.RebirthTime - _character.rebirthTime.totalseconds) < (30 * 60)) && !rebirth)
+                if (((trb.RebirthTime - _character.rebirthTime.totalseconds) < (30 * 60)) && !rebirth)
                 {
                     return;
                 }
@@ -832,7 +820,7 @@ namespace NGUInjector.AllocationProfiles
         [SerializeField] public GearBreakpoint[] Gear;
         [SerializeField] public DiggerBreakpoint[] Diggers;
         [SerializeField] public WandoosBreakpoint[] Wandoos;
-        [SerializeField] public int RebirthTime;
+        [SerializeField] public BaseRebirth Rebirth;
         [SerializeField] public NGUDiffBreakpoint[] NGUBreakpoints;
 
     }

@@ -404,8 +404,8 @@ namespace NGUInjector.Managers
                     //Wait for Charge to be ready again, as well as other buffs
                     if (ChargeUnlocked() && !ChargeReady()) return;
                     if (ParryUnlocked() && !ParryReady()) return;
-                    if (UltimateBuffUnlocked() && !UltimateBuffReady()) return;
                     if (MegaBuffUnlocked() && !MegaBuffReady()) return;
+                    if (UltimateBuffUnlocked() && !UltimateBuffReady()) return;
                     if (DefensiveBuffUnlocked() && !DefensiveBuffReady()) return;
                 }
 
