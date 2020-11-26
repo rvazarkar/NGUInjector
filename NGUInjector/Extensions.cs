@@ -12,6 +12,12 @@ namespace NGUInjector
 {
     public static class Extensions
     {
+        public static MethodInfo GetPrivateMethod(this Type t, string method)
+        {
+            return t.GetMethod(method, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.NonPublic);
+        }
+
+
         public static ih MaxItem(this IEnumerable<ih> items)
         {
             return items.Aggregate(
