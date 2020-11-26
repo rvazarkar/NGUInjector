@@ -269,8 +269,7 @@ namespace NGUInjector
                         SpecialBoostBlacklist = new int[0],
                         MoreBlockParry = false,
                         WishSortOrder = false,
-                        WishSortPriorities = false
-                        AdventureTargetITOPOD = false,
+                        WishSortPriorities = false,
                         BalanceMayo = false,
                         TrashCards = false,
                         CardsTrashQuality = 0

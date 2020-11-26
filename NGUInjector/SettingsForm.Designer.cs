@@ -80,7 +80,6 @@
             this.ManageEnergy = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.YggSwapThreshold = new System.Windows.Forms.NumericUpDown();
-            this.label28 = new System.Windows.Forms.Label();
             this.HarvestSafety = new System.Windows.Forms.CheckBox();
             this.HarvestAllButton = new System.Windows.Forms.Button();
             this.ActivateFruits = new System.Windows.Forms.CheckBox();
@@ -128,10 +127,8 @@
             this.BlacklistAddEnemyButton = new System.Windows.Forms.Button();
             this.label31 = new System.Windows.Forms.Label();
             this.EnemyBlacklistNames = new System.Windows.Forms.ComboBox();
-            this.label30 = new System.Windows.Forms.Label();
             this.BlacklistRemoveEnemyButton = new System.Windows.Forms.Button();
             this.EnemyBlacklistZone = new System.Windows.Forms.ComboBox();
-            this.label29 = new System.Windows.Forms.Label();
             this.BlacklistedBosses = new System.Windows.Forms.ListBox();
             this.MoreBlockParry = new System.Windows.Forms.CheckBox();
             this.ITOPODBeastMode = new System.Windows.Forms.CheckBox();
@@ -210,11 +207,11 @@
             this.tabPage11 = new System.Windows.Forms.TabPage();
             this.AddCardType = new System.Windows.Forms.Button();
             this.CardTypes = new System.Windows.Forms.ComboBox();
-            this.label30 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
             this.CardTypeList = new System.Windows.Forms.ListBox();
             this.AutoCastCards = new System.Windows.Forms.CheckBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
             this.TrashQuality = new System.Windows.Forms.ComboBox();
             this.TrashCards = new System.Windows.Forms.CheckBox();
             this.balanceMayo = new System.Windows.Forms.CheckBox();
@@ -611,7 +608,6 @@
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.YggSwapThreshold);
-            this.tabPage3.Controls.Add(this.label28);
             this.tabPage3.Controls.Add(this.HarvestSafety);
             this.tabPage3.Controls.Add(this.HarvestAllButton);
             this.tabPage3.Controls.Add(this.ActivateFruits);
@@ -642,11 +638,6 @@
             0,
             0});
             this.YggSwapThreshold.ValueChanged += new System.EventHandler(this.YggSwapThreshold_ValueChanged);
-            // 
-            // label28
-            // 
-            resources.ApplyResources(this.label28, "label28");
-            this.label28.Name = "label28";
             // 
             // HarvestSafety
             // 
@@ -1006,10 +997,8 @@
             this.tabPage6.Controls.Add(this.BlacklistAddEnemyButton);
             this.tabPage6.Controls.Add(this.label31);
             this.tabPage6.Controls.Add(this.EnemyBlacklistNames);
-            this.tabPage6.Controls.Add(this.label30);
             this.tabPage6.Controls.Add(this.BlacklistRemoveEnemyButton);
             this.tabPage6.Controls.Add(this.EnemyBlacklistZone);
-            this.tabPage6.Controls.Add(this.label29);
             this.tabPage6.Controls.Add(this.BlacklistedBosses);
             this.tabPage6.Controls.Add(this.MoreBlockParry);
             this.tabPage6.Controls.Add(this.ITOPODBeastMode);
@@ -1061,11 +1050,6 @@
             resources.ApplyResources(this.EnemyBlacklistNames, "EnemyBlacklistNames");
             this.EnemyBlacklistNames.Name = "EnemyBlacklistNames";
             // 
-            // label30
-            // 
-            resources.ApplyResources(this.label30, "label30");
-            this.label30.Name = "label30";
-            // 
             // BlacklistRemoveEnemyButton
             // 
             resources.ApplyResources(this.BlacklistRemoveEnemyButton, "BlacklistRemoveEnemyButton");
@@ -1079,11 +1063,6 @@
             resources.ApplyResources(this.EnemyBlacklistZone, "EnemyBlacklistZone");
             this.EnemyBlacklistZone.Name = "EnemyBlacklistZone";
             this.EnemyBlacklistZone.SelectedIndexChanged += new System.EventHandler(this.EnemyBlacklistZone_SelectedIndexChanged);
-            // 
-            // label29
-            // 
-            resources.ApplyResources(this.label29, "label29");
-            this.label29.Name = "label29";
             // 
             // BlacklistedBosses
             // 
@@ -1677,11 +1656,11 @@
             // 
             this.tabPage11.Controls.Add(this.AddCardType);
             this.tabPage11.Controls.Add(this.CardTypes);
-            this.tabPage11.Controls.Add(this.label30);
+            this.tabPage11.Controls.Add(this.label35);
             this.tabPage11.Controls.Add(this.CardTypeList);
             this.tabPage11.Controls.Add(this.AutoCastCards);
-            this.tabPage11.Controls.Add(this.label29);
-            this.tabPage11.Controls.Add(this.label28);
+            this.tabPage11.Controls.Add(this.label34);
+            this.tabPage11.Controls.Add(this.label33);
             this.tabPage11.Controls.Add(this.TrashQuality);
             this.tabPage11.Controls.Add(this.TrashCards);
             this.tabPage11.Controls.Add(this.balanceMayo);
@@ -1702,10 +1681,10 @@
             resources.ApplyResources(this.CardTypes, "CardTypes");
             this.CardTypes.Name = "CardTypes";
             // 
-            // label30
+            // label35
             // 
-            resources.ApplyResources(this.label30, "label30");
-            this.label30.Name = "label30";
+            resources.ApplyResources(this.label35, "label35");
+            this.label35.Name = "label35";
             // 
             // CardTypeList
             // 
@@ -1720,15 +1699,15 @@
             this.AutoCastCards.UseVisualStyleBackColor = true;
             this.AutoCastCards.CheckedChanged += new System.EventHandler(this.AutoCastCards_CheckedChanged);
             // 
-            // label29
+            // label34
             // 
-            resources.ApplyResources(this.label29, "label29");
-            this.label29.Name = "label29";
+            resources.ApplyResources(this.label34, "label34");
+            this.label34.Name = "label34";
             // 
-            // label28
+            // label33
             // 
-            resources.ApplyResources(this.label28, "label28");
-            this.label28.Name = "label28";
+            resources.ApplyResources(this.label33, "label33");
+            this.label33.Name = "label33";
             // 
             // TrashQuality
             // 
@@ -1989,13 +1968,13 @@
         private System.Windows.Forms.Label label123;
         private System.Windows.Forms.CheckBox CastBloodSpells;
         private System.Windows.Forms.NumericUpDown YggSwapThreshold;
-        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label33;
         private System.Windows.Forms.CheckBox MoreBlockParry;
-        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label34;
         private System.Windows.Forms.ListBox BlacklistedBosses;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.ComboBox EnemyBlacklistNames;
-        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Button BlacklistRemoveEnemyButton;
         private System.Windows.Forms.ComboBox EnemyBlacklistZone;
         private System.Windows.Forms.Button BlacklistAddEnemyButton;
@@ -2005,14 +1984,11 @@
         private System.Windows.Forms.CheckBox WishSortPriorities;
         private System.Windows.Forms.TabPage tabPage11;
         private System.Windows.Forms.CheckBox balanceMayo;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.Label label28;
         private System.Windows.Forms.ComboBox TrashQuality;
         private System.Windows.Forms.CheckBox TrashCards;
         private System.Windows.Forms.CheckBox AutoCastCards;
         private System.Windows.Forms.Button AddCardType;
         private System.Windows.Forms.ComboBox CardTypes;
-        private System.Windows.Forms.Label label30;
         private System.Windows.Forms.ListBox CardTypeList;
     }
 }
