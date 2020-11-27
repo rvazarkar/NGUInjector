@@ -417,8 +417,8 @@
             // 
             resources.ApplyResources(this.IronPillThreshold, "IronPillThreshold");
             this.IronPillThreshold.Maximum = new decimal(new int[] {
-            9999999,
-            0,
+            -1530494977,
+            232830,
             0,
             0});
             this.IronPillThreshold.Name = "IronPillThreshold";
