@@ -101,8 +101,8 @@ namespace NGUInjector.Managers
             controller.itopodStartInput.text = optimal.ToString();
             if (optimal == Main.Character.adventure.highestItopodLevel - 1)
             {
-                optimal++;
-                Main.Log("Pushed optimal floor up by 1 because highest floor is hit");
+                optimal = Main.Character.adventureController.maxItopodLevel().ToString();
+                Main.Log("Highest ITOPOD floor is hit so setting climb mode");
             }
 
             controller.itopodEndInput.text = optimal.ToString();
