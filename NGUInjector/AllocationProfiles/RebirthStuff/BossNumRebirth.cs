@@ -5,9 +5,9 @@ using System.Text;
 
 namespace NGUInjector.AllocationProfiles.RebirthStuff
 {
-    internal class NumberRebirth : BaseRebirth
+    internal class BossNumRebirth : BaseRebirth
     {
-        internal double MultTarget { get; set; }
+        internal double NumBosses { get; set; }
         internal override bool RebirthAvailable()
         {
             if (!Main.Settings.AutoRebirth)
@@ -16,9 +16,8 @@ namespace NGUInjector.AllocationProfiles.RebirthStuff
             if (!MinTimeMet())
                 return false;
 
-            var target = CharObj.attackMulti * MultTarget;
-
-            return CharObj.nextAttackMulti > target;
+            var bosses = Math.Round(Math.Log10(CharObj.nextAttackMulti / CharObj.attackMulti));
+            return bosses > NumBosses;
         }
     }
 }

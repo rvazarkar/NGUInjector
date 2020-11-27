@@ -60,6 +60,17 @@ namespace NGUInjector.AllocationProfiles.RebirthStuff
                 };
             }
 
+            if (type == "BOSSES")
+            {
+                return new BossNumRebirth
+                {
+                    CharObj = Main.Character,
+                    ChallengeTargets = ParseChallenges(challenges),
+                    RebirthController = Main.Character.rebirth,
+                    NumBosses = target
+                };
+            }
+
             return new NoRebirth();
         }
 
@@ -121,6 +132,11 @@ namespace NGUInjector.AllocationProfiles.RebirthStuff
         {
             Main.Log($"Rebirthing into {rbType}");
             RebirthController.GetType().GetPrivateMethod(rbType)?.Invoke(RebirthController, null);
+        }
+
+        protected bool MinTimeMet()
+        {
+            return CharObj.rebirthTime.totalseconds > RebirthController.minRebirthTime();
         }
 
         protected void EngageRebirth()

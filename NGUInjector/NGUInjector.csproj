@@ -71,6 +71,7 @@
     <Compile Include="AllocationProfiles\AllocationProfile.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\NGUBP.cs" />
     <Compile Include="AllocationProfiles\RebirthStuff\BaseRebirth.cs" />
+    <Compile Include="AllocationProfiles\RebirthStuff\BossNumRebirth.cs" />
     <Compile Include="AllocationProfiles\RebirthStuff\NoRebirth.cs" />
     <Compile Include="AllocationProfiles\RebirthStuff\NumberRebirth.cs" />
     <Compile Include="AllocationProfiles\RebirthStuff\TimeRebirth.cs" />

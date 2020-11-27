@@ -247,6 +247,9 @@ namespace NGUInjector.AllocationProfiles
             }else if (rb is TimeRebirth trb)
             {
                 builder.AppendLine($"Rebirthing at {trb.RebirthTime} seconds");
+            }else if (rb is BossNumRebirth brb)
+            {
+                builder.AppendLine($"Rebirthing when number allows you +{brb.NumBosses} bosses");
             }
 
             if (rb.ChallengeTargets.Length > 0)
