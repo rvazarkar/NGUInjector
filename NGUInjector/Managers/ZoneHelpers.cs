@@ -99,10 +99,10 @@ namespace NGUInjector.Managers
             var optimal = CalculateBestItopodLevel();
             if (level == optimal) return;
             controller.itopodStartInput.text = optimal.ToString();
-            if (optimal == Main.Character.adventure.highestItopodLevel)
+            if (optimal == Main.Character.adventure.highestItopodLevel - 1)
             {
-                optimal++;
-                Main.Log("Pushed optimal floor up by 1 because highest floor is hit");
+                optimal = Main.Character.adventureController.maxItopodLevel().ToString();
+                Main.Log("Highest ITOPOD floor is hit so setting climb mode");
             }
 
             controller.itopodEndInput.text = optimal.ToString();
@@ -120,8 +120,8 @@ namespace NGUInjector.Managers
             var num2 = Convert.ToInt32(Math.Floor(Math.Log(num1, 1.05)));
             if (num2 < 1)
                 return 1;
-            if (num2 > c.adventure.highestItopodLevel)
-                num2 = c.adventure.highestItopodLevel;
+            if (num2 >= c.adventure.highestItopodLevel)
+                num2 = c.adventure.highestItopodLevel - 1;
             return num2;
         }
     }
