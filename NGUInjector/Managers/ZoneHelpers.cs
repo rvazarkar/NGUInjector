@@ -115,7 +115,7 @@ namespace NGUInjector.Managers
             var num2 = Convert.ToInt32(Math.Floor(Math.Log(num1, 1.05)));
             if (num2 < 1)
                 return 1;
-            var maxLevel = c.adventureController.maxItopodLevel()
+            var maxLevel = c.adventureController.maxItopodLevel();
             if (num2 > maxLevel)
                 num2 = maxLevel;
             return num2;
