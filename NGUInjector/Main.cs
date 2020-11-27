@@ -740,50 +740,53 @@ namespace NGUInjector
                         total += r3Purchase.customAllCost();
                     }
 
-                    var numPurchases = Math.Floor((double)(Character.realExp / total));
-
-                    if (numPurchases > 0)
+                    if (total > 0)
                     {
-                        var t = string.Empty;
-                        if (energy)
-                        {
-                            t += "/exp";
-                        }
-                        
-                        if (magic)
-                        {
-                            t += "/magic";
-                        }
+                        var numPurchases = Math.Floor((double)(Character.realExp / total));
 
-                        if (r3)
+                        if (numPurchases > 0)
                         {
-                            t += "/res3";
-                        }
-
-                        t = t.Substring(1);
-                        
-                        Log($"Buying {numPurchases} {t} purchases");
-                        for (var i = 0; i < numPurchases; i++)
-                        {
+                            var t = string.Empty;
                             if (energy)
                             {
-                                var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
-                                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                                ePurchaseMethod?.Invoke(ePurchase, null);
+                                t += "/exp";
                             }
 
                             if (magic)
                             {
-                                var mPurchaseMethod = mPurchase.GetType().GetMethod("buyCustomAll",
-                                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                                mPurchaseMethod?.Invoke(mPurchase, null);
+                                t += "/magic";
                             }
 
                             if (r3)
                             {
-                                var r3PurchaseMethod = r3Purchase.GetType().GetMethod("buyCustomAll",
-                                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                                r3PurchaseMethod?.Invoke(r3Purchase, null);
+                                t += "/res3";
+                            }
+
+                            t = t.Substring(1);
+
+                            Log($"Buying {numPurchases} {t} purchases");
+                            for (var i = 0; i < numPurchases; i++)
+                            {
+                                if (energy)
+                                {
+                                    var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
+                                        BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                    ePurchaseMethod?.Invoke(ePurchase, null);
+                                }
+
+                                if (magic)
+                                {
+                                    var mPurchaseMethod = mPurchase.GetType().GetMethod("buyCustomAll",
+                                        BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                    mPurchaseMethod?.Invoke(mPurchase, null);
+                                }
+
+                                if (r3)
+                                {
+                                    var r3PurchaseMethod = r3Purchase.GetType().GetMethod("buyCustomAll",
+                                        BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                    r3PurchaseMethod?.Invoke(r3Purchase, null);
+                                }
                             }
                         }
                     }
