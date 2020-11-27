@@ -96,19 +96,14 @@ namespace NGUInjector.Managers
             if (Main.Character.adventure.zone < 1000) return;
             var controller = Main.Character.adventureController;
             var level = controller.itopodLevel;
+            var highestOpen = Main.Character.adventure.highestItopodLevel;
             var optimal = CalculateBestItopodLevel();
-            if (level == optimal) return;
             controller.itopodStartInput.text = optimal.ToString();
-            if (optimal == Main.Character.adventure.highestItopodLevel - 1)
-            {
-                optimal = Main.Character.adventureController.maxItopodLevel();
-                Main.Log("Highest ITOPOD floor is hit so setting climb mode");
-            }
-
             controller.itopodEndInput.text = optimal.ToString();
             controller.verifyItopodInputs();
+            if (level == optimal) return; // we are on optimal floor
+            if (level < optimal && level >= highestOpen - 1) return; // we are climbing
             controller.zoneSelector.changeZone(1000);
-            //controller.log.AddEvent($"The CHEATER Floor Shifter changed your current floor from {level} to {optimal}");
         }
 
         internal static int CalculateBestItopodLevel()
@@ -120,8 +115,9 @@ namespace NGUInjector.Managers
             var num2 = Convert.ToInt32(Math.Floor(Math.Log(num1, 1.05)));
             if (num2 < 1)
                 return 1;
-            if (num2 >= c.adventure.highestItopodLevel)
-                num2 = c.adventure.highestItopodLevel - 1;
+            var maxLevel = c.adventureController.maxItopodLevel();
+            if (num2 > maxLevel)
+                num2 = maxLevel;
             return num2;
         }
     }
