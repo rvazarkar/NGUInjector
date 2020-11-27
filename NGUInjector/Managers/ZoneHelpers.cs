@@ -95,14 +95,14 @@ namespace NGUInjector.Managers
             if (Main.Character.arbitrary.boughtLazyITOPOD && Main.Character.arbitrary.lazyITOPODOn) return;
             if (Main.Character.adventure.zone < 1000) return;
             var controller = Main.Character.adventureController;
-            var level = controller.itopodLevel; // 511
-            var highestOpen = Main.Character.adventure.highestItopodLevel; // 512
-            var optimal = CalculateBestItopodLevel(); // 512
+            var level = controller.itopodLevel;
+            var highestOpen = Main.Character.adventure.highestItopodLevel;
+            var optimal = CalculateBestItopodLevel();
             controller.itopodStartInput.text = optimal.ToString();
             controller.itopodEndInput.text = optimal.ToString();
             controller.verifyItopodInputs();
             if (level == optimal) return; // we are on optimal floor
-            if (level < optimal && level >= highestOpen - 1) return;
+            if (level < optimal && level >= highestOpen - 1) return; // we are climbing
             controller.zoneSelector.changeZone(1000);
         }
 
