@@ -16,6 +16,9 @@ namespace NGUInjector.AllocationProfiles.RebirthStuff
             if (!MinTimeMet())
                 return false;
 
+            if (!CharObj.challenges.inChallenge && AnyChallengesValid())
+                return true;
+
             var target = CharObj.attackMulti * MultTarget;
 
             return CharObj.nextAttackMulti > target;

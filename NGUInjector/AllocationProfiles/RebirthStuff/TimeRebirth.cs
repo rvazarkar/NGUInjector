@@ -17,6 +17,9 @@ namespace NGUInjector.AllocationProfiles.RebirthStuff
             if (!MinTimeMet())
                 return false;
 
+            if (!CharObj.challenges.inChallenge && AnyChallengesValid())
+                return true;
+
             var time = CharObj.rebirthTime.totalseconds;
             return time >= RebirthTime;
         }

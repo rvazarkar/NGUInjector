@@ -146,6 +146,69 @@ namespace NGUInjector.AllocationProfiles.RebirthStuff
                 .Single(x => x.Name == "engage" && x.GetParameters().Length == 0).Invoke(RebirthController, null);
         }
 
+        protected bool AnyChallengesValid()
+        {
+            if (ChallengeTargets.Length == 0)
+                return false;
+
+            var cc = CharObj.allChallenges;
+            foreach (var rc in ChallengeTargets)
+            {
+                var i = rc.Index;
+                switch (rc.Challenge)
+                {
+                    case ChallengeType.Basic:
+                        if (i > cc.basicChallenge.maxCompletions || i != cc.basicChallenge.currentCompletions() + 1)
+                            continue;
+                        return true;
+                    case ChallengeType.NoAug:
+                        if (i > cc.noAugsChallenge.maxCompletions || i != cc.noAugsChallenge.currentCompletions() + 1)
+                            continue;
+                        return true;
+                    case ChallengeType.TwentyFourHour:
+                        if (i > cc.hour24Challenge.maxCompletions || i != cc.hour24Challenge.currentCompletions() + 1)
+                            continue;
+                        return true;
+                    case ChallengeType.OneHundredLC:
+                        if (i > cc.level100Challenge.maxCompletions || i != cc.level100Challenge.currentCompletions() + 1)
+                            continue;
+                        return true;
+                    case ChallengeType.NoEquip:
+                        if (i > cc.noEquipmentChallenge.maxCompletions || i != cc.noEquipmentChallenge.currentCompletions() + 1)
+                            continue;
+                        return true;
+                    case ChallengeType.Troll:
+                        if (i > cc.trollChallenge.maxCompletions || i != cc.trollChallenge.currentCompletions() + 1)
+                            continue;
+                        return true;
+                    case ChallengeType.NoRebirth:
+                        if (i > cc.noRebirthChallenge.maxCompletions || i != cc.noRebirthChallenge.currentCompletions() + 1)
+                            continue;
+                        return true;
+                    case ChallengeType.LaserSword:
+                        if (i > cc.laserSwordChallenge.maxCompletions || i != cc.laserSwordChallenge.currentCompletions() + 1)
+                            continue;
+                        return true;
+                    case ChallengeType.Blind:
+                        if (i > cc.blindChallenge.maxCompletions || i != cc.blindChallenge.currentCompletions() + 1)
+                            continue;
+                        return true;
+                    case ChallengeType.NoNGU:
+                        if (i > cc.NGUChallenge.maxCompletions || i != cc.NGUChallenge.currentCompletions() + 1)
+                            continue;
+                        return true;
+                    case ChallengeType.NoTimeMachine:
+                        if (i > cc.timeMachineChallenge.maxCompletions || i != cc.timeMachineChallenge.currentCompletions() + 1)
+                            continue;
+                        return true;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            return false;
+        }
+
         protected bool TryStartChallenge()
         {
             if (ChallengeTargets.Length == 0)

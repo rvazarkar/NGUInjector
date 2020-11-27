@@ -16,6 +16,9 @@ namespace NGUInjector.AllocationProfiles.RebirthStuff
             if (!MinTimeMet())
                 return false;
 
+            if (!CharObj.challenges.inChallenge && AnyChallengesValid())
+                return true;
+
             var bosses = Math.Round(Math.Log10(CharObj.nextAttackMulti / CharObj.attackMulti));
             return bosses > NumBosses;
         }
