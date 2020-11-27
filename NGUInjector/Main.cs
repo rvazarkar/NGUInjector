@@ -820,7 +820,14 @@ namespace NGUInjector
         internal static void LoadAllocation()
         {
             _profile = new CustomAllocation(_profilesDir, Settings.AllocationFile);
-            _profile.ReloadAllocation();
+            try
+            {
+                _profile.ReloadAllocation();
+            }
+            catch (Exception e)
+            {
+                Log(e.Message);
+            }
         }
 
         private static void LoadAllocationProfiles() {

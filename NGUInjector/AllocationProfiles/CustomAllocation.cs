@@ -51,18 +51,17 @@ namespace NGUInjector.AllocationProfiles
                     _wrapper = new BreakpointWrapper {Breakpoints = new Breakpoints()};
                     var rb = breakpoints["Rebirth"];
                     var rbtime = breakpoints["RebirthTime"];
-
-                    if (rb.IsNull)
+                    if (rb == null)
                     {
-                        _wrapper.Breakpoints.Rebirth = rbtime.IsNull ? new NoRebirth() : BaseRebirth.CreateRebirth(ParseTime(rbtime), "time", new string[0]);
+                        _wrapper.Breakpoints.Rebirth = rbtime == null ? new NoRebirth() : BaseRebirth.CreateRebirth(ParseTime(rbtime), "time", new string[0]);
                     }
                     else
                     {
-                        if (rb["Type"].IsNull || rb["Target"].IsNull)
+                        if (rb["Type"] == null || rb["Target"] == null)
                             _wrapper.Breakpoints.Rebirth = new NoRebirth();
 
                         var type = rb["Type"].Value.ToUpper();
-                        var target = type == "TIME" ? ParseTime(rb["Target"].AsInt) : rb["Target"].AsInt;
+                        var target = type == "TIME" ? ParseTime(rb["Target"]) : rb["Target"].AsInt;
                         _wrapper.Breakpoints.Rebirth = BaseRebirth.CreateRebirth(target, type, rb["Challenges"].AsArray.Children.Select(x => x.Value.ToUpper()).ToArray());
                     }
 
@@ -248,6 +247,12 @@ namespace NGUInjector.AllocationProfiles
             }else if (rb is TimeRebirth trb)
             {
                 builder.AppendLine($"Rebirthing at {trb.RebirthTime} seconds");
+            }
+
+            if (rb.ChallengeTargets.Length > 0)
+            {
+                builder.AppendLine(
+                    $"Challenge targets: {string.Join(",", rb.ChallengeTargets.Select(x => x.ToString()).ToArray())}");
             }
 
             return builder.ToString();

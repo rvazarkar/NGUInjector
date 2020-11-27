@@ -26,6 +26,11 @@ namespace NGUInjector.AllocationProfiles.RebirthStuff
     {
         internal ChallengeType Challenge { get; set; }
         internal int Index { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Challenge}-{Index}";
+        }
     }
 
     internal abstract class BaseRebirth
@@ -73,7 +78,7 @@ namespace NGUInjector.AllocationProfiles.RebirthStuff
             {"NOTM", ChallengeType.NoTimeMachine},
         };
 
-        protected RCTarget[] ChallengeTargets { get; set; }
+        internal RCTarget[] ChallengeTargets { get; set; }
         protected Rebirth RebirthController;
         internal abstract bool RebirthAvailable();
         protected Character CharObj;
@@ -99,7 +104,7 @@ namespace NGUInjector.AllocationProfiles.RebirthStuff
                 if (!CMap.ContainsKey(challenge))
                     continue;
 
-                if (!int.TryParse(split[0], out var index))
+                if (!int.TryParse(split[1], out var index))
                     continue;
 
                 parsed.Add(new RCTarget
