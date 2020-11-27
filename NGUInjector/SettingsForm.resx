@@ -417,6 +417,30 @@
   <data name="&gt;&gt;tabPage1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="ProfileEditButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>503, 13</value>
+  </data>
+  <data name="ProfileEditButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="ProfileEditButton.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="ProfileEditButton.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="&gt;&gt;ProfileEditButton.Name" xml:space="preserve">
+    <value>ProfileEditButton</value>
+  </data>
+  <data name="&gt;&gt;ProfileEditButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ProfileEditButton.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;ProfileEditButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="CastBloodSpells.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -442,7 +466,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;CastBloodSpells.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="IronPillThreshold.Location" type="System.Drawing.Point, System.Drawing">
     <value>277, 188</value>
@@ -463,7 +487,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;IronPillThreshold.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="label123.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -493,7 +517,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label123.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="GuffBThreshold.Location" type="System.Drawing.Point, System.Drawing">
     <value>277, 250</value>
@@ -514,7 +538,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;GuffBThreshold.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="label26.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -544,7 +568,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label26.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="GuffAThreshold.Location" type="System.Drawing.Point, System.Drawing">
     <value>277, 220</value>
@@ -565,7 +589,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;GuffAThreshold.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="label27.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -595,7 +619,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label27.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="UpgradeDiggers.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -625,7 +649,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;UpgradeDiggers.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="ManageNGUDiff.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -655,13 +679,13 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageNGUDiff.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="ChangeProfileFile.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="ChangeProfileFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>421, 12</value>
+    <value>393, 13</value>
   </data>
   <data name="ChangeProfileFile.Size" type="System.Drawing.Size, System.Drawing">
     <value>107, 23</value>
@@ -682,7 +706,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ChangeProfileFile.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="AllocationProfileFileLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -712,13 +736,13 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;AllocationProfileFileLabel.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="AllocationProfileFile.Location" type="System.Drawing.Point, System.Drawing">
     <value>124, 14</value>
   </data>
   <data name="AllocationProfileFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>291, 21</value>
+    <value>262, 21</value>
   </data>
   <data name="AllocationProfileFile.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
@@ -733,7 +757,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;AllocationProfileFile.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="ManageR3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -763,7 +787,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageR3.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="BloodNumberThreshold.Location" type="System.Drawing.Point, System.Drawing">
     <value>96, 246</value>
@@ -784,7 +808,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;BloodNumberThreshold.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="label18.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -814,7 +838,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label18.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>15</value>
   </data>
   <data name="SaveSpellCapButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -841,7 +865,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;SaveSpellCapButton.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>16</value>
   </data>
   <data name="AutoSpellSwap.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -871,7 +895,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;AutoSpellSwap.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>17</value>
   </data>
   <data name="label17.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -895,7 +919,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label17.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>18</value>
   </data>
   <data name="CounterfeitCap.Location" type="System.Drawing.Point, System.Drawing">
     <value>96, 220</value>
@@ -916,7 +940,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;CounterfeitCap.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>19</value>
   </data>
   <data name="label16.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -946,7 +970,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label16.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>20</value>
   </data>
   <data name="SpaghettiCap.Location" type="System.Drawing.Point, System.Drawing">
     <value>96, 190</value>
@@ -967,7 +991,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;SpaghettiCap.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>21</value>
   </data>
   <data name="label15.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -997,7 +1021,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label15.ZOrder" xml:space="preserve">
-    <value>21</value>
+    <value>22</value>
   </data>
   <data name="label14.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1027,7 +1051,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
-    <value>22</value>
+    <value>23</value>
   </data>
   <data name="AutoRebirth.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1057,7 +1081,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;AutoRebirth.ZOrder" xml:space="preserve">
-    <value>23</value>
+    <value>24</value>
   </data>
   <data name="ManageWandoos.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1087,7 +1111,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageWandoos.ZOrder" xml:space="preserve">
-    <value>24</value>
+    <value>25</value>
   </data>
   <data name="ManageDiggers.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1117,7 +1141,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageDiggers.ZOrder" xml:space="preserve">
-    <value>25</value>
+    <value>26</value>
   </data>
   <data name="ManageGear.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1147,7 +1171,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageGear.ZOrder" xml:space="preserve">
-    <value>26</value>
+    <value>27</value>
   </data>
   <data name="ManageMagic.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1177,7 +1201,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageMagic.ZOrder" xml:space="preserve">
-    <value>27</value>
+    <value>28</value>
   </data>
   <data name="ManageEnergy.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1207,7 +1231,7 @@
     <value>tabPage2</value>
   </data>
   <data name="&gt;&gt;ManageEnergy.ZOrder" xml:space="preserve">
-    <value>28</value>
+    <value>29</value>
   </data>
   <data name="tabPage2.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>

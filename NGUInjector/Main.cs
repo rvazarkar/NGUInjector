@@ -83,6 +83,11 @@ namespace NGUInjector
             AllocationWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
         }
 
+        internal static string GetProfilesDir()
+        {
+            return _profilesDir;
+        }
+
         internal void Unload()
         {
             try

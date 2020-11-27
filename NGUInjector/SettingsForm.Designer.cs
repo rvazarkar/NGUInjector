@@ -49,6 +49,7 @@
             this.AutoFightBosses = new System.Windows.Forms.CheckBox();
             this.AutoITOPOD = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ProfileEditButton = new System.Windows.Forms.Button();
             this.CastBloodSpells = new System.Windows.Forms.CheckBox();
             this.IronPillThreshold = new System.Windows.Forms.NumericUpDown();
             this.label123 = new System.Windows.Forms.Label();
@@ -364,6 +365,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.ProfileEditButton);
             this.tabPage2.Controls.Add(this.CastBloodSpells);
             this.tabPage2.Controls.Add(this.IronPillThreshold);
             this.tabPage2.Controls.Add(this.label123);
@@ -396,6 +398,13 @@
             resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // ProfileEditButton
+            // 
+            resources.ApplyResources(this.ProfileEditButton, "ProfileEditButton");
+            this.ProfileEditButton.Name = "ProfileEditButton";
+            this.ProfileEditButton.UseVisualStyleBackColor = true;
+            this.ProfileEditButton.Click += new System.EventHandler(this.ProfileEditButton_Click);
             // 
             // CastBloodSpells
             // 
@@ -1910,5 +1919,6 @@
         private System.Windows.Forms.Button BoostAvgReset;
         private System.Windows.Forms.CheckBox WishSortOrder;
         private System.Windows.Forms.CheckBox WishSortPriorities;
+        private System.Windows.Forms.Button ProfileEditButton;
     }
 }

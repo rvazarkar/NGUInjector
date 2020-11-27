@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -1401,6 +1403,13 @@ namespace NGUInjector
         {
             if (_initializing) return;
             Main.Settings.WishSortOrder = WishSortOrder.Checked;
+        }
+
+        private void ProfileEditButton_Click(object sender, EventArgs e)
+        {
+            var filename = Main.Settings.AllocationFile + ".json";
+            var path = Path.Combine(Main.GetProfilesDir(), filename);
+            Process.Start(path);
         }
     }
 }
