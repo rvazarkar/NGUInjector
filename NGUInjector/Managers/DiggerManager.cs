@@ -126,7 +126,7 @@ namespace NGUInjector.Managers
 
         internal static void RecapDiggers()
         {
-            for (var i = 0; i < Main.Character.diggers.diggers.Count; i++)
+            for (var i = Main.Character.diggers.diggers.Count-1; i >= 0 ; i--)
             {
                 if (Main.Character.diggers.diggers[i].active)
                 {
