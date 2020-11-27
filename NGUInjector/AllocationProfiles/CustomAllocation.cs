@@ -61,7 +61,7 @@ namespace NGUInjector.AllocationProfiles
                             _wrapper.Breakpoints.Rebirth = new NoRebirth();
 
                         var type = rb["Type"].Value.ToUpper();
-                        var target = type == "TIME" ? ParseTime(rb["Target"]) : rb["Target"].AsInt;
+                        var target = type == "TIME" ? ParseTime(rb["Target"]) : rb["Target"].AsDouble;
                         _wrapper.Breakpoints.Rebirth = BaseRebirth.CreateRebirth(target, type, rb["Challenges"].AsArray.Children.Select(x => x.Value.ToUpper()).ToArray());
                     }
 
@@ -191,7 +191,7 @@ namespace NGUInjector.AllocationProfiles
             }
         }
 
-        private int ParseTime(JSONNode timeNode)
+        private double ParseTime(JSONNode timeNode)
         {
             var time = 0;
 
@@ -833,35 +833,35 @@ namespace NGUInjector.AllocationProfiles
     [Serializable]
     internal class AllocationBreakPoint
     {
-        [SerializeField] public int Time;
+        [SerializeField] public double Time;
         [SerializeField] public BaseBreakpoint[] Priorities;
     }
 
     [Serializable]
     public class GearBreakpoint
     {
-        public int Time;
+        public double Time;
         public int[] Gear;
     }
 
     [Serializable]
     public class DiggerBreakpoint
     {
-        public int Time;
+        public double Time;
         public int[] Diggers;
     }
 
     [Serializable]
     public class WandoosBreakpoint
     {
-        public int Time;
+        public double Time;
         public int OS;
     }
 
     [Serializable]
     public class NGUDiffBreakpoint
     {
-        public int Time;
+        public double Time;
         public int Diff;
     }
 }

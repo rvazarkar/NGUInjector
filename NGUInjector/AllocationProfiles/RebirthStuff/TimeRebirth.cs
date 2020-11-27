@@ -4,7 +4,7 @@ namespace NGUInjector.AllocationProfiles.RebirthStuff
 {
     internal class TimeRebirth : BaseRebirth
     {
-        internal int RebirthTime { get; set; }
+        internal double RebirthTime { get; set; }
 
         internal override bool RebirthAvailable()
         {

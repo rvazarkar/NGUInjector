@@ -35,7 +35,7 @@ namespace NGUInjector.AllocationProfiles.RebirthStuff
 
     internal abstract class BaseRebirth
     {
-        internal static BaseRebirth CreateRebirth(int target, string type, string[] challenges)
+        internal static BaseRebirth CreateRebirth(double target, string type, string[] challenges)
         {
             type = type.ToUpper();
             if (type == "TIME")
