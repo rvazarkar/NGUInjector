@@ -418,6 +418,17 @@ namespace NGUInjector.Managers
                 }
             },
             {
+                40, new ZoneStats
+                {
+                    MPower = 1.28e32,
+                    MToughness = 3.2e31,
+                    IPower = 3.5e32,
+                    IToughness = 2.7e32,
+                    OPower = 1.0e33,
+                    Name = "Duck Duck Zone"
+                }
+            },
+            {
                 41, new ZoneStats
                 {
                     MPower = 3.15e32,
