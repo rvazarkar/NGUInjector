@@ -138,6 +138,13 @@ namespace NGUInjector.AllocationProfiles
                         }
                     };
 
+                    _currentDiggerBreakpoint = null;
+                    _currentEnergyBreakpoint = null;
+                    _currentGearBreakpoint = null;
+                    _currentWandoosBreakpoint = null;
+                    _currentMagicBreakpoint = null;
+                    _currentR3Breakpoint = null;
+                    _currentNguBreakpoint = null;
                 }
             }
             else
@@ -684,7 +691,11 @@ namespace NGUInjector.AllocationProfiles
 
         private AllocationBreakPoint GetCurrentBreakpoint(bool energy)
         {
-            foreach (var b in energy ? _wrapper.Breakpoints.Energy : _wrapper.Breakpoints.Magic)
+            var bps = energy ? _wrapper?.Breakpoints?.Energy : _wrapper?.Breakpoints?.Magic;
+            if (bps == null)
+                return null;
+
+            foreach (var b in bps)
             {
                 var rbTime = _character.rebirthTime.totalseconds;
                 if (rbTime > b.Time)
@@ -717,6 +728,9 @@ namespace NGUInjector.AllocationProfiles
 
         private AllocationBreakPoint GetCurrentR3Breakpoint()
         {
+            var bps = _wrapper?.Breakpoints?.NGUBreakpoints;
+            if (bps == null)
+                return null;
             foreach (var b in _wrapper.Breakpoints.R3)
             {
                 var rbTime = _character.rebirthTime.totalseconds;
@@ -737,7 +751,10 @@ namespace NGUInjector.AllocationProfiles
 
         private GearBreakpoint GetCurrentGearBreakpoint()
         {
-            foreach (var b in _wrapper.Breakpoints.Gear)
+            var bps = _wrapper?.Breakpoints?.Gear;
+            if (bps == null)
+                return null;
+            foreach (var b in bps)
             {
                 if (_character.rebirthTime.totalseconds > b.Time)
                 {
@@ -757,7 +774,10 @@ namespace NGUInjector.AllocationProfiles
 
         private DiggerBreakpoint GetCurrentDiggerBreakpoint()
         {
-            foreach (var b in _wrapper.Breakpoints.Diggers)
+            var bps = _wrapper?.Breakpoints?.Diggers;
+            if (bps == null)
+                return null;
+            foreach (var b in bps)
             {
                 if (_character.rebirthTime.totalseconds > b.Time)
                 {
@@ -777,7 +797,10 @@ namespace NGUInjector.AllocationProfiles
 
         private NGUDiffBreakpoint GetCurrentNGUDiffBreakpoint()
         {
-            foreach (var b in _wrapper.Breakpoints.NGUBreakpoints)
+            var bps = _wrapper?.Breakpoints?.NGUBreakpoints;
+            if (bps == null)
+                return null;
+            foreach (var b in bps)
             {
                 if (_character.rebirthTime.totalseconds > b.Time)
                 {
