@@ -94,7 +94,8 @@ namespace NGUInjector
                 {39, "Construction Zone"},
                 {40, "DUCK DUCK ZONE"},
                 {41, "The Nether Regions"},
-                {42, "AMALGAMATE"}
+                {42, "AMALGAMATE"},
+                {43, "7 Aethereal Seas"}
             };
 
             SpriteEnemyList = new Dictionary<int, string>();
@@ -1086,7 +1087,7 @@ namespace NGUInjector
         {
             wishErrorProvider.SetError(WishAddInput, "");
             var val = decimal.ToInt32(WishAddInput.Value);
-            if (val < 0 || val > 225)
+            if (val < 0 || val > 230)
             {
                 wishErrorProvider.SetError(WishAddInput, "Not a valid Wish ID");
                 return;
@@ -1117,7 +1118,7 @@ namespace NGUInjector
         {
             wishErrorProvider.SetError(WishAddInput, "");
             var val = decimal.ToInt32(WishAddInput.Value);
-            if (val < 0 || val > 225)
+            if (val < 0 || val > 230)
                 return;
             var wishName = Main.Character.wishesController.properties[val].wishName;
             AddWishLabel.Text = wishName;
@@ -1129,7 +1130,7 @@ namespace NGUInjector
             {
                 wishErrorProvider.SetError(WishAddInput, "");
                 var val = decimal.ToInt32(WishAddInput.Value);
-                if (val < 0 || val > 225)
+                if (val < 0 || val > 230)
                 {
                     wishErrorProvider.SetError(WishAddInput, "Not a valid Wish ID");
                     return;
