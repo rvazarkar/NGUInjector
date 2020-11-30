@@ -521,7 +521,7 @@ namespace NGUInjector
         {
             yggErrorProvider.SetError(yggLoadoutItem, "");
             var val = decimal.ToInt32(yggLoadoutItem.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
                 return;
             var itemName = Main.Character.itemInfo.itemName[val];
             yggItemLabel.Text = itemName;
@@ -531,7 +531,7 @@ namespace NGUInjector
         {
             yggErrorProvider.SetError(yggLoadoutItem, "");
             var val = decimal.ToInt32(yggLoadoutItem.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
             {
                 yggErrorProvider.SetError(yggLoadoutItem, "Not a valid item id");
                 return;
@@ -574,7 +574,7 @@ namespace NGUInjector
         {
             invPrioErrorProvider.SetError(priorityBoostItemAdd, "");
             var val = decimal.ToInt32(priorityBoostItemAdd.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
             {
                 invPrioErrorProvider.SetError(priorityBoostItemAdd, "Not a valid item id");
                 return;
@@ -637,7 +637,7 @@ namespace NGUInjector
         {
             invBlacklistErrProvider.SetError(blacklistAddItem, "");
             var val = decimal.ToInt32(blacklistAddItem.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
             {
                 invBlacklistErrProvider.SetError(blacklistAddItem, "Not a valid item id");
                 return;
@@ -673,7 +673,7 @@ namespace NGUInjector
         {
             titanErrProvider.SetError(titanAddItem, "");
             var val = decimal.ToInt32(titanAddItem.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
                 return;
             var itemName = Main.Character.itemInfo.itemName[val];
             titanLabel.Text = itemName;
@@ -683,7 +683,7 @@ namespace NGUInjector
         {
             titanErrProvider.SetError(titanAddItem, "");
             var val = decimal.ToInt32(titanAddItem.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
             {
                 invBlacklistErrProvider.SetError(titanAddItem, "Not a valid item id");
                 return;
@@ -770,7 +770,7 @@ namespace NGUInjector
         {
             goldErrorProvider.SetError(GoldItemBox, "");
             var val = decimal.ToInt32(GoldItemBox.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
                 return;
             var itemName = Main.Character.itemInfo.itemName[val];
             GoldItemLabel.Text = itemName;
@@ -780,7 +780,7 @@ namespace NGUInjector
         {
             goldErrorProvider.SetError(GoldItemBox, "");
             var val = decimal.ToInt32(GoldItemBox.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
             {
                 goldErrorProvider.SetError(GoldItemBox, "Invalid item id");
                 return;
@@ -846,7 +846,7 @@ namespace NGUInjector
         {
             invPrioErrorProvider.SetError(priorityBoostItemAdd, "");
             var val = decimal.ToInt32(priorityBoostItemAdd.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
                 return;
             var itemName = Main.Character.itemInfo.itemName[val];
             priorityBoostLabel.Text = itemName;
@@ -858,7 +858,7 @@ namespace NGUInjector
             {
                 invPrioErrorProvider.SetError(priorityBoostItemAdd, "");
                 var val = decimal.ToInt32(priorityBoostItemAdd.Value);
-                if (val < 40 || val > 505)
+                if (val < 40 || val > Consts.MAX_GEAR_ID)
                 {
                     invPrioErrorProvider.SetError(priorityBoostItemAdd, "Not a valid item id");
                     return;
@@ -880,7 +880,7 @@ namespace NGUInjector
             {
                 invBlacklistErrProvider.SetError(blacklistAddItem, "");
                 var val = decimal.ToInt32(blacklistAddItem.Value);
-                if (val < 40 || val > 505)
+                if (val < 40 || val > Consts.MAX_GEAR_ID)
                 {
                     invBlacklistErrProvider.SetError(blacklistAddItem, "Not a valid item id");
                     return;
@@ -900,7 +900,7 @@ namespace NGUInjector
         {
             invBlacklistErrProvider.SetError(blacklistAddItem, "");
             var val = decimal.ToInt32(blacklistAddItem.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
                 return;
             var itemName = Main.Character.itemInfo.itemName[val];
             blacklistLabel.Text = itemName;
@@ -912,7 +912,7 @@ namespace NGUInjector
             {
                 yggErrorProvider.SetError(yggLoadoutItem, "");
                 var val = decimal.ToInt32(yggLoadoutItem.Value);
-                if (val < 40 || val > 505)
+                if (val < 40 || val > Consts.MAX_GEAR_ID)
                 {
                     yggErrorProvider.SetError(yggLoadoutItem, "Not a valid item id");
                     return;
@@ -935,7 +935,7 @@ namespace NGUInjector
             {
                 titanErrProvider.SetError(titanAddItem, "");
                 var val = decimal.ToInt32(titanAddItem.Value);
-                if (val < 40 || val > 505)
+                if (val < 40 || val > Consts.MAX_GEAR_ID)
                 {
                     invBlacklistErrProvider.SetError(titanAddItem, "Not a valid item id");
                     return;
@@ -957,7 +957,7 @@ namespace NGUInjector
             {
                 goldErrorProvider.SetError(GoldItemBox, "");
                 var val = decimal.ToInt32(GoldItemBox.Value);
-                if (val < 40 || val > 505)
+                if (val < 40 || val > Consts.MAX_GEAR_ID)
                 {
                     goldErrorProvider.SetError(GoldItemBox, "Invalid item id");
                     return;
@@ -1087,7 +1087,7 @@ namespace NGUInjector
         {
             wishErrorProvider.SetError(WishAddInput, "");
             var val = decimal.ToInt32(WishAddInput.Value);
-            if (val < 0 || val > 230)
+            if (val < 0 || val > Consts.MAX_WISH_ID)
             {
                 wishErrorProvider.SetError(WishAddInput, "Not a valid Wish ID");
                 return;
@@ -1118,7 +1118,7 @@ namespace NGUInjector
         {
             wishErrorProvider.SetError(WishAddInput, "");
             var val = decimal.ToInt32(WishAddInput.Value);
-            if (val < 0 || val > 230)
+            if (val < 0 || val > Consts.MAX_WISH_ID)
                 return;
             var wishName = Main.Character.wishesController.properties[val].wishName;
             AddWishLabel.Text = wishName;
@@ -1130,7 +1130,7 @@ namespace NGUInjector
             {
                 wishErrorProvider.SetError(WishAddInput, "");
                 var val = decimal.ToInt32(WishAddInput.Value);
-                if (val < 0 || val > 230)
+                if (val < 0 || val > Consts.MAX_WISH_ID)
                 {
                     wishErrorProvider.SetError(WishAddInput, "Not a valid Wish ID");
                     return;
@@ -1302,7 +1302,7 @@ namespace NGUInjector
         private void MoneyPitAdd_Click(object sender, EventArgs e)
         {
             var val = decimal.ToInt32(MoneyPitInput.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
             {
                 return;
             }
@@ -1317,7 +1317,7 @@ namespace NGUInjector
         private void MoneyPitLoadout_TextChanged(object sender, EventArgs e)
         {
             var val = decimal.ToInt32(MoneyPitInput.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
                 return;
             var itemName = Main.Character.itemInfo.itemName[val];
             MoneyPitLabel.Text = itemName;
