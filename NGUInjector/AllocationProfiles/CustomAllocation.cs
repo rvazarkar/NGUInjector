@@ -127,7 +127,16 @@ namespace NGUInjector.AllocationProfiles
                     Main.Log("Failed to load allocation file. Resave to reload");
                     Main.Log(e.Message);
                     Main.Log(e.StackTrace);
-                    _wrapper = new BreakpointWrapper {Breakpoints = {Rebirth = new NoRebirth()}};
+                    _wrapper = new BreakpointWrapper
+                    {
+                        Breakpoints =
+                        {
+                            Rebirth = new NoRebirth(), R3 = new AllocationBreakPoint[0],
+                            Diggers = new DiggerBreakpoint[0], Energy = new AllocationBreakPoint[0],
+                            Gear = new GearBreakpoint[0], Magic = new AllocationBreakPoint[0],
+                            NGUBreakpoints = new NGUDiffBreakpoint[0], Wandoos = new WandoosBreakpoint[0]
+                        }
+                    };
 
                 }
             }
