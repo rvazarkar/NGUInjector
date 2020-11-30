@@ -21,11 +21,21 @@ namespace NGUInjector
         public static ih MaxItem(this IEnumerable<ih> items)
         {
             return items.Aggregate(
-                new { max = int.MinValue, t = (ih)null },
+                new { max = int.MinValue, t = (ih)null, b = decimal.MaxValue },
                 (state, el) =>
                 {
                     var current = el.locked ? el.level + 101 : el.level;
-                    return current > state.max ? new { max = current, t = el } : state;
+                    if (current > state.max)
+                    {
+                        return new {max = current, t = el, b = el.equipment.GetNeededBoosts().Total()};
+                    }
+                    
+                    if (current == state.max)
+                    {
+                        return el.equipment.GetNeededBoosts().Total() > state.b ? new { max = current, t = el, b = el.equipment.GetNeededBoosts().Total() } : state;
+                    }
+
+                    return state;
                 }).t;
         }
 
