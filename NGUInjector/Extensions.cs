@@ -32,7 +32,9 @@ namespace NGUInjector
                     
                     if (current == state.max)
                     {
-                        return el.equipment.GetNeededBoosts().Total() > state.b ? new { max = current, t = el, b = el.equipment.GetNeededBoosts().Total() } : state;
+                        return el.equipment.GetNeededBoosts().Total() > state.b
+                            ? state
+                            : new {max = current, t = el, b = el.equipment.GetNeededBoosts().Total()};
                     }
 
                     return state;
