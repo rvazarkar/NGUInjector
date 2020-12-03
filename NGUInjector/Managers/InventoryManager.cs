@@ -302,7 +302,8 @@ namespace NGUInjector.Managers
             var questItems = ci.Where(x =>
                 x.id >= 278 && x.id <= 287 && _character.inventory.inventory[x.slot].removable).ToArray();
 
-            Log($"Turning in {questItems.Length} quest items");
+            if (questItems.Length > 0)
+                Log($"Turning in {questItems.Length} quest items");
             foreach (var target in questItems)
             {
                 var newSlot = ChangePage(target.slot);
