@@ -141,35 +141,39 @@ namespace NGUInjector
 
             if (allocation.IsAllocationRunning)
                 return;
-
-            var originalInput = Main.Character.energyMagicPanel.energyMagicInput;
-
-            allocation.IsAllocationRunning = true;
-
-            if (Settings.ManageNGUDiff)
-                allocation.SwapNGUDiff();
-            if (Settings.ManageGear)
-                allocation.EquipGear();
-            if (Settings.ManageEnergy)
-                allocation.AllocateEnergy();
-            if (Settings.ManageMagic)
-                allocation.AllocateMagic();
-            if (Settings.ManageR3)
-                allocation.AllocateR3();
-
-            if (Settings.ManageDiggers && Main.Character.buttons.diggers.interactable)
+            try
             {
-                allocation.EquipDiggers();
-                DiggerManager.RecapDiggers();
+                var originalInput = Main.Character.energyMagicPanel.energyMagicInput;
+
+                allocation.IsAllocationRunning = true;
+
+                if (Settings.ManageNGUDiff)
+                    allocation.SwapNGUDiff();
+                if (Settings.ManageGear)
+                    allocation.EquipGear();
+                if (Settings.ManageEnergy)
+                    allocation.AllocateEnergy();
+                if (Settings.ManageMagic)
+                    allocation.AllocateMagic();
+                if (Settings.ManageR3)
+                    allocation.AllocateR3();
+
+                if (Settings.ManageDiggers && Main.Character.buttons.diggers.interactable)
+                {
+                    allocation.EquipDiggers();
+                    DiggerManager.RecapDiggers();
+                }
+
+                if (Settings.ManageWandoos && Main.Character.buttons.wandoos.interactable)
+                    allocation.SwapOS();
+
+                Main.Character.energyMagicPanel.energyRequested.text = originalInput.ToString();
+                Main.Character.energyMagicPanel.validateInput();
             }
-
-            if (Settings.ManageWandoos && Main.Character.buttons.wandoos.interactable)
-                allocation.SwapOS();
-
-            Main.Character.energyMagicPanel.energyRequested.text = originalInput.ToString();
-            Main.Character.energyMagicPanel.validateInput();
-            
-            allocation.IsAllocationRunning = false;
+            finally
+            {
+                allocation.IsAllocationRunning = false;
+            }
         }
 
         //Function from https://www.dotnetperls.com/pretty-date
