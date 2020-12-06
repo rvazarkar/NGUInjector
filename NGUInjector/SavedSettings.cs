@@ -1094,5 +1094,19 @@ namespace NGUInjector
                 SaveSettings();
             }
         }
+
+        internal bool NeedsGoldSwap()
+        {
+            for (var i = 0; i < TitanSwapTargets.Length; i++)
+            {
+                if (!TitanSwapTargets[i])
+                    continue;
+
+                if (TitanSwapTargets[i] && !TitanMoneyDone[i])
+                    return true;
+            }
+
+            return false;
+        }
     }
 }

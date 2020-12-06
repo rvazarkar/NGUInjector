@@ -698,7 +698,7 @@ namespace NGUInjector
                 //    watch.Stop();
                 //}
 
-                if (Settings.SwapTitanLoadouts)
+                if (Settings.SwapTitanLoadouts || Settings.ManageGoldLoadouts && Settings.NeedsGoldSwap())
                 {
                     LoadoutManager.TryTitanSwap();
                     DiggerManager.TryTitanSwap();
@@ -807,14 +807,7 @@ namespace NGUInjector
 
                 if (Settings.AutoRebirth)
                 {
-                    if (!Character.bossController.isFighting && !Character.bossController.nukeBoss)
-                    {
-                        _profile.DoRebirth();
-                    }
-                    else
-                    {
-                        Log("Delaying rebirth while boss fight is in progress");
-                    }
+                    _profile.DoRebirth();
                 }
             }
             catch (Exception e)
@@ -865,7 +858,7 @@ namespace NGUInjector
                     return;
                 }
                 //Go to our gold loadout zone next to get a high gold drop
-                if (Settings.ManageGoldLoadouts && Settings.DoGoldSwap)
+                if (Settings.ManageGoldLoadouts && Settings.DoGoldSwap && Settings.GoldDropLoadout.Length > 0)
                 {
                     if (LoadoutManager.TryGoldDropSwap())
                     {
