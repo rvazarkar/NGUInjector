@@ -372,16 +372,28 @@ namespace NGUInjector.AllocationProfiles
                 return;
 
             if (_wrapper.Breakpoints.Rebirth.RebirthAvailable())
-                if (_wrapper.Breakpoints.Rebirth.DoRebirth())
+            {
+                if (_character.bossController.isFighting || _character.bossController.nukeBoss)
                 {
-                    _currentDiggerBreakpoint = null;
-                    _currentEnergyBreakpoint = null;
-                    _currentGearBreakpoint = null;
-                    _currentWandoosBreakpoint = null;
-                    _currentMagicBreakpoint = null;
-                    _currentR3Breakpoint = null;
-                    _currentNguBreakpoint = null;
+                    Main.Log("Delaying rebirth while boss fight is in progress");
+                    return;
                 }
+            }
+            else
+            {
+                return;
+            }
+
+            if (_wrapper.Breakpoints.Rebirth.DoRebirth())
+            {
+                _currentDiggerBreakpoint = null;
+                _currentEnergyBreakpoint = null;
+                _currentGearBreakpoint = null;
+                _currentWandoosBreakpoint = null;
+                _currentMagicBreakpoint = null;
+                _currentR3Breakpoint = null;
+                _currentNguBreakpoint = null;
+            }
         }
 
         public void CastBloodSpells()
@@ -781,7 +793,7 @@ namespace NGUInjector.AllocationProfiles
             {
                 if (_character.rebirthTime.totalseconds > b.Time)
                 {
-                    if (_currentDiggerBreakpoint == null)
+                    if (_currentDiggerBreakpoint == null || _character.challenges.trollChallenge.inChallenge)
                     {
                         _hasDiggerSwapped = false;
                         _currentDiggerBreakpoint = b;
@@ -820,7 +832,11 @@ namespace NGUInjector.AllocationProfiles
 
         private WandoosBreakpoint GetCurrentWandoosBreakpoint()
         {
-            foreach (var b in _wrapper.Breakpoints.Wandoos)
+            var bps = _wrapper?.Breakpoints?.Wandoos;
+            if (bps == null)
+                return null;
+
+            foreach (var b in bps)
             {
                 if (_character.rebirthTime.totalseconds > b.Time)
                 {
