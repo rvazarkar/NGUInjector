@@ -9,7 +9,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
     {
         protected override bool Unlocked()
         {
-            return Character.buttons.brokenTimeMachine.interactable;
+            return Character.buttons.brokenTimeMachine.interactable && !Character.challenges.timeMachineChallenge.inChallenge;
         }
 
         protected override bool TargetMet()

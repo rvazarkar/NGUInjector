@@ -14,6 +14,9 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             if (!Character.buttons.augmentation.interactable)
                 return false;
 
+            if (Character.challenges.noAugsChallenge.inChallenge)
+                return false;
+
             if (Index > 13)
                 return false;
 

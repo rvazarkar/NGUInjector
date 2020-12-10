@@ -789,6 +789,10 @@ namespace NGUInjector.AllocationProfiles
             var bps = _wrapper?.Breakpoints?.Diggers;
             if (bps == null)
                 return null;
+
+            if (_character.challenges.timeMachineChallenge.inChallenge)
+                return null;
+
             foreach (var b in bps)
             {
                 if (_character.rebirthTime.totalseconds > b.Time)

@@ -14,7 +14,7 @@ namespace NGUInjector.AllocationProfiles.RebirthStuff
             if (RebirthTime < 0)
                 return false;
 
-            if (!MinTimeMet())
+            if (!BaseRebirthChecks())
                 return false;
 
             if (!CharObj.challenges.inChallenge && AnyChallengesValid())

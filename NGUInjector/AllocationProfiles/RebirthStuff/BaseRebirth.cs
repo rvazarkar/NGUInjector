@@ -134,9 +134,9 @@ namespace NGUInjector.AllocationProfiles.RebirthStuff
             RebirthController.GetType().GetPrivateMethod(rbType)?.Invoke(RebirthController, null);
         }
 
-        protected bool MinTimeMet()
+        protected bool BaseRebirthChecks()
         {
-            return CharObj.rebirthTime.totalseconds > RebirthController.minRebirthTime();
+            return CharObj.rebirthTime.totalseconds > RebirthController.minRebirthTime() && !CharObj.challenges.noRebirthChallenge.inChallenge;
         }
 
         protected void EngageRebirth()

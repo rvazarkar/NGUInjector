@@ -12,7 +12,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
 
         protected override bool Unlocked()
         {
-            return Character.buttons.augmentation.interactable;
+            return Character.buttons.augmentation.interactable && !Character.challenges.noAugsChallenge.inChallenge;
         }
 
         protected override bool TargetMet()
@@ -22,10 +22,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
 
         internal override bool Allocate()
         {
-            if (Character.bossID >= 37)
-            {
-                _useUpgrades = true;
-            }
+            _useUpgrades = Character.bossID >= 37;
             AllocatePairs();
             return true;
         }
