@@ -25,6 +25,9 @@ namespace NGUInjector.Managers
                 {
                     Main.Character.bloodMagicController.bloodMagics[i].cap();
                 }
+
+                if (!DiggerManager.CanSwap())
+                    return;
                 DiggerManager.SaveDiggers();
                 DiggerManager.EquipDiggers(new[] {10});
                 DoMoneyPit();
