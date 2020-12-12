@@ -15,7 +15,6 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
 
         protected override bool TargetMet()
         {
-            
             return false;
         }
 

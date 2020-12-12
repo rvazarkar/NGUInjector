@@ -39,7 +39,7 @@ namespace NGUInjector
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
         internal static WishManager WishManager;
-        internal const string Version = "3.3.1";
+        internal const string Version = "3.4";
         private static int _furthestZone;
 
         internal static bool Test { get; set; }

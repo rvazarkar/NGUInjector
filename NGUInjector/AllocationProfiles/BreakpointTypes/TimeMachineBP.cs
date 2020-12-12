@@ -17,7 +17,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             var target = Type == ResourceType.Energy ? Character.machine.speedTarget : Character.machine.multiTarget;
             var level = Type == ResourceType.Energy ? Character.machine.levelSpeed : Character.machine.levelGoldMulti;
 
-            return target > 0 && level >= target;
+            return target == -1 || target > 0 && level >= target;
         }
 
         internal override bool Allocate()

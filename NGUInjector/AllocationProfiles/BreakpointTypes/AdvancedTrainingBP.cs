@@ -15,8 +15,12 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
 
         protected override bool TargetMet()
         {
-            return Character.advancedTraining.levelTarget[Index] != 0 && Character.advancedTraining.level[Index] >=
-                Character.advancedTraining.levelTarget[Index];
+            var target = Character.advancedTraining.levelTarget[Index];
+            if (target < 0)
+                return true;
+
+            return target != 0 && Character.advancedTraining.level[Index] >=
+                target;
         }
 
         internal override bool Allocate()

@@ -34,12 +34,12 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             if (Index % 2 == 0)
             {
                 var target = Character.augments.augs[AugIndex].augmentTarget;
-                return target != 0 && Character.augments.augs[AugIndex].augLevel >= target;
+                return target == -1 || target != 0 && Character.augments.augs[AugIndex].augLevel >= target;
             }
             else
             {
                 var target = Character.augments.augs[AugIndex].upgradeTarget;
-                return target != 0 && Character.augments.augs[AugIndex].upgradeLevel >= target;
+                return target == -1 || target != 0 && Character.augments.augs[AugIndex].upgradeLevel >= target;
             }
         }
 
