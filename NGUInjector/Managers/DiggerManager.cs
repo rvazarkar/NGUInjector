@@ -133,7 +133,7 @@ namespace NGUInjector.Managers
                 if (Main.Character.diggers.diggers[i].active)
                 {
                     SetLevelMaxAffordable(i, gross - sub);
-                    sub += Main.Character.allDiggers.baseGPSDrain[i];
+                    sub += Main.Character.allDiggers.drain(i);
                 }
             }
             UpgradeCheapestDigger();
