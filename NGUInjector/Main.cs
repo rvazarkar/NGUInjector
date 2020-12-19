@@ -895,8 +895,14 @@ namespace NGUInjector
                 return;
 
             if (Settings.SnipeZone < 0)
+            {
+                if (Character.adventure.zone != Settings.SnipeZone)
+                {
+                    _combManager.MoveToZone(-1);
+                }
                 return;
-
+            }
+            
             var tempZone = Settings.AdventureTargetITOPOD ? 1000 : Settings.SnipeZone;
             if (tempZone < 1000)
             {
