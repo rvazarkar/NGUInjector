@@ -280,6 +280,14 @@ namespace NGUInjector.Managers
 
         internal void IdleZone(int zone, bool bossOnly, bool recoverHealth)
         {
+            if (zone == -1)
+            {
+                if (_character.adventure.zone != -1)
+                {
+                    MoveToZone(-1);
+                    return;
+                }
+            }
             //Enable idle attack if its not on
             if (!_character.adventure.autoattacking)
             {
@@ -344,6 +352,15 @@ namespace NGUInjector.Managers
 
         internal void ManualZone(int zone, bool bossOnly, bool recoverHealth, bool precastBuffs, bool fastCombat, bool beastMode)
         {
+            if (zone == -1)
+            {
+                if (_character.adventure.zone != -1)
+                {
+                    MoveToZone(-1);
+                    return;
+                }
+            }
+
             //Start by turning off auto attack if its on unless we can only idle attack
             if (!_character.adventure.autoattacking)
             {
