@@ -140,7 +140,7 @@ namespace NGUInjector
 
             EnemyBlacklistZone.ValueMember = "Key";
             EnemyBlacklistZone.DisplayMember = "Value";
-            EnemyBlacklistZone.DataSource = new BindingSource(ZoneList, null);
+            EnemyBlacklistZone.DataSource = new BindingSource(ZoneList.Where(x => !ZoneHelpers.TitanZones.Contains(x.Key)), null);
             EnemyBlacklistZone.SelectedIndex = 0;
 
 
