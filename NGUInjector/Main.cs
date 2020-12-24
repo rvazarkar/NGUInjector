@@ -190,7 +190,7 @@ namespace NGUInjector
                         SwapTitanLoadouts = false,
                         TitanLoadout = new int[] { },
                         ManageDiggers = true,
-                        ManageYggdrasil = true,
+                        ManageYggdrasil = false,
                         ManageEnergy = true,
                         ManageMagic = true,
                         ManageInventory = true,

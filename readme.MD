@@ -428,7 +428,7 @@ Additionally, you may specify challenges to rebirth into. The following string c
 Challenges must be given a number afterwards to specify which challenge is being completed. Ex:
 
 ```
-"Challenges": ["BASIC-0", "BASIC-1", "TC-0","NOEQ-0"]
+"Challenges": ["BASIC-1", "BASIC-2", "TC-1","NOEQ-1"]
 ```
 
 # Zone Stat Overrides
