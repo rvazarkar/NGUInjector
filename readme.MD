@@ -425,7 +425,7 @@ Additionally, you may specify challenges to rebirth into. The following string c
 - **NONGU** - No NGU
 - **NOTM** - No Time Machine
 
-Challenges must be given a number afterwards to specify which challenge is being completed. Ex:
+Challenges must be given a number afterwards to specify which challenge is being completed. Challenges start at 1. Ex:
 
 ```
 "Challenges": ["BASIC-1", "BASIC-2", "TC-1","NOEQ-1"]
