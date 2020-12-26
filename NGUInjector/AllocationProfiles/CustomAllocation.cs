@@ -294,18 +294,28 @@ namespace NGUInjector.AllocationProfiles
             if (bp.Diff == 0)
             {
                 _character.settings.nguLevelTrack = difficulty.normal;
+                if (_character.settings.nguLevelTrack == difficulty.normal)
+                {
+                    _hasNGUSwapped = true;
+                }
             }
             else if (bp.Diff == 1 && (_character.settings.rebirthDifficulty == difficulty.evil ||
                                       _character.settings.rebirthDifficulty == difficulty.sadistic))
             {
                 _character.settings.nguLevelTrack = difficulty.evil;
+                if (_character.settings.nguLevelTrack == difficulty.evil)
+                {
+                    _hasNGUSwapped = true;
+                }
             }
             else if (bp.Diff == 2 && _character.settings.rebirthDifficulty == difficulty.sadistic)
             {
                 _character.settings.nguLevelTrack = difficulty.sadistic;
+                if (_character.settings.nguLevelTrack == difficulty.sadistic)
+                {
+                    _hasNGUSwapped = true;
+                }
             }
-
-            _hasNGUSwapped = true;
 
             _character.NGUController.refreshMenu();
         }
