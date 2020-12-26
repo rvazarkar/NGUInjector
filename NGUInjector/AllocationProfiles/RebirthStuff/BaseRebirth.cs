@@ -303,12 +303,18 @@ namespace NGUInjector.AllocationProfiles.RebirthStuff
 
         protected bool PreRebirth()
         {
-            if (Main.Settings.SwapYggdrasilLoadouts && Main.Settings.YggdrasilLoadout.Length > 0 &&
-                YggdrasilManager.AnyHarvestable())
+            if (Main.Settings.ManageYggdrasil && YggdrasilManager.AnyHarvestable())
             {
-                if (!LoadoutManager.TryYggdrasilSwap() || !DiggerManager.TryYggSwap())
+                if (Main.Settings.SwapYggdrasilLoadouts && Main.Settings.YggdrasilLoadout.Length > 0)
                 {
-                    Main.Log("Delaying rebirth to wait for ygg loadout/diggers");
+                    if (!LoadoutManager.TryYggdrasilSwap() || !DiggerManager.TryYggSwap())
+                    {
+                        Main.Log("Delaying rebirth to wait for ygg loadout/diggers");
+                        return true;
+                    }
+
+                    YggdrasilManager.HarvestAll();
+                    Main.Log("Delaying rebirth 1 loop to allow fruit effects");
                     return true;
                 }
 
