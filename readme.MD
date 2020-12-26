@@ -411,6 +411,26 @@ The following types are available:
 - **Number** - Rebirths when your number will be OldNumber \* _Target_
 - **Bosses** - Rebirths when you can defeat _Target_ additional bosses
 
+The following example will rebirth when your number is 10x your previous number:
+
+```
+"Rebirth": {
+    "Type": "Number",
+    "Target": 10,
+    "Challenges": []
+},
+```
+
+The following example will rebirth when you can kill 5 more bosses than your last rebirth:
+
+```
+"Rebirth": {
+    "Type": "Bosses",
+    "Target": 5,
+    "Challenges": []
+},
+```
+
 Additionally, you may specify challenges to rebirth into. The following string correspond to challenges:
 
 - **BASIC** - Basic
