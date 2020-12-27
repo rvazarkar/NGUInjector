@@ -197,7 +197,8 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                         IsCap = temp.Contains("CAP"),
                         Type = type
                     };
-                }else if (temp.StartsWith("HACK") || temp.StartsWith("CAPHACK"))
+                }
+                else if (temp.StartsWith("HACK") || temp.StartsWith("CAPHACK"))
                 {
                     yield return new HackBP
                     {
@@ -207,7 +208,19 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                         IsCap = temp.Contains("CAP"),
                         Type = type
                     };
-                }else if (temp.StartsWith("WISH") || temp.StartsWith("CAPWISH"))
+                }
+                else if (temp.StartsWith("BESTHACK") || temp.StartsWith("CAPBESTHACK"))
+                {
+                    yield return new BestHackBP
+                    {
+                        CapPercent = cap,
+                        Character = Main.Character,
+                        Index = index,
+                        IsCap = temp.Contains("CAP"),
+                        Type = type
+                    };
+                }
+                else if (temp.StartsWith("WISH") || temp.StartsWith("CAPWISH"))
                 {
                     yield return new WishBP
                     {
