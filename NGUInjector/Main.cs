@@ -873,7 +873,7 @@ namespace NGUInjector
             }
 
             var questZone = _questManager.IsQuesting();
-            if (!Settings.CombatEnabled || !ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) ||
+            if (!Settings.CombatEnabled || Settings.AdventureTargetITOPOD || !ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) ||
                 ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) &&
                 !ZoneHelpers.TitanSpawningSoon(Array.IndexOf(ZoneHelpers.TitanZones, Settings.SnipeZone)))
             {
