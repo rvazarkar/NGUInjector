@@ -414,6 +414,7 @@ namespace NGUInjector
                 {
                     settingsForm.Show();
                 }
+
                 settingsForm.BringToFront();
             }
 
