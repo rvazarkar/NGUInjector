@@ -330,7 +330,7 @@ namespace NGUInjector.Managers
             if (_character.adventureController.currentEnemy == null)
                 return;
 
-            if (Settings.BlacklistedBosses.Contains(_character.adventureController.currentEnemy.spriteID))
+            if (zone < 1000 && Settings.BlacklistedBosses.Contains(_character.adventureController.currentEnemy.spriteID))
             {
                 MoveToZone(-1);
                 MoveToZone(zone);
@@ -520,7 +520,7 @@ namespace NGUInjector.Managers
                 return;
             }
 
-            if (Settings.BlacklistedBosses.Contains(_character.adventureController.currentEnemy.spriteID))
+            if (zone < 1000 && Settings.BlacklistedBosses.Contains(_character.adventureController.currentEnemy.spriteID))
             {
                 MoveToZone(-1);
                 MoveToZone(zone);
