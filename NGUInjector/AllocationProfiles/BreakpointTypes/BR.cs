@@ -39,8 +39,11 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
 
         private void CastRituals()
         {
+            var allocationLeft = (long)MaxAllocation;
             for (var i = Character.bloodMagic.ritual.Count - 1; i >= 0; i--)
             {
+                if (allocationLeft <= 0)
+                    break;
                 if (Character.magic.idleMagic == 0)
                     break;
                 if (i >= Character.bloodMagicController.ritualsUnlocked())
@@ -67,14 +70,20 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                         continue;
                 }
 
-                Character.bloodMagicController.bloodMagics[i].cap();
+                var cap = CalculateMaxAllocation(i, allocationLeft);
+                SetInput(cap);
+                Character.bloodMagicController.bloodMagics[i].add();
+                allocationLeft -= cap;
             }
         }
 
         private void CastRitualEndTime(int endTime)
         {
+            var allocationLeft = (long)MaxAllocation;
             for (var i = Character.bloodMagic.ritual.Count - 1; i >= 0; i--)
             {
+                if (allocationLeft <= 0)
+                    break;
                 if (Character.magic.idleMagic == 0)
                     break;
                 if (i >= Character.bloodMagicController.ritualsUnlocked())
@@ -101,7 +110,10 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 if (Character.rebirthTime.totalseconds + tLeft > endTime)
                     continue;
 
-                Character.bloodMagicController.bloodMagics[i].cap();
+                var cap = CalculateMaxAllocation(i, allocationLeft);
+                SetInput(cap);
+                Character.bloodMagicController.bloodMagics[i].add();
+                allocationLeft -= cap;
             }
         }
 
@@ -131,6 +143,18 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
         {
             return (float)((1.0 - Character.bloodMagic.ritual[id].progress) /
                            RitualProgressPerTick(id) / 50.0);
+        }
+
+        private long CalculateMaxAllocation(int id, long remaining)
+        {
+            var num1 = Character.bloodMagicController.bloodMagics[id].capValue();
+            if (remaining > num1)
+            {
+                return num1;
+            }
+
+            var num2 = (long) ((double) num1 / Math.Ceiling((double) num1 / (double) remaining)) + 1L;
+            return num2;
         }
     }
 }

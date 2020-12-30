@@ -418,7 +418,7 @@ namespace NGUInjector.AllocationProfiles
 
             if (_wrapper.Breakpoints.Rebirth is TimeRebirth trb && Main.Settings.AutoRebirth)
             {
-                if (((trb.RebirthTime - _character.rebirthTime.totalseconds) < (30 * 60)) && !rebirth)
+                if (trb.RebirthTime - _character.rebirthTime.totalseconds < 30 * 60 && !rebirth)
                 {
                     return;
                 }
