@@ -59,7 +59,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     continue;
                 }
 
-                var tLeft = RitualTimeLeft(i);
+                var tLeft = RitualTimeLeft(i, allocationLeft);
 
                 if (tLeft > 3600)
                     continue;
@@ -99,7 +99,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     continue;
                 }
 
-                var tLeft = RitualTimeLeft(i);
+                var tLeft = RitualTimeLeft(i, allocationLeft);
 
                 if (RebirthTime > 0 && Main.Settings.AutoRebirth)
                 {
@@ -117,17 +117,17 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             }
         }
 
-        private float RitualProgressPerTick(int id)
+        private float RitualProgressPerTick(int id, long remaining)
         {
             var num1 = 0.0;
             if (Character.settings.rebirthDifficulty == difficulty.normal)
-                num1 = Character.magic.idleMagic * (double)Character.totalMagicPower() / 50000.0 /
+                num1 = remaining * (double)Character.totalMagicPower() / 50000.0 /
                        Character.bloodMagicController.normalSpeedDividers[id];
             else if (Character.settings.rebirthDifficulty == difficulty.evil)
-                num1 = Character.magic.idleMagic * (double)Character.totalMagicPower() / 50000.0 /
+                num1 = remaining * (double)Character.totalMagicPower() / 50000.0 /
                        Character.bloodMagicController.evilSpeedDividers[id];
             else if (Character.settings.rebirthDifficulty == difficulty.sadistic)
-                num1 = Character.magic.idleMagic * (double)Character.totalMagicPower() /
+                num1 = remaining * (double)Character.totalMagicPower() /
                        Character.bloodMagicController.sadisticSpeedDividers[id];
             if (Character.settings.rebirthDifficulty >= difficulty.sadistic)
                 num1 /= Character.bloodMagicController.bloodMagics[id].sadisticDivider();
@@ -139,10 +139,10 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             return (float)num2;
         }
 
-        public float RitualTimeLeft(int id)
+        public float RitualTimeLeft(int id, long remaining)
         {
             return (float)((1.0 - Character.bloodMagic.ritual[id].progress) /
-                           RitualProgressPerTick(id) / 50.0);
+                           RitualProgressPerTick(id, remaining) / 50.0);
         }
 
         private long CalculateMaxAllocation(int id, long remaining)
