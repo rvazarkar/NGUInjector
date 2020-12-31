@@ -95,7 +95,7 @@ An in game menu can be opened using the F1 button.
   - **Auto Filtering** - If improved loot filter is purchased, will automatically filter items when they hit level 100
   - **Auto Convertible Management** - Will automatically transform non-locked pendants/lootys and other items
   - **Quest Item Management** - Will try to merge a quest item to level 100 if a locked one is found. Otherwise will automatically turn in quest items
-- **Manage Boost Conversion** - If all normal 100 Level Challenges are completed, will calculate needed boosts for items in boostIds and then switch auto conversion appropriately. Will prioritize power > toughness > special. Will also show you the hourly average of boost progress in the inject.log file.
+- **Manage Boost Conversion** - If all normal 100 Level Challenges are completed, will calculate needed boosts for items in boostIds and then switch auto conversion appropriately. If a locked non-level 100 boost is found in your inventory, will lock conversion to that type first to boost it to 100. Will prioritize power > toughness > special. Will also show you the hourly average of boost progress in the inject.log file.
 - **Cube Priority** - How to boost cube.
   - **None** - Will turn off boost conversion
   - **Balanced** - Will keep power and toughness on cube balanced
