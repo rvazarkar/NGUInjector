@@ -20,7 +20,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
 
         internal override bool Allocate()
         {
-            if (Index < Character.rebirthTime.totalseconds)
+            if (Index == 0)
             {
                 CastRituals();
             }
