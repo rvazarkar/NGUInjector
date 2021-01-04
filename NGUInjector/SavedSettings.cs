@@ -1117,7 +1117,7 @@ namespace NGUInjector
             set
             {
                 if (value == _hackAdvance) return;
-                _moreBlockParry = value;
+                _hackAdvance = value;
                 SaveSettings();
             }
         }
