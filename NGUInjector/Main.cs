@@ -264,7 +264,8 @@ namespace NGUInjector
                         SpecialBoostBlacklist = new int[0],
                         MoreBlockParry = false,
                         WishSortOrder = false,
-                        WishSortPriorities = false
+                        WishSortPriorities = false,
+                        HackAdvance = false
                     };
 
                     Settings.MassUpdate(temp);

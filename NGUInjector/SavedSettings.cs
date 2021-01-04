@@ -92,10 +92,11 @@ namespace NGUInjector
         [SerializeField] private bool _moreBlockParry;
         [SerializeField] private int[] _specialBoostBlacklist;
         [SerializeField] private int[] _blacklistedBosses;
+        [SerializeField] private bool _hackAdvance;
 
         private readonly string _savePath;
         private bool _disableSave;
-        
+
         public SavedSettings(string dir)
         {
             if (dir != null)
@@ -239,6 +240,7 @@ namespace NGUInjector
             _moreBlockParry = other.MoreBlockParry;
             _specialBoostBlacklist = other.SpecialBoostBlacklist;
             _blacklistedBosses = other.BlacklistedBosses;
+            _hackAdvance = other.HackAdvance;
         }
 
         public int SnipeZone
@@ -1107,6 +1109,17 @@ namespace NGUInjector
             }
 
             return false;
+        }
+
+        public bool HackAdvance
+        {
+            get => _hackAdvance;
+            set
+            {
+                if (value == _hackAdvance) return;
+                _moreBlockParry = value;
+                SaveSettings();
+            }
         }
     }
 }
