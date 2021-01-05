@@ -60,6 +60,7 @@
     <Compile Include="AllocationProfiles\BreakpointTypes\BaseBreakpoint.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\BasicTrainingBP.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\BestAug.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\BestHackBP.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\BR.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\CapCalc.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\HackBP.cs" />
