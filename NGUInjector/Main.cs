@@ -978,8 +978,10 @@ namespace NGUInjector
             }
 
             list.RemoveAll(x => x == 0);
+            var items = $"[{string.Join(", ", list.Select(x => x.ToString()).ToArray())}]";
 
-            Log($"Equipped Items: [{string.Join(", ", list.Select(x => x.ToString()).ToArray())}]");
+            Log($"Equipped Items: {items}");
+            Clipboard.SetText(items);
         }
 
         public void OnGUI()
