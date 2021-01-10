@@ -285,6 +285,7 @@ namespace NGUInjector.Managers
 
         internal void ManageQuestItems(ih[] ci)
         {
+            var curPage = (int)Math.Floor((double)_controller.inventory[0].id / 60);
             //Merge quest items first
             var toMerge = ci.Where(x =>
                 x.id >= 278 && x.id <= 287 && !_character.inventory.inventory[x.slot].removable &&
@@ -299,16 +300,18 @@ namespace NGUInjector.Managers
 
             //Consume quest items that dont need to be merged
             var questItems = ci.Where(x =>
-                x.id >= 278 && x.id <= 287 && _character.inventory.inventory[x.slot].removable);
+                x.id >= 278 && x.id <= 287 && _character.inventory.inventory[x.slot].removable).ToArray();
 
+            if (questItems.Length > 0)
+                Log($"Turning in {questItems.Length} quest items");
             foreach (var target in questItems)
             {
                 var newSlot = ChangePage(target.slot);
                 var ic = _controller.inventory[newSlot];
-                Log($"Using quest item {SanitizeName(target.name)} in slot {target.slot}");
                 typeof(ItemController).GetMethod("consumeItem", BindingFlags.NonPublic | BindingFlags.Instance)
                     ?.Invoke(ic, null);
             }
+            _controller.changePage(curPage);
         }
 
         internal void MergeInventory(ih[] ci)

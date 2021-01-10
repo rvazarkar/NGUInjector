@@ -126,18 +126,21 @@ namespace NGUInjector.Managers
 
         internal static void RecapDiggers()
         {
-            for (var i = 0; i < Main.Character.diggers.diggers.Count; i++)
+            var gross = Main.Character.grossGoldPerSecond();
+            var sub = 0.0;
+            for (var i = Main.Character.diggers.diggers.Count-1; i >= 0 ; i--)
             {
                 if (Main.Character.diggers.diggers[i].active)
                 {
-                    SetLevelMaxAffordable(i);
+                    SetLevelMaxAffordable(i, gross - sub);
+                    sub += Main.Character.allDiggers.drain(i);
                 }
             }
             UpgradeCheapestDigger();
             Main.Character.allDiggers.refreshMenu();
         }
 
-        private static void SetLevelMaxAffordable(int id)
+        private static void SetLevelMaxAffordable(int id, double cap)
         {
             if (id < 0 || id > Main.Character.diggers.diggers.Count)
                 return;
@@ -149,7 +152,7 @@ namespace NGUInjector.Managers
             }
             else
             {
-                var num1 = Main.Character.goldPerSecond();
+                var num1 = cap;
                 var num2 = Main.Character.allDiggers.baseGPSDrain[id];
                 var a = Main.Character.allDiggers.gpsGrowthRate[id];
                 var num3 = Math.Min((long)(Math.Log(num1 / num2, Math.E) / Math.Log(a, Math.E)), Main.Character.diggers.diggers[id].maxLevel);

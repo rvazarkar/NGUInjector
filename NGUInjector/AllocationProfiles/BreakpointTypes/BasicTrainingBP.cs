@@ -8,7 +8,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
 {
     internal class BasicTrainingBP : BaseBreakpoint
     {
-        private int BTIndex => Index <= 5 ? Index : Index -= 6;
+        private int BTIndex => Index <= 5 ? Index : Index - 6;
 
         protected override bool Unlocked()
         {

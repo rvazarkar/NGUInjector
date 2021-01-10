@@ -49,6 +49,7 @@
             this.AutoFightBosses = new System.Windows.Forms.CheckBox();
             this.AutoITOPOD = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ProfileEditButton = new System.Windows.Forms.Button();
             this.CastBloodSpells = new System.Windows.Forms.CheckBox();
             this.IronPillThreshold = new System.Windows.Forms.NumericUpDown();
             this.label123 = new System.Windows.Forms.Label();
@@ -374,6 +375,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.ProfileEditButton);
             this.tabPage2.Controls.Add(this.CastBloodSpells);
             this.tabPage2.Controls.Add(this.IronPillThreshold);
             this.tabPage2.Controls.Add(this.label123);
@@ -407,6 +409,13 @@
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // ProfileEditButton
+            // 
+            resources.ApplyResources(this.ProfileEditButton, "ProfileEditButton");
+            this.ProfileEditButton.Name = "ProfileEditButton";
+            this.ProfileEditButton.UseVisualStyleBackColor = true;
+            this.ProfileEditButton.Click += new System.EventHandler(this.ProfileEditButton_Click);
+            // 
             // CastBloodSpells
             // 
             resources.ApplyResources(this.CastBloodSpells, "CastBloodSpells");
@@ -418,8 +427,8 @@
             // 
             resources.ApplyResources(this.IronPillThreshold, "IronPillThreshold");
             this.IronPillThreshold.Maximum = new decimal(new int[] {
-            9999999,
-            0,
+            -1530494977,
+            232830,
             0,
             0});
             this.IronPillThreshold.Name = "IronPillThreshold";
@@ -1749,6 +1758,7 @@
             this.Controls.Add(this.flowLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "SettingsForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).EndInit();
@@ -1990,5 +2000,6 @@
         private System.Windows.Forms.Button AddCardType;
         private System.Windows.Forms.ComboBox CardTypes;
         private System.Windows.Forms.ListBox CardTypeList;
+        private System.Windows.Forms.Button ProfileEditButton;
     }
 }

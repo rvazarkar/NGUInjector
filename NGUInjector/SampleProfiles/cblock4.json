@@ -1,0 +1,146 @@
+{
+  "Breakpoints": {
+    "Magic": [
+      {
+        "Time": 0,
+        "Priorities": ["CAPALLNGU:1", "CAPWAN:50", "CAPTM:25", "BR"]
+      }
+    ],
+    "Energy": [
+      {
+        "Time": 0,
+        "Priorities": [
+          "CAPALLNGU:1",
+          "CAPALLAT",
+          "CAPWAN:50",
+          "CAPTM:25",
+          "CAPBESTAUG"
+        ]
+      }
+    ],
+    "Gear": [
+      {
+        "Time": 0,
+        "ID": [
+          448,
+          190,
+          270,
+          446,
+          257,
+          264,
+          136,
+          444,
+          242,
+          171,
+          247,
+          263,
+          273,
+          301,
+          158,
+          178,
+          267,
+          269
+        ],
+        "Comment": "Challenge Set"
+      }
+    ],
+    "Wandoos": [
+      {
+        "Time": 0,
+        "OS": 0
+      }
+    ],
+    "Diggers": [
+      {
+        "Time": {
+          "s": 15
+        },
+        "List": [1, 2, 3, 6, 7, 8, 9, 10, 11]
+      },
+      {
+        "Time": {
+          "m": 1
+        },
+        "List": [1, 2, 3, 6, 7, 8, 9, 10, 11]
+      },
+      {
+        "Time": {
+          "m": 5
+        },
+        "List": [1, 2, 3, 6, 7, 8, 9, 10, 11]
+      },
+      {
+        "Time": {
+          "m": 13
+        },
+        "List": [1, 2, 3, 6, 7, 8, 9, 10, 11]
+      },
+      {
+        "Time": {
+          "m": 30
+        },
+        "List": [1, 2, 3, 6, 7, 8, 9, 10, 11]
+      }
+    ],
+    "R3": [
+      {
+        "Time": 0,
+        "Priorities": [
+          "HACK-5",
+          "HACK-6",
+          "HACK-8",
+          "HACK-9",
+          "HACK-11",
+          "HACK-12",
+          "HACK-7",
+          "HACK-2",
+          "HACK-3",
+          "HACK-4",
+          "HACK-0",
+          "HACK-1"
+        ]
+      }
+    ],
+    "Rebirth": {
+      "Type": "Bosses",
+      "Target": 5,
+      "Challenges": [
+        "NOTM-2",
+        "NOTM-3",
+        "NOTM-4",
+        "NOTM-5",
+        "BLIND-2",
+        "BLIND-3",
+        "BLIND-4",
+        "BLIND-5",
+        "BLIND-6",
+        "TC-3",
+        "TC-4",
+        "TC-5",
+        "NONGU-2",
+        "NONGU-3",
+        "NONGU-4",
+        "NONGU-5",
+        "NONGU-6",
+        "NONGU-7",
+        "NORB-7",
+        "NORB-8",
+        "NOEC-1",
+        "NOEC-2",
+        "NOEC-3",
+        "NOEC-4",
+        "NOEC-5",
+        "24HR-1",
+        "24HR-2",
+        "24HR-3",
+        "24HR-4"
+      ]
+    },
+    "NGUDiff": [
+      {
+        "Time": 0,
+        "Diff": 0
+      }
+    ]
+  }
+}

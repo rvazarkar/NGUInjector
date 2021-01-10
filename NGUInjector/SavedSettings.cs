@@ -97,10 +97,11 @@ namespace NGUInjector
         [SerializeField] private int _cardsTrashQuality;
         [SerializeField] private bool _autoCastCards;
         [SerializeField] private int _autoCastCardType;
+        [SerializeField] private bool _hackAdvance;
 
         private readonly string _savePath;
         private bool _disableSave;
-        
+
         public SavedSettings(string dir)
         {
             if (dir != null)
@@ -249,6 +250,7 @@ namespace NGUInjector
             _cardsTrashQuality = other._cardsTrashQuality;
             _autoCastCards = other._autoCastCards;
             _autoCastCardType = other._autoCastCardType;
+            _hackAdvance = other.HackAdvance;
         }
 
         public int SnipeZone
@@ -1156,5 +1158,30 @@ namespace NGUInjector
             }
         }
 
+
+        internal bool NeedsGoldSwap()
+        {
+            for (var i = 0; i < TitanSwapTargets.Length; i++)
+            {
+                if (!TitanSwapTargets[i])
+                    continue;
+
+                if (TitanSwapTargets[i] && !TitanMoneyDone[i])
+                    return true;
+            }
+
+            return false;
+        }
+
+        public bool HackAdvance
+        {
+            get => _hackAdvance;
+            set
+            {
+                if (value == _hackAdvance) return;
+                _hackAdvance = value;
+                SaveSettings();
+            }
+        }
     }
 }

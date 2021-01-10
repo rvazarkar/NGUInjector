@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -92,7 +94,8 @@ namespace NGUInjector
                 {39, "Construction Zone"},
                 {40, "DUCK DUCK ZONE"},
                 {41, "The Nether Regions"},
-                {42, "AMALGAMATE"}
+                {42, "AMALGAMATE"},
+                {43, "7 Aethereal Seas"}
             };
 
             SpriteEnemyList = new Dictionary<int, string>();
@@ -152,7 +155,7 @@ namespace NGUInjector
 
             EnemyBlacklistZone.ValueMember = "Key";
             EnemyBlacklistZone.DisplayMember = "Value";
-            EnemyBlacklistZone.DataSource = new BindingSource(ZoneList, null);
+            EnemyBlacklistZone.DataSource = new BindingSource(ZoneList.Where(x => !ZoneHelpers.TitanZones.Contains(x.Key) ).ToDictionary(x => x.Key, x=> x.Value), null);
             EnemyBlacklistZone.SelectedIndex = 0;
 
 
@@ -551,7 +554,7 @@ namespace NGUInjector
         {
             yggErrorProvider.SetError(yggLoadoutItem, "");
             var val = decimal.ToInt32(yggLoadoutItem.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
                 return;
             var itemName = Main.Character.itemInfo.itemName[val];
             yggItemLabel.Text = itemName;
@@ -561,7 +564,7 @@ namespace NGUInjector
         {
             yggErrorProvider.SetError(yggLoadoutItem, "");
             var val = decimal.ToInt32(yggLoadoutItem.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
             {
                 yggErrorProvider.SetError(yggLoadoutItem, "Not a valid item id");
                 return;
@@ -604,7 +607,7 @@ namespace NGUInjector
         {
             invPrioErrorProvider.SetError(priorityBoostItemAdd, "");
             var val = decimal.ToInt32(priorityBoostItemAdd.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
             {
                 invPrioErrorProvider.SetError(priorityBoostItemAdd, "Not a valid item id");
                 return;
@@ -667,7 +670,7 @@ namespace NGUInjector
         {
             invBlacklistErrProvider.SetError(blacklistAddItem, "");
             var val = decimal.ToInt32(blacklistAddItem.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
             {
                 invBlacklistErrProvider.SetError(blacklistAddItem, "Not a valid item id");
                 return;
@@ -703,7 +706,7 @@ namespace NGUInjector
         {
             titanErrProvider.SetError(titanAddItem, "");
             var val = decimal.ToInt32(titanAddItem.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
                 return;
             var itemName = Main.Character.itemInfo.itemName[val];
             titanLabel.Text = itemName;
@@ -713,7 +716,7 @@ namespace NGUInjector
         {
             titanErrProvider.SetError(titanAddItem, "");
             var val = decimal.ToInt32(titanAddItem.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
             {
                 invBlacklistErrProvider.SetError(titanAddItem, "Not a valid item id");
                 return;
@@ -800,7 +803,7 @@ namespace NGUInjector
         {
             goldErrorProvider.SetError(GoldItemBox, "");
             var val = decimal.ToInt32(GoldItemBox.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
                 return;
             var itemName = Main.Character.itemInfo.itemName[val];
             GoldItemLabel.Text = itemName;
@@ -810,7 +813,7 @@ namespace NGUInjector
         {
             goldErrorProvider.SetError(GoldItemBox, "");
             var val = decimal.ToInt32(GoldItemBox.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
             {
                 goldErrorProvider.SetError(GoldItemBox, "Invalid item id");
                 return;
@@ -876,7 +879,7 @@ namespace NGUInjector
         {
             invPrioErrorProvider.SetError(priorityBoostItemAdd, "");
             var val = decimal.ToInt32(priorityBoostItemAdd.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
                 return;
             var itemName = Main.Character.itemInfo.itemName[val];
             priorityBoostLabel.Text = itemName;
@@ -888,7 +891,7 @@ namespace NGUInjector
             {
                 invPrioErrorProvider.SetError(priorityBoostItemAdd, "");
                 var val = decimal.ToInt32(priorityBoostItemAdd.Value);
-                if (val < 40 || val > 505)
+                if (val < 40 || val > Consts.MAX_GEAR_ID)
                 {
                     invPrioErrorProvider.SetError(priorityBoostItemAdd, "Not a valid item id");
                     return;
@@ -910,7 +913,7 @@ namespace NGUInjector
             {
                 invBlacklistErrProvider.SetError(blacklistAddItem, "");
                 var val = decimal.ToInt32(blacklistAddItem.Value);
-                if (val < 40 || val > 505)
+                if (val < 40 || val > Consts.MAX_GEAR_ID)
                 {
                     invBlacklistErrProvider.SetError(blacklistAddItem, "Not a valid item id");
                     return;
@@ -930,7 +933,7 @@ namespace NGUInjector
         {
             invBlacklistErrProvider.SetError(blacklistAddItem, "");
             var val = decimal.ToInt32(blacklistAddItem.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
                 return;
             var itemName = Main.Character.itemInfo.itemName[val];
             blacklistLabel.Text = itemName;
@@ -942,7 +945,7 @@ namespace NGUInjector
             {
                 yggErrorProvider.SetError(yggLoadoutItem, "");
                 var val = decimal.ToInt32(yggLoadoutItem.Value);
-                if (val < 40 || val > 505)
+                if (val < 40 || val > Consts.MAX_GEAR_ID)
                 {
                     yggErrorProvider.SetError(yggLoadoutItem, "Not a valid item id");
                     return;
@@ -965,7 +968,7 @@ namespace NGUInjector
             {
                 titanErrProvider.SetError(titanAddItem, "");
                 var val = decimal.ToInt32(titanAddItem.Value);
-                if (val < 40 || val > 505)
+                if (val < 40 || val > Consts.MAX_GEAR_ID)
                 {
                     invBlacklistErrProvider.SetError(titanAddItem, "Not a valid item id");
                     return;
@@ -987,7 +990,7 @@ namespace NGUInjector
             {
                 goldErrorProvider.SetError(GoldItemBox, "");
                 var val = decimal.ToInt32(GoldItemBox.Value);
-                if (val < 40 || val > 505)
+                if (val < 40 || val > Consts.MAX_GEAR_ID)
                 {
                     goldErrorProvider.SetError(GoldItemBox, "Invalid item id");
                     return;
@@ -1117,7 +1120,7 @@ namespace NGUInjector
         {
             wishErrorProvider.SetError(WishAddInput, "");
             var val = decimal.ToInt32(WishAddInput.Value);
-            if (val < 0 || val > 224)
+            if (val < 0 || val > Consts.MAX_WISH_ID)
             {
                 wishErrorProvider.SetError(WishAddInput, "Not a valid Wish ID");
                 return;
@@ -1148,7 +1151,7 @@ namespace NGUInjector
         {
             wishErrorProvider.SetError(WishAddInput, "");
             var val = decimal.ToInt32(WishAddInput.Value);
-            if (val < 0 || val > 224)
+            if (val < 0 || val > Consts.MAX_WISH_ID)
                 return;
             var wishName = Main.Character.wishesController.properties[val].wishName;
             AddWishLabel.Text = wishName;
@@ -1160,7 +1163,7 @@ namespace NGUInjector
             {
                 wishErrorProvider.SetError(WishAddInput, "");
                 var val = decimal.ToInt32(WishAddInput.Value);
-                if (val < 0 || val > 224)
+                if (val < 0 || val > Consts.MAX_WISH_ID)
                 {
                     wishErrorProvider.SetError(WishAddInput, "Not a valid Wish ID");
                     return;
@@ -1332,7 +1335,7 @@ namespace NGUInjector
         private void MoneyPitAdd_Click(object sender, EventArgs e)
         {
             var val = decimal.ToInt32(MoneyPitInput.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
             {
                 return;
             }
@@ -1347,7 +1350,7 @@ namespace NGUInjector
         private void MoneyPitLoadout_TextChanged(object sender, EventArgs e)
         {
             var val = decimal.ToInt32(MoneyPitInput.Value);
-            if (val < 40 || val > 505)
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
                 return;
             var itemName = Main.Character.itemInfo.itemName[val];
             MoneyPitLabel.Text = itemName;
@@ -1478,6 +1481,13 @@ namespace NGUInjector
                 Main.Log(ex.Message);
                 Main.Log(ex.StackTrace);
             }
+        }
+
+        private void ProfileEditButton_Click(object sender, EventArgs e)
+        {
+            var filename = Main.Settings.AllocationFile + ".json";
+            var path = Path.Combine(Main.GetProfilesDir(), filename);
+            Process.Start(path);
         }
     }
 }

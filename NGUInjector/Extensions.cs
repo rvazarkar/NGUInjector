@@ -12,14 +12,32 @@ namespace NGUInjector
 {
     public static class Extensions
     {
+        public static MethodInfo GetPrivateMethod(this Type t, string method)
+        {
+            return t.GetMethod(method, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.NonPublic);
+        }
+
+
         public static ih MaxItem(this IEnumerable<ih> items)
         {
             return items.Aggregate(
-                new { max = int.MinValue, t = (ih)null },
+                new { max = int.MinValue, t = (ih)null, b = decimal.MaxValue },
                 (state, el) =>
                 {
                     var current = el.locked ? el.level + 101 : el.level;
-                    return current > state.max ? new { max = current, t = el } : state;
+                    if (current > state.max)
+                    {
+                        return new {max = current, t = el, b = el.equipment.GetNeededBoosts().Total()};
+                    }
+                    
+                    if (current == state.max)
+                    {
+                        return el.equipment.GetNeededBoosts().Total() > state.b
+                            ? state
+                            : new {max = current, t = el, b = el.equipment.GetNeededBoosts().Total()};
+                    }
+
+                    return state;
                 }).t;
         }
 
@@ -123,35 +141,39 @@ namespace NGUInjector
 
             if (allocation.IsAllocationRunning)
                 return;
-
-            var originalInput = Main.Character.energyMagicPanel.energyMagicInput;
-
-            allocation.IsAllocationRunning = true;
-
-            if (Settings.ManageNGUDiff)
-                allocation.SwapNGUDiff();
-            if (Settings.ManageGear)
-                allocation.EquipGear();
-            if (Settings.ManageEnergy)
-                allocation.AllocateEnergy();
-            if (Settings.ManageMagic)
-                allocation.AllocateMagic();
-            if (Settings.ManageR3)
-                allocation.AllocateR3();
-
-            if (Settings.ManageDiggers && Main.Character.buttons.diggers.interactable)
+            try
             {
-                allocation.EquipDiggers();
-                DiggerManager.RecapDiggers();
+                var originalInput = Main.Character.energyMagicPanel.energyMagicInput;
+
+                allocation.IsAllocationRunning = true;
+
+                if (Settings.ManageNGUDiff)
+                    allocation.SwapNGUDiff();
+                if (Settings.ManageGear)
+                    allocation.EquipGear();
+                if (Settings.ManageEnergy)
+                    allocation.AllocateEnergy();
+                if (Settings.ManageMagic)
+                    allocation.AllocateMagic();
+                if (Settings.ManageR3)
+                    allocation.AllocateR3();
+
+                if (Settings.ManageDiggers && Main.Character.buttons.diggers.interactable)
+                {
+                    allocation.EquipDiggers();
+                    DiggerManager.RecapDiggers();
+                }
+
+                if (Settings.ManageWandoos && Main.Character.buttons.wandoos.interactable)
+                    allocation.SwapOS();
+
+                Main.Character.energyMagicPanel.energyRequested.text = originalInput.ToString();
+                Main.Character.energyMagicPanel.validateInput();
             }
-
-            if (Settings.ManageWandoos && Main.Character.buttons.wandoos.interactable)
-                allocation.SwapOS();
-
-            Main.Character.energyMagicPanel.energyRequested.text = originalInput.ToString();
-            Main.Character.energyMagicPanel.validateInput();
-            
-            allocation.IsAllocationRunning = false;
+            finally
+            {
+                allocation.IsAllocationRunning = false;
+            }
         }
 
         //Function from https://www.dotnetperls.com/pretty-date

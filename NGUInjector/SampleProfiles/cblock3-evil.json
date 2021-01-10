@@ -1,0 +1,118 @@
+{
+  "Breakpoints": {
+    "Magic": [
+      {
+        "Time": 0,
+        "Priorities": ["CAPALLNGU:1", "CAPWAN:50", "CAPTM:25", "BR"]
+      }
+    ],
+    "Energy": [
+      {
+        "Time": 0,
+        "Priorities": [
+          "CAPALLNGU:1",
+          "CAPALLBT",
+          "CAPALLAT",
+          "CAPWAN:50",
+          "CAPTM:25",
+          "CAPBESTAUG"
+        ]
+      }
+    ],
+    "R3": [
+      {
+        "Time": 0,
+        "Priorities": ["HACK-0"]
+      }
+    ],
+    "Gear": [
+      {
+        "Time": 0,
+        "ID": [
+          241,
+          237,
+          238,
+          239,
+          240,
+          226,
+          445,
+          189,
+          195,
+          194,
+          192,
+          243,
+          161,
+          218,
+          446,
+          136,
+          242
+        ],
+        "Comment": "Challenge Set"
+      }
+    ],
+    "Wandoos": [
+      {
+        "Time": 0,
+        "OS": 0
+      }
+    ],
+    "Diggers": [
+      {
+        "Time": 15,
+        "List": [1, 2, 3, 8, 9, 10, 11]
+      },
+      {
+        "Time": 60,
+        "List": [1, 2, 3, 8, 9, 10, 11]
+      },
+      {
+        "Time": 300,
+        "List": [1, 2, 3, 8, 9, 10, 11]
+      },
+      {
+        "Time": 600,
+        "List": [1, 2, 3, 8, 9, 10, 11]
+      },
+      {
+        "Time": 900,
+        "List": [1, 2, 3, 8, 9, 10, 11]
+      },
+      {
+        "Time": 1800,
+        "List": [1, 2, 3, 8, 9, 10, 11]
+      }
+    ],
+    "NGUDiff": [
+      {
+        "Time": 0,
+        "Diff": 0
+      }
+    ],
+    "Rebirth": {
+      "Type": "Bosses",
+      "Target": 5,
+      "Challenges": [
+        "NOTM-1",
+        "NOAUG-1",
+        "NOAUG-2",
+        "NOAUG-3",
+        "NOAUG-4",
+        "NOAUG-5",
+        "BASIC-2",
+        "BASIC-3",
+        "BASIC-4",
+        "BASIC-5",
+        "TC-1",
+        "NORB-1",
+        "NORB-2",
+        "NORB-3",
+        "NORB-4",
+        "BLIND-1",
+        "NORB-5",
+        "NORB-6",
+        "NONGU-1",
+        "TC-2"
+      ]
+    }
+  }
+}

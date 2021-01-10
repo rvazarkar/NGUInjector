@@ -41,7 +41,7 @@ namespace NGUInjector
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
         internal static WishManager WishManager;
-        internal const string Version = "3.3.0rc";
+        internal const string Version = "3.4.2";
         private static int _furthestZone;
 
         internal static bool Test { get; set; }
@@ -89,6 +89,11 @@ namespace NGUInjector
         {
             CardsWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
         }
+        internal static string GetProfilesDir()
+        {
+            return _profilesDir;
+        }
+
         internal void Unload()
         {
             try
@@ -195,7 +200,7 @@ namespace NGUInjector
                         SwapTitanLoadouts = false,
                         TitanLoadout = new int[] { },
                         ManageDiggers = true,
-                        ManageYggdrasil = true,
+                        ManageYggdrasil = false,
                         ManageEnergy = true,
                         ManageMagic = true,
                         ManageInventory = true,
@@ -272,7 +277,8 @@ namespace NGUInjector
                         WishSortPriorities = false,
                         BalanceMayo = false,
                         TrashCards = false,
-                        CardsTrashQuality = 0
+                        CardsTrashQuality = 0,
+                        HackAdvance = false
                     };
 
                     Settings.MassUpdate(temp);
@@ -422,6 +428,7 @@ namespace NGUInjector
                 {
                     settingsForm.Show();
                 }
+
                 settingsForm.BringToFront();
             }
 
@@ -706,7 +713,7 @@ namespace NGUInjector
                 //    watch.Stop();
                 //}
 
-                if (Settings.SwapTitanLoadouts)
+                if (Settings.SwapTitanLoadouts || Settings.ManageGoldLoadouts && Settings.NeedsGoldSwap())
                 {
                     LoadoutManager.TryTitanSwap();
                     DiggerManager.TryTitanSwap();
@@ -748,50 +755,53 @@ namespace NGUInjector
                         total += r3Purchase.customAllCost();
                     }
 
-                    var numPurchases = Math.Floor((double)(Character.realExp / total));
-
-                    if (numPurchases > 0)
+                    if (total > 0)
                     {
-                        var t = string.Empty;
-                        if (energy)
-                        {
-                            t += "/exp";
-                        }
+                        var numPurchases = Math.Floor((double)(Character.realExp / total));
 
-                        if (magic)
+                        if (numPurchases > 0)
                         {
-                            t += "/magic";
-                        }
-
-                        if (r3)
-                        {
-                            t += "/res3";
-                        }
-
-                        t = t.Substring(1);
-
-                        Log($"Buying {numPurchases} {t} purchases");
-                        for (var i = 0; i < numPurchases; i++)
-                        {
+                            var t = string.Empty;
                             if (energy)
                             {
-                                var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
-                                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                                ePurchaseMethod?.Invoke(ePurchase, null);
+                                t += "/exp";
                             }
 
                             if (magic)
                             {
-                                var mPurchaseMethod = mPurchase.GetType().GetMethod("buyCustomAll",
-                                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                                mPurchaseMethod?.Invoke(mPurchase, null);
+                                t += "/magic";
                             }
 
                             if (r3)
                             {
-                                var r3PurchaseMethod = r3Purchase.GetType().GetMethod("buyCustomAll",
-                                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                                r3PurchaseMethod?.Invoke(r3Purchase, null);
+                                t += "/res3";
+                            }
+
+                            t = t.Substring(1);
+
+                            Log($"Buying {numPurchases} {t} purchases");
+                            for (var i = 0; i < numPurchases; i++)
+                            {
+                                if (energy)
+                                {
+                                    var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
+                                        BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                    ePurchaseMethod?.Invoke(ePurchase, null);
+                                }
+
+                                if (magic)
+                                {
+                                    var mPurchaseMethod = mPurchase.GetType().GetMethod("buyCustomAll",
+                                        BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                    mPurchaseMethod?.Invoke(mPurchase, null);
+                                }
+
+                                if (r3)
+                                {
+                                    var r3PurchaseMethod = r3Purchase.GetType().GetMethod("buyCustomAll",
+                                        BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                    r3PurchaseMethod?.Invoke(r3Purchase, null);
+                                }
                             }
                         }
                     }
@@ -812,14 +822,7 @@ namespace NGUInjector
 
                 if (Settings.AutoRebirth)
                 {
-                    if (!Character.bossController.isFighting && !Character.bossController.nukeBoss)
-                    {
-                        _profile.DoRebirth();
-                    }
-                    else
-                    {
-                        Log("Delaying rebirth while boss fight is in progress");
-                    }
+                    _profile.DoRebirth();
                 }
 
                 if (Settings.BalanceMayo)
@@ -847,7 +850,14 @@ namespace NGUInjector
         internal static void LoadAllocation()
         {
             _profile = new CustomAllocation(_profilesDir, Settings.AllocationFile);
-            _profile.ReloadAllocation();
+            try
+            {
+                _profile.ReloadAllocation();
+            }
+            catch (Exception e)
+            {
+                Log(e.Message);
+            }
         }
 
         private static void LoadAllocationProfiles()
@@ -878,7 +888,7 @@ namespace NGUInjector
                     return;
                 }
                 //Go to our gold loadout zone next to get a high gold drop
-                if (Settings.ManageGoldLoadouts && Settings.DoGoldSwap)
+                if (Settings.ManageGoldLoadouts && Settings.DoGoldSwap && Settings.GoldDropLoadout.Length > 0)
                 {
                     if (LoadoutManager.TryGoldDropSwap())
                     {
@@ -892,7 +902,7 @@ namespace NGUInjector
             }
 
             var questZone = _questManager.IsQuesting();
-            if (!Settings.CombatEnabled || !ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) ||
+            if (!Settings.CombatEnabled || Settings.AdventureTargetITOPOD || !ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) ||
                 ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) &&
                 !ZoneHelpers.TitanSpawningSoon(Array.IndexOf(ZoneHelpers.TitanZones, Settings.SnipeZone)))
             {
@@ -912,9 +922,6 @@ namespace NGUInjector
             }
 
             if (!Settings.CombatEnabled)
-                return;
-
-            if (Settings.SnipeZone < 0)
                 return;
 
             var tempZone = Settings.AdventureTargetITOPOD ? 1000 : Settings.SnipeZone;
@@ -999,8 +1006,10 @@ namespace NGUInjector
             }
 
             list.RemoveAll(x => x == 0);
+            var items = $"[{string.Join(", ", list.Select(x => x.ToString()).ToArray())}]";
 
-            Log($"Equipped Items: [{string.Join(", ", list.Select(x => x.ToString()).ToArray())}]");
+            Log($"Equipped Items: {items}");
+            Clipboard.SetText(items);
         }
 
         public void OnGUI()
