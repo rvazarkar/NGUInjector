@@ -44,11 +44,26 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 if (_useUpgrades && aug.upgradeLocked() || aug.hitUpgradeTarget())
                     continue;
 
-                var cost = aug.getAugCost();
-                if (cost > gold)
-                    continue;
+                double time;
+                double timeRemaining;
+                long cost;
+                if (_useUpgrades)
+                {
+                    time = aug.UpgradeTimeLeftEnergyMax((long)(MaxAllocation * augRatio[i]));
+                    if (time < 0.01) { time = 0.01d; }
+                    timeRemaining = aug.UpgradeTimeLeftEnergyMax((long)(MaxAllocation * augRatio[i])) - aug.UpgradeTimeLeftEnergy((long)(MaxAllocation * augRatio[i]));
+                    cost = (long)Math.Max(1, (long)1000 / time) * (long)aug.getUpgradeCost();
+                }
+                else
+                {
+                    time = aug.AugTimeLeftEnergyMax((long)(MaxAllocation));
+                    if (time < 0.01) { time = 0.01d; }
+                    timeRemaining = aug.AugTimeLeftEnergyMax((long)(MaxAllocation)) - aug.AugTimeLeftEnergy((long)(MaxAllocation));
+                    cost = (long)Math.Max(1, (long)1000 / time) * (long)aug.getAugCost();
+                }
 
-                double time = aug.AugTimeLeftEnergyMax((long)(_useUpgrades ? MaxAllocation * augRatio[i] : MaxAllocation));
+                if (cost > gold && timeRemaining < 10)
+                    continue;
 
                 if (time > 1200)
                     continue;
@@ -57,14 +72,12 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     if (Character.rebirthTime.totalseconds - time < 0)
                         continue;
 
-                if (Index > 0)
-                    if (Character.rebirthTime.totalseconds + time > Index)
-                        continue;
-
-                if (time < 0.01) { time = 0.01d; }
+                //if (Index > 0)
+                //    if (Character.rebirthTime.totalseconds + time > Index)
+                //        continue;
 
                 double value = AugmentValue(i);
-                Main.LogAllocation($"Pair ID {i}: time {time} - Value: {value} - ROI : {value / time}");
+                Main.LogAllocation($"Pair ID {i}: time {time} remaining {timeRemaining} - Value: {value} - ROI : {value / time}");
 
                 if (value / time > bestAugmentValue)
                 {
@@ -126,7 +139,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 PPT = 1
             };
             double formula = 0;
-            if (Index % 2 == 0)
+            if (index % 2 == 0)
             {
                 augIndex = index / 2;
                 formula = 50000 * (1f + Character.augments.augs[augIndex].augLevel + offset) /
