@@ -54,7 +54,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     if (time < 0.01) { time = 0.01d; }
                     timeRemaining = aug.UpgradeTimeLeftEnergy((long)(MaxAllocation * upgRatio[i]));
                     cost = (double)Math.Max(1, 1d / time) * (double)aug.getUpgradeCost();
-                    progress = aug.getUpgradeProgress();
+                    progress = aug.UpgradeProgress();
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     if (time < 0.01) { time = 0.01d; }
                     timeRemaining = aug.AugTimeLeftEnergy((long)(MaxAllocation));
                     cost = (double)Math.Max(1, 1d / time) * (double)aug.getAugCost();
-                    progress = aug.getAugProgress();
+                    progress = aug.AugProgress();
                 }
 
                 if (cost > gold && (progress == 0f || timeRemaining < 10))
