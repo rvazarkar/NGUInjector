@@ -130,7 +130,7 @@ namespace NGUInjector
         }
         public static float UpgradeTimeLeftEnergy(this AugmentController aug, long energy)
         {
-            return (float)((1.0 - (double)aug.character.augments.augs[aug.id].upgradeProgress) / (double)aug.getUpgradeProgressPerTick(energy) / 50.0);
+            return (float)((1.0 - (double)aug.character.augments.augs[aug.id].upgradeProgress) / (double)getUpgradeProgressPerTick(aug, energy) / 50.0);
         }
 
         public static float UpgradeTimeLeftEnergyMax(this AugmentController aug, long energy)
@@ -147,11 +147,11 @@ namespace NGUInjector
             }
             else if (aug.character.settings.rebirthDifficulty == difficulty.evil)
             {
-                num = (double)((float)amount * aug.character.totalEnergyPower() / 50000f / aug.character.augmentsController.evilUpgradeSpeedDividers[aug.id] / (float)(aug.character.augments.augs[aug.id].upgradeLevel + 1L));
+                num = (double)amount * (double)aug.character.totalEnergyPower() / 50000.0 / (double)aug.character.augmentsController.evilUpgradeSpeedDividers[aug.id] / (double)(aug.character.augments.augs[aug.id].upgradeLevel + 1L);
             }
             else if (aug.character.settings.rebirthDifficulty == difficulty.sadistic)
             {
-                num = (double)((float)amount * aug.character.totalEnergyPower() / aug.character.augmentsController.sadisticUpgradeSpeedDividers[aug.id] / (float)(aug.character.augments.augs[aug.id].upgradeLevel + 1L));
+                num = (double)amount * (double)aug.character.totalEnergyPower() / (double)aug.character.augmentsController.sadisticUpgradeSpeedDividers[aug.id] / (double)(aug.character.augments.augs[aug.id].upgradeLevel + 1L);
             }
             num *= (double)(1f + aug.character.inventoryController.bonuses[specType.Augs]);
             num *= (double)aug.character.inventory.macguffinBonuses[12];

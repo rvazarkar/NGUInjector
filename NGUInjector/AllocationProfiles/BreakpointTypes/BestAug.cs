@@ -46,27 +46,31 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
 
                 double time;
                 double timeRemaining;
-                long cost;
+                double cost;
                 if (_useUpgrades)
                 {
-                    time = aug.UpgradeTimeLeftEnergyMax((long)(MaxAllocation * augRatio[i]));
+                    time = aug.UpgradeTimeLeftEnergyMax((long)(MaxAllocation * upgRatio[i]));
                     if (time < 0.01) { time = 0.01d; }
-                    timeRemaining = aug.UpgradeTimeLeftEnergyMax((long)(MaxAllocation * augRatio[i])) - aug.UpgradeTimeLeftEnergy((long)(MaxAllocation * augRatio[i]));
-                    cost = (long)Math.Max(1, (long)1000 / time) * (long)aug.getUpgradeCost();
+                    timeRemaining = aug.UpgradeTimeLeftEnergy((long)(MaxAllocation * upgRatio[i]));
+                    cost = (double)Math.Max(1, 1d / time) * (double)aug.getUpgradeCost();
                 }
                 else
                 {
                     time = aug.AugTimeLeftEnergyMax((long)(MaxAllocation));
                     if (time < 0.01) { time = 0.01d; }
-                    timeRemaining = aug.AugTimeLeftEnergyMax((long)(MaxAllocation)) - aug.AugTimeLeftEnergy((long)(MaxAllocation));
-                    cost = (long)Math.Max(1, (long)1000 / time) * (long)aug.getAugCost();
+                    timeRemaining = aug.AugTimeLeftEnergy((long)(MaxAllocation));
+                    cost = (double)Math.Max(1, 1d / time) * (double)aug.getAugCost();
                 }
 
-                if (cost > gold && timeRemaining < 10)
+                if (cost > gold && (time - timeRemaining > 10 && timeRemaining < 10))
+                {
                     continue;
+                }
 
                 if (time > 1200)
+                {
                     continue;
+                }
 
                 if (RebirthTime > 0 && Main.Settings.AutoRebirth)
                     if (Character.rebirthTime.totalseconds - time < 0)
@@ -77,13 +81,14 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 //        continue;
 
                 double value = AugmentValue(i);
-                Main.LogAllocation($"Pair ID {i}: time {time} remaining {timeRemaining} - Value: {value} - ROI : {value / time}");
 
                 if (value / time > bestAugmentValue)
                 {
                     bestAugment = i;
                     bestAugmentValue = value / time;
                 }
+
+                Main.LogAllocation($"Pair ID {i}: cost {cost} with {(_useUpgrades ? MaxAllocation * upgRatio[bestAugment] : MaxAllocation * augRatio[bestAugment])} of {MaxAllocation} energy for time {NumberOutput.timeOutput(time)} remaining {NumberOutput.timeOutput(timeRemaining)} - Value: {value} - ROI : {value / time}");
             }
             if (bestAugment != -1)
             {
@@ -96,7 +101,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 Character.augmentsController.augments[bestAugment].addEnergyAug();
                 if (_useUpgrades)
                 {
-                    Main.LogAllocation($"BestAug: ({bestAugment}) @ {(_useUpgrades ? MaxAllocation / 2 : MaxAllocation)} using {augRatio[bestAugment]} : {alloc} and {upgRatio[bestAugment]} : {alloc2}");
+                    Main.LogAllocation($"BestAug: ({bestAugment}) @ {maxAllocation} using {augRatio[bestAugment]} : {alloc} and {upgRatio[bestAugment]} : {alloc2}");
                     SetInput(alloc2);
                     Character.augmentsController.augments[bestAugment].addEnergyUpgrade();
                 }
