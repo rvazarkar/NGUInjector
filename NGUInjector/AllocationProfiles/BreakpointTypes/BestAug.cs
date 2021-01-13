@@ -49,7 +49,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 double cost;
                 if (_useUpgrades)
                 {
-                    time = aug.UpgradeTimeLeftEnergyMax((long)(MaxAllocation * upgRatio[i]));
+                    time = Math.Max(aug.UpgradeTimeLeftEnergyMax((long)(MaxAllocation * upgRatio[i])), aug.AugTimeLeftEnergyMax((long)(MaxAllocation * augRatio[i])));
                     if (time < 0.01) { time = 0.01d; }
                     timeRemaining = aug.UpgradeTimeLeftEnergy((long)(MaxAllocation * upgRatio[i]));
                     cost = (double)Math.Max(1, 1d / time) * (double)aug.getUpgradeCost();
@@ -67,7 +67,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     continue;
                 }
 
-                if (time > 1200)
+                if (time > 300) 
                 {
                     continue;
                 }
