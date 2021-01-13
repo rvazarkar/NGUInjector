@@ -128,6 +128,12 @@ namespace NGUInjector
         {
             return (float)(1.0 / (double)aug.getAugProgressPerTick(energy) / 50.0);
         }
+
+        public static float AugProgress(this AugmentController aug)
+        {
+            return aug.character.augments.augs[aug.id].augProgress;
+        }
+
         public static float UpgradeTimeLeftEnergy(this AugmentController aug, long energy)
         {
             return (float)((1.0 - (double)aug.character.augments.augs[aug.id].upgradeProgress) / (double)getUpgradeProgressPerTick(aug, energy) / 50.0);
@@ -136,6 +142,11 @@ namespace NGUInjector
         public static float UpgradeTimeLeftEnergyMax(this AugmentController aug, long energy)
         {
             return (float)(1.0 / (double)getUpgradeProgressPerTick(aug, energy) / 50.0);
+        }
+
+        public static float UpgradeProgress(this AugmentController aug)
+        {
+            return aug.character.augments.augs[aug.id].upgradeProgress;
         }
 
         public static float getUpgradeProgressPerTick(this AugmentController aug, long amount)
