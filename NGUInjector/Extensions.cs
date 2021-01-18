@@ -129,6 +129,74 @@ namespace NGUInjector
             return (float)(1.0 / (double)aug.getAugProgressPerTick(energy) / 50.0);
         }
 
+        public static float AugProgress(this AugmentController aug)
+        {
+            return aug.character.augments.augs[aug.id].augProgress;
+        }
+
+        public static float UpgradeTimeLeftEnergy(this AugmentController aug, long energy)
+        {
+            return (float)((1.0 - (double)aug.character.augments.augs[aug.id].upgradeProgress) / (double)getUpgradeProgressPerTick(aug, energy) / 50.0);
+        }
+
+        public static float UpgradeTimeLeftEnergyMax(this AugmentController aug, long energy)
+        {
+            return (float)(1.0 / (double)getUpgradeProgressPerTick(aug, energy) / 50.0);
+        }
+
+        public static float UpgradeProgress(this AugmentController aug)
+        {
+            return aug.character.augments.augs[aug.id].upgradeProgress;
+        }
+
+        public static float getUpgradeProgressPerTick(this AugmentController aug, long amount)
+        {
+            double num = 0.0;
+            if (aug.character.settings.rebirthDifficulty == difficulty.normal)
+            {
+                num = (double)((float)amount * aug.character.totalEnergyPower() / 50000f / aug.character.augmentsController.normalUpgradeSpeedDividers[aug.id] / (float)(aug.character.augments.augs[aug.id].upgradeLevel + 1L));
+            }
+            else if (aug.character.settings.rebirthDifficulty == difficulty.evil)
+            {
+                num = (double)amount * (double)aug.character.totalEnergyPower() / 50000.0 / (double)aug.character.augmentsController.evilUpgradeSpeedDividers[aug.id] / (double)(aug.character.augments.augs[aug.id].upgradeLevel + 1L);
+            }
+            else if (aug.character.settings.rebirthDifficulty == difficulty.sadistic)
+            {
+                num = (double)amount * (double)aug.character.totalEnergyPower() / (double)aug.character.augmentsController.sadisticUpgradeSpeedDividers[aug.id] / (double)(aug.character.augments.augs[aug.id].upgradeLevel + 1L);
+            }
+            num *= (double)(1f + aug.character.inventoryController.bonuses[specType.Augs]);
+            num *= (double)aug.character.inventory.macguffinBonuses[12];
+            num *= (double)aug.character.hacksController.totalAugSpeedBonus();
+            num *= (double)aug.character.adventureController.itopod.totalAugSpeedBonus();
+            num *= (double)aug.character.cardsController.getBonus(cardBonus.augSpeed);
+            num *= (double)(1f + (float)aug.character.allChallenges.noAugsChallenge.evilCompletions() * 0.05f);
+            if (aug.character.allChallenges.noAugsChallenge.completions() >= 1)
+            {
+                num *= 1.1000000238418579;
+            }
+            if (aug.character.allChallenges.noAugsChallenge.evilCompletions() >= aug.character.allChallenges.noAugsChallenge.maxCompletions)
+            {
+                num *= 1.25;
+            }
+            if (aug.character.settings.rebirthDifficulty >= difficulty.sadistic)
+            {
+                num /= (double)aug.sadisticDivider();
+            }
+            if (num <= -3.4028234663852886E+38)
+            {
+                num = 0.0;
+            }
+            if (num >= 3.4028234663852886E+38)
+            {
+                num = 3.4028234663852886E+38;
+            }
+            if (num <= 9.9999997171806854E-10)
+            {
+                num = 0.0;
+            }
+            return (float)num;
+        }
+
         private static decimal CalcCap(float cap, float level)
         {
             return (decimal)Mathf.Floor(cap * (float)(1.0 + level / 100.0));
