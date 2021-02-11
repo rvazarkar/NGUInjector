@@ -4798,7 +4798,7 @@
     <value>1</value>
   </data>
   <data name="DontCastAdd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 102</value>
+    <value>260, 102</value>
   </data>
   <data name="DontCastAdd.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -4822,7 +4822,7 @@
     <value>2</value>
   </data>
   <data name="DontCastSelection.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 103</value>
+    <value>133, 103</value>
   </data>
   <data name="DontCastSelection.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 21</value>
@@ -4870,13 +4870,13 @@
     <value>10, 106</value>
   </data>
   <data name="label29.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 13</value>
+    <value>117, 13</value>
   </data>
   <data name="label29.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
   </data>
   <data name="label29.Text" xml:space="preserve">
-    <value>Don't cast card types</value>
+    <value>Trash All Cards of Type</value>
   </data>
   <data name="&gt;&gt;label29.Name" xml:space="preserve">
     <value>label29</value>

@@ -206,6 +206,7 @@
             this.AutoMoneyPit = new System.Windows.Forms.CheckBox();
             this.AutoDailySpin = new System.Windows.Forms.CheckBox();
             this.tabPage11 = new System.Windows.Forms.TabPage();
+            this.TrashChunkers = new System.Windows.Forms.CheckBox();
             this.DontCastRemove = new System.Windows.Forms.Button();
             this.DontCastAdd = new System.Windows.Forms.Button();
             this.DontCastSelection = new System.Windows.Forms.ComboBox();
@@ -223,7 +224,6 @@
             this.balanceMayo = new System.Windows.Forms.CheckBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.TrashChunkers = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).BeginInit();
@@ -1689,6 +1689,13 @@
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.UseVisualStyleBackColor = true;
             // 
+            // TrashChunkers
+            // 
+            resources.ApplyResources(this.TrashChunkers, "TrashChunkers");
+            this.TrashChunkers.Name = "TrashChunkers";
+            this.TrashChunkers.UseVisualStyleBackColor = true;
+            this.TrashChunkers.CheckedChanged += new System.EventHandler(this.TrashChunkers_CheckedChanged);
+            // 
             // DontCastRemove
             // 
             resources.ApplyResources(this.DontCastRemove, "DontCastRemove");
@@ -1793,13 +1800,6 @@
             this.flowLayoutPanel1.Controls.Add(this.tabControl1);
             resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            // 
-            // TrashChunkers
-            // 
-            resources.ApplyResources(this.TrashChunkers, "TrashChunkers");
-            this.TrashChunkers.Name = "TrashChunkers";
-            this.TrashChunkers.UseVisualStyleBackColor = true;
-            this.TrashChunkers.CheckedChanged += new System.EventHandler(this.TrashChunkers_CheckedChanged);
             // 
             // SettingsForm
             // 
