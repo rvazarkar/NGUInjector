@@ -234,7 +234,7 @@ Available cap priorities for Energy are as follows:
 - CAPBT-X (0-11) - Calculate a cap for basic training
 - CAPALLBT - Caps all basic trainings
 - CAPAUG-X (0-13) - Calculate a cap for augments and attempt to BB it
-- CAPWISH-X (0-X) - Allocate magic to wishes. X is the wish slot you wish to allocate too. If you only have 1 slot, WISH-0 will be the one you use. Wishes will follow the priority set in the WishPriorities setting and then work through cheapest wishes
+- CAPWISH-X (0-X) - Allocate energy to wishes. X is the wish slot you wish to allocate to. If you only have 1 slot, WISH-0 will be the one you use. Wishes will follow the priority set in the WishPriorities setting and then work through cheapest wishes
 
 Available non-cap priorities for Energy are as follows:
 
@@ -247,7 +247,7 @@ Available non-cap priorities for Energy are as follows:
 - WAN - Allocate energy to energy wandoos
 - TM - Allocate energy to energy time machine
 - BT-X (0-11) - Allocate energy to basic training
-- WISH-X (0-X) - Allocate energy to wish. X is the wish slot you wish to allocate too. If you only have 1 slot, WISH-0 will be the one you use. Wishes will follow the priority set in the WishPriorities setting and then work through cheapest wishes
+- WISH-X (0-X) - Allocate energy to wishes. X is the wish slot you wish to allocate to. If you only have 1 slot, WISH-0 will be the one you use. Wishes will follow the priority set in the WishPriorities setting and then work through cheapest wishes
 
 More information on allocation indexes can be found on the [wiki](https://github.com/rvazarkar/NGUInjector/wiki/Allocation-Indexes)
 
@@ -283,7 +283,7 @@ Available cap priorities for Magic are as follows:
 - CAPWAN - Use the cap button for wandoos magic
 - CAPTM - Calculate a cap for magic time machine and attempt to BB it.
 - CAPRIT-X - Calculate a cap for the ritual and allocate
-- CAPWISH-X (0-X) - Allocate magic to wishes. X is the wish slot you wish to allocate too. If you only have 1 slot, WISH-0 will be the one you use. Wishes will follow the priority set in the WishPriorities setting and then work through cheapest wishes
+- CAPWISH-X (0-X) - Allocate magic to wishes. X is the wish slot you wish to allocate to. If you only have 1 slot, WISH-0 will be the one you use. Wishes will follow the priority set in the WishPriorities setting and then work through cheapest wishes
 - BR - Cast rituals from highest to lowest ignoring rituals you cant afford or will take more than an hour
 - BR-X - Cast rituals from highest to lowest that will finish before time specified by X. BR-3600 will cast rituals that will end before the 1 hour mark from your current time.
 
@@ -293,7 +293,7 @@ Available non-cap priorities for Magic are as follows:
 - WAN - Allocate energy to magic wandoos
 - TM - Allocate energy to magic time machine
 - RIT-X - Allocate energy to ritual
-- WISH-X (0-X) - Allocate magic to wishes. X is the wish slot you wish to allocate too. If you only have 1 slot, WISH-0 will be the one you use. Wishes will follow the priority set in the WishPriorities setting and then work through cheapest wishes
+- WISH-X (0-X) - Allocate magic to wishes. X is the wish slot you wish to allocate to. If you only have 1 slot, WISH-0 will be the one you use. Wishes will follow the priority set in the WishPriorities setting and then work through cheapest wishes
 
 More information on allocation indexes can be found on the [wiki](https://github.com/rvazarkar/NGUInjector/wiki/Allocation-Indexes)
 
@@ -315,7 +315,7 @@ Available priorities for R3 are as follows:
 
 - (CAP)HACK-X (0-14) - Allocate R3 to hacks. Will only ever allocate to the first hack in your priority list that hasn't met its target.
 - (CAP)ALLHACK - Adds every hack from 0 to 14 as a priority
-- (CAP)WISH-X (0-X) - Allocate R3 to wishes. X is the wish slot you wish to allocate too. If you only have 1 slot, WISH-0 will be the one you use. Wishes will follow the priority set in the WishPriorities setting and then work through cheapest wishes
+- (CAP)WISH-X (0-X) - Allocate R3 to wishes. X is the wish slot you wish to allocate to. If you only have 1 slot, WISH-0 will be the one you use. Wishes will follow the priority set in the WishPriorities setting and then work through cheapest wishes
 
 ## Gear
 
