@@ -206,10 +206,15 @@
             this.AutoMoneyPit = new System.Windows.Forms.CheckBox();
             this.AutoDailySpin = new System.Windows.Forms.CheckBox();
             this.tabPage11 = new System.Windows.Forms.TabPage();
-            this.AddCardType = new System.Windows.Forms.Button();
-            this.CardTypes = new System.Windows.Forms.ComboBox();
-            this.label35 = new System.Windows.Forms.Label();
-            this.CardTypeList = new System.Windows.Forms.ListBox();
+            this.DontCastRemove = new System.Windows.Forms.Button();
+            this.DontCastAdd = new System.Windows.Forms.Button();
+            this.DontCastSelection = new System.Windows.Forms.ComboBox();
+            this.DontCastList = new System.Windows.Forms.ListBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.TrashTier = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.TrashAdventureCards = new System.Windows.Forms.CheckBox();
             this.AutoCastCards = new System.Windows.Forms.CheckBox();
             this.label34 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
@@ -218,6 +223,7 @@
             this.balanceMayo = new System.Windows.Forms.CheckBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.TrashChunkers = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).BeginInit();
@@ -1663,10 +1669,16 @@
             // 
             // tabPage11
             // 
-            this.tabPage11.Controls.Add(this.AddCardType);
-            this.tabPage11.Controls.Add(this.CardTypes);
-            this.tabPage11.Controls.Add(this.label35);
-            this.tabPage11.Controls.Add(this.CardTypeList);
+            this.tabPage11.Controls.Add(this.TrashChunkers);
+            this.tabPage11.Controls.Add(this.DontCastRemove);
+            this.tabPage11.Controls.Add(this.DontCastAdd);
+            this.tabPage11.Controls.Add(this.DontCastSelection);
+            this.tabPage11.Controls.Add(this.DontCastList);
+            this.tabPage11.Controls.Add(this.label29);
+            this.tabPage11.Controls.Add(this.label28);
+            this.tabPage11.Controls.Add(this.TrashTier);
+            this.tabPage11.Controls.Add(this.label1);
+            this.tabPage11.Controls.Add(this.TrashAdventureCards);
             this.tabPage11.Controls.Add(this.AutoCastCards);
             this.tabPage11.Controls.Add(this.label34);
             this.tabPage11.Controls.Add(this.label33);
@@ -1677,29 +1689,60 @@
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.UseVisualStyleBackColor = true;
             // 
-            // AddCardType
+            // DontCastRemove
             // 
-            resources.ApplyResources(this.AddCardType, "AddCardType");
-            this.AddCardType.Name = "AddCardType";
-            this.AddCardType.UseVisualStyleBackColor = true;
-            this.AddCardType.Click += new System.EventHandler(this.AddCardType_Click);
+            resources.ApplyResources(this.DontCastRemove, "DontCastRemove");
+            this.DontCastRemove.Name = "DontCastRemove";
+            this.DontCastRemove.UseVisualStyleBackColor = true;
+            this.DontCastRemove.Click += new System.EventHandler(this.DontCastRemove_Click);
             // 
-            // CardTypes
+            // DontCastAdd
             // 
-            this.CardTypes.FormattingEnabled = true;
-            resources.ApplyResources(this.CardTypes, "CardTypes");
-            this.CardTypes.Name = "CardTypes";
+            resources.ApplyResources(this.DontCastAdd, "DontCastAdd");
+            this.DontCastAdd.Name = "DontCastAdd";
+            this.DontCastAdd.UseVisualStyleBackColor = true;
+            this.DontCastAdd.Click += new System.EventHandler(this.DontCastAdd_Click);
             // 
-            // label35
+            // DontCastSelection
             // 
-            resources.ApplyResources(this.label35, "label35");
-            this.label35.Name = "label35";
+            this.DontCastSelection.FormattingEnabled = true;
+            resources.ApplyResources(this.DontCastSelection, "DontCastSelection");
+            this.DontCastSelection.Name = "DontCastSelection";
             // 
-            // CardTypeList
+            // DontCastList
             // 
-            this.CardTypeList.FormattingEnabled = true;
-            resources.ApplyResources(this.CardTypeList, "CardTypeList");
-            this.CardTypeList.Name = "CardTypeList";
+            this.DontCastList.FormattingEnabled = true;
+            resources.ApplyResources(this.DontCastList, "DontCastList");
+            this.DontCastList.Name = "DontCastList";
+            // 
+            // label29
+            // 
+            resources.ApplyResources(this.label29, "label29");
+            this.label29.Name = "label29";
+            // 
+            // label28
+            // 
+            resources.ApplyResources(this.label28, "label28");
+            this.label28.Name = "label28";
+            // 
+            // TrashTier
+            // 
+            this.TrashTier.FormattingEnabled = true;
+            resources.ApplyResources(this.TrashTier, "TrashTier");
+            this.TrashTier.Name = "TrashTier";
+            this.TrashTier.SelectedIndexChanged += new System.EventHandler(this.trashCardCost_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
+            // TrashAdventureCards
+            // 
+            resources.ApplyResources(this.TrashAdventureCards, "TrashAdventureCards");
+            this.TrashAdventureCards.Name = "TrashAdventureCards";
+            this.TrashAdventureCards.UseVisualStyleBackColor = true;
+            this.TrashAdventureCards.CheckedChanged += new System.EventHandler(this.trashAdventureCards_CheckedChanged);
             // 
             // AutoCastCards
             // 
@@ -1737,7 +1780,7 @@
             resources.ApplyResources(this.balanceMayo, "balanceMayo");
             this.balanceMayo.Name = "balanceMayo";
             this.balanceMayo.UseVisualStyleBackColor = true;
-            this.balanceMayo.CheckedChanged += new System.EventHandler(this.balanceMayo_CheckedChanged);
+            this.balanceMayo.CheckedChanged += new System.EventHandler(this.manageMayo_CheckedChanged);
             // 
             // progressBar1
             // 
@@ -1750,6 +1793,13 @@
             this.flowLayoutPanel1.Controls.Add(this.tabControl1);
             resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            // 
+            // TrashChunkers
+            // 
+            resources.ApplyResources(this.TrashChunkers, "TrashChunkers");
+            this.TrashChunkers.Name = "TrashChunkers";
+            this.TrashChunkers.UseVisualStyleBackColor = true;
+            this.TrashChunkers.CheckedChanged += new System.EventHandler(this.TrashChunkers_CheckedChanged);
             // 
             // SettingsForm
             // 
@@ -1984,7 +2034,6 @@
         private System.Windows.Forms.ListBox BlacklistedBosses;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.ComboBox EnemyBlacklistNames;
-        private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Button BlacklistRemoveEnemyButton;
         private System.Windows.Forms.ComboBox EnemyBlacklistZone;
         private System.Windows.Forms.Button BlacklistAddEnemyButton;
@@ -1997,9 +2046,16 @@
         private System.Windows.Forms.ComboBox TrashQuality;
         private System.Windows.Forms.CheckBox TrashCards;
         private System.Windows.Forms.CheckBox AutoCastCards;
-        private System.Windows.Forms.Button AddCardType;
-        private System.Windows.Forms.ComboBox CardTypes;
-        private System.Windows.Forms.ListBox CardTypeList;
         private System.Windows.Forms.Button ProfileEditButton;
+        private System.Windows.Forms.CheckBox TrashAdventureCards;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.ComboBox TrashTier;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button DontCastRemove;
+        private System.Windows.Forms.Button DontCastAdd;
+        private System.Windows.Forms.ComboBox DontCastSelection;
+        private System.Windows.Forms.ListBox DontCastList;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.CheckBox TrashChunkers;
     }
 }

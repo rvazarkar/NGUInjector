@@ -92,11 +92,15 @@ namespace NGUInjector
         [SerializeField] private bool _moreBlockParry;
         [SerializeField] private int[] _specialBoostBlacklist;
         [SerializeField] private int[] _blacklistedBosses;
-        [SerializeField] private bool _balanceMayo;
+        [SerializeField] private bool _manageMayo;
         [SerializeField] private bool _trashCards;
         [SerializeField] private int _cardsTrashQuality;
         [SerializeField] private bool _autoCastCards;
         [SerializeField] private int _autoCastCardType;
+        [SerializeField] private bool _trashAdventureCards;
+        [SerializeField] private int _trashCardCost;
+        [SerializeField] private string[] _dontCastCardType;
+        [SerializeField] private bool _trashChunkers;
         [SerializeField] private bool _hackAdvance;
 
         private readonly string _savePath;
@@ -245,11 +249,15 @@ namespace NGUInjector
             _moreBlockParry = other.MoreBlockParry;
             _specialBoostBlacklist = other.SpecialBoostBlacklist;
             _blacklistedBosses = other.BlacklistedBosses;
-            _balanceMayo = other._balanceMayo;
+            _manageMayo = other._manageMayo;
             _trashCards = other._trashCards;
             _cardsTrashQuality = other._cardsTrashQuality;
             _autoCastCards = other._autoCastCards;
             _autoCastCardType = other._autoCastCardType;
+            _trashAdventureCards = other._trashAdventureCards;
+            _trashCardCost = other._trashCardCost;
+            _dontCastCardType = other._dontCastCardType;
+            _trashChunkers = other._trashChunkers;
             _hackAdvance = other.HackAdvance;
         }
 
@@ -1106,13 +1114,13 @@ namespace NGUInjector
                 SaveSettings();
             }
         }
-        public bool BalanceMayo
+        public bool ManageMayo
         {
-            get => _balanceMayo;
+            get => _manageMayo;
             set
             {
-                if (value == _balanceMayo) return;
-                _balanceMayo = value;
+                if (value == _manageMayo) return;
+                _manageMayo = value;
                 SaveSettings();
             }
         }
@@ -1158,7 +1166,47 @@ namespace NGUInjector
             }
         }
 
+        public bool TrashAdventureCards
+        {
+            get => _trashAdventureCards;
+            set
+            {
+                if (value == _trashAdventureCards) return;
+                _trashAdventureCards = value;
+                SaveSettings();
+            }
+        }
 
+        public int TrashCardCost
+        {
+            get => _trashCardCost;
+            set
+            {
+                if (value == _trashCardCost) return;
+                _trashCardCost = value;
+                SaveSettings();
+            }
+        }
+        public string[] DontCastCardType
+        {
+            get => _dontCastCardType;
+            set
+            {
+                if (value == _dontCastCardType) return;
+                _dontCastCardType = value;
+                SaveSettings();
+            }
+        }
+        public bool TrashChunkers
+        {
+            get => _trashChunkers;
+            set
+            {
+                if (value == _trashChunkers) return;
+                _trashChunkers = value;
+                SaveSettings();
+            }
+        }
         internal bool NeedsGoldSwap()
         {
             for (var i = 0; i < TitanSwapTargets.Length; i++)

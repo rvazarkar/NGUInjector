@@ -113,21 +113,17 @@ namespace NGUInjector
                     }
                 }
             }
-
-            TrashQuality.Items.AddRange(Enum.GetNames(typeof(rarity)));
-            CardTypes.Items.AddRange(Enum.GetNames(typeof(cardBonus)).Where(card => card != "none").ToArray());
-
-            //int autoCasts = newSettings.AutoCastCardType;
-            //string[] cardTypes = Enum.GetNames(typeof(cardBonus));
-            //List<string> activatedTypes = new List<string>();
-            //for (int i = 1; i < cardTypes.Length; i++)
-            //{
-            //    if ((autoCasts & 1 << (i - 1)) == 1)
-            //    {
-            //        activatedTypes.Add(cardTypes[i]);
-            //    }
-            //}
-            //CardTypeList.Items.AddRange(activatedTypes.ToArray());
+            List<string> rarities = Enum.GetNames(typeof(rarity)).ToList();
+            rarities.Insert(0, "Don't trash");
+            TrashQuality.Items.AddRange(rarities.ToArray());
+            
+            object[] arr = new object[31];
+            for (int i = 0; i < arr.Length; i++) arr[i] = i;
+            TrashTier.Items.AddRange(arr);
+            
+            object[] bonusTypes = Enum.GetNames(typeof(cardBonus)).Where(x => x != "none").ToArray();
+            DontCastSelection.Items.AddRange(bonusTypes);
+            DontCastSelection.SelectedIndex = 0;
 
             CubePriority.DataSource = new BindingSource(CubePriorityList, null);
             CubePriority.ValueMember = "Key";
@@ -308,23 +304,19 @@ namespace NGUInjector
             SetTitanGoldBox(newSettings);
             SetTitanSwapBox(newSettings);
 
-            balanceMayo.Checked = newSettings.BalanceMayo;
+            balanceMayo.Checked = newSettings.ManageMayo;
             TrashCards.Checked = newSettings.TrashCards;
             TrashQuality.SelectedIndex = newSettings.CardsTrashQuality;
+            TrashTier.SelectedIndex = newSettings.TrashCardCost;
+            TrashAdventureCards.Checked = newSettings.TrashAdventureCards;
+            AutoCastCards.Checked = newSettings.AutoCastCards;
+            TrashChunkers.Checked = newSettings.TrashChunkers;
 
-            CardTypeList.Items.Clear();
-            int autoCasts = newSettings.AutoCastCardType;
-            string[] cardTypes = Enum.GetNames(typeof(cardBonus));
-            List<string> activatedTypes = new List<string>();
-            for (int i = 1; i < cardTypes.Length; i++)
+            if (newSettings.DontCastCardType != null)
             {
-                if ((autoCasts & 1 << (i - 1)) > 0)
-                {
-                    activatedTypes.Add(cardTypes[i]);
-                }
+                DontCastList.Items.Clear();
+                DontCastList.Items.AddRange(newSettings.DontCastCardType); 
             }
-            CardTypeList.Items.AddRange(activatedTypes.ToArray());
-
 
             var temp = newSettings.YggdrasilLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
             if (temp.Count > 0)
@@ -1439,9 +1431,9 @@ namespace NGUInjector
             Main.Settings.WishSortOrder = WishSortOrder.Checked;
         }
 
-        private void balanceMayo_CheckedChanged(object sender, EventArgs e)
+        private void manageMayo_CheckedChanged(object sender, EventArgs e)
         {
-            Main.Settings.BalanceMayo = balanceMayo.Checked;
+            Main.Settings.ManageMayo = balanceMayo.Checked;
         }
 
         private void TrashCards_CheckedChanged(object sender, EventArgs e)
@@ -1459,35 +1451,44 @@ namespace NGUInjector
             Main.Settings.AutoCastCards = AutoCastCards.Checked;
         }
 
-        private void AddCardType_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (CardTypes.SelectedIndex != -1)
-                {
-                    string cardType = CardTypes.SelectedItem.ToString();
-                    if (!CardTypeList.Items.Contains(cardType))
-                    {
-                        CardTypeList.Items.Add(cardType);
-                        cardBonus enumCardType = (cardBonus)Enum.Parse(typeof(cardBonus), cardType); 
-                        int binary = 1 << ((int)enumCardType - 1);
-                        int saveValue = Main.Settings.AutoCastCardType;
-                        Main.Settings.AutoCastCardType = saveValue | binary;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Main.Log(ex.Message);
-                Main.Log(ex.StackTrace);
-            }
-        }
-
         private void ProfileEditButton_Click(object sender, EventArgs e)
         {
             var filename = Main.Settings.AllocationFile + ".json";
             var path = Path.Combine(Main.GetProfilesDir(), filename);
             Process.Start(path);
+        }
+
+        private void trashAdventureCards_CheckedChanged(object sender, EventArgs e)
+        {
+            Main.Settings.TrashAdventureCards = TrashAdventureCards.Checked;
+        }
+
+        private void trashCardCost_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Main.Settings.TrashCardCost = (int)TrashTier.SelectedItem;
+        }
+
+        private void DontCastAdd_Click(object sender, EventArgs e)
+        {
+            if(DontCastSelection.SelectedItem != null && !DontCastList.Items.Contains(DontCastSelection.SelectedItem))
+            {
+                DontCastList.Items.Add(DontCastSelection.SelectedItem);
+                Main.Settings.DontCastCardType = DontCastList.Items.Cast<string>().ToArray();
+            }
+        }
+
+        private void DontCastRemove_Click(object sender, EventArgs e)
+        {
+            if(DontCastList.SelectedItem != null)
+            {
+                DontCastList.Items.RemoveAt(DontCastList.SelectedIndex);
+                Main.Settings.DontCastCardType = DontCastList.Items.Cast<string>().ToArray();
+            }
+        }
+
+        private void TrashChunkers_CheckedChanged(object sender, EventArgs e)
+        {
+            Main.Settings.TrashChunkers = TrashChunkers.Checked;
         }
     }
 }

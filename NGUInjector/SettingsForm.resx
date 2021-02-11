@@ -4746,104 +4746,257 @@
   <data name="&gt;&gt;tabPage10.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="AddCardType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>240, 59</value>
-  </data>
-  <data name="AddCardType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="AddCardType.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="AddCardType.Text" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="&gt;&gt;AddCardType.Name" xml:space="preserve">
-    <value>AddCardType</value>
-  </data>
-  <data name="&gt;&gt;AddCardType.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;AddCardType.Parent" xml:space="preserve">
-    <value>tabPage11</value>
-  </data>
-  <data name="&gt;&gt;AddCardType.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="CardTypes.Location" type="System.Drawing.Point, System.Drawing">
-    <value>112, 60</value>
-  </data>
-  <data name="CardTypes.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 21</value>
-  </data>
-  <data name="CardTypes.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;CardTypes.Name" xml:space="preserve">
-    <value>CardTypes</value>
-  </data>
-  <data name="&gt;&gt;CardTypes.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;CardTypes.Parent" xml:space="preserve">
-    <value>tabPage11</value>
-  </data>
-  <data name="&gt;&gt;CardTypes.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="label35.AutoSize" type="System.Boolean, mscorlib">
+  <data name="TrashChunkers.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label35.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 63</value>
+  <data name="TrashChunkers.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 131</value>
   </data>
-  <data name="label35.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 13</value>
+  <data name="TrashChunkers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>101, 17</value>
   </data>
-  <data name="label35.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+  <data name="TrashChunkers.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
   </data>
-  <data name="label35.Text" xml:space="preserve">
-    <value>Use Cards of Type</value>
+  <data name="TrashChunkers.Text" xml:space="preserve">
+    <value>Trash Chunkers</value>
   </data>
-  <data name="&gt;&gt;label35.Name" xml:space="preserve">
-    <value>label35</value>
+  <data name="&gt;&gt;TrashChunkers.Name" xml:space="preserve">
+    <value>TrashChunkers</value>
   </data>
-  <data name="&gt;&gt;label35.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;TrashChunkers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label35.Parent" xml:space="preserve">
+  <data name="&gt;&gt;TrashChunkers.Parent" xml:space="preserve">
     <value>tabPage11</value>
   </data>
-  <data name="&gt;&gt;label35.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;TrashChunkers.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="DontCastRemove.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 233</value>
+  </data>
+  <data name="DontCastRemove.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="DontCastRemove.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="DontCastRemove.Text" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="&gt;&gt;DontCastRemove.Name" xml:space="preserve">
+    <value>DontCastRemove</value>
+  </data>
+  <data name="&gt;&gt;DontCastRemove.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DontCastRemove.Parent" xml:space="preserve">
+    <value>tabPage11</value>
+  </data>
+  <data name="&gt;&gt;DontCastRemove.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="DontCastAdd.Location" type="System.Drawing.Point, System.Drawing">
+    <value>250, 102</value>
+  </data>
+  <data name="DontCastAdd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="DontCastAdd.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="DontCastAdd.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="&gt;&gt;DontCastAdd.Name" xml:space="preserve">
+    <value>DontCastAdd</value>
+  </data>
+  <data name="&gt;&gt;DontCastAdd.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DontCastAdd.Parent" xml:space="preserve">
+    <value>tabPage11</value>
+  </data>
+  <data name="&gt;&gt;DontCastAdd.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="CardTypeList.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 90</value>
+  <data name="DontCastSelection.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 103</value>
   </data>
-  <data name="CardTypeList.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 134</value>
+  <data name="DontCastSelection.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 21</value>
   </data>
-  <data name="CardTypeList.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+  <data name="DontCastSelection.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
   </data>
-  <data name="&gt;&gt;CardTypeList.Name" xml:space="preserve">
-    <value>CardTypeList</value>
+  <data name="&gt;&gt;DontCastSelection.Name" xml:space="preserve">
+    <value>DontCastSelection</value>
   </data>
-  <data name="&gt;&gt;CardTypeList.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;DontCastSelection.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;CardTypeList.Parent" xml:space="preserve">
+  <data name="&gt;&gt;DontCastSelection.Parent" xml:space="preserve">
     <value>tabPage11</value>
   </data>
-  <data name="&gt;&gt;CardTypeList.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;DontCastSelection.ZOrder" xml:space="preserve">
     <value>3</value>
+  </data>
+  <data name="DontCastList.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 131</value>
+  </data>
+  <data name="DontCastList.Size" type="System.Drawing.Size, System.Drawing">
+    <value>104, 95</value>
+  </data>
+  <data name="DontCastList.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;DontCastList.Name" xml:space="preserve">
+    <value>DontCastList</value>
+  </data>
+  <data name="&gt;&gt;DontCastList.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DontCastList.Parent" xml:space="preserve">
+    <value>tabPage11</value>
+  </data>
+  <data name="&gt;&gt;DontCastList.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="label29.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label29.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 106</value>
+  </data>
+  <data name="label29.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 13</value>
+  </data>
+  <data name="label29.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="label29.Text" xml:space="preserve">
+    <value>Don't cast card types</value>
+  </data>
+  <data name="&gt;&gt;label29.Name" xml:space="preserve">
+    <value>label29</value>
+  </data>
+  <data name="&gt;&gt;label29.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label29.Parent" xml:space="preserve">
+    <value>tabPage11</value>
+  </data>
+  <data name="&gt;&gt;label29.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label28.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label28.Location" type="System.Drawing.Point, System.Drawing">
+    <value>215, 64</value>
+  </data>
+  <data name="label28.Size" type="System.Drawing.Size, System.Drawing">
+    <value>79, 13</value>
+  </data>
+  <data name="label28.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="label28.Text" xml:space="preserve">
+    <value>cost and below</value>
+  </data>
+  <data name="&gt;&gt;label28.Name" xml:space="preserve">
+    <value>label28</value>
+  </data>
+  <data name="&gt;&gt;label28.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label28.Parent" xml:space="preserve">
+    <value>tabPage11</value>
+  </data>
+  <data name="&gt;&gt;label28.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="TrashTier.Location" type="System.Drawing.Point, System.Drawing">
+    <value>88, 61</value>
+  </data>
+  <data name="TrashTier.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 21</value>
+  </data>
+  <data name="TrashTier.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;TrashTier.Name" xml:space="preserve">
+    <value>TrashTier</value>
+  </data>
+  <data name="&gt;&gt;TrashTier.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TrashTier.Parent" xml:space="preserve">
+    <value>tabPage11</value>
+  </data>
+  <data name="&gt;&gt;TrashTier.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 64</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 13</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Trash Cards of</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>tabPage11</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="TrashAdventureCards.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="TrashAdventureCards.Location" type="System.Drawing.Point, System.Drawing">
+    <value>231, 6</value>
+  </data>
+  <data name="TrashAdventureCards.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 17</value>
+  </data>
+  <data name="TrashAdventureCards.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="TrashAdventureCards.Text" xml:space="preserve">
+    <value>Trash Adventure Cards</value>
+  </data>
+  <data name="&gt;&gt;TrashAdventureCards.Name" xml:space="preserve">
+    <value>TrashAdventureCards</value>
+  </data>
+  <data name="&gt;&gt;TrashAdventureCards.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TrashAdventureCards.Parent" xml:space="preserve">
+    <value>tabPage11</value>
+  </data>
+  <data name="&gt;&gt;TrashAdventureCards.ZOrder" xml:space="preserve">
+    <value>9</value>
   </data>
   <data name="AutoCastCards.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="AutoCastCards.Location" type="System.Drawing.Point, System.Drawing">
-    <value>232, 7</value>
+    <value>381, 6</value>
   </data>
   <data name="AutoCastCards.Size" type="System.Drawing.Size, System.Drawing">
     <value>102, 17</value>
@@ -4864,13 +5017,13 @@
     <value>tabPage11</value>
   </data>
   <data name="&gt;&gt;AutoCastCards.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>10</value>
   </data>
   <data name="label34.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="label34.Location" type="System.Drawing.Point, System.Drawing">
-    <value>239, 36</value>
+    <value>215, 40</value>
   </data>
   <data name="label34.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 13</value>
@@ -4891,7 +5044,7 @@
     <value>tabPage11</value>
   </data>
   <data name="&gt;&gt;label34.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>11</value>
   </data>
   <data name="label33.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -4900,7 +5053,7 @@
     <value>NoControl</value>
   </data>
   <data name="label33.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 36</value>
+    <value>6, 40</value>
   </data>
   <data name="label33.Size" type="System.Drawing.Size, System.Drawing">
     <value>76, 13</value>
@@ -4921,10 +5074,10 @@
     <value>tabPage11</value>
   </data>
   <data name="&gt;&gt;label33.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>12</value>
   </data>
   <data name="TrashQuality.Location" type="System.Drawing.Point, System.Drawing">
-    <value>112, 30</value>
+    <value>88, 37</value>
   </data>
   <data name="TrashQuality.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 21</value>
@@ -4942,7 +5095,7 @@
     <value>tabPage11</value>
   </data>
   <data name="&gt;&gt;TrashQuality.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>13</value>
   </data>
   <data name="TrashCards.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -4969,7 +5122,7 @@
     <value>tabPage11</value>
   </data>
   <data name="&gt;&gt;TrashCards.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>14</value>
   </data>
   <data name="balanceMayo.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -4984,7 +5137,7 @@
     <value>0</value>
   </data>
   <data name="balanceMayo.Text" xml:space="preserve">
-    <value>Balance Mayo</value>
+    <value>Manage Mayo</value>
   </data>
   <data name="&gt;&gt;balanceMayo.Name" xml:space="preserve">
     <value>balanceMayo</value>
@@ -4996,7 +5149,7 @@
     <value>tabPage11</value>
   </data>
   <data name="&gt;&gt;balanceMayo.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>15</value>
   </data>
   <data name="tabPage11.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>

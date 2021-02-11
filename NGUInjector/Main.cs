@@ -275,9 +275,14 @@ namespace NGUInjector
                         MoreBlockParry = false,
                         WishSortOrder = false,
                         WishSortPriorities = false,
-                        BalanceMayo = false,
+                        ManageMayo = false,
                         TrashCards = false,
+                        TrashAdventureCards = false,
+                        AutoCastCards = false,
                         CardsTrashQuality = 0,
+                        TrashCardCost = 0,
+                        DontCastCardType = new string[0],
+                        TrashChunkers = false,
                         HackAdvance = false
                     };
 
@@ -825,7 +830,7 @@ namespace NGUInjector
                     _profile.DoRebirth();
                 }
 
-                if (Settings.BalanceMayo)
+                if (Settings.ManageMayo)
                 {
                     _cardManager.CheckManas();
                 }
@@ -836,7 +841,7 @@ namespace NGUInjector
                 }
                 if (Settings.AutoCastCards)
                 {
-                    //_cardManager.CastCards();
+                    _cardManager.CastCards();
                 }
             }
             catch (Exception e)
