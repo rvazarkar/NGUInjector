@@ -151,29 +151,30 @@ namespace NGUInjector.Managers
         }
         public void CastCards()
         {
-            int i = 0;
-            List<Mana> manas = _character.cards.manas;
-            Card card;
-            if (Main.Settings.TrashCards) TrashCards(); //Make sure all cards in inventory are ones that should be cast
-            while (i < _cards.cards.Count)
+            bool castCard = true;
+            while (castCard && _cards.cards.Count > 0)
             {
-                card = _cards.cards[i];
-                bool castCard = true;
-                for (int j = 0; j < card.manaCosts.Count; j++)
+                Card card = _cards.cards[0];
+                List<Mana> manas = _character.cards.manas;
+                if (Main.Settings.TrashCards) TrashCards(); //Make sure all cards in inventory are ones that should be cast
+                for (int i = 0; i < card.manaCosts.Count; i++)
                 {
+                    //Main.LogCard(manas[i].amount.ToString());
+                    //Main.LogCard(card.manaCosts[i].ToString());
                     if (manas[i].amount < card.manaCosts[i])
                     {
+                        //Main.LogCard("false");
                         castCard = false;
                         break;
                     }
                 }
+                //Main.LogCard(castCard.ToString());
                 if (castCard)
                 {
                     Main.LogCard($"Cast Card: Cost: {card.manaCosts.Sum()} Rarity: {card.cardRarity} Bonus Type: {card.bonusType}");
                     if (card.isProtected) card.isProtected = false;
-                    _cardsController.tryConsumeCard(i);
+                    _cardsController.tryConsumeCard(0);
                 }
-                else i++;
             }
         }
     }
