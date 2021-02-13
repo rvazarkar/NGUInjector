@@ -68,7 +68,7 @@ namespace NGUInjector
         [SerializeField] private bool _activateFruits;
         [SerializeField] private int[] _wishPriorities;
         [SerializeField] private bool _wishSortPriorities;
-        [SerializeField] private bool _wishSortOrder;        
+        [SerializeField] private bool _wishSortOrder;
         [SerializeField] private bool _beastMode;
         [SerializeField] private int _cubePriority;
         [SerializeField] private bool _manageNguDiff;
@@ -92,10 +92,20 @@ namespace NGUInjector
         [SerializeField] private bool _moreBlockParry;
         [SerializeField] private int[] _specialBoostBlacklist;
         [SerializeField] private int[] _blacklistedBosses;
+        [SerializeField] private bool _manageMayo;
+        [SerializeField] private bool _trashCards;
+        [SerializeField] private int _cardsTrashQuality;
+        [SerializeField] private bool _autoCastCards;
+        [SerializeField] private int _autoCastCardType;
+        [SerializeField] private bool _trashAdventureCards;
+        [SerializeField] private int _trashCardCost;
+        [SerializeField] private string[] _dontCastCardType;
+        [SerializeField] private bool _trashChunkers;
+        [SerializeField] private bool _hackAdvance;
 
         private readonly string _savePath;
         private bool _disableSave;
-        
+
         public SavedSettings(string dir)
         {
             if (dir != null)
@@ -239,6 +249,16 @@ namespace NGUInjector
             _moreBlockParry = other.MoreBlockParry;
             _specialBoostBlacklist = other.SpecialBoostBlacklist;
             _blacklistedBosses = other.BlacklistedBosses;
+            _manageMayo = other._manageMayo;
+            _trashCards = other._trashCards;
+            _cardsTrashQuality = other._cardsTrashQuality;
+            _autoCastCards = other._autoCastCards;
+            _autoCastCardType = other._autoCastCardType;
+            _trashAdventureCards = other._trashAdventureCards;
+            _trashCardCost = other._trashCardCost;
+            _dontCastCardType = other._dontCastCardType;
+            _trashChunkers = other._trashChunkers;
+            _hackAdvance = other.HackAdvance;
         }
 
         public int SnipeZone
@@ -528,7 +548,7 @@ namespace NGUInjector
                 SaveSettings();
             }
         }
-        
+
         public bool SnipeBossOnly
         {
             get => _snipeBossOnly;
@@ -1091,6 +1111,123 @@ namespace NGUInjector
             {
                 if (_blacklistedBosses != null && _blacklistedBosses.SequenceEqual(value)) return;
                 _blacklistedBosses = value;
+                SaveSettings();
+            }
+        }
+        public bool ManageMayo
+        {
+            get => _manageMayo;
+            set
+            {
+                if (value == _manageMayo) return;
+                _manageMayo = value;
+                SaveSettings();
+            }
+        }
+        public bool TrashCards
+        {
+            get => _trashCards;
+            set
+            {
+                if (value == _trashCards) return;
+                _trashCards = value;
+                SaveSettings();
+            }
+        }
+        public int CardsTrashQuality
+        {
+            get => _cardsTrashQuality;
+            set
+            {
+                if (value == _cardsTrashQuality) return;
+                _cardsTrashQuality = value;
+                SaveSettings();
+            }
+        }
+        public bool AutoCastCards
+        {
+            get => _autoCastCards;
+            set
+            {
+                if (value == _autoCastCards) return;
+                _autoCastCards = value;
+                SaveSettings();
+            }
+        }
+
+        public int AutoCastCardType
+        {
+            get => _autoCastCardType;
+            set 
+            {
+                if (value == _autoCastCardType) return;
+                _autoCastCardType = value;
+                SaveSettings();
+            }
+        }
+
+        public bool TrashAdventureCards
+        {
+            get => _trashAdventureCards;
+            set
+            {
+                if (value == _trashAdventureCards) return;
+                _trashAdventureCards = value;
+                SaveSettings();
+            }
+        }
+
+        public int TrashCardCost
+        {
+            get => _trashCardCost;
+            set
+            {
+                if (value == _trashCardCost) return;
+                _trashCardCost = value;
+                SaveSettings();
+            }
+        }
+        public string[] DontCastCardType
+        {
+            get => _dontCastCardType;
+            set
+            {
+                if (value == _dontCastCardType) return;
+                _dontCastCardType = value;
+                SaveSettings();
+            }
+        }
+        public bool TrashChunkers
+        {
+            get => _trashChunkers;
+            set
+            {
+                if (value == _trashChunkers) return;
+                _trashChunkers = value;
+                SaveSettings();
+            }
+        }
+        internal bool NeedsGoldSwap()
+        {
+            for (var i = 0; i < TitanSwapTargets.Length; i++)
+            {
+                if (!TitanSwapTargets[i])
+                    continue;
+
+                if (TitanSwapTargets[i] && !TitanMoneyDone[i])
+                    return true;
+            }
+
+            return false;
+        }
+
+        public bool HackAdvance
+        {
+            get => _hackAdvance;
+            set
+            {
+                if (value == _hackAdvance) return;
+                _hackAdvance = value;
                 SaveSettings();
             }
         }

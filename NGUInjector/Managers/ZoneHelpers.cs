@@ -40,7 +40,7 @@ namespace NGUInjector.Managers
 
             if (!CheckTitanSpawnTime(bossId)) return result;
 
-            result.SpawningSoon = Main.Settings.TitanSwapTargets[bossId];
+            result.SpawningSoon = Main.Settings.SwapTitanLoadouts && Main.Settings.TitanSwapTargets[bossId];
             // Run money once for each boss
             result.RunMoneyLoadout = Main.Settings.ManageGoldLoadouts && Main.Settings.TitanGoldTargets[bossId] && !Main.Settings.TitanMoneyDone[bossId];
 
@@ -97,18 +97,16 @@ namespace NGUInjector.Managers
             var controller = Main.Character.adventureController;
             var level = controller.itopodLevel;
             var optimal = CalculateBestItopodLevel();
-            if (level == optimal) return;
+            if (level == optimal) return; // we are on optimal floor
+            var highestOpen = Main.Character.adventure.highestItopodLevel;
+            var climbing = (level < optimal && level >= highestOpen - 1);
             controller.itopodStartInput.text = optimal.ToString();
-            if (optimal == Main.Character.adventure.highestItopodLevel)
-            {
+            if (climbing)
                 optimal++;
-                Main.Log("Pushed optimal floor up by 1 because highest floor is hit");
-            }
-
             controller.itopodEndInput.text = optimal.ToString();
             controller.verifyItopodInputs();
-            controller.zoneSelector.changeZone(1000);
-            //controller.log.AddEvent($"The CHEATER Floor Shifter changed your current floor from {level} to {optimal}");
+            if (!climbing)
+                controller.zoneSelector.changeZone(1000);
         }
 
         internal static int CalculateBestItopodLevel()
@@ -120,8 +118,9 @@ namespace NGUInjector.Managers
             var num2 = Convert.ToInt32(Math.Floor(Math.Log(num1, 1.05)));
             if (num2 < 1)
                 return 1;
-            if (num2 > c.adventure.highestItopodLevel)
-                num2 = c.adventure.highestItopodLevel;
+            var maxLevel = c.adventureController.maxItopodLevel();
+            if (num2 > maxLevel)
+                num2 = maxLevel;
             return num2;
         }
     }

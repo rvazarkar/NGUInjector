@@ -20,7 +20,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
 
         internal override bool Allocate()
         {
-            if (Index < Character.rebirthTime.totalseconds)
+            if (Index == 0)
             {
                 CastRituals();
             }
@@ -39,8 +39,11 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
 
         private void CastRituals()
         {
+            var allocationLeft = (long)MaxAllocation;
             for (var i = Character.bloodMagic.ritual.Count - 1; i >= 0; i--)
             {
+                if (allocationLeft <= 0)
+                    break;
                 if (Character.magic.idleMagic == 0)
                     break;
                 if (i >= Character.bloodMagicController.ritualsUnlocked())
@@ -56,7 +59,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     continue;
                 }
 
-                var tLeft = RitualTimeLeft(i);
+                var tLeft = RitualTimeLeft(i, allocationLeft);
 
                 if (tLeft > 3600)
                     continue;
@@ -67,14 +70,20 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                         continue;
                 }
 
-                Character.bloodMagicController.bloodMagics[i].cap();
+                var cap = CalculateMaxAllocation(i, allocationLeft);
+                SetInput(cap);
+                Character.bloodMagicController.bloodMagics[i].add();
+                allocationLeft -= cap;
             }
         }
 
         private void CastRitualEndTime(int endTime)
         {
+            var allocationLeft = (long)MaxAllocation;
             for (var i = Character.bloodMagic.ritual.Count - 1; i >= 0; i--)
             {
+                if (allocationLeft <= 0)
+                    break;
                 if (Character.magic.idleMagic == 0)
                     break;
                 if (i >= Character.bloodMagicController.ritualsUnlocked())
@@ -90,7 +99,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     continue;
                 }
 
-                var tLeft = RitualTimeLeft(i);
+                var tLeft = RitualTimeLeft(i, allocationLeft);
 
                 if (RebirthTime > 0 && Main.Settings.AutoRebirth)
                 {
@@ -101,21 +110,24 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 if (Character.rebirthTime.totalseconds + tLeft > endTime)
                     continue;
 
-                Character.bloodMagicController.bloodMagics[i].cap();
+                var cap = CalculateMaxAllocation(i, allocationLeft);
+                SetInput(cap);
+                Character.bloodMagicController.bloodMagics[i].add();
+                allocationLeft -= cap;
             }
         }
 
-        private float RitualProgressPerTick(int id)
+        private float RitualProgressPerTick(int id, long remaining)
         {
             var num1 = 0.0;
             if (Character.settings.rebirthDifficulty == difficulty.normal)
-                num1 = Character.magic.idleMagic * (double)Character.totalMagicPower() / 50000.0 /
+                num1 = remaining * (double)Character.totalMagicPower() / 50000.0 /
                        Character.bloodMagicController.normalSpeedDividers[id];
             else if (Character.settings.rebirthDifficulty == difficulty.evil)
-                num1 = Character.magic.idleMagic * (double)Character.totalMagicPower() / 50000.0 /
+                num1 = remaining * (double)Character.totalMagicPower() / 50000.0 /
                        Character.bloodMagicController.evilSpeedDividers[id];
             else if (Character.settings.rebirthDifficulty == difficulty.sadistic)
-                num1 = Character.magic.idleMagic * (double)Character.totalMagicPower() /
+                num1 = remaining * (double)Character.totalMagicPower() /
                        Character.bloodMagicController.sadisticSpeedDividers[id];
             if (Character.settings.rebirthDifficulty >= difficulty.sadistic)
                 num1 /= Character.bloodMagicController.bloodMagics[id].sadisticDivider();
@@ -127,10 +139,22 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             return (float)num2;
         }
 
-        public float RitualTimeLeft(int id)
+        public float RitualTimeLeft(int id, long remaining)
         {
             return (float)((1.0 - Character.bloodMagic.ritual[id].progress) /
-                           RitualProgressPerTick(id) / 50.0);
+                           RitualProgressPerTick(id, remaining) / 50.0);
+        }
+
+        private long CalculateMaxAllocation(int id, long remaining)
+        {
+            var num1 = Character.bloodMagicController.bloodMagics[id].capValue();
+            if (remaining > num1)
+            {
+                return num1;
+            }
+
+            var num2 = (long) ((double) num1 / Math.Ceiling((double) num1 / (double) remaining)) + 1L;
+            return num2;
         }
     }
 }

@@ -49,6 +49,7 @@
             this.AutoFightBosses = new System.Windows.Forms.CheckBox();
             this.AutoITOPOD = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.ProfileEditButton = new System.Windows.Forms.Button();
             this.CastBloodSpells = new System.Windows.Forms.CheckBox();
             this.IronPillThreshold = new System.Windows.Forms.NumericUpDown();
             this.label123 = new System.Windows.Forms.Label();
@@ -80,7 +81,6 @@
             this.ManageEnergy = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.YggSwapThreshold = new System.Windows.Forms.NumericUpDown();
-            this.label28 = new System.Windows.Forms.Label();
             this.HarvestSafety = new System.Windows.Forms.CheckBox();
             this.HarvestAllButton = new System.Windows.Forms.Button();
             this.ActivateFruits = new System.Windows.Forms.CheckBox();
@@ -128,10 +128,8 @@
             this.BlacklistAddEnemyButton = new System.Windows.Forms.Button();
             this.label31 = new System.Windows.Forms.Label();
             this.EnemyBlacklistNames = new System.Windows.Forms.ComboBox();
-            this.label30 = new System.Windows.Forms.Label();
             this.BlacklistRemoveEnemyButton = new System.Windows.Forms.Button();
             this.EnemyBlacklistZone = new System.Windows.Forms.ComboBox();
-            this.label29 = new System.Windows.Forms.Label();
             this.BlacklistedBosses = new System.Windows.Forms.ListBox();
             this.MoreBlockParry = new System.Windows.Forms.CheckBox();
             this.ITOPODBeastMode = new System.Windows.Forms.CheckBox();
@@ -207,6 +205,23 @@
             this.label7 = new System.Windows.Forms.Label();
             this.AutoMoneyPit = new System.Windows.Forms.CheckBox();
             this.AutoDailySpin = new System.Windows.Forms.CheckBox();
+            this.tabPage11 = new System.Windows.Forms.TabPage();
+            this.TrashChunkers = new System.Windows.Forms.CheckBox();
+            this.DontCastRemove = new System.Windows.Forms.Button();
+            this.DontCastAdd = new System.Windows.Forms.Button();
+            this.DontCastSelection = new System.Windows.Forms.ComboBox();
+            this.DontCastList = new System.Windows.Forms.ListBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.TrashTier = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.TrashAdventureCards = new System.Windows.Forms.CheckBox();
+            this.AutoCastCards = new System.Windows.Forms.CheckBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.TrashQuality = new System.Windows.Forms.ComboBox();
+            this.TrashCards = new System.Windows.Forms.CheckBox();
+            this.balanceMayo = new System.Windows.Forms.CheckBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
@@ -243,6 +258,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.WishAddInput)).BeginInit();
             this.tabPage10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MoneyPitInput)).BeginInit();
+            this.tabPage11.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -290,6 +306,7 @@
             this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Controls.Add(this.tabPage9);
             this.tabControl1.Controls.Add(this.tabPage10);
+            this.tabControl1.Controls.Add(this.tabPage11);
             resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -364,6 +381,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.ProfileEditButton);
             this.tabPage2.Controls.Add(this.CastBloodSpells);
             this.tabPage2.Controls.Add(this.IronPillThreshold);
             this.tabPage2.Controls.Add(this.label123);
@@ -397,6 +415,13 @@
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // ProfileEditButton
+            // 
+            resources.ApplyResources(this.ProfileEditButton, "ProfileEditButton");
+            this.ProfileEditButton.Name = "ProfileEditButton";
+            this.ProfileEditButton.UseVisualStyleBackColor = true;
+            this.ProfileEditButton.Click += new System.EventHandler(this.ProfileEditButton_Click);
+            // 
             // CastBloodSpells
             // 
             resources.ApplyResources(this.CastBloodSpells, "CastBloodSpells");
@@ -408,8 +433,8 @@
             // 
             resources.ApplyResources(this.IronPillThreshold, "IronPillThreshold");
             this.IronPillThreshold.Maximum = new decimal(new int[] {
-            9999999,
-            0,
+            -1530494977,
+            232830,
             0,
             0});
             this.IronPillThreshold.Name = "IronPillThreshold";
@@ -598,7 +623,6 @@
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.YggSwapThreshold);
-            this.tabPage3.Controls.Add(this.label28);
             this.tabPage3.Controls.Add(this.HarvestSafety);
             this.tabPage3.Controls.Add(this.HarvestAllButton);
             this.tabPage3.Controls.Add(this.ActivateFruits);
@@ -629,11 +653,6 @@
             0,
             0});
             this.YggSwapThreshold.ValueChanged += new System.EventHandler(this.YggSwapThreshold_ValueChanged);
-            // 
-            // label28
-            // 
-            resources.ApplyResources(this.label28, "label28");
-            this.label28.Name = "label28";
             // 
             // HarvestSafety
             // 
@@ -993,10 +1012,8 @@
             this.tabPage6.Controls.Add(this.BlacklistAddEnemyButton);
             this.tabPage6.Controls.Add(this.label31);
             this.tabPage6.Controls.Add(this.EnemyBlacklistNames);
-            this.tabPage6.Controls.Add(this.label30);
             this.tabPage6.Controls.Add(this.BlacklistRemoveEnemyButton);
             this.tabPage6.Controls.Add(this.EnemyBlacklistZone);
-            this.tabPage6.Controls.Add(this.label29);
             this.tabPage6.Controls.Add(this.BlacklistedBosses);
             this.tabPage6.Controls.Add(this.MoreBlockParry);
             this.tabPage6.Controls.Add(this.ITOPODBeastMode);
@@ -1048,11 +1065,6 @@
             resources.ApplyResources(this.EnemyBlacklistNames, "EnemyBlacklistNames");
             this.EnemyBlacklistNames.Name = "EnemyBlacklistNames";
             // 
-            // label30
-            // 
-            resources.ApplyResources(this.label30, "label30");
-            this.label30.Name = "label30";
-            // 
             // BlacklistRemoveEnemyButton
             // 
             resources.ApplyResources(this.BlacklistRemoveEnemyButton, "BlacklistRemoveEnemyButton");
@@ -1066,11 +1078,6 @@
             resources.ApplyResources(this.EnemyBlacklistZone, "EnemyBlacklistZone");
             this.EnemyBlacklistZone.Name = "EnemyBlacklistZone";
             this.EnemyBlacklistZone.SelectedIndexChanged += new System.EventHandler(this.EnemyBlacklistZone_SelectedIndexChanged);
-            // 
-            // label29
-            // 
-            resources.ApplyResources(this.label29, "label29");
-            this.label29.Name = "label29";
             // 
             // BlacklistedBosses
             // 
@@ -1660,6 +1667,128 @@
             this.AutoDailySpin.UseVisualStyleBackColor = true;
             this.AutoDailySpin.CheckedChanged += new System.EventHandler(this.AutoDailySpin_CheckedChanged);
             // 
+            // tabPage11
+            // 
+            this.tabPage11.Controls.Add(this.TrashChunkers);
+            this.tabPage11.Controls.Add(this.DontCastRemove);
+            this.tabPage11.Controls.Add(this.DontCastAdd);
+            this.tabPage11.Controls.Add(this.DontCastSelection);
+            this.tabPage11.Controls.Add(this.DontCastList);
+            this.tabPage11.Controls.Add(this.label29);
+            this.tabPage11.Controls.Add(this.label28);
+            this.tabPage11.Controls.Add(this.TrashTier);
+            this.tabPage11.Controls.Add(this.label1);
+            this.tabPage11.Controls.Add(this.TrashAdventureCards);
+            this.tabPage11.Controls.Add(this.AutoCastCards);
+            this.tabPage11.Controls.Add(this.label34);
+            this.tabPage11.Controls.Add(this.label33);
+            this.tabPage11.Controls.Add(this.TrashQuality);
+            this.tabPage11.Controls.Add(this.TrashCards);
+            this.tabPage11.Controls.Add(this.balanceMayo);
+            resources.ApplyResources(this.tabPage11, "tabPage11");
+            this.tabPage11.Name = "tabPage11";
+            this.tabPage11.UseVisualStyleBackColor = true;
+            // 
+            // TrashChunkers
+            // 
+            resources.ApplyResources(this.TrashChunkers, "TrashChunkers");
+            this.TrashChunkers.Name = "TrashChunkers";
+            this.TrashChunkers.UseVisualStyleBackColor = true;
+            this.TrashChunkers.CheckedChanged += new System.EventHandler(this.TrashChunkers_CheckedChanged);
+            // 
+            // DontCastRemove
+            // 
+            resources.ApplyResources(this.DontCastRemove, "DontCastRemove");
+            this.DontCastRemove.Name = "DontCastRemove";
+            this.DontCastRemove.UseVisualStyleBackColor = true;
+            this.DontCastRemove.Click += new System.EventHandler(this.DontCastRemove_Click);
+            // 
+            // DontCastAdd
+            // 
+            resources.ApplyResources(this.DontCastAdd, "DontCastAdd");
+            this.DontCastAdd.Name = "DontCastAdd";
+            this.DontCastAdd.UseVisualStyleBackColor = true;
+            this.DontCastAdd.Click += new System.EventHandler(this.DontCastAdd_Click);
+            // 
+            // DontCastSelection
+            // 
+            this.DontCastSelection.FormattingEnabled = true;
+            resources.ApplyResources(this.DontCastSelection, "DontCastSelection");
+            this.DontCastSelection.Name = "DontCastSelection";
+            // 
+            // DontCastList
+            // 
+            this.DontCastList.FormattingEnabled = true;
+            resources.ApplyResources(this.DontCastList, "DontCastList");
+            this.DontCastList.Name = "DontCastList";
+            // 
+            // label29
+            // 
+            resources.ApplyResources(this.label29, "label29");
+            this.label29.Name = "label29";
+            // 
+            // label28
+            // 
+            resources.ApplyResources(this.label28, "label28");
+            this.label28.Name = "label28";
+            // 
+            // TrashTier
+            // 
+            this.TrashTier.FormattingEnabled = true;
+            resources.ApplyResources(this.TrashTier, "TrashTier");
+            this.TrashTier.Name = "TrashTier";
+            this.TrashTier.SelectedIndexChanged += new System.EventHandler(this.trashCardCost_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
+            // TrashAdventureCards
+            // 
+            resources.ApplyResources(this.TrashAdventureCards, "TrashAdventureCards");
+            this.TrashAdventureCards.Name = "TrashAdventureCards";
+            this.TrashAdventureCards.UseVisualStyleBackColor = true;
+            this.TrashAdventureCards.CheckedChanged += new System.EventHandler(this.trashAdventureCards_CheckedChanged);
+            // 
+            // AutoCastCards
+            // 
+            resources.ApplyResources(this.AutoCastCards, "AutoCastCards");
+            this.AutoCastCards.Name = "AutoCastCards";
+            this.AutoCastCards.UseVisualStyleBackColor = true;
+            this.AutoCastCards.CheckedChanged += new System.EventHandler(this.AutoCastCards_CheckedChanged);
+            // 
+            // label34
+            // 
+            resources.ApplyResources(this.label34, "label34");
+            this.label34.Name = "label34";
+            // 
+            // label33
+            // 
+            resources.ApplyResources(this.label33, "label33");
+            this.label33.Name = "label33";
+            // 
+            // TrashQuality
+            // 
+            this.TrashQuality.FormattingEnabled = true;
+            resources.ApplyResources(this.TrashQuality, "TrashQuality");
+            this.TrashQuality.Name = "TrashQuality";
+            this.TrashQuality.SelectedIndexChanged += new System.EventHandler(this.TrashQuality_SelectedIndexChanged);
+            // 
+            // TrashCards
+            // 
+            resources.ApplyResources(this.TrashCards, "TrashCards");
+            this.TrashCards.Name = "TrashCards";
+            this.TrashCards.UseVisualStyleBackColor = true;
+            this.TrashCards.CheckedChanged += new System.EventHandler(this.TrashCards_CheckedChanged);
+            // 
+            // balanceMayo
+            // 
+            resources.ApplyResources(this.balanceMayo, "balanceMayo");
+            this.balanceMayo.Name = "balanceMayo";
+            this.balanceMayo.UseVisualStyleBackColor = true;
+            this.balanceMayo.CheckedChanged += new System.EventHandler(this.manageMayo_CheckedChanged);
+            // 
             // progressBar1
             // 
             resources.ApplyResources(this.progressBar1, "progressBar1");
@@ -1679,6 +1808,7 @@
             this.Controls.Add(this.flowLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "SettingsForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).EndInit();
@@ -1725,6 +1855,8 @@
             this.tabPage10.ResumeLayout(false);
             this.tabPage10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MoneyPitInput)).EndInit();
+            this.tabPage11.ResumeLayout(false);
+            this.tabPage11.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -1896,13 +2028,12 @@
         private System.Windows.Forms.Label label123;
         private System.Windows.Forms.CheckBox CastBloodSpells;
         private System.Windows.Forms.NumericUpDown YggSwapThreshold;
-        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label33;
         private System.Windows.Forms.CheckBox MoreBlockParry;
-        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label34;
         private System.Windows.Forms.ListBox BlacklistedBosses;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.ComboBox EnemyBlacklistNames;
-        private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Button BlacklistRemoveEnemyButton;
         private System.Windows.Forms.ComboBox EnemyBlacklistZone;
         private System.Windows.Forms.Button BlacklistAddEnemyButton;
@@ -1910,5 +2041,21 @@
         private System.Windows.Forms.Button BoostAvgReset;
         private System.Windows.Forms.CheckBox WishSortOrder;
         private System.Windows.Forms.CheckBox WishSortPriorities;
+        private System.Windows.Forms.TabPage tabPage11;
+        private System.Windows.Forms.CheckBox balanceMayo;
+        private System.Windows.Forms.ComboBox TrashQuality;
+        private System.Windows.Forms.CheckBox TrashCards;
+        private System.Windows.Forms.CheckBox AutoCastCards;
+        private System.Windows.Forms.Button ProfileEditButton;
+        private System.Windows.Forms.CheckBox TrashAdventureCards;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.ComboBox TrashTier;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button DontCastRemove;
+        private System.Windows.Forms.Button DontCastAdd;
+        private System.Windows.Forms.ComboBox DontCastSelection;
+        private System.Windows.Forms.ListBox DontCastList;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.CheckBox TrashChunkers;
     }
 }

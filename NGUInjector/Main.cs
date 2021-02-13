@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -30,16 +30,18 @@ namespace NGUInjector
         internal static StreamWriter CombatWriter;
         internal static StreamWriter AllocationWriter;
         internal static StreamWriter PitSpinWriter;
+        internal static StreamWriter CardsWriter;
         internal static Main reference;
         private YggdrasilManager _yggManager;
         private InventoryManager _invManager;
         private CombatManager _combManager;
         private QuestManager _questManager;
+        private CardManager _cardManager;
         private static CustomAllocation _profile;
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
         internal static WishManager WishManager;
-        internal const string Version = "3.3.0rc";
+        internal const string Version = "3.4.2";
         private static int _furthestZone;
 
         internal static bool Test { get; set; }
@@ -83,6 +85,15 @@ namespace NGUInjector
             AllocationWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
         }
 
+        internal static void LogCard(string msg)
+        {
+            CardsWriter.WriteLine($"{DateTime.Now.ToShortDateString()}-{ DateTime.Now.ToShortTimeString()} ({Math.Floor(Character.rebirthTime.totalseconds)}s): {msg}");
+        }
+        internal static string GetProfilesDir()
+        {
+            return _profilesDir;
+        }
+
         internal void Unload()
         {
             try
@@ -99,6 +110,7 @@ namespace NGUInjector
                 CombatWriter.Close();
                 AllocationWriter.Close();
                 PitSpinWriter.Close();
+                CardsWriter.Close();
                 settingsForm.Close();
                 settingsForm.Dispose();
 
@@ -129,11 +141,12 @@ namespace NGUInjector
                     Directory.CreateDirectory(logDir);
                 }
 
-                OutputWriter = new StreamWriter(Path.Combine(logDir, "inject.log")) {AutoFlush = true};
-                LootWriter = new StreamWriter(Path.Combine(logDir, "loot.log")) {AutoFlush = true};
-                CombatWriter = new StreamWriter(Path.Combine(logDir, "combat.log")) {AutoFlush = true};
-                AllocationWriter = new StreamWriter(Path.Combine(logDir, "allocation.log")) {AutoFlush = true};
-                PitSpinWriter = new StreamWriter(Path.Combine(logDir, "pitspin.log"), true) {AutoFlush = true};
+                OutputWriter = new StreamWriter(Path.Combine(logDir, "inject.log")) { AutoFlush = true };
+                LootWriter = new StreamWriter(Path.Combine(logDir, "loot.log")) { AutoFlush = true };
+                CombatWriter = new StreamWriter(Path.Combine(logDir, "combat.log")) { AutoFlush = true };
+                AllocationWriter = new StreamWriter(Path.Combine(logDir, "allocation.log")) { AutoFlush = true };
+                PitSpinWriter = new StreamWriter(Path.Combine(logDir, "pitspin.log"), true) { AutoFlush = true };
+                CardsWriter = new StreamWriter(Path.Combine(logDir, "cards.log")) { AutoFlush = true };
 
                 _profilesDir = Path.Combine(_dir, "profiles");
                 if (!Directory.Exists(_profilesDir))
@@ -156,7 +169,7 @@ namespace NGUInjector
                 Loader.Unload();
                 return;
             }
-            
+
             try
             {
                 Character = FindObjectOfType<Character>();
@@ -164,12 +177,14 @@ namespace NGUInjector
                 Log("Injected");
                 LogLoot("Starting Loot Writer");
                 LogCombat("Starting Combat Writer");
+                LogCard("Starting Card Writer");
                 Controller = Character.inventoryController;
                 PlayerController = FindObjectOfType<PlayerController>();
                 _invManager = new InventoryManager();
                 _yggManager = new YggdrasilManager();
                 _questManager = new QuestManager();
                 _combManager = new CombatManager();
+                _cardManager = new CardManager();
                 LoadoutManager.ReleaseLock();
                 DiggerManager.ReleaseLock();
 
@@ -185,7 +200,7 @@ namespace NGUInjector
                         SwapTitanLoadouts = false,
                         TitanLoadout = new int[] { },
                         ManageDiggers = true,
-                        ManageYggdrasil = true,
+                        ManageYggdrasil = false,
                         ManageEnergy = true,
                         ManageMagic = true,
                         ManageInventory = true,
@@ -198,15 +213,15 @@ namespace NGUInjector
                         AutoQuest = false,
                         AutoQuestITOPOD = false,
                         AllowMajorQuests = false,
-                        GoldDropLoadout = new int[] {},
+                        GoldDropLoadout = new int[] { },
                         AutoMoneyPit = false,
                         AutoSpin = false,
-                        MoneyPitLoadout = new int[] {},
+                        MoneyPitLoadout = new int[] { },
                         AutoRebirth = false,
                         ManageWandoos = false,
                         MoneyPitThreshold = 1e5,
                         DoGoldSwap = false,
-                        BoostBlacklist = new int[] {},
+                        BoostBlacklist = new int[] { },
                         CombatMode = 0,
                         RecoverHealth = false,
                         SnipeBossOnly = true,
@@ -227,14 +242,14 @@ namespace NGUInjector
                         CubePriority = 0,
                         CombatEnabled = false,
                         GlobalEnabled = false,
-                        QuickDiggers = new int[] {},
-                        QuickLoadout = new int[] {},
+                        QuickDiggers = new int[] { },
+                        QuickLoadout = new int[] { },
                         UseButterMajor = false,
-                        ManualMinors =  false,
+                        ManualMinors = false,
                         UseButterMinor = false,
                         ActivateFruits = false,
                         ManageR3 = true,
-                        WishPriorities = new int[] {},
+                        WishPriorities = new int[] { },
                         BeastMode = true,
                         ManageNGUDiff = true,
                         AllocationFile = "default",
@@ -259,7 +274,16 @@ namespace NGUInjector
                         SpecialBoostBlacklist = new int[0],
                         MoreBlockParry = false,
                         WishSortOrder = false,
-                        WishSortPriorities = false
+                        WishSortPriorities = false,
+                        ManageMayo = false,
+                        TrashCards = false,
+                        TrashAdventureCards = false,
+                        AutoCastCards = false,
+                        CardsTrashQuality = 0,
+                        TrashCardCost = 0,
+                        DontCastCardType = new string[0],
+                        TrashChunkers = false,
+                        HackAdvance = false
                     };
 
                     Settings.MassUpdate(temp);
@@ -378,7 +402,7 @@ namespace NGUInjector
                 InvokeRepeating("MonitorLog", 0.0f, 1f);
                 InvokeRepeating("QuickStuff", 0.0f, .5f);
                 InvokeRepeating("ShowBoostProgress", 0.0f, 60.0f);
-                InvokeRepeating("SetResnipe", 0f,1f);
+                InvokeRepeating("SetResnipe", 0f, 1f);
 
 
                 reference = this;
@@ -409,6 +433,7 @@ namespace NGUInjector
                 {
                     settingsForm.Show();
                 }
+
                 settingsForm.BringToFront();
             }
 
@@ -693,7 +718,7 @@ namespace NGUInjector
                 //    watch.Stop();
                 //}
 
-                if (Settings.SwapTitanLoadouts)
+                if (Settings.SwapTitanLoadouts || Settings.ManageGoldLoadouts && Settings.NeedsGoldSwap())
                 {
                     LoadoutManager.TryTitanSwap();
                     DiggerManager.TryTitanSwap();
@@ -724,7 +749,7 @@ namespace NGUInjector
                     {
                         total += ePurchase.customAllCost();
                     }
-                    
+
                     if (magic)
                     {
                         total += mPurchase.customAllCost();
@@ -735,50 +760,53 @@ namespace NGUInjector
                         total += r3Purchase.customAllCost();
                     }
 
-                    var numPurchases = Math.Floor((double)(Character.realExp / total));
-
-                    if (numPurchases > 0)
+                    if (total > 0)
                     {
-                        var t = string.Empty;
-                        if (energy)
-                        {
-                            t += "/exp";
-                        }
-                        
-                        if (magic)
-                        {
-                            t += "/magic";
-                        }
+                        var numPurchases = Math.Floor((double)(Character.realExp / total));
 
-                        if (r3)
+                        if (numPurchases > 0)
                         {
-                            t += "/res3";
-                        }
-
-                        t = t.Substring(1);
-                        
-                        Log($"Buying {numPurchases} {t} purchases");
-                        for (var i = 0; i < numPurchases; i++)
-                        {
+                            var t = string.Empty;
                             if (energy)
                             {
-                                var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
-                                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                                ePurchaseMethod?.Invoke(ePurchase, null);
+                                t += "/exp";
                             }
 
                             if (magic)
                             {
-                                var mPurchaseMethod = mPurchase.GetType().GetMethod("buyCustomAll",
-                                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                                mPurchaseMethod?.Invoke(mPurchase, null);
+                                t += "/magic";
                             }
 
                             if (r3)
                             {
-                                var r3PurchaseMethod = r3Purchase.GetType().GetMethod("buyCustomAll",
-                                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                                r3PurchaseMethod?.Invoke(r3Purchase, null);
+                                t += "/res3";
+                            }
+
+                            t = t.Substring(1);
+
+                            Log($"Buying {numPurchases} {t} purchases");
+                            for (var i = 0; i < numPurchases; i++)
+                            {
+                                if (energy)
+                                {
+                                    var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
+                                        BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                    ePurchaseMethod?.Invoke(ePurchase, null);
+                                }
+
+                                if (magic)
+                                {
+                                    var mPurchaseMethod = mPurchase.GetType().GetMethod("buyCustomAll",
+                                        BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                    mPurchaseMethod?.Invoke(mPurchase, null);
+                                }
+
+                                if (r3)
+                                {
+                                    var r3PurchaseMethod = r3Purchase.GetType().GetMethod("buyCustomAll",
+                                        BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                    r3PurchaseMethod?.Invoke(r3Purchase, null);
+                                }
                             }
                         }
                     }
@@ -799,14 +827,21 @@ namespace NGUInjector
 
                 if (Settings.AutoRebirth)
                 {
-                    if (!Character.bossController.isFighting && !Character.bossController.nukeBoss)
-                    {
-                        _profile.DoRebirth();
-                    }
-                    else
-                    {
-                        Log("Delaying rebirth while boss fight is in progress");
-                    }
+                    _profile.DoRebirth();
+                }
+
+                if (Settings.ManageMayo)
+                {
+                    _cardManager.CheckManas();
+                }
+
+                if (Settings.TrashCards)
+                {
+                    _cardManager.TrashCards();
+                }
+                if (Settings.AutoCastCards)
+                {
+                    _cardManager.CastCards();
                 }
             }
             catch (Exception e)
@@ -820,10 +855,18 @@ namespace NGUInjector
         internal static void LoadAllocation()
         {
             _profile = new CustomAllocation(_profilesDir, Settings.AllocationFile);
-            _profile.ReloadAllocation();
+            try
+            {
+                _profile.ReloadAllocation();
+            }
+            catch (Exception e)
+            {
+                Log(e.Message);
+            }
         }
 
-        private static void LoadAllocationProfiles() {
+        private static void LoadAllocationProfiles()
+        {
             var files = Directory.GetFiles(_profilesDir);
             settingsForm.UpdateProfileList(files.Select(Path.GetFileNameWithoutExtension).ToArray(), Settings.AllocationFile);
         }
@@ -850,13 +893,13 @@ namespace NGUInjector
                     return;
                 }
                 //Go to our gold loadout zone next to get a high gold drop
-                if (Settings.ManageGoldLoadouts && Settings.DoGoldSwap)
+                if (Settings.ManageGoldLoadouts && Settings.DoGoldSwap && Settings.GoldDropLoadout.Length > 0)
                 {
                     if (LoadoutManager.TryGoldDropSwap())
                     {
                         var bestZone = ZoneStatHelper.GetBestZone();
                         _furthestZone = ZoneHelpers.GetMaxReachableZone(false);
-                        
+
                         _combManager.ManualZone(bestZone.Zone, true, bestZone.FightType == 1, false, bestZone.FightType == 2, false);
                         return;
                     }
@@ -864,7 +907,7 @@ namespace NGUInjector
             }
 
             var questZone = _questManager.IsQuesting();
-            if (!Settings.CombatEnabled || !ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) ||
+            if (!Settings.CombatEnabled || Settings.AdventureTargetITOPOD || !ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) ||
                 ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) &&
                 !ZoneHelpers.TitanSpawningSoon(Array.IndexOf(ZoneHelpers.TitanZones, Settings.SnipeZone)))
             {
@@ -884,9 +927,6 @@ namespace NGUInjector
             }
 
             if (!Settings.CombatEnabled)
-                return;
-
-            if (Settings.SnipeZone < 0)
                 return;
 
             var tempZone = Settings.AdventureTargetITOPOD ? 1000 : Settings.SnipeZone;
@@ -918,7 +958,7 @@ namespace NGUInjector
 
                 return;
             }
-            
+
             if (Settings.CombatMode == 0)
             {
                 _combManager.ManualZone(tempZone, Settings.SnipeBossOnly, Settings.RecoverHealth, Settings.PrecastBuffs, Settings.FastCombat, Settings.BeastMode);
@@ -971,8 +1011,10 @@ namespace NGUInjector
             }
 
             list.RemoveAll(x => x == 0);
+            var items = $"[{string.Join(", ", list.Select(x => x.ToString()).ToArray())}]";
 
-            Log($"Equipped Items: [{string.Join(", ", list.Select(x => x.ToString()).ToArray())}]");
+            Log($"Equipped Items: {items}");
+            Clipboard.SetText(items);
         }
 
         public void OnGUI()
@@ -992,7 +1034,7 @@ namespace NGUInjector
             if (val == null)
                 return;
 
-            var log = (List<string>) val;
+            var log = (List<string>)val;
             for (var i = log.Count - 1; i >= 0; i--)
             {
                 var line = log[i];
@@ -1054,6 +1096,7 @@ namespace NGUInjector
                 Log(e.Message);
                 Log(e.StackTrace);
             }
+
         }
 
         public void OnApplicationQuit()

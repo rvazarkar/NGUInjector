@@ -280,6 +280,14 @@ namespace NGUInjector.Managers
 
         internal void IdleZone(int zone, bool bossOnly, bool recoverHealth)
         {
+            if (zone == -1)
+            {
+                if (_character.adventure.zone != -1)
+                {
+                    MoveToZone(-1);
+                    return;
+                }
+            }
             //Enable idle attack if its not on
             if (!_character.adventure.autoattacking)
             {
@@ -322,7 +330,7 @@ namespace NGUInjector.Managers
             if (_character.adventureController.currentEnemy == null)
                 return;
 
-            if (Settings.BlacklistedBosses.Contains(_character.adventureController.currentEnemy.spriteID))
+            if (zone < 1000 && Settings.BlacklistedBosses.Contains(_character.adventureController.currentEnemy.spriteID))
             {
                 MoveToZone(-1);
                 MoveToZone(zone);
@@ -344,6 +352,15 @@ namespace NGUInjector.Managers
 
         internal void ManualZone(int zone, bool bossOnly, bool recoverHealth, bool precastBuffs, bool fastCombat, bool beastMode)
         {
+            if (zone == -1)
+            {
+                if (_character.adventure.zone != -1)
+                {
+                    MoveToZone(-1);
+                    return;
+                }
+            }
+
             //Start by turning off auto attack if its on unless we can only idle attack
             if (!_character.adventure.autoattacking)
             {
@@ -404,8 +421,8 @@ namespace NGUInjector.Managers
                     //Wait for Charge to be ready again, as well as other buffs
                     if (ChargeUnlocked() && !ChargeReady()) return;
                     if (ParryUnlocked() && !ParryReady()) return;
-                    if (UltimateBuffUnlocked() && !UltimateBuffReady()) return;
                     if (MegaBuffUnlocked() && !MegaBuffReady()) return;
+                    if (UltimateBuffUnlocked() && !UltimateBuffReady()) return;
                     if (DefensiveBuffUnlocked() && !DefensiveBuffReady()) return;
                 }
 
@@ -503,7 +520,7 @@ namespace NGUInjector.Managers
                 return;
             }
 
-            if (Settings.BlacklistedBosses.Contains(_character.adventureController.currentEnemy.spriteID))
+            if (zone < 1000 && Settings.BlacklistedBosses.Contains(_character.adventureController.currentEnemy.spriteID))
             {
                 MoveToZone(-1);
                 MoveToZone(zone);

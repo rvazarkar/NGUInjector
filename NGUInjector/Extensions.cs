@@ -12,14 +12,32 @@ namespace NGUInjector
 {
     public static class Extensions
     {
+        public static MethodInfo GetPrivateMethod(this Type t, string method)
+        {
+            return t.GetMethod(method, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.NonPublic);
+        }
+
+
         public static ih MaxItem(this IEnumerable<ih> items)
         {
             return items.Aggregate(
-                new { max = int.MinValue, t = (ih)null },
+                new { max = int.MinValue, t = (ih)null, b = decimal.MaxValue },
                 (state, el) =>
                 {
                     var current = el.locked ? el.level + 101 : el.level;
-                    return current > state.max ? new { max = current, t = el } : state;
+                    if (current > state.max)
+                    {
+                        return new {max = current, t = el, b = el.equipment.GetNeededBoosts().Total()};
+                    }
+                    
+                    if (current == state.max)
+                    {
+                        return el.equipment.GetNeededBoosts().Total() > state.b
+                            ? state
+                            : new {max = current, t = el, b = el.equipment.GetNeededBoosts().Total()};
+                    }
+
+                    return state;
                 }).t;
         }
 
@@ -111,6 +129,74 @@ namespace NGUInjector
             return (float)(1.0 / (double)aug.getAugProgressPerTick(energy) / 50.0);
         }
 
+        public static float AugProgress(this AugmentController aug)
+        {
+            return aug.character.augments.augs[aug.id].augProgress;
+        }
+
+        public static float UpgradeTimeLeftEnergy(this AugmentController aug, long energy)
+        {
+            return (float)((1.0 - (double)aug.character.augments.augs[aug.id].upgradeProgress) / (double)getUpgradeProgressPerTick(aug, energy) / 50.0);
+        }
+
+        public static float UpgradeTimeLeftEnergyMax(this AugmentController aug, long energy)
+        {
+            return (float)(1.0 / (double)getUpgradeProgressPerTick(aug, energy) / 50.0);
+        }
+
+        public static float UpgradeProgress(this AugmentController aug)
+        {
+            return aug.character.augments.augs[aug.id].upgradeProgress;
+        }
+
+        public static float getUpgradeProgressPerTick(this AugmentController aug, long amount)
+        {
+            double num = 0.0;
+            if (aug.character.settings.rebirthDifficulty == difficulty.normal)
+            {
+                num = (double)((float)amount * aug.character.totalEnergyPower() / 50000f / aug.character.augmentsController.normalUpgradeSpeedDividers[aug.id] / (float)(aug.character.augments.augs[aug.id].upgradeLevel + 1L));
+            }
+            else if (aug.character.settings.rebirthDifficulty == difficulty.evil)
+            {
+                num = (double)amount * (double)aug.character.totalEnergyPower() / 50000.0 / (double)aug.character.augmentsController.evilUpgradeSpeedDividers[aug.id] / (double)(aug.character.augments.augs[aug.id].upgradeLevel + 1L);
+            }
+            else if (aug.character.settings.rebirthDifficulty == difficulty.sadistic)
+            {
+                num = (double)amount * (double)aug.character.totalEnergyPower() / (double)aug.character.augmentsController.sadisticUpgradeSpeedDividers[aug.id] / (double)(aug.character.augments.augs[aug.id].upgradeLevel + 1L);
+            }
+            num *= (double)(1f + aug.character.inventoryController.bonuses[specType.Augs]);
+            num *= (double)aug.character.inventory.macguffinBonuses[12];
+            num *= (double)aug.character.hacksController.totalAugSpeedBonus();
+            num *= (double)aug.character.adventureController.itopod.totalAugSpeedBonus();
+            num *= (double)aug.character.cardsController.getBonus(cardBonus.augSpeed);
+            num *= (double)(1f + (float)aug.character.allChallenges.noAugsChallenge.evilCompletions() * 0.05f);
+            if (aug.character.allChallenges.noAugsChallenge.completions() >= 1)
+            {
+                num *= 1.1000000238418579;
+            }
+            if (aug.character.allChallenges.noAugsChallenge.evilCompletions() >= aug.character.allChallenges.noAugsChallenge.maxCompletions)
+            {
+                num *= 1.25;
+            }
+            if (aug.character.settings.rebirthDifficulty >= difficulty.sadistic)
+            {
+                num /= (double)aug.sadisticDivider();
+            }
+            if (num <= -3.4028234663852886E+38)
+            {
+                num = 0.0;
+            }
+            if (num >= 3.4028234663852886E+38)
+            {
+                num = 3.4028234663852886E+38;
+            }
+            if (num <= 9.9999997171806854E-10)
+            {
+                num = 0.0;
+            }
+            return (float)num;
+        }
+
         private static decimal CalcCap(float cap, float level)
         {
             return (decimal)Mathf.Floor(cap * (float)(1.0 + level / 100.0));
@@ -123,35 +209,39 @@ namespace NGUInjector
 
             if (allocation.IsAllocationRunning)
                 return;
-
-            var originalInput = Main.Character.energyMagicPanel.energyMagicInput;
-
-            allocation.IsAllocationRunning = true;
-
-            if (Settings.ManageNGUDiff)
-                allocation.SwapNGUDiff();
-            if (Settings.ManageGear)
-                allocation.EquipGear();
-            if (Settings.ManageEnergy)
-                allocation.AllocateEnergy();
-            if (Settings.ManageMagic)
-                allocation.AllocateMagic();
-            if (Settings.ManageR3)
-                allocation.AllocateR3();
-
-            if (Settings.ManageDiggers && Main.Character.buttons.diggers.interactable)
+            try
             {
-                allocation.EquipDiggers();
-                DiggerManager.RecapDiggers();
+                var originalInput = Main.Character.energyMagicPanel.energyMagicInput;
+
+                allocation.IsAllocationRunning = true;
+
+                if (Settings.ManageNGUDiff)
+                    allocation.SwapNGUDiff();
+                if (Settings.ManageGear)
+                    allocation.EquipGear();
+                if (Settings.ManageEnergy)
+                    allocation.AllocateEnergy();
+                if (Settings.ManageMagic)
+                    allocation.AllocateMagic();
+                if (Settings.ManageR3)
+                    allocation.AllocateR3();
+
+                if (Settings.ManageDiggers && Main.Character.buttons.diggers.interactable)
+                {
+                    allocation.EquipDiggers();
+                    DiggerManager.RecapDiggers();
+                }
+
+                if (Settings.ManageWandoos && Main.Character.buttons.wandoos.interactable)
+                    allocation.SwapOS();
+
+                Main.Character.energyMagicPanel.energyRequested.text = originalInput.ToString();
+                Main.Character.energyMagicPanel.validateInput();
             }
-
-            if (Settings.ManageWandoos && Main.Character.buttons.wandoos.interactable)
-                allocation.SwapOS();
-
-            Main.Character.energyMagicPanel.energyRequested.text = originalInput.ToString();
-            Main.Character.energyMagicPanel.validateInput();
-            
-            allocation.IsAllocationRunning = false;
+            finally
+            {
+                allocation.IsAllocationRunning = false;
+            }
         }
 
         //Function from https://www.dotnetperls.com/pretty-date

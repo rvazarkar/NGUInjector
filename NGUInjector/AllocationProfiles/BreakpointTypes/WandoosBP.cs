@@ -9,7 +9,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
     {
         protected override bool Unlocked()
         {
-            return Character.buttons.wandoos.interactable;
+            return Character.buttons.wandoos.interactable && !Character.wandoos98.disabled;
         }
 
         protected override bool TargetMet()

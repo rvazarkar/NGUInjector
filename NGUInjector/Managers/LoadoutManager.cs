@@ -43,7 +43,7 @@ namespace NGUInjector.Managers
 
         internal static void TryTitanSwap()
         {
-            if (Settings.TitanLoadout.Length == 0)
+            if (Settings.TitanLoadout.Length == 0 && Settings.GoldDropLoadout.Length == 0)
                 return;
             //Skip if we're currently locked for yggdrasil (although this generally shouldn't happen)
             if (!CanAcquireOrHasLock(LockType.Titan))

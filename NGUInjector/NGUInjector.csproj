@@ -60,6 +60,7 @@
     <Compile Include="AllocationProfiles\BreakpointTypes\BaseBreakpoint.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\BasicTrainingBP.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\BestAug.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\BestHackBP.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\BR.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\CapCalc.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\HackBP.cs" />
@@ -70,6 +71,13 @@
     <Compile Include="AllocationProfiles\CustomAllocation.cs" />
     <Compile Include="AllocationProfiles\AllocationProfile.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\NGUBP.cs" />
+    <Compile Include="Managers\CardManager.cs" />
+    <Compile Include="AllocationProfiles\RebirthStuff\BaseRebirth.cs" />
+    <Compile Include="AllocationProfiles\RebirthStuff\BossNumRebirth.cs" />
+    <Compile Include="AllocationProfiles\RebirthStuff\NoRebirth.cs" />
+    <Compile Include="AllocationProfiles\RebirthStuff\NumberRebirth.cs" />
+    <Compile Include="AllocationProfiles\RebirthStuff\TimeRebirth.cs" />
+    <Compile Include="Consts.cs" />
     <Compile Include="Managers\ZoneStatHelper.cs" />
     <Compile Include="Managers\ZoneHelpers.cs" />
     <Compile Include="Managers\CombatHelpers.cs" />

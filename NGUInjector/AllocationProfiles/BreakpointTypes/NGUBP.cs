@@ -38,6 +38,9 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                     break;
             }
 
+            if (target < 0)
+                return true;
+
             return target > 0 && level >= target;
         }
 
