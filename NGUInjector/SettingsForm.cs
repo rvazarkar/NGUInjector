@@ -1050,6 +1050,12 @@ namespace NGUInjector
             Main.Settings.ActivateFruits = ActivateFruits.Checked;
         }
 
+        private void lvl1FruitOfMacGuffinBeta_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.Level1FruitOfMacGuffinBeta = lvl1FruitOfMacGuffinBeta.Checked;
+        }
+
         private void WishUpButton_Click(object sender, EventArgs e)
         {
             wishErrorProvider.SetError(WishAddInput, "");

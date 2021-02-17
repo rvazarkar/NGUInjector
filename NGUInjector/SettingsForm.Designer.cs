@@ -80,6 +80,7 @@
             this.ManageMagic = new System.Windows.Forms.CheckBox();
             this.ManageEnergy = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.lvl1FruitOfMacGuffinBeta = new System.Windows.Forms.CheckBox();
             this.YggSwapThreshold = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
             this.HarvestSafety = new System.Windows.Forms.CheckBox();
@@ -606,6 +607,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.lvl1FruitOfMacGuffinBeta);
             this.tabPage3.Controls.Add(this.YggSwapThreshold);
             this.tabPage3.Controls.Add(this.label28);
             this.tabPage3.Controls.Add(this.HarvestSafety);
@@ -622,6 +624,13 @@
             resources.ApplyResources(this.tabPage3, "tabPage3");
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // lvl1FruitOfMacGuffinBeta
+            // 
+            resources.ApplyResources(this.lvl1FruitOfMacGuffinBeta, "lvl1FruitOfMacGuffinBeta");
+            this.lvl1FruitOfMacGuffinBeta.Name = "lvl1FruitOfMacGuffinBeta";
+            this.lvl1FruitOfMacGuffinBeta.UseVisualStyleBackColor = true;
+            this.lvl1FruitOfMacGuffinBeta.CheckedChanged += new System.EventHandler(this.lvl1FruitOfMacGuffinBeta_CheckedChanged);
             // 
             // YggSwapThreshold
             // 
@@ -1921,5 +1930,6 @@
         private System.Windows.Forms.CheckBox WishSortOrder;
         private System.Windows.Forms.CheckBox WishSortPriorities;
         private System.Windows.Forms.Button ProfileEditButton;
+        private System.Windows.Forms.CheckBox lvl1FruitOfMacGuffinBeta;
     }
 }
