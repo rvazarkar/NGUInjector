@@ -100,7 +100,6 @@ namespace NGUInjector.Managers
             else if (Settings.Level1FruitOfMacGuffinBeta && Main.Character.yggdrasilController.fruits[0].harvestTier(13) == 1)
             {
                 Main.Character.yggdrasilController.fruits[0].consumeMacguffinFruit2();
-                Log($"Fruit of MacGuffin β consumed.");
             }
         }
 
