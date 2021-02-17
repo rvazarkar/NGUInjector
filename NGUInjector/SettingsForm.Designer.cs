@@ -80,6 +80,7 @@
             this.ManageMagic = new System.Windows.Forms.CheckBox();
             this.ManageEnergy = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.lvl1FruitOfMacGuffinBeta = new System.Windows.Forms.CheckBox();
             this.YggSwapThreshold = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
             this.HarvestSafety = new System.Windows.Forms.CheckBox();
@@ -606,6 +607,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.lvl1FruitOfMacGuffinBeta);
             this.tabPage3.Controls.Add(this.YggSwapThreshold);
             this.tabPage3.Controls.Add(this.label28);
             this.tabPage3.Controls.Add(this.HarvestSafety);
@@ -622,6 +624,13 @@
             resources.ApplyResources(this.tabPage3, "tabPage3");
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // lvl1FruitOfMacGuffinBeta
+            // 
+            resources.ApplyResources(this.lvl1FruitOfMacGuffinBeta, "lvl1FruitOfMacGuffinBeta");
+            this.lvl1FruitOfMacGuffinBeta.Name = "lvl1FruitOfMacGuffinBeta";
+            this.lvl1FruitOfMacGuffinBeta.UseVisualStyleBackColor = true;
+            this.lvl1FruitOfMacGuffinBeta.CheckedChanged += new System.EventHandler(this.lvl1FruitOfMacGuffinBeta_CheckedChanged);
             // 
             // YggSwapThreshold
             // 
@@ -714,10 +723,10 @@
             // yggdrasilLoadoutBox
             // 
             this.yggdrasilLoadoutBox.FormattingEnabled = true;
+            resources.ApplyResources(this.yggdrasilLoadoutBox, "yggdrasilLoadoutBox");
             this.yggdrasilLoadoutBox.Items.AddRange(new object[] {
             resources.GetString("yggdrasilLoadoutBox.Items"),
             resources.GetString("yggdrasilLoadoutBox.Items1")});
-            resources.ApplyResources(this.yggdrasilLoadoutBox, "yggdrasilLoadoutBox");
             this.yggdrasilLoadoutBox.Name = "yggdrasilLoadoutBox";
             // 
             // YggdrasilSwap
@@ -835,10 +844,10 @@
             // blacklistBox
             // 
             this.blacklistBox.FormattingEnabled = true;
+            resources.ApplyResources(this.blacklistBox, "blacklistBox");
             this.blacklistBox.Items.AddRange(new object[] {
             resources.GetString("blacklistBox.Items"),
             resources.GetString("blacklistBox.Items1")});
-            resources.ApplyResources(this.blacklistBox, "blacklistBox");
             this.blacklistBox.Name = "blacklistBox";
             // 
             // label2
@@ -884,10 +893,10 @@
             // priorityBoostBox
             // 
             this.priorityBoostBox.FormattingEnabled = true;
+            resources.ApplyResources(this.priorityBoostBox, "priorityBoostBox");
             this.priorityBoostBox.Items.AddRange(new object[] {
             resources.GetString("priorityBoostBox.Items"),
             resources.GetString("priorityBoostBox.Items1")});
-            resources.ApplyResources(this.priorityBoostBox, "priorityBoostBox");
             this.priorityBoostBox.Name = "priorityBoostBox";
             // 
             // ManageInventory
@@ -983,10 +992,10 @@
             // titanLoadout
             // 
             this.titanLoadout.FormattingEnabled = true;
+            resources.ApplyResources(this.titanLoadout, "titanLoadout");
             this.titanLoadout.Items.AddRange(new object[] {
             resources.GetString("titanLoadout.Items"),
             resources.GetString("titanLoadout.Items1")});
-            resources.ApplyResources(this.titanLoadout, "titanLoadout");
             this.titanLoadout.Name = "titanLoadout";
             // 
             // SwapTitanLoadout
@@ -1376,10 +1385,10 @@
             // GoldLoadout
             // 
             this.GoldLoadout.FormattingEnabled = true;
+            resources.ApplyResources(this.GoldLoadout, "GoldLoadout");
             this.GoldLoadout.Items.AddRange(new object[] {
             resources.GetString("GoldLoadout.Items"),
             resources.GetString("GoldLoadout.Items1")});
-            resources.ApplyResources(this.GoldLoadout, "GoldLoadout");
             this.GoldLoadout.Name = "GoldLoadout";
             // 
             // tabPage8
@@ -1566,10 +1575,10 @@
             // WishPriority
             // 
             this.WishPriority.FormattingEnabled = true;
+            resources.ApplyResources(this.WishPriority, "WishPriority");
             this.WishPriority.Items.AddRange(new object[] {
             resources.GetString("WishPriority.Items"),
             resources.GetString("WishPriority.Items1")});
-            resources.ApplyResources(this.WishPriority, "WishPriority");
             this.WishPriority.Name = "WishPriority";
             // 
             // tabPage10
@@ -1631,10 +1640,10 @@
             // MoneyPitLoadout
             // 
             this.MoneyPitLoadout.FormattingEnabled = true;
+            resources.ApplyResources(this.MoneyPitLoadout, "MoneyPitLoadout");
             this.MoneyPitLoadout.Items.AddRange(new object[] {
             resources.GetString("MoneyPitLoadout.Items"),
             resources.GetString("MoneyPitLoadout.Items1")});
-            resources.ApplyResources(this.MoneyPitLoadout, "MoneyPitLoadout");
             this.MoneyPitLoadout.Name = "MoneyPitLoadout";
             // 
             // MoneyPitThresholdSave
@@ -1921,5 +1930,6 @@
         private System.Windows.Forms.CheckBox WishSortOrder;
         private System.Windows.Forms.CheckBox WishSortPriorities;
         private System.Windows.Forms.Button ProfileEditButton;
+        private System.Windows.Forms.CheckBox lvl1FruitOfMacGuffinBeta;
     }
 }

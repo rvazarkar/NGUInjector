@@ -97,6 +97,10 @@ namespace NGUInjector.Managers
                 //Harvest stuff
                 ActuallyHarvest();
             }
+            else if (Settings.Level1FruitOfMacGuffinBeta && Main.Character.yggdrasilController.fruits[0].harvestTier(13) == 1)
+            {
+                Main.Character.yggdrasilController.fruits[0].consumeMacguffinFruit2();
+            }
         }
 
         private void ActuallyHarvest()

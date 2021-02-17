@@ -66,6 +66,7 @@ namespace NGUInjector
         [SerializeField] private bool _manualMinors;
         [SerializeField] private bool _manageR3;
         [SerializeField] private bool _activateFruits;
+        [SerializeField] private bool _lvl1FruitOfMacGuffinB;
         [SerializeField] private int[] _wishPriorities;
         [SerializeField] private bool _wishSortPriorities;
         [SerializeField] private bool _wishSortOrder;        
@@ -816,6 +817,18 @@ namespace NGUInjector
                 SaveSettings();
             }
         }
+
+        public bool Level1FruitOfMacGuffinBeta
+        {
+            get => _lvl1FruitOfMacGuffinB;
+            set
+            {
+                if (value == _lvl1FruitOfMacGuffinB) return;
+                _lvl1FruitOfMacGuffinB = value;
+                SaveSettings();
+            }
+        }
+
         public int[] WishPriorities
         {
             get => _wishPriorities;
