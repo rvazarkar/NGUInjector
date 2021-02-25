@@ -131,11 +131,12 @@ namespace NGUInjector.Managers
                                 }
                                 else if (Main.Settings.DontCastCardType.Contains(_card.bonusType.ToString()))
                                 {
-                                    if (_card.cardRarity == rarity.BigChonker && !Main.Settings.TrashChunkers) continue;
+                                    if (_card.cardRarity != rarity.BigChonker ||_card.cardRarity == rarity.BigChonker && Main.Settings.TrashChunkers) { 
                                     if (_card.isProtected) _card.isProtected = false;
-                                    Main.LogCard($"Trashed Card: Cost: {_card.manaCosts.Sum()} Rarity: {_card.cardRarity} Bonus Type: {_card.bonusType}, due to trash all settings");
-                                    _cardsController.trashCard(id);
-                                    continue;
+                                        Main.LogCard($"Trashed Card: Cost: {_card.manaCosts.Sum()} Rarity: {_card.cardRarity} Bonus Type: {_card.bonusType}, due to trash all settings");
+                                        _cardsController.trashCard(id);
+                                        continue;
+                                    }
                                 }
                             }
                             id++;
