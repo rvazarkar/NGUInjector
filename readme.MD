@@ -174,6 +174,13 @@ An in game menu can be opened using the F1 button.
 - **Money Pit Threshold** - The amount of gold to wait for to throw gold into the money pit. Accepts scientific notation (ex: 1E+28)
 - **Loadout** - Items to equip before throwing money in the pit
 
+![Cards](https://i.imgur.com/0OXulFY.png)
+- **Manage Mayo** Will prioritize mayo production to be able to cast the first card in your deck asap. If you have no cards, it will equalize all mayo types.
+- **Auto Trash Cards** Will trash cards according to the settings below
+- **Trash Adventure Cards** If checked, adventure cards are trashed according to your settings. If not checked, no adventure cards are deleted, regarless of settings
+- **Auto Cast Cards** Will cast any card that is not trashed according to your settings
+- **Trash All Cards of Type** WIll trash these card types regardless of your other settings
+- **Trash Chunkers** Will trash chunkers of the types in your trash all list.
 # Allocation
 
 Allocation profiles can be found in the profiles folder and contain time breakpoints for configuring your gear, diggers, energy allocation and magic allocation. Sample allocation files can be found in the sampleprofile folder.
