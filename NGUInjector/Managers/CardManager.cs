@@ -28,12 +28,12 @@ namespace NGUInjector.Managers
                 Main.Log(e.StackTrace);
             }
         }
-
+        int CurTogg() => _character.cardsController.curManaToggleCount();
         public void CheckManas()
         {
+            
             try
             {
-                _character.cardsController.curManaToggleCount();
                 List<Mana> manas = _character.cards.manas;
                 int lowestCount = int.MaxValue;
                 Mana lowestProgress = manas[0];
@@ -49,13 +49,14 @@ namespace NGUInjector.Managers
                             break;
                         }
                     }
-                    for (int i = 0; i < _maxManas && !balanceMayo; i++)
+                    for (int i = 0; i < manas.Count && !balanceMayo; i++)
                     {
-                        if (manas[i].amount >= _card.manaCosts[i] && manas[i].running) _cardsController.toggleManaGen(i);
-                        if (manas[i].amount < _card.manaCosts[i] && !manas[i].running && _character.cardsController.curManaToggleCount() < _maxManas)
+                        if (manas[i].amount >= _card.manaCosts[i] && manas[i].running)
                         {
                             _cardsController.toggleManaGen(i);
+                            i = 0;
                         }
+                        if (manas[i].amount < _card.manaCosts[i] && !manas[i].running && CurTogg() < _maxManas) _cardsController.toggleManaGen(i);
                     }
                 }
 
@@ -74,6 +75,7 @@ namespace NGUInjector.Managers
 
                     for (int i = 0; i < manas.Count; i++)
                     {
+                        int toggStart = CurTogg();
                         float progressPerSec = _cardsController.manaGenProgressPerTick() * 50;
                         Mana mana = manas[i];
 
@@ -84,12 +86,13 @@ namespace NGUInjector.Managers
                         }
                         else
                         {
-                            if (_character.cardsController.curManaToggleCount() >= _maxManas) continue;
+                            if (CurTogg() >= _maxManas) continue;
                             else if (mana.amount == lowestCount && Math.Abs((mana.progress - lowestProgress.progress) / progressPerSec) > 10) continue;
                             else if (mana.amount - lowestCount == 1 && Math.Abs((1f + mana.progress - lowestProgress.progress) / progressPerSec) > 10) continue;
                             else if (mana.amount - lowestProgress.amount > 1) continue;
                         }
                         _cardsController.toggleManaGen(i);
+                        if (toggStart < CurTogg()) i = 0;
                     }
                 }
             }
