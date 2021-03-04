@@ -1,0 +1,49 @@
+{
+    "Breakpoints": {
+      "Magic": [
+        {
+          "Time": 0,
+          "Priorities": ["BR"] 	}
+      ],
+      "Energy": [
+        {
+          "Time": 0,
+          "Priorities": ["CAPTM:30", "CAPAUG-2", "CAPAUG-0", "CAPAUG-1:10"]
+	}
+      ],
+    "R3": [
+        {
+          "Time": 0,
+          "Priorities": []
+        }
+      ],
+      "Gear": [
+        {
+          "Time": 0,
+          "ID": []
+        }
+      ],
+      "Wandoos": [
+        {
+          "Time": 0,
+          "OS": 0
+        }
+      ],
+      "Diggers": [
+        {
+          "Time": 0,
+          "List": []
+        }
+      ],
+      "NGUDiff": [
+        {
+          "Time": 0,
+          "Diff": 0
+        }
+      ],
+      "RebirthTime": -1
+    }
+ }
+
+"comments" : "Your best off using the script close to Titan 1 + or a bit below, you want your basic training caps also to be fairly low, and turn on synch training, as that will help, Been running with the above for a bit, so far it working fine. Blood you don't really use at chat 1 or 2. So I've been using it for blood number boosting. For energy, I capped at 30% in time machine, you don't need a lot there, about 6/7 levels (set in NGU idle) then it will shift the energy for augs. For augs, I find some levels in milk (50 / 100) (or remove CAPAUG-2 if you don't want it boost that. Then the rest will be in safely scissors and 5% in danger scissors. (depending on how much gold your making, this won't go up too many levels. So adding about 5% there is fine, but if you want more, change the 5 to a bigger number."
+        
