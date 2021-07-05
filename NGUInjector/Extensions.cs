@@ -235,7 +235,7 @@ namespace NGUInjector
                 if (Settings.ManageWandoos && Main.Character.buttons.wandoos.interactable)
                     allocation.SwapOS();
 
-                Main.Character.energyMagicPanel.energyRequested.text = originalInput.ToString();
+                Main.Character.energyMagicPanel.energyRequested.text = originalInput.ToString(CultureInfo.InvariantCulture);
                 Main.Character.energyMagicPanel.validateInput();
             }
             finally
