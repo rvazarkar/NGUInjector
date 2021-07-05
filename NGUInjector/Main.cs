@@ -37,12 +37,14 @@ namespace NGUInjector
         private CombatManager _combManager;
         private QuestManager _questManager;
         private CardManager _cardManager;
+        private CookingManager _cookingManager;
         private static CustomAllocation _profile;
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
         internal static WishManager WishManager;
         internal const string Version = "3.5.1";
         private static int _furthestZone;
+
 
         internal static bool Test { get; set; }
 
@@ -185,6 +187,7 @@ namespace NGUInjector
                 _questManager = new QuestManager();
                 _combManager = new CombatManager();
                 _cardManager = new CardManager();
+                _cookingManager = new CookingManager();
                 LoadoutManager.ReleaseLock();
                 DiggerManager.ReleaseLock();
 
@@ -842,6 +845,11 @@ namespace NGUInjector
                 if (Settings.AutoCastCards)
                 {
                     _cardManager.CastCards();
+                }
+
+                if (Settings.ManageCooking)
+                {
+                    _cookingManager.manageFood();
                 }
             }
             catch (Exception e)

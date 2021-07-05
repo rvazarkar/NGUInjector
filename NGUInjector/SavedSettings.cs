@@ -102,6 +102,7 @@ namespace NGUInjector
         [SerializeField] private string[] _dontCastCardType;
         [SerializeField] private bool _trashChunkers;
         [SerializeField] private bool _hackAdvance;
+        [SerializeField] private bool _manageCooking;
 
         private readonly string _savePath;
         private bool _disableSave;
@@ -259,6 +260,7 @@ namespace NGUInjector
             _dontCastCardType = other._dontCastCardType;
             _trashChunkers = other._trashChunkers;
             _hackAdvance = other.HackAdvance;
+            _manageCooking = other._manageCooking;
         }
 
         public int SnipeZone
@@ -1228,6 +1230,17 @@ namespace NGUInjector
             {
                 if (value == _hackAdvance) return;
                 _hackAdvance = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ManageCooking
+        {
+            get => _manageCooking;
+            set
+            {
+                if (value == _manageCooking) return;
+                _manageCooking = value;
                 SaveSettings();
             }
         }
