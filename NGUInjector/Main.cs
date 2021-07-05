@@ -14,7 +14,6 @@ using System.Windows.Forms;
 using NGUInjector.AllocationProfiles;
 using NGUInjector.Managers;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Application = UnityEngine.Application;
 
