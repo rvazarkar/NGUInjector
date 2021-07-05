@@ -870,7 +870,7 @@ namespace NGUInjector.AllocationProfiles
 
         private void SetInput(float val)
         {
-            _character.energyMagicPanel.energyRequested.text = val.ToString();
+            _character.energyMagicPanel.energyRequested.text = val.ToString("000000000000000000");
             _character.energyMagicPanel.validateInput();
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -235,7 +236,7 @@ namespace NGUInjector
                 if (Settings.ManageWandoos && Main.Character.buttons.wandoos.interactable)
                     allocation.SwapOS();
 
-                Main.Character.energyMagicPanel.energyRequested.text = originalInput.ToString();
+                Main.Character.energyMagicPanel.energyRequested.text = originalInput.ToString(CultureInfo.InvariantCulture);
                 Main.Character.energyMagicPanel.validateInput();
             }
             finally
