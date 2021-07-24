@@ -236,16 +236,19 @@ namespace NGUInjector.Managers
                 if (fastCombat)
                 {
                     ac.ultimateAttackMove.doMove();
+                    return;
                 }
 
                 if (ChargeActive())
                 {
                     ac.ultimateAttackMove.doMove();
+                    return;
                 }
 
                 if (GetChargeCooldown() > .45)
                 {
                     ac.ultimateAttackMove.doMove();
+                    return;
                 }
             }
 
