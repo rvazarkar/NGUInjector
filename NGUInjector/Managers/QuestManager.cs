@@ -35,6 +35,12 @@ namespace NGUInjector.Managers
             {
                 Log("Turning in quest");
                 _character.beastQuestController.completeQuest();
+
+                if (_character.beastQuest.curBankedQuests == 0)
+                {
+                    LoadoutManager.RestoreGear();
+                    LoadoutManager.ReleaseLock();
+                }
             }
         }
 
@@ -76,20 +82,35 @@ namespace NGUInjector.Managers
             //First logic: not in a quest
             if (!_character.beastQuest.inQuest)
             {
+                bool startedQuest = false;
+
                 //If we're allowing major quests and we have a quest available
                 if (Settings.AllowMajorQuests && _character.beastQuest.curBankedQuests > 0)
                 {
                     _character.settings.useMajorQuests = true;
                     SetIdleMode(false);
+                    EquipQuestingLoadout();
                     _character.beastQuestController.startQuest();
+                    startedQuest = true;
                 }
                 else
                 {
                     _character.settings.useMajorQuests = false;
                     SetIdleMode(!Settings.ManualMinors);
+                    if (Settings.ManualMinors)
+                    {
+                        EquipQuestingLoadout();
+                    }
                     _character.beastQuestController.startQuest();
+                    startedQuest = true;
                 }
 
+                // If we're not questing and we still have the lock, restore gear
+                if (!startedQuest && LoadoutManager.HasQuestLock())
+                {
+                    LoadoutManager.RestoreGear();
+                    LoadoutManager.ReleaseLock();
+                }
                 return;
             }
 
@@ -105,6 +126,7 @@ namespace NGUInjector.Managers
                         _character.settings.useMajorQuests = true;
                         _character.beastQuestController.skipQuest();
                         SetIdleMode(false);
+                        EquipQuestingLoadout();
                         _character.beastQuestController.startQuest();
                         //Combat logic will pick up from here
                         return;
@@ -120,6 +142,17 @@ namespace NGUInjector.Managers
             else
             {
                 SetIdleMode(false);
+            }
+        }
+
+        internal void EquipQuestingLoadout()
+        {
+            if (Settings.ManageQuestLoadouts && Settings.QuestLoadout.Length > 0)
+            {
+                if (!LoadoutManager.TryQuestSwap())
+                {
+                    Log("Tried to equip quest loadout but not unable to acquire lock");
+                }
             }
         }
     }

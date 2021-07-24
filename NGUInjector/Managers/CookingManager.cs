@@ -1,4 +1,5 @@
 ﻿using System;
+using static NGUInjector.Main;
 
 namespace NGUInjector.Managers
 {
@@ -24,10 +25,26 @@ namespace NGUInjector.Managers
 			{
 				if (cook.character.cooking.cookTimer >= cook.eatRate())
 				{
+					if (Settings.ManageCookingLoadouts && Settings.CookingLoadout.Length > 0)
+                    {
+						if (!LoadoutManager.TryCookingSwap())
+                        {
+							Log("Unable to acquire lock for gear, waiting a cycle to equip gears");
+							return;
+						}
+                    }
+
 					cook.consumeDish();
+
+					if (LoadoutManager.HasCookingLock())
+                    {
+						LoadoutManager.RestoreGear();
+						LoadoutManager.ReleaseLock();
+                    }
 				}
 				return;
 			}
+
 			int foodA = 0;
 			int foodB = 0;
 			int foodC = 0;

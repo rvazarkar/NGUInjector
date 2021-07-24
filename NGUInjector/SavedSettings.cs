@@ -103,6 +103,10 @@ namespace NGUInjector
         [SerializeField] private bool _trashChunkers;
         [SerializeField] private bool _hackAdvance;
         [SerializeField] private bool _manageCooking;
+        [SerializeField] private bool _manageQuestLoadouts;
+        [SerializeField] private bool _manageCookingLoadouts;
+        [SerializeField] private int[] _questLoadout;
+        [SerializeField] private int[] _cookingLoadout;
 
         private readonly string _savePath;
         private bool _disableSave;
@@ -261,6 +265,10 @@ namespace NGUInjector
             _trashChunkers = other._trashChunkers;
             _hackAdvance = other.HackAdvance;
             _manageCooking = other._manageCooking;
+            _manageQuestLoadouts = other._manageQuestLoadouts;
+            _manageCookingLoadouts = other._manageCookingLoadouts;
+            _questLoadout = other._questLoadout;
+            _cookingLoadout = other._cookingLoadout;
         }
 
         public int SnipeZone
@@ -1241,6 +1249,48 @@ namespace NGUInjector
             {
                 if (value == _manageCooking) return;
                 _manageCooking = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ManageQuestLoadouts
+        {
+            get => _manageQuestLoadouts;
+            set
+            {
+                if (value == _manageQuestLoadouts) return;
+                _manageQuestLoadouts = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ManageCookingLoadouts
+        {
+            get => _manageCookingLoadouts;
+            set
+            {
+                if (value == _manageCookingLoadouts) return;
+                _manageCookingLoadouts = value;
+                SaveSettings();
+            }
+        }
+
+        public int[] QuestLoadout
+        {
+            get => _questLoadout;
+            set
+            {
+                _questLoadout = value;
+                SaveSettings();
+            }
+        }
+
+        public int[] CookingLoadout
+        {
+            get => _cookingLoadout;
+            set
+            {
+                _cookingLoadout = value;
                 SaveSettings();
             }
         }

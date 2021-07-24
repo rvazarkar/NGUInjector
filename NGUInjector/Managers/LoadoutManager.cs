@@ -12,6 +12,8 @@ namespace NGUInjector.Managers
         Yggdrasil,
         MoneyPit,
         Gold,
+        Quest,
+        Cooking,
         None
     }
     internal static class LoadoutManager
@@ -130,6 +132,59 @@ namespace NGUInjector.Managers
             ChangeGear(Settings.GoldDropLoadout);
 
             return true;
+        }
+
+        internal static bool TryQuestSwap()
+        {
+
+            if (!CanAcquireOrHasLock(LockType.Quest))
+            {
+                return false;
+            }
+
+            //We already hold the lock so just return true
+            if (CurrentLock == LockType.Quest)
+            {
+                return true;
+            }
+
+            Log("Equipping Quest Loadout");
+            AcquireLock(LockType.Quest);
+            SaveCurrentLoadout();
+            ChangeGear(Settings.QuestLoadout);
+
+            return true;
+        }
+
+        internal static bool HasQuestLock()
+        {
+            return CurrentLock == LockType.Quest;
+        }
+
+        internal static bool TryCookingSwap()
+        {
+            if (!CanAcquireOrHasLock(LockType.Cooking))
+            {
+                return false;
+            }
+
+            //We already hold the lock so just return true
+            if (CurrentLock == LockType.Cooking)
+            {
+                return true;
+            }
+
+            Log("Equipping Cooking Loadout");
+            AcquireLock(LockType.Cooking);
+            SaveCurrentLoadout();
+            ChangeGear(Settings.CookingLoadout);
+
+            return true;
+        }
+
+        internal static bool HasCookingLock()
+        {
+            return CurrentLock == LockType.Cooking;
         }
 
         private static bool CanAcquireOrHasLock(LockType requestor)
