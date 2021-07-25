@@ -38,11 +38,12 @@ namespace NGUInjector
         private QuestManager _questManager;
         private CardManager _cardManager;
         private CookingManager _cookingManager;
+        private ConsumablesManager _consumablesManager;
         private static CustomAllocation _profile;
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
         internal static WishManager WishManager;
-        internal const string Version = "3.6.1";
+        internal const string Version = "3.6.2";
         private static int _furthestZone;
 
 
@@ -189,6 +190,7 @@ namespace NGUInjector
                 _combManager = new CombatManager();
                 _cardManager = new CardManager();
                 _cookingManager = new CookingManager();
+                _consumablesManager = new ConsumablesManager();
                 LoadoutManager.ReleaseLock();
                 DiggerManager.ReleaseLock();
 

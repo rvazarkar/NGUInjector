@@ -107,6 +107,8 @@ namespace NGUInjector
         [SerializeField] private bool _manageCookingLoadouts;
         [SerializeField] private int[] _questLoadout;
         [SerializeField] private int[] _cookingLoadout;
+        [SerializeField] private bool _manageConsumables;
+        [SerializeField] private bool _autoBuyConsumables;
 
         private readonly string _savePath;
         private bool _disableSave;
@@ -269,6 +271,8 @@ namespace NGUInjector
             _manageCookingLoadouts = other._manageCookingLoadouts;
             _questLoadout = other._questLoadout;
             _cookingLoadout = other._cookingLoadout;
+            _manageConsumables = other._manageConsumables;
+            _autoBuyConsumables = other._autoBuyConsumables;
         }
 
         public int SnipeZone
@@ -1291,6 +1295,28 @@ namespace NGUInjector
             set
             {
                 _cookingLoadout = value;
+                SaveSettings();
+            }
+        }
+
+        public bool AutoBuyConsumables
+        {
+            get => _autoBuyConsumables;
+            set
+            {
+                if (value == _autoBuyConsumables) return;
+                _autoBuyConsumables = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ManageConsumables
+        {
+            get => _manageConsumables;
+            set
+            {
+                if (value == _manageConsumables) return;
+                _manageConsumables = value;
                 SaveSettings();
             }
         }

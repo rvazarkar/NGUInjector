@@ -226,8 +226,8 @@ namespace NGUInjector
                     allocation.AllocateMagic();
                 if (Settings.ManageR3)
                     allocation.AllocateR3();
-                //if (Settings.ManageConsumables)
-                    //allocation.AllocateConsumables();
+                if (Settings.ManageConsumables)
+                    allocation.ConsumeConsumables();
 
                 if (Settings.ManageDiggers && Main.Character.buttons.diggers.interactable)
                 {
