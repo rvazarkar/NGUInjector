@@ -487,13 +487,13 @@ A Consumables breakpoint is structured as follows:
 Consumables are indexed as follows:
 - **EPOT-A** - Energy Potion alpha
 - **EPOT-B** - Energy Potion beta
-- **EPOT-C** - Energy Potion gamma
+- **EPOT-C** - Energy Potion delta
 - **MPOT-A** - Magic Potion alpha
 - **MPOT-B** - Magic Potion beta
-- **MPOT-C** - Magic Potion gamma
+- **MPOT-C** - Magic Potion delta
 - **R3POT-A** - R3 Potion alpha
 - **R3POT-B** - R3 Potion beta
-- **R3POT-C** - R3 Potion gamma
+- **R3POT-C** - R3 Potion delta
 - **EBARBAR** - Energy Bar Bar
 - **MBARBAR** - Magic Bar Bar
 - **MUFFIN** - MacGuffin Muffin
