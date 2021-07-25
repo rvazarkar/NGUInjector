@@ -8,6 +8,11 @@ namespace NGUInjector.Managers
     {
         internal static readonly int[] TitanZones = { 6, 8, 11, 14, 16, 19, 23, 26, 30, 34, 38, 42, 44, 45 };
 
+        public static int TitanCount()
+        {
+            return TitanZones.Length;
+        }
+
         internal static bool ZoneIsTitan(int zone)
         {
             return TitanZones.Contains(zone);

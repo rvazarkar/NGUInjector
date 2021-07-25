@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NGUInjector.Managers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -237,9 +238,23 @@ namespace NGUInjector
             _manageNguDiff = other.ManageNGUDiff;
             _allocationFile = other.AllocationFile;
             _manageGoldLoadouts = other.ManageGoldLoadouts;
-            _titanGoldTargets = other.TitanGoldTargets;
-            _titanSwapTargets = other.TitanSwapTargets;
-            _titanMoneyDone = other.TitanMoneyDone;
+
+            bool[] tempTitanGoldTargets = new bool[other.TitanGoldTargets.Length];
+            Array.Copy(other.TitanGoldTargets, tempTitanGoldTargets, other.TitanGoldTargets.Length);
+            Array.Resize(ref tempTitanGoldTargets, ZoneHelpers.TitanCount());
+
+            _titanGoldTargets = tempTitanGoldTargets;
+
+            bool[] tempTitanSwapTargets = new bool[other.TitanSwapTargets.Length];
+            Array.Copy(other.TitanSwapTargets, tempTitanSwapTargets, other.TitanSwapTargets.Length);
+            Array.Resize(ref tempTitanSwapTargets, ZoneHelpers.TitanCount());
+            _titanSwapTargets = tempTitanSwapTargets;
+
+            bool[] tempTitanMoneyDone = new bool[other.TitanMoneyDone.Length];
+            Array.Copy(other.TitanMoneyDone, tempTitanMoneyDone, other.TitanMoneyDone.Length);
+            Array.Resize(ref tempTitanMoneyDone, ZoneHelpers.TitanCount());
+            _titanMoneyDone = tempTitanMoneyDone;
+
             _resnipeTime = other.ResnipeTime;
             _goldCBlockMode = other.GoldCBlockMode;
             _debugAllocation = other.DebugAllocation;
