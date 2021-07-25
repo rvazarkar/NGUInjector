@@ -36,10 +36,22 @@ namespace NGUInjector.Managers
                 Log("Turning in quest");
                 _character.beastQuestController.completeQuest();
 
-                if (_character.beastQuest.curBankedQuests == 0)
+                // Check if we need to swap back gear and release lock
+                if (LoadoutManager.HasQuestLock())
                 {
-                    LoadoutManager.RestoreGear();
-                    LoadoutManager.ReleaseLock();
+                    // No more quests, swap back
+                   if (_character.beastQuest.curBankedQuests == 0)
+                    {
+                        LoadoutManager.RestoreGear();
+                        LoadoutManager.ReleaseLock();
+                    }
+
+                   // else if majors are off and we're not manualing minors, swap back
+                   else if (!Settings.AllowMajorQuests && !Settings.ManualMinors)
+                    {
+                        LoadoutManager.RestoreGear();
+                        LoadoutManager.ReleaseLock();
+                    }
                 }
             }
         }

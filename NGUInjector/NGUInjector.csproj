@@ -73,6 +73,8 @@
     <Compile Include="AllocationProfiles\BreakpointTypes\BestHackBP.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\BR.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\CapCalc.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\BaseConsumableBreakpoint.cs" />
+    <Compile Include="AllocationProfiles\BreakpointTypes\MuffinBP.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\HackBP.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\RitualBP.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\TimeMachineBP.cs" />

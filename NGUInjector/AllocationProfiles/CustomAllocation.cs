@@ -24,6 +24,7 @@ namespace NGUInjector.AllocationProfiles
         private DiggerBreakpoint _currentDiggerBreakpoint;
         private WandoosBreakpoint _currentWandoosBreakpoint;
         private NGUDiffBreakpoint _currentNguBreakpoint;
+        //private ConsumablesBreakpoint _currentConsumablesBreakpoint;
         private bool _hasGearSwapped;
         private bool _hasDiggerSwapped;
         private bool _hasWandoosSwapped;
@@ -64,6 +65,14 @@ namespace NGUInjector.AllocationProfiles
                         var target = type == "TIME" ? ParseTime(rb["Target"]) : rb["Target"].AsDouble;
                         _wrapper.Breakpoints.Rebirth = BaseRebirth.CreateRebirth(target, type, rb["Challenges"].AsArray.Children.Select(x => x.Value.ToUpper()).ToArray());
                     }
+
+                    _wrapper.Breakpoints.ConsumablesBreakpoints = breakpoints["Consumables"].Children.Select(bp => new ConsumablesBreakpoint
+                    {
+                        Time = ParseTime(bp["Time"]),
+
+                        Consumables = BaseConsumableBreakpoint.ParseBreakpointArray(bp["Priorities"].AsArray.Children.Select(x => x.Value.ToUpper())
+                          .ToArray(), ResourceType.Consumable, rbtime).Where(x => x != null).ToArray()
+                    }).OrderByDescending(x => x.Time).ToArray();
 
                     _wrapper.Breakpoints.Magic = breakpoints["Magic"].Children.Select(bp => new AllocationBreakPoint
                     {
@@ -109,7 +118,6 @@ namespace NGUInjector.AllocationProfiles
                         .Select(bp => new NGUDiffBreakpoint {Time = ParseTime(bp["Time"]), Diff = bp["Diff"].AsInt})
                         .Where(x => x.Diff <= 2).OrderByDescending(x => x.Time).ToArray();
 
-
                     Main.Log(BuildAllocationString());
 
                     _currentDiggerBreakpoint = null;
@@ -119,6 +127,7 @@ namespace NGUInjector.AllocationProfiles
                     _currentMagicBreakpoint = null;
                     _currentR3Breakpoint = null;
                     _currentNguBreakpoint = null;
+                    //_currentConsumablesBreakpoint = null;
 
                     this.DoAllocations();
                 }
@@ -134,7 +143,8 @@ namespace NGUInjector.AllocationProfiles
                             Rebirth = new NoRebirth(), R3 = new AllocationBreakPoint[0],
                             Diggers = new DiggerBreakpoint[0], Energy = new AllocationBreakPoint[0],
                             Gear = new GearBreakpoint[0], Magic = new AllocationBreakPoint[0],
-                            NGUBreakpoints = new NGUDiffBreakpoint[0], Wandoos = new WandoosBreakpoint[0]
+                            NGUBreakpoints = new NGUDiffBreakpoint[0], Wandoos = new WandoosBreakpoint[0],
+                            ConsumablesBreakpoints = new ConsumablesBreakpoint[0]
                         }
                     };
 
@@ -145,6 +155,7 @@ namespace NGUInjector.AllocationProfiles
                     _currentMagicBreakpoint = null;
                     _currentR3Breakpoint = null;
                     _currentNguBreakpoint = null;
+                    //_currentConsumablesBreakpoint = null;
                 }
             }
             else
@@ -253,6 +264,7 @@ namespace NGUInjector.AllocationProfiles
             builder.AppendLine($"{_wrapper.Breakpoints.Diggers.Length} Digger Breakpoints");
             builder.AppendLine($"{_wrapper.Breakpoints.Wandoos.Length} Wandoos Breakpoints");
             builder.AppendLine($"{_wrapper.Breakpoints.NGUBreakpoints.Length} NGU Difficulty Breakpoints");
+            builder.AppendLine($"{_wrapper.Breakpoints.ConsumablesBreakpoints.Length} Consumable Breakpoints");
             var rb = _wrapper.Breakpoints.Rebirth;
             if (rb is NoRebirth)
             {
@@ -892,6 +904,7 @@ namespace NGUInjector.AllocationProfiles
         [SerializeField] public WandoosBreakpoint[] Wandoos;
         [SerializeField] public BaseRebirth Rebirth;
         [SerializeField] public NGUDiffBreakpoint[] NGUBreakpoints;
+        [SerializeField] public ConsumablesBreakpoint[] ConsumablesBreakpoints;
 
     }
 
@@ -928,5 +941,13 @@ namespace NGUInjector.AllocationProfiles
     {
         public double Time;
         public int Diff;
+    }
+
+    [Serializable]
+    internal class ConsumablesBreakpoint
+    {
+        [SerializeField] public double Time;
+        [SerializeField] public BaseConsumableBreakpoint[] Consumables;
+        [SerializeField] public int Quantity = 1;
     }
 }

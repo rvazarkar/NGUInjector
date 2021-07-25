@@ -24,6 +24,7 @@ namespace NGUInjector
         internal static InventoryController Controller;
         internal static Character Character;
         internal static PlayerController PlayerController;
+        internal static ArbitraryController ArbitraryController;
         internal static StreamWriter OutputWriter;
         internal static StreamWriter LootWriter;
         internal static StreamWriter CombatWriter;
@@ -41,7 +42,7 @@ namespace NGUInjector
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
         internal static WishManager WishManager;
-        internal const string Version = "3.6.0";
+        internal const string Version = "3.6.1";
         private static int _furthestZone;
 
 
@@ -181,6 +182,7 @@ namespace NGUInjector
                 LogCard("Starting Card Writer");
                 Controller = Character.inventoryController;
                 PlayerController = FindObjectOfType<PlayerController>();
+                ArbitraryController = FindObjectOfType<ArbitraryController>();
                 _invManager = new InventoryManager();
                 _yggManager = new YggdrasilManager();
                 _questManager = new QuestManager();
