@@ -502,16 +502,23 @@ Consumables are indexed as follows:
 - **MAYO** - Mayo Infuser
 
 **IMPORTANT NOTE: BE CAREFUL WHEN USING CONSUMABLE BREAKPOINTS**
+
 The injector cannot remember consumable usage across session. Therefore, if you restart NGU and/or the injector, it **will** run your latest Consumables breakpoint again -- and use any items again (except for beta pots and MacGuffin Muffins, those only activate if not already active).
 
 **_Example_**:
 Let's say you have it set to use a Lucky Charm 4 hours into your run.
+
 4 hours into your run, you use a Lucky Charm, all is well and life is good.
+
 But sometime after this, you restart your computer. :(
+
 When firing up NGU and injector, if the 4hour breakpoint is your latest one, it **will** run that one again **once** and use another Lucky Charm.
+
 If you had set that breakpoint to use a Lucky Charm AND a Super Lucky Charm, the injector will use **both** Lucky Charm and Super Lucky Charm again **once**.
 
+
 Be mindful of this or your AP will be sad. No one likes sad AP.
+
 
 Beta potions and Macguffin Muffins are smart enough to only activate if not already active.
 
