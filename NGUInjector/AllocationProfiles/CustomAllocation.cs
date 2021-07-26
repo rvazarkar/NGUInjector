@@ -128,6 +128,7 @@ namespace NGUInjector.AllocationProfiles
                     _currentR3Breakpoint = null;
                     _currentNguBreakpoint = null;
                     _currentConsumablesBreakpoint = null;
+                    ConsumablesManager.resetLastConsumables();
 
                     this.DoAllocations();
                 }
@@ -156,6 +157,7 @@ namespace NGUInjector.AllocationProfiles
                     _currentR3Breakpoint = null;
                     _currentNguBreakpoint = null;
                     _currentConsumablesBreakpoint = null;
+                    ConsumablesManager.resetLastConsumables();
                 }
             }
             else
@@ -435,7 +437,7 @@ namespace NGUInjector.AllocationProfiles
                 _currentR3Breakpoint = null;
                 _currentNguBreakpoint = null;
                 _currentConsumablesBreakpoint = null;
-
+                ConsumablesManager.resetLastConsumables();
             }
         }
 
@@ -758,7 +760,6 @@ namespace NGUInjector.AllocationProfiles
             }
             
             if (_didConsumeConsumables) return;
-            Main.Log($"ConsumeConsumables() entered and found bp time[{bp.Time}] and items[{string.Join(", ", bp.Consumables)}] with quantity[{string.Join(", ", bp.Quantity)}]");
             _didConsumeConsumables = true;
             _currentConsumablesBreakpoint = bp;
             ConsumablesManager.EatConsumables(bp.Consumables, bp.Time, bp.Quantity);

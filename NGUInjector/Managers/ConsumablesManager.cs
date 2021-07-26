@@ -11,7 +11,7 @@ namespace NGUInjector.Managers
         private static readonly Character _character = Main.Character;
         private static ArbitraryController _arbitraryController = Main.ArbitraryController;
         private static string[] lastConsumables = new string[0];
-        private static double lastTime;
+        private static double lastTime = 0;
 
         internal static readonly Dictionary<string, int> ConsumablePrices = new Dictionary<string, int>
         {
@@ -40,15 +40,13 @@ namespace NGUInjector.Managers
                 return;
             }
 
-            Main.Log($"Entered EatConsumables() with items[{string.Join(", ", consumables)}]");
-
             for (int i = 0; i < consumables.Length; i++)
             {
                 string consumable = consumables[i];
 
                 if (!IsValidConsumable(consumable))
                 {
-                    Main.Log($"Invalid consumable name: {consumable}");
+                    Main.Log($"ConsumablesManager - Invalid consumable name: {consumable}");
                     continue;
                 }
 
@@ -56,17 +54,17 @@ namespace NGUInjector.Managers
                 {
                     if (Main.Settings.AutoBuyConsumables && HasEnoughAP(consumable, quantity[i]))
                     {
-                        Main.Log($"Not enough of consumable, buying {quantity[i]} more: {consumable}");
+                        Main.Log($"ConsumablesManager - Not enough of consumable, buying {quantity[i]} more: {consumable}");
                         BuyConsumable(consumable, quantity[i]);
                     }
                     else
                     {
-                        Main.Log($"Not enough {consumable} owned, unable to use consumable. Buy more manually, or turn on AutoBuyConsumables in settings.json");
+                        Main.Log($"ConsumablesManager - Not enough {consumable} owned, unable to use consumable. Buy more manually, or turn on AutoBuyConsumables in settings.json");
                         return;
                     }
                 }
 
-                Main.Log($"Eating {quantity[i]} {consumable}");
+                
                 UseConsumables(consumable, quantity[i]);
             }
 
@@ -77,8 +75,9 @@ namespace NGUInjector.Managers
 
         private static bool HasEnoughConsumable(string consumable, int quantity)
         {
-            Main.Log($"Owned: {GetOwnedConsumableCount(consumable)} , Needed: {quantity}");
-            return GetOwnedConsumableCount(consumable) >= quantity;
+            int owned = GetOwnedConsumableCount(consumable);
+            Main.Log($"ConsumablesManager - Owned {consumable}s: {owned} , Needed: {quantity}");
+            return owned >= quantity;
         }
 
         private static bool HasEnoughAP(string consumable, int quantity)
@@ -91,11 +90,10 @@ namespace NGUInjector.Managers
                 enough = _character.arbitrary.curArbitraryPoints > (price * quantity);
                 if (!enough)
                 {
-                    Main.Log($"Not enough AP[{_character.arbitrary.curArbitraryPoints}] to buy consumable, need {price * quantity} AP for {quantity} {consumable}");
+                    Main.Log($"ConsumablesManager - Not enough AP[{_character.arbitrary.curArbitraryPoints}] to buy consumable, need {price * quantity} AP for {quantity} {consumable}");
                 }
             }
 
-            Main.Log($"MyAP: {_character.arbitrary.curArbitraryPoints} or {_character.arbitrary.arbitraryPoints}? and need {quantity}");
             return enough;
         }
 
@@ -198,6 +196,8 @@ namespace NGUInjector.Managers
 
         private static void UseConsumables(string consumable, int count)
         {
+            Main.Log($"ConsumablesManager - Eating {count} {consumable}");
+
             for (int i = 0; i < count; i++)
             {
                 switch (consumable)
@@ -214,7 +214,7 @@ namespace NGUInjector.Managers
                         } 
                         else
                         {
-                            Main.Log($"EPOT-B already active, not eating");
+                            Main.Log($"ConsumablesManager - Energy Potion Beta already active, not eating");
                         }
                         break;
                     case "EPOT-C":
@@ -233,7 +233,7 @@ namespace NGUInjector.Managers
                         }
                         else
                         {
-                            Main.Log($"MPOT-B already active, not eating");
+                            Main.Log($"ConsumablesManager - Magic Potion Beta already active, not eating");
                         }
                         break;
                     case "MPOT-C":
@@ -252,7 +252,7 @@ namespace NGUInjector.Managers
                         }
                         else
                         {
-                            Main.Log($"R3POT-B already active, not eating");
+                            Main.Log($"ConsumablesManager - R3 Potion Beta already active, not eating");
                         }
                         break;
                     case "R3POT-C":
@@ -272,6 +272,9 @@ namespace NGUInjector.Managers
                         {
                             _character.arbitrary.macGuffinBooster1Time.advanceTime(60 * 60 * 24);
                             _character.arbitrary.macGuffinBooster1Count--;
+                        } else
+                        {
+                            Main.Log($"ConsumablesManager - Macguffin Muffin already active, not eating");
                         }
                         break;
                     case "LC":
@@ -287,6 +290,7 @@ namespace NGUInjector.Managers
                         _character.arbitrary.mayoSpeedPotCount--;
                         break;
                     default:
+                        Main.Log($"ConsumablesManager - Unknown consumable: {consumable}");
                         break;
                 }
             }
@@ -295,6 +299,12 @@ namespace NGUInjector.Managers
         private static bool IsValidConsumable(string consumable)
         {
             return ConsumablePrices.ContainsKey(consumable);
+        }
+
+        internal static void resetLastConsumables()
+        {
+            ConsumablesManager.lastConsumables = new string[0];
+            ConsumablesManager.lastTime = 0;
         }
     }
 }
