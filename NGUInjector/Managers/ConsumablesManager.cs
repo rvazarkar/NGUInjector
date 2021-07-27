@@ -110,9 +110,9 @@ namespace NGUInjector.Managers
                 case "MPOT-A":
                     return _character.arbitrary.magicPotion1Count;
                 case "MPOT-B":
-                    return _character.arbitrary.magicPotion1Count;
+                    return _character.arbitrary.magicPotion2Count;
                 case "MPOT-C":
-                    return _character.arbitrary.magicPotion1Count;
+                    return _character.arbitrary.magicPotion3Count;
                 case "R3POT-A":
                     return _character.arbitrary.res3Potion1Count;
                 case "R3POT-B":

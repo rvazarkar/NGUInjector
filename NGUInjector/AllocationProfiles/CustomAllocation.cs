@@ -128,7 +128,6 @@ namespace NGUInjector.AllocationProfiles
                     _currentR3Breakpoint = null;
                     _currentNguBreakpoint = null;
                     _currentConsumablesBreakpoint = null;
-                    ConsumablesManager.resetLastConsumables();
 
                     this.DoAllocations();
                 }
@@ -157,7 +156,6 @@ namespace NGUInjector.AllocationProfiles
                     _currentR3Breakpoint = null;
                     _currentNguBreakpoint = null;
                     _currentConsumablesBreakpoint = null;
-                    ConsumablesManager.resetLastConsumables();
                 }
             }
             else
