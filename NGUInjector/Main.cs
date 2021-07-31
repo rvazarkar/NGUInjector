@@ -43,7 +43,7 @@ namespace NGUInjector
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
         internal static WishManager WishManager;
-        internal const string Version = "3.6.5";
+        internal const string Version = "3.6.6";
         private static int _furthestZone;
 
 
@@ -156,6 +156,7 @@ namespace NGUInjector
                 {
                     Directory.CreateDirectory(_profilesDir);
                 }
+
 
                 var oldPath = Path.Combine(_dir, "allocation.json");
                 var newPath = Path.Combine(_profilesDir, "default.json");

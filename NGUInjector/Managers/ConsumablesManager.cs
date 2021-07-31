@@ -268,7 +268,9 @@ namespace NGUInjector.Managers
                         _character.arbitrary.magicBarBar1Count--;
                         break;
                     case "MUFFIN":
-                        if (!_character.arbitrary.macGuffinBooster1InUse)
+                        // boolean _character.arbitrary.macGuffinBooster1InUse
+                        // The boolean doesn't seem to work, so going by remaining time instead
+                        if (_character.arbitrary.macGuffinBooster1Time.totalseconds < 1)
                         {
                             _character.arbitrary.macGuffinBooster1Time.advanceTime(60 * 60 * 24);
                             _character.arbitrary.macGuffinBooster1Count--;
