@@ -273,5 +273,10 @@ namespace NGUInjector.Managers
 
             return false;
         }
+
+        internal static bool Move69Ready()
+        {
+            return Main.Character.adventure.move69Unlocked && Main.Character.adventure.move69Used < 69;
+        }
     }
 }

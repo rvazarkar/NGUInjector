@@ -110,6 +110,7 @@ namespace NGUInjector
         [SerializeField] private int[] _cookingLoadout;
         [SerializeField] private bool _manageConsumables;
         [SerializeField] private bool _autoBuyConsumables;
+        [SerializeField] private bool _doMove69;
 
         private readonly string _savePath;
         private bool _disableSave;
@@ -288,6 +289,7 @@ namespace NGUInjector
             _cookingLoadout = other._cookingLoadout;
             _manageConsumables = other._manageConsumables;
             _autoBuyConsumables = other._autoBuyConsumables;
+            _doMove69 = other._doMove69;
         }
 
         public int SnipeZone
@@ -1332,6 +1334,17 @@ namespace NGUInjector
             {
                 if (value == _manageConsumables) return;
                 _manageConsumables = value;
+                SaveSettings();
+            }
+        }
+
+        public bool DoMove69
+        {
+            get => _doMove69;
+            set
+            {
+                if (value == _doMove69) return;
+                _doMove69 = value;
                 SaveSettings();
             }
         }

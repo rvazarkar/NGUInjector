@@ -14,6 +14,7 @@ namespace NGUInjector.Managers
         private bool _isFighting = false;
         private float _fightTimer = 0;
         private string _enemyName;
+        private DateTime move69Cooldown = DateTime.MinValue;
 
         public CombatManager()
         {
@@ -258,6 +259,12 @@ namespace NGUInjector.Managers
                 return;
             }
 
+            if (Settings.DoMove69 && Move69Ready() && Move69CooldownReady())
+            {
+                Main.PlayerController.move69();
+                move69Cooldown = DateTime.Now;
+            }
+
             if (ac.strongAttackMove.button.IsInteractable())
             {
                 ac.strongAttackMove.doMove();
@@ -269,6 +276,16 @@ namespace NGUInjector.Managers
                 ac.regularAttackMove.doMove();
                 return;
             }
+        }
+
+        internal bool Move69CooldownReady()
+        {
+            TimeSpan ts = (DateTime.Now - move69Cooldown);
+            if (ts.TotalMilliseconds > (1000 * 60 * 60)) // cooldown: 3600s or 1 hour
+            {
+                return true;
+            }
+            return false;
         }
 
         internal static bool IsZoneUnlocked(int zone)
