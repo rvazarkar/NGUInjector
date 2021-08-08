@@ -14,7 +14,6 @@ using System.Windows.Forms;
 using NGUInjector.AllocationProfiles;
 using NGUInjector.Managers;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Application = UnityEngine.Application;
 
@@ -25,6 +24,7 @@ namespace NGUInjector
         internal static InventoryController Controller;
         internal static Character Character;
         internal static PlayerController PlayerController;
+        internal static ArbitraryController ArbitraryController;
         internal static StreamWriter OutputWriter;
         internal static StreamWriter LootWriter;
         internal static StreamWriter CombatWriter;
@@ -38,12 +38,14 @@ namespace NGUInjector
         private QuestManager _questManager;
         private CardManager _cardManager;
         private CookingManager _cookingManager;
+        private ConsumablesManager _consumablesManager;
         private static CustomAllocation _profile;
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
         internal static WishManager WishManager;
-        internal const string Version = "3.5.1";
+        internal const string Version = "3.6.7";
         private static int _furthestZone;
+
 
         internal static bool Test { get; set; }
 
@@ -155,6 +157,7 @@ namespace NGUInjector
                     Directory.CreateDirectory(_profilesDir);
                 }
 
+
                 var oldPath = Path.Combine(_dir, "allocation.json");
                 var newPath = Path.Combine(_profilesDir, "default.json");
 
@@ -181,12 +184,14 @@ namespace NGUInjector
                 LogCard("Starting Card Writer");
                 Controller = Character.inventoryController;
                 PlayerController = FindObjectOfType<PlayerController>();
+                ArbitraryController = FindObjectOfType<ArbitraryController>();
                 _invManager = new InventoryManager();
                 _yggManager = new YggdrasilManager();
                 _questManager = new QuestManager();
                 _combManager = new CombatManager();
                 _cardManager = new CardManager();
                 _cookingManager = new CookingManager();
+                _consumablesManager = new ConsumablesManager();
                 LoadoutManager.ReleaseLock();
                 DiggerManager.ReleaseLock();
 

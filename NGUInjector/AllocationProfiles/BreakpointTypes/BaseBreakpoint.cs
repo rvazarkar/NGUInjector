@@ -10,7 +10,8 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
     {
         Energy,
         Magic,
-        R3
+        R3,
+        Consumable
     }
 
     internal abstract class BaseBreakpoint

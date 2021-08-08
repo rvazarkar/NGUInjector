@@ -46,7 +46,9 @@ namespace NGUInjector
                 {9, "Exile"},
                 {10, "IT HUNGERS"},
                 {11, "Rock Lobster"},
-                {12, "Amalgamate"}
+                {12, "Amalgamate"},
+                {13, "Tippi"},
+                {14, "Traitor"},
             };
             
             ZoneList = new Dictionary<int, string>
@@ -95,7 +97,9 @@ namespace NGUInjector
                 {40, "DUCK DUCK ZONE"},
                 {41, "The Nether Regions"},
                 {42, "AMALGAMATE"},
-                {43, "7 Aethereal Seas"}
+                {43, "7 Aethereal Seas"},
+                {44, "TIPPI THE TUTORIAL MOUSE"},
+                {45, "THE TRAITOR"}
             };
 
             SpriteEnemyList = new Dictionary<int, string>();

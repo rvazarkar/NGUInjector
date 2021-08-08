@@ -40,8 +40,15 @@ namespace NGUInjector.Managers
             
             if (Main.Settings.MoneyPitLoadout.Length > 0)
             {
-                LoadoutManager.RestoreGear();
-                LoadoutManager.ReleaseLock();
+                if (LoadoutManager.SwappedQuestToMoneyPit)
+                {
+                    LoadoutManager.RestoreQuestLayoutFromPit();
+                }
+                else
+                {
+                    LoadoutManager.RestoreGear();
+                    LoadoutManager.ReleaseLock();
+                }
             }
         }
 

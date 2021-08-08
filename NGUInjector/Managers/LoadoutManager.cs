@@ -12,12 +12,20 @@ namespace NGUInjector.Managers
         Yggdrasil,
         MoneyPit,
         Gold,
+        Quest,
+        Cooking,
         None
     }
     internal static class LoadoutManager
     {
         private static int[] _savedLoadout;
         private static int[] _tempLoadout;
+        private static bool _swappedQuestToMoneyPit = false;
+        private static bool _swappedQuestToTitan = false;
+        public static bool SwappedQuestToMoneyPit { get => _swappedQuestToMoneyPit; }
+        public static bool SwappedQuestToTitan { get => _swappedQuestToTitan; }
+
+
         internal static LockType CurrentLock { get; set; }
 
         internal static bool CanSwap()
@@ -45,6 +53,13 @@ namespace NGUInjector.Managers
         {
             if (Settings.TitanLoadout.Length == 0 && Settings.GoldDropLoadout.Length == 0)
                 return;
+
+            if (CurrentLock == LockType.Quest)
+            {
+                SaveTempLoadout();
+                ReleaseLock();
+                _swappedQuestToTitan = true;
+            }
             //Skip if we're currently locked for yggdrasil (although this generally shouldn't happen)
             if (!CanAcquireOrHasLock(LockType.Titan))
                 return;
@@ -57,8 +72,16 @@ namespace NGUInjector.Managers
                     return;
 
                 //Titans have been AKed, restore back to original gear
-                RestoreGear();
-                ReleaseLock();
+                if (_swappedQuestToTitan)
+                {
+                    RestoreQuestLayoutFromTitan();
+                }
+                else
+                {
+                    RestoreGear();
+                    ReleaseLock();
+                }
+                
                 return;
             }
 
@@ -103,6 +126,12 @@ namespace NGUInjector.Managers
 
         internal static bool TryMoneyPitSwap()
         {
+            if (CurrentLock == LockType.Quest)
+            {
+                SaveTempLoadout();
+                ReleaseLock();
+                _swappedQuestToMoneyPit = true;
+            }
             if (!CanAcquireOrHasLock(LockType.MoneyPit))
                 return false;
 
@@ -130,6 +159,59 @@ namespace NGUInjector.Managers
             ChangeGear(Settings.GoldDropLoadout);
 
             return true;
+        }
+
+        internal static bool TryQuestSwap()
+        {
+
+            if (!CanAcquireOrHasLock(LockType.Quest))
+            {
+                return false;
+            }
+
+            //We already hold the lock so just return true
+            if (CurrentLock == LockType.Quest)
+            {
+                return true;
+            }
+
+            Log("Equipping Quest Loadout");
+            AcquireLock(LockType.Quest);
+            SaveCurrentLoadout();
+            ChangeGear(Settings.QuestLoadout);
+
+            return true;
+        }
+
+        internal static bool HasQuestLock()
+        {
+            return CurrentLock == LockType.Quest;
+        }
+
+        internal static bool TryCookingSwap()
+        {
+            if (!CanAcquireOrHasLock(LockType.Cooking))
+            {
+                return false;
+            }
+
+            //We already hold the lock so just return true
+            if (CurrentLock == LockType.Cooking)
+            {
+                return true;
+            }
+
+            Log("Equipping Cooking Loadout");
+            AcquireLock(LockType.Cooking);
+            SaveCurrentLoadout();
+            ChangeGear(Settings.CookingLoadout);
+
+            return true;
+        }
+
+        internal static bool HasCookingLock()
+        {
+            return CurrentLock == LockType.Cooking;
         }
 
         private static bool CanAcquireOrHasLock(LockType requestor)
@@ -354,6 +436,20 @@ namespace NGUInjector.Managers
         internal static void RestoreTempLoadout()
         {
             ChangeGear(_tempLoadout);
+        }
+
+        internal static void RestoreQuestLayoutFromPit()
+        {
+            RestoreTempLoadout();
+            _swappedQuestToMoneyPit = false;
+            AcquireLock(LockType.Quest);
+        }
+
+        private static void RestoreQuestLayoutFromTitan()
+        {
+            RestoreTempLoadout();
+            _swappedQuestToTitan = false;
+            AcquireLock(LockType.Titan);
         }
 
         //private static float GetSeedGain(Equipment e)

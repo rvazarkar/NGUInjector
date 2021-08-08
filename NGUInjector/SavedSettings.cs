@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NGUInjector.Managers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -103,6 +104,13 @@ namespace NGUInjector
         [SerializeField] private bool _trashChunkers;
         [SerializeField] private bool _hackAdvance;
         [SerializeField] private bool _manageCooking;
+        [SerializeField] private bool _manageQuestLoadouts;
+        [SerializeField] private bool _manageCookingLoadouts;
+        [SerializeField] private int[] _questLoadout;
+        [SerializeField] private int[] _cookingLoadout;
+        [SerializeField] private bool _manageConsumables;
+        [SerializeField] private bool _autoBuyConsumables;
+        [SerializeField] private bool _doMove69;
 
         private readonly string _savePath;
         private bool _disableSave;
@@ -231,9 +239,23 @@ namespace NGUInjector
             _manageNguDiff = other.ManageNGUDiff;
             _allocationFile = other.AllocationFile;
             _manageGoldLoadouts = other.ManageGoldLoadouts;
-            _titanGoldTargets = other.TitanGoldTargets;
-            _titanSwapTargets = other.TitanSwapTargets;
-            _titanMoneyDone = other.TitanMoneyDone;
+
+            bool[] tempTitanGoldTargets = new bool[other.TitanGoldTargets.Length];
+            Array.Copy(other.TitanGoldTargets, tempTitanGoldTargets, other.TitanGoldTargets.Length);
+            Array.Resize(ref tempTitanGoldTargets, ZoneHelpers.TitanCount());
+
+            _titanGoldTargets = tempTitanGoldTargets;
+
+            bool[] tempTitanSwapTargets = new bool[other.TitanSwapTargets.Length];
+            Array.Copy(other.TitanSwapTargets, tempTitanSwapTargets, other.TitanSwapTargets.Length);
+            Array.Resize(ref tempTitanSwapTargets, ZoneHelpers.TitanCount());
+            _titanSwapTargets = tempTitanSwapTargets;
+
+            bool[] tempTitanMoneyDone = new bool[other.TitanMoneyDone.Length];
+            Array.Copy(other.TitanMoneyDone, tempTitanMoneyDone, other.TitanMoneyDone.Length);
+            Array.Resize(ref tempTitanMoneyDone, ZoneHelpers.TitanCount());
+            _titanMoneyDone = tempTitanMoneyDone;
+
             _resnipeTime = other.ResnipeTime;
             _goldCBlockMode = other.GoldCBlockMode;
             _debugAllocation = other.DebugAllocation;
@@ -261,6 +283,13 @@ namespace NGUInjector
             _trashChunkers = other._trashChunkers;
             _hackAdvance = other.HackAdvance;
             _manageCooking = other._manageCooking;
+            _manageQuestLoadouts = other._manageQuestLoadouts;
+            _manageCookingLoadouts = other._manageCookingLoadouts;
+            _questLoadout = other._questLoadout;
+            _cookingLoadout = other._cookingLoadout;
+            _manageConsumables = other._manageConsumables;
+            _autoBuyConsumables = other._autoBuyConsumables;
+            _doMove69 = other._doMove69;
         }
 
         public int SnipeZone
@@ -1241,6 +1270,81 @@ namespace NGUInjector
             {
                 if (value == _manageCooking) return;
                 _manageCooking = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ManageQuestLoadouts
+        {
+            get => _manageQuestLoadouts;
+            set
+            {
+                if (value == _manageQuestLoadouts) return;
+                _manageQuestLoadouts = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ManageCookingLoadouts
+        {
+            get => _manageCookingLoadouts;
+            set
+            {
+                if (value == _manageCookingLoadouts) return;
+                _manageCookingLoadouts = value;
+                SaveSettings();
+            }
+        }
+
+        public int[] QuestLoadout
+        {
+            get => _questLoadout;
+            set
+            {
+                _questLoadout = value;
+                SaveSettings();
+            }
+        }
+
+        public int[] CookingLoadout
+        {
+            get => _cookingLoadout;
+            set
+            {
+                _cookingLoadout = value;
+                SaveSettings();
+            }
+        }
+
+        public bool AutoBuyConsumables
+        {
+            get => _autoBuyConsumables;
+            set
+            {
+                if (value == _autoBuyConsumables) return;
+                _autoBuyConsumables = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ManageConsumables
+        {
+            get => _manageConsumables;
+            set
+            {
+                if (value == _manageConsumables) return;
+                _manageConsumables = value;
+                SaveSettings();
+            }
+        }
+
+        public bool DoMove69
+        {
+            get => _doMove69;
+            set
+            {
+                if (value == _doMove69) return;
+                _doMove69 = value;
                 SaveSettings();
             }
         }

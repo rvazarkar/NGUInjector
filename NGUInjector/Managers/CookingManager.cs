@@ -1,32 +1,50 @@
 ﻿using System;
+using static NGUInjector.Main;
 
 namespace NGUInjector.Managers
 {
-    internal class CookingManager
-    {
+	internal class CookingManager
+	{
 		CookingController cook;
 
 		public CookingManager()
-        {
+		{
 			cook = Main.Character.cookingController;
 		}
 
 		internal void manageFood()
-        {
+		{
 			if (Main.Character.cooking.unlocked)
 			{
 				bestCooking();
 			}
-        }
+		}
 		public void bestCooking()
 		{
-			if (cook.getCurScore() == cook.getOptimalScore()) {
+			if (cook.getCurScore() == cook.getOptimalScore())
+			{
 				if (cook.character.cooking.cookTimer >= cook.eatRate())
 				{
+					if (Settings.ManageCookingLoadouts && Settings.CookingLoadout.Length > 0)
+                    {
+						if (!LoadoutManager.TryCookingSwap())
+                        {
+							Log("Unable to acquire lock for gear, waiting a cycle to equip gears");
+							return;
+						}
+                    }
+
 					cook.consumeDish();
+
+					if (LoadoutManager.HasCookingLock())
+                    {
+						LoadoutManager.RestoreGear();
+						LoadoutManager.ReleaseLock();
+                    }
 				}
 				return;
-            }
+			}
+
 			int foodA = 0;
 			int foodB = 0;
 			int foodC = 0;
@@ -139,7 +157,7 @@ namespace NGUInjector.Managers
 					}
 				}
 			}
-            Main.LogAllocation($"Best Cooking:: {cook.character.cooking.pair1[0]}@{foodA} | {cook.character.cooking.pair1[1]}@{foodB} |" +
+			Main.LogAllocation($"Best Cooking:: {cook.character.cooking.pair1[0]}@{foodA} | {cook.character.cooking.pair1[1]}@{foodB} |" +
 				$" {cook.character.cooking.pair2[0]}@{foodC} | {cook.character.cooking.pair2[1]}@{foodD} |" +
 				$" {cook.character.cooking.pair3[0]}@{foodE} | {cook.character.cooking.pair3[1]}@{foodF} |" +
 				$" {cook.character.cooking.pair4[0]}@{foodG} | {cook.character.cooking.pair4[1]}@{foodH}");
