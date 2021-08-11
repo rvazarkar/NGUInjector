@@ -8,8 +8,7 @@ namespace NGUInjector.Managers
 
     class ConsumablesManager
     {
-        private static readonly Character _character = Main.Character;
-        private static ArbitraryController _arbitraryController = Main.ArbitraryController;
+        private static Character _character = Main.Character;
         private static string[] lastConsumables = new string[0];
         private static double lastTime = 0;
 
@@ -144,49 +143,49 @@ namespace NGUInjector.Managers
                 switch (consumable)
                 {
                     case "EPOT-A":
-                        _arbitraryController.buyEnergyPotion1AP();
+                        _character.arbitrary.energyPotion1Count++;
                         break;
                     case "EPOT-B":
-                        _arbitraryController.buyEnergyPotion2AP();
+                        _character.arbitrary.energyPotion2Count++;
                         break;
                     case "EPOT-C":
-                        _arbitraryController.buyEnergyPotion3();
+                        _character.arbitrary.energyPotion3Count++;
                         break;
                     case "MPOT-A":
-                        _arbitraryController.buyMagicPotion1AP();
+                        _character.arbitrary.magicPotion1Count++;
                         break;
                     case "MPOT-B":
-                        _arbitraryController.buyMagicPotion2AP();
+                        _character.arbitrary.magicPotion2Count++;
                         break;
                     case "MPOT-C":
-                        _arbitraryController.buyMagicPotion3();
+                        _character.arbitrary.magicPotion3Count++;
                         break;
                     case "R3POT-A":
-                        _arbitraryController.buyRes3Potion1();
+                        _character.arbitrary.res3Potion1Count++;
                         break;
                     case "R3POT-B":
-                        _arbitraryController.buyRes3Potion2();
+                        _character.arbitrary.res3Potion2Count++;
                         break;
                     case "R3POT-C":
-                        _arbitraryController.buyRes3Potion3();
+                        _character.arbitrary.res3Potion3Count++;
                         break;
                     case "EBARBAR":
-                        _arbitraryController.buyEnergyBarBar1AP();
+                        _character.arbitrary.energyBarBar1Count++;
                         break;
                     case "MBARBAR":
-                        _arbitraryController.buyMagicBarBar1AP();
+                        _character.arbitrary.magicBarBar1Count++;
                         break;
                     case "MUFFIN":
-                        _arbitraryController.buyMacguffinBooster1AP();
+                        _character.arbitrary.macGuffinBooster1Count++;
                         break;
                     case "LC":
-                        _arbitraryController.buyLootCharm1AP();
+                        _character.arbitrary.lootCharm1Count++;
                         break;
                     case "SLC":
-                        _arbitraryController.buyLootCharm2AP();
+                        _character.arbitrary.lootCharm2Count++;
                         break;
                     case "MAYO":
-                        _arbitraryController.buyMayoSpeedConsumableAP();
+                        _character.arbitrary.mayoSpeedPotCount++;
                         break;
                     default:
                         break;
