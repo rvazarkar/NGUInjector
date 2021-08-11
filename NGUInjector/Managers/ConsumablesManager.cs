@@ -191,6 +191,9 @@ namespace NGUInjector.Managers
                     default:
                         break;
                 }
+
+                ConsumablePrices.TryGetValue(consumable, out int price);
+                _character.arbitrary.curArbitraryPoints -= price;
             }
         }
 
