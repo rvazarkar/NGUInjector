@@ -276,7 +276,8 @@ namespace NGUInjector.Managers
                         {
                             _character.arbitrary.macGuffinBooster1Time.advanceTime(60 * 60 * 24);
                             _character.arbitrary.macGuffinBooster1Count--;
-                        } else
+                        } 
+                        else
                         {
                             Main.Log($"ConsumablesManager - Macguffin Muffin already active, not eating");
                         }
@@ -290,8 +291,15 @@ namespace NGUInjector.Managers
                         _character.arbitrary.lootCharm2Count--;
                         break;
                     case "MAYO":
-                        _character.arbitrary.mayoSpeedPotTime.advanceTime(60 * 60 * 24);
-                        _character.arbitrary.mayoSpeedPotCount--;
+                        if (_character.arbitrary.mayoSpeedPotTime.totalseconds < 1)
+                        {
+                            _character.arbitrary.mayoSpeedPotTime.advanceTime(60 * 60 * 24);
+                            _character.arbitrary.mayoSpeedPotCount--;
+                        }
+                        else
+                        {
+                            Main.Log($"ConsumablesManager - Mayo already active, not eating");
+                        }
                         break;
                     default:
                         Main.Log($"ConsumablesManager - Unknown consumable: {consumable}");
