@@ -20,6 +20,7 @@ namespace NGUInjector.Managers
     {
         private static int[] _savedLoadout;
         private static int[] _tempLoadout;
+        private static int[] _originalQuestLoadout;
         private static bool _swappedQuestToMoneyPit = false;
         private static bool _swappedQuestToTitan = false;
         public static bool SwappedQuestToMoneyPit { get => _swappedQuestToMoneyPit; }
@@ -49,6 +50,12 @@ namespace NGUInjector.Managers
             ChangeGear(_savedLoadout);
         }
 
+        internal static void RestoreOriginalQuestGear()
+        {
+            Log($"Restoring original loadout");
+            ChangeGear(_originalQuestLoadout);
+        }
+
         internal static void TryTitanSwap()
         {
             if (Settings.TitanLoadout.Length == 0 && Settings.GoldDropLoadout.Length == 0)
@@ -75,13 +82,14 @@ namespace NGUInjector.Managers
                 if (_swappedQuestToTitan)
                 {
                     RestoreQuestLayoutFromTitan();
+                    _swappedQuestToTitan = !_swappedQuestToTitan;
                 }
                 else
                 {
                     RestoreGear();
                     ReleaseLock();
                 }
-                
+
                 return;
             }
 
@@ -90,7 +98,7 @@ namespace NGUInjector.Managers
             if (ts.SpawningSoon)
             {
                 Log("Equipping Loadout for Titans");
-                
+
                 //Titans are spawning soon, grab a lock and swap
                 AcquireLock(LockType.Titan);
                 SaveCurrentLoadout();
@@ -132,9 +140,12 @@ namespace NGUInjector.Managers
                 ReleaseLock();
                 _swappedQuestToMoneyPit = true;
             }
-            if (!CanAcquireOrHasLock(LockType.MoneyPit))
+            
+            else if (!CanAcquireOrHasLock(LockType.MoneyPit))
+            {
                 return false;
-
+            }
+                
             Log("Equipping Money Pit");
             AcquireLock(LockType.MoneyPit);
             SaveCurrentLoadout();
@@ -177,7 +188,7 @@ namespace NGUInjector.Managers
 
             Log("Equipping Quest Loadout");
             AcquireLock(LockType.Quest);
-            SaveCurrentLoadout();
+            SaveOriginalQuestLoadout();
             ChangeGear(Settings.QuestLoadout);
 
             return true;
@@ -317,7 +328,7 @@ namespace NGUInjector.Managers
                 Log(e.Message);
                 Log(e.StackTrace);
             }
-            
+
 
             controller.updateBonuses();
             controller.updateInventory();
@@ -378,7 +389,7 @@ namespace NGUInjector.Managers
             return null;
         }
 
-        private static void SaveCurrentLoadout()
+        private static List<int> GetCurrentGear()
         {
             var inv = Main.Character.inventory;
             var loadout = new List<int>
@@ -402,33 +413,26 @@ namespace NGUInjector.Managers
                 loadout.Add(Main.Character.inventory.accs[index].id);
             }
 
+            return loadout;
+        }
+
+        private static void SaveOriginalQuestLoadout()
+        {
+            var loadout = GetCurrentGear();
+            _originalQuestLoadout = loadout.ToArray();
+            Log($"Saved Loadout {string.Join(",", _originalQuestLoadout.Select(x => x.ToString()).ToArray())}");
+        }
+
+        private static void SaveCurrentLoadout()
+        {
+            var loadout = GetCurrentGear();
             _savedLoadout = loadout.ToArray();
             Log($"Saved Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
         }
 
         internal static void SaveTempLoadout()
         {
-            var inv = Main.Character.inventory;
-            var loadout = new List<int>
-            {
-                inv.head.id,
-                inv.boots.id,
-                inv.chest.id,
-                inv.legs.id,
-                inv.weapon.id
-            };
-
-
-            if (Main.Character.inventoryController.weapon2Unlocked())
-            {
-                loadout.Add(inv.weapon2.id);
-            }
-
-            for (var id = 10000; Controller.accessoryID(id) < Main.Character.inventory.accs.Count; ++id)
-            {
-                var index = Controller.accessoryID(id);
-                loadout.Add(Main.Character.inventory.accs[index].id);
-            }
+            var loadout = GetCurrentGear();
             _tempLoadout = loadout.ToArray();
             Log($"Saved Loadout {string.Join(",", _tempLoadout.Select(x => x.ToString()).ToArray())}");
         }
@@ -448,8 +452,7 @@ namespace NGUInjector.Managers
         private static void RestoreQuestLayoutFromTitan()
         {
             RestoreTempLoadout();
-            _swappedQuestToTitan = false;
-            AcquireLock(LockType.Titan);
+            AcquireLock(LockType.Quest);
         }
 
         //private static float GetSeedGain(Equipment e)

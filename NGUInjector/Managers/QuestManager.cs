@@ -42,14 +42,14 @@ namespace NGUInjector.Managers
                     // No more quests, swap back
                    if (_character.beastQuest.curBankedQuests == 0)
                     {
-                        LoadoutManager.RestoreGear();
+                        LoadoutManager.RestoreOriginalQuestGear();
                         LoadoutManager.ReleaseLock();
                     }
 
                    // else if majors are off and we're not manualing minors, swap back
                    else if (!Settings.AllowMajorQuests && !Settings.ManualMinors)
                     {
-                        LoadoutManager.RestoreGear();
+                        LoadoutManager.RestoreOriginalQuestGear();
                         LoadoutManager.ReleaseLock();
                     }
                 }
@@ -120,7 +120,7 @@ namespace NGUInjector.Managers
                 // If we're not questing and we still have the lock, restore gear
                 if (!startedQuest && LoadoutManager.HasQuestLock())
                 {
-                    LoadoutManager.RestoreGear();
+                    LoadoutManager.RestoreOriginalQuestGear();
                     LoadoutManager.ReleaseLock();
                 }
                 return;
