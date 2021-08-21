@@ -159,8 +159,12 @@ namespace NGUInjector.Managers
 
         internal void EquipQuestingLoadout()
         {
+
             if (Settings.ManageQuestLoadouts && Settings.QuestLoadout.Length > 0)
             {
+                if (LoadoutManager.HasQuestLock())
+                    return;
+
                 if (!LoadoutManager.TryQuestSwap())
                 {
                     Log("Tried to equip quest loadout but not unable to acquire lock");
