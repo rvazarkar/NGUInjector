@@ -61,15 +61,18 @@ namespace NGUInjector.Managers
             if (Settings.TitanLoadout.Length == 0 && Settings.GoldDropLoadout.Length == 0)
                 return;
 
-            if (CurrentLock == LockType.Quest)
+            //Skip if we're currently locked for yggdrasil (although this generally shouldn't happen)
+            if (CurrentLock != LockType.Quest && !CanAcquireOrHasLock(LockType.Titan))
+                return;
+
+            var ts = ZoneHelpers.TitansSpawningSoon();
+
+            if (CurrentLock == LockType.Quest && ts.SpawningSoon)
             {
                 SaveTempLoadout();
                 ReleaseLock();
                 _swappedQuestToTitan = true;
             }
-            //Skip if we're currently locked for yggdrasil (although this generally shouldn't happen)
-            if (!CanAcquireOrHasLock(LockType.Titan))
-                return;
 
             //If we're currently holding the lock
             if (CurrentLock == LockType.Titan)
@@ -94,7 +97,6 @@ namespace NGUInjector.Managers
             }
 
             //No lock currently, check if titans are spawning
-            var ts = ZoneHelpers.TitansSpawningSoon();
             if (ts.SpawningSoon)
             {
                 Log("Equipping Loadout for Titans");
@@ -420,21 +422,21 @@ namespace NGUInjector.Managers
         {
             var loadout = GetCurrentGear();
             _originalQuestLoadout = loadout.ToArray();
-            Log($"Saved Loadout {string.Join(",", _originalQuestLoadout.Select(x => x.ToString()).ToArray())}");
+            Log($"Saved Original Quest Loadout {string.Join(",", _originalQuestLoadout.Select(x => x.ToString()).ToArray())}");
         }
 
         private static void SaveCurrentLoadout()
         {
             var loadout = GetCurrentGear();
             _savedLoadout = loadout.ToArray();
-            Log($"Saved Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
+            Log($"Saved Current Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
         }
 
         internal static void SaveTempLoadout()
         {
             var loadout = GetCurrentGear();
             _tempLoadout = loadout.ToArray();
-            Log($"Saved Loadout {string.Join(",", _tempLoadout.Select(x => x.ToString()).ToArray())}");
+            Log($"Saved Temp Loadout {string.Join(",", _tempLoadout.Select(x => x.ToString()).ToArray())}");
         }
 
         internal static void RestoreTempLoadout()
