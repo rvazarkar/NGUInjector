@@ -84,7 +84,6 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 PPT = 1
             };
             double formula = 0;
-            double formulaB = 0;
             double num1 = 1D;
             if (index % 2 == 0)
             {

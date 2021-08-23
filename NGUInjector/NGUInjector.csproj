@@ -81,7 +81,6 @@
     <Compile Include="AllocationProfiles\CustomAllocation.cs" />
     <Compile Include="AllocationProfiles\AllocationProfile.cs" />
     <Compile Include="AllocationProfiles\BreakpointTypes\NGUBP.cs" />
-    <Compile Include="Managers\CookingManager.cs" />
     <Compile Include="Managers\CardManager.cs" />
     <Compile Include="AllocationProfiles\RebirthStuff\BaseRebirth.cs" />
     <Compile Include="AllocationProfiles\RebirthStuff\BossNumRebirth.cs" />
