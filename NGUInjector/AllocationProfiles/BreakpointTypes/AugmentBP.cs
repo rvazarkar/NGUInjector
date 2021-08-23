@@ -45,7 +45,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
 
         internal override bool Allocate()
         {
-            var alloc = CalculateAugCap();
+            var alloc = CalculateAugCap(this.Index, MaxAllocation);
             SetInput(alloc);
             if (Index % 2 == 0)
             {
@@ -63,106 +63,102 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             return Type == ResourceType.Energy;
         }
 
-        internal float CalculateAugCap()
+        internal float CalculateAugCap(int index, float allocation)
         {
-            var calcA = CalculateAugCapCalc(500);
+            var calcA = CalculateAugCapCalc(500, index, allocation);
             if (calcA.PPT < 1)
             {
-                var calcB = CalculateAugCapCalc(calcA.GetOffset());
+                var calcB = CalculateAugCapCalc(calcA.GetOffset(), index, allocation);
                 return calcB.Num;
             }
 
             return calcA.Num;
         }
 
-        internal CapCalc CalculateAugCapCalc(int offset)
+        internal CapCalc CalculateAugCapCalc(int offset, int index, float allocation)
         {
+            int augIndex;
             var ret = new CapCalc
             {
                 Num = 0,
                 PPT = 1
             };
             double formula = 0;
-            if (Index % 2 == 0)
+            double num1 = 1D;
+            if (index % 2 == 0)
             {
-                formula = 50000 * (1f + Character.augments.augs[AugIndex].augLevel + offset) /
-                    (Character.totalEnergyPower() *
-                    (1 + Character.inventoryController.bonuses[specType.Augs]) *
-                    Character.inventory.macguffinBonuses[12] *
-                    Character.hacksController.totalAugSpeedBonus() *
-                    Character.cardsController.getBonus(cardBonus.augSpeed) *
-                    Character.adventureController.itopod.totalAugSpeedBonus() *
-                    (1.0 + Character.allChallenges.noAugsChallenge.evilCompletions() * 0.0500000007450581));
-
-                if (Character.allChallenges.noAugsChallenge.completions() >= 1)
-                {
-                    formula /= 1.10000002384186;
-                }
-                if (Character.allChallenges.noAugsChallenge.evilCompletions() >= Character.allChallenges.noAugsChallenge.maxCompletions)
-                {
-                    formula /= 1.25;
-                }
-                if (Character.settings.rebirthDifficulty >= difficulty.sadistic)
-                {
-                    formula *= Character.augmentsController.augments[AugIndex].sadisticDivider();
-                }
+                augIndex = index / 2;
                 if (Character.settings.rebirthDifficulty == difficulty.normal)
                 {
-                    formula *= Character.augmentsController.normalAugSpeedDividers[AugIndex];
+                    num1 = (Character.totalEnergyPower() / 50000D / Character.augmentsController.normalAugSpeedDividers[augIndex] / (Character.augments.augs[augIndex].augLevel + offset));
                 }
                 else if (Character.settings.rebirthDifficulty == difficulty.evil)
                 {
-                    formula *= Character.augmentsController.evilAugSpeedDividers[AugIndex];
+                    num1 = (Character.totalEnergyPower() / 50000D / Character.augmentsController.evilAugSpeedDividers[augIndex] / (Character.augments.augs[augIndex].augLevel + offset));
                 }
                 else if (Character.settings.rebirthDifficulty == difficulty.sadistic)
                 {
-                    formula *= Character.augmentsController.sadisticAugSpeedDividers[AugIndex];
+                    num1 = (Character.totalEnergyPower() / Character.augmentsController.sadisticAugSpeedDividers[augIndex] / (Character.augments.augs[augIndex].augLevel + offset));
                 }
+                num1 *= (1D + Character.inventoryController.bonuses[specType.Augs]);
+                num1 *= Character.inventory.macguffinBonuses[12];
+                num1 *= Character.hacksController.totalAugSpeedBonus();
+                num1 *= Character.adventureController.itopod.totalAugSpeedBonus();
+                num1 *= Character.cardsController.getBonus(cardBonus.augSpeed);
+                num1 *= (1D + Character.allChallenges.noAugsChallenge.evilCompletions() * 0.05D);
+                if (Character.allChallenges.noAugsChallenge.completions() >= 1)
+                {
+                    num1 *= 1.1000000238418579;
+                }
+                if (Character.allChallenges.noAugsChallenge.evilCompletions() >= Character.allChallenges.noAugsChallenge.maxCompletions)
+                {
+                    num1 *= 1.25;
+                }
+                if (Character.settings.rebirthDifficulty >= difficulty.sadistic)
+                {
+                    num1 /= Character.augmentsController.augments[augIndex].sadisticDivider();
+                }
+                formula = 1/num1;
             }
             else
             {
-                formula = 50000 * (1f + Character.augments.augs[AugIndex].upgradeLevel + offset) /
-                    (Character.totalEnergyPower() *
-                    (1 + Character.inventoryController.bonuses[specType.Augs]) *
-                    Character.inventory.macguffinBonuses[12] *
-                    Character.hacksController.totalAugSpeedBonus() *
-                    Character.cardsController.getBonus(cardBonus.augSpeed) *
-                    Character.adventureController.itopod.totalAugSpeedBonus() *
-                    (1.0 + Character.allChallenges.noAugsChallenge.evilCompletions() * 0.0500000007450581));
-
-                if (Character.allChallenges.noAugsChallenge.completions() >= 1)
-                {
-                    formula /= 1.10000002384186;
-                }
-                if (Character.allChallenges.noAugsChallenge.evilCompletions() >= Character.allChallenges.noAugsChallenge.maxCompletions)
-                {
-                    formula /= 1.25;
-                }
-                if (Character.settings.rebirthDifficulty >= difficulty.sadistic)
-                {
-                    formula *= Character.augmentsController.augments[AugIndex].sadisticDivider();
-                }
+                augIndex = (index - 1) / 2;
                 if (Character.settings.rebirthDifficulty == difficulty.normal)
                 {
-                    formula *= Character.augmentsController.normalUpgradeSpeedDividers[AugIndex];
-
+                    num1 = (Character.totalEnergyPower() / 50000D / Character.augmentsController.normalUpgradeSpeedDividers[augIndex] / (Character.augments.augs[augIndex].upgradeLevel + offset));
                 }
                 else if (Character.settings.rebirthDifficulty == difficulty.evil)
                 {
-                    formula *= Character.augmentsController.evilUpgradeSpeedDividers[AugIndex];
-
+                    num1 = (Character.totalEnergyPower() / 50000f / Character.augmentsController.evilUpgradeSpeedDividers[augIndex] /(Character.augments.augs[augIndex].upgradeLevel + offset));
                 }
                 else if (Character.settings.rebirthDifficulty == difficulty.sadistic)
                 {
-                    formula *= Character.augmentsController.sadisticUpgradeSpeedDividers[AugIndex];
+                    num1 = (Character.totalEnergyPower() / Character.augmentsController.sadisticUpgradeSpeedDividers[augIndex] / (Character.augments.augs[augIndex].upgradeLevel + offset));
                 }
+                num1 *= (1D + Character.inventoryController.bonuses[specType.Augs]);
+                num1 *= Character.inventory.macguffinBonuses[12];
+                num1 *= Character.hacksController.totalAugSpeedBonus();
+                num1 *= Character.adventureController.itopod.totalAugSpeedBonus();
+                num1 *= Character.cardsController.getBonus(cardBonus.augSpeed);
+                num1 *= (1D + Character.allChallenges.noAugsChallenge.evilCompletions() * 0.05D);
+                if (Character.allChallenges.noAugsChallenge.completions() >= 1)
+                {
+                    num1 *= 1.1000000238418579;
+                }
+                if (Character.allChallenges.noAugsChallenge.evilCompletions() >= Character.allChallenges.noAugsChallenge.maxCompletions)
+                {
+                    num1 *= 1.25;
+                }
+                if (Character.settings.rebirthDifficulty >= difficulty.sadistic)
+                {
+                    num1 /= Character.augmentsController.augments[augIndex].sadisticDivider();
+                }
+                formula = 1/num1;
             }
-
             if (formula >= Character.hardCap())
                 formula = Character.hardCap();
-
             var num4 = formula <= 1.0 ? 1L : (long)formula;
-            var num = (long)(num4 / (long)Math.Ceiling(num4 / (double) MaxAllocation) * 1.00000202655792);
+            var num = (long)(num4 / (long)Math.Ceiling(num4 / (double)allocation) * 1.00000202655792);
             if (num + 1L <= long.MaxValue)
                 ++num;
             if (num > Character.idleEnergy)
@@ -172,6 +168,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
             var ppt = (double)num / num4;
             ret.Num = num;
             ret.PPT = ppt;
+            Main.LogAllocation($"Returning from Index : {index} : {ret.Num} vs {ret.PPT}");
             return ret;
         }
     }
