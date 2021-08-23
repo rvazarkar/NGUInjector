@@ -854,6 +854,10 @@ namespace NGUInjector.AllocationProfiles
 
             if (_character.challenges.timeMachineChallenge.inChallenge)
                 return null;
+            if (!_character.buttons.brokenTimeMachine.interactable)
+                return null;
+            if (_character.machine.realBaseGold == 0.0)
+                return null;
 
             foreach (var b in bps)
             {
