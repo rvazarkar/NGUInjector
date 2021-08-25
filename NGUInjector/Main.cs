@@ -43,7 +43,7 @@ namespace NGUInjector
         private float _timeLeft = 10.0f;
         internal static SettingsForm settingsForm;
         internal static WishManager WishManager;
-        internal const string Version = "3.6.12";
+        internal const string Version = "3.6.14";
         private static int _furthestZone;
 
 
@@ -920,6 +920,7 @@ namespace NGUInjector
 
             var questZone = _questManager.IsQuesting();
             if (!Settings.CombatEnabled || Settings.AdventureTargetITOPOD || !ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) ||
+                CombatManager.IsZoneUnlocked(Settings.SnipeZone) ||
                 ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) &&
                 !ZoneHelpers.TitanSpawningSoon(Array.IndexOf(ZoneHelpers.TitanZones, Settings.SnipeZone)))
             {

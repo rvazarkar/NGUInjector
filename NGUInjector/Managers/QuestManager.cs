@@ -73,12 +73,13 @@ namespace NGUInjector.Managers
             {
                 if (Settings.ManualMinors)
                 {
+                    EquipQuestingLoadout();
                     return questZone;
                 }
 
                 return -1;
             }
-
+            EquipQuestingLoadout();
             return _character.beastQuestController.curQuestZone();
         }
 

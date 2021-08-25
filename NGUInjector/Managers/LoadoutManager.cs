@@ -234,6 +234,11 @@ namespace NGUInjector.Managers
                 return true;
             }
 
+            if (CurrentLock == LockType.Quest) {
+                LoadoutManager.RestoreOriginalQuestGear();
+                LoadoutManager.ReleaseLock();
+            }
+
             if (CurrentLock == LockType.None)
             {
                 return true;
@@ -246,7 +251,7 @@ namespace NGUInjector.Managers
         {
             if (gearIds.Length == 0)
                 return;
-            Log($"Received New Gear: {string.Join(",", gearIds.Select(x => x.ToString()).ToArray())}");
+            Log($"Received New Gear for {getLockTypeName(CurrentLock)}: {string.Join(",", gearIds.Select(x => x.ToString()).ToArray())}");
             var weaponSlot = -5;
             var accSlot = 10000;
             var controller = Controller;
@@ -455,6 +460,29 @@ namespace NGUInjector.Managers
         {
             RestoreTempLoadout();
             AcquireLock(LockType.Quest);
+        }
+
+
+        public static string getLockTypeName(LockType currentLock)
+        {
+            switch (currentLock)
+            {
+                case LockType.Cooking:
+                    return "Cooking";
+                case LockType.Gold:
+                    return "Gold";
+                case LockType.MoneyPit:
+                    return "MoneyPit";
+                case LockType.None:
+                    return "None";
+                case LockType.Quest:
+                    return "Quest";
+                case LockType.Titan:
+                    return "Titan";
+                case LockType.Yggdrasil:
+                    return "Yggdrasil";
+            }
+            return "Unknown";
         }
 
         //private static float GetSeedGain(Equipment e)
