@@ -920,7 +920,7 @@ namespace NGUInjector
 
             var questZone = _questManager.IsQuesting();
             if (!Settings.CombatEnabled || Settings.AdventureTargetITOPOD || !ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) ||
-                CombatManager.IsZoneUnlocked(Settings.SnipeZone) ||
+                !CombatManager.IsZoneUnlocked(Settings.SnipeZone) ||
                 ZoneHelpers.ZoneIsTitan(Settings.SnipeZone) &&
                 !ZoneHelpers.TitanSpawningSoon(Array.IndexOf(ZoneHelpers.TitanZones, Settings.SnipeZone)))
             {

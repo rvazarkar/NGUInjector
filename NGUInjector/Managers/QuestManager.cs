@@ -76,6 +76,11 @@ namespace NGUInjector.Managers
                     EquipQuestingLoadout();
                     return questZone;
                 }
+                else if (LoadoutManager.HasQuestLock())
+                {
+                    LoadoutManager.RestoreOriginalQuestGear();
+                    LoadoutManager.ReleaseLock();
+                }
 
                 return -1;
             }
