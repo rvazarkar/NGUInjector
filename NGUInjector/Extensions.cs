@@ -241,6 +241,10 @@ namespace NGUInjector
                 Main.Character.energyMagicPanel.energyRequested.text = originalInput.ToString(CultureInfo.InvariantCulture);
                 Main.Character.energyMagicPanel.validateInput();
             }
+            catch (Exception e)
+            {
+                Main.Log($"Error while allocating: {e.ToString()}");
+            }
             finally
             {
                 allocation.IsAllocationRunning = false;
