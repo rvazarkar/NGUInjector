@@ -49,6 +49,15 @@ To access these settings, open the **settings.json** (in your Desktop folder, me
 - **_manageConsumables** - Set this to true to have injector manage consumables via breakpoints in your allocation file (see Section on Consumables below for details)
 - **_autoBuyConsumables** - Set this to true to have the injector auto purchase any consumables you try to use that you do not own. Will only buy consumables if you have the AP to purchase them.
 
+# Log Parsing
+
+Discord user WookieeNo1 has made a PowerShell script to prettify the log files. If you are interested in this, check out the github here: https://github.com/WookieeNo1/NGUIdleInjector-Pretty-Print
+
+This is what it looks like once you set it up:
+![loot.log](https://i.imgur.com/68fVGk7.png)
+![pitspin.log](https://i.imgur.com/nTMJ5jP.png)
+![inject.log](https://i.imgur.com/7tlf4qH.png)
+
 # Settings Configuration
 
 An in game menu can be opened using the F1 button.
