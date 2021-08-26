@@ -90,15 +90,15 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
                 augIndex = index / 2;
                 if (Character.settings.rebirthDifficulty == difficulty.normal)
                 {
-                    num1 = (Character.totalEnergyPower() / 50000D / Character.augmentsController.normalAugSpeedDividers[augIndex] / (Character.augments.augs[augIndex].augLevel + offset));
+                    num1 = (Character.totalEnergyPower() / 50000D / Character.augmentsController.normalAugSpeedDividers[augIndex] / (Character.augments.augs[augIndex].augLevel + 1D + offset));
                 }
                 else if (Character.settings.rebirthDifficulty == difficulty.evil)
                 {
-                    num1 = (Character.totalEnergyPower() / 50000D / Character.augmentsController.evilAugSpeedDividers[augIndex] / (Character.augments.augs[augIndex].augLevel + offset));
+                    num1 = (Character.totalEnergyPower() / 50000D / Character.augmentsController.evilAugSpeedDividers[augIndex] / (Character.augments.augs[augIndex].augLevel + 1D + offset));
                 }
                 else if (Character.settings.rebirthDifficulty == difficulty.sadistic)
                 {
-                    num1 = (Character.totalEnergyPower() / Character.augmentsController.sadisticAugSpeedDividers[augIndex] / (Character.augments.augs[augIndex].augLevel + offset));
+                    num1 = (Character.totalEnergyPower() / Character.augmentsController.sadisticAugSpeedDividers[augIndex] / (Character.augments.augs[augIndex].augLevel + 1D + offset));
                 }
                 num1 *= (1D + Character.inventoryController.bonuses[specType.Augs]);
                 num1 *= Character.inventory.macguffinBonuses[12];
