@@ -12,6 +12,7 @@ namespace NGUInjector.Managers
         Yggdrasil,
         MoneyPit,
         Gold,
+        Quest,
         None
     }
     internal static class LoadoutManager
@@ -98,6 +99,21 @@ namespace NGUInjector.Managers
             AcquireLock(LockType.Yggdrasil);
             SaveCurrentLoadout();
             ChangeGear(Settings.YggdrasilLoadout);
+            return true;
+        }
+
+        internal static bool TryQuestSwap()
+        {
+            if (!CanAcquireOrHasLock(LockType.Quest))
+                return false;
+
+            if (CurrentLock == LockType.Quest)
+                return true;
+
+            Log("Equipping Quest Loadout");
+            AcquireLock(LockType.Quest);
+            SaveCurrentLoadout();
+            ChangeGear(Settings.QuestLoadout);
             return true;
         }
 

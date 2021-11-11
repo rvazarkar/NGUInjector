@@ -93,6 +93,8 @@ namespace NGUInjector
         [SerializeField] private int[] _specialBoostBlacklist;
         [SerializeField] private int[] _blacklistedBosses;
         [SerializeField] private bool _hackAdvance;
+        [SerializeField] private int[] _questLoadout;
+        [SerializeField] private bool _swapQuestLoadout;
 
         private readonly string _savePath;
         private bool _disableSave;
@@ -195,6 +197,8 @@ namespace NGUInjector
             _minorAbandonThreshold = other.MinorAbandonThreshold;
             _questCombatMode = other.QuestCombatMode;
             _questFastCombat = other.QuestFastCombat;
+            _questLoadout = other.QuestLoadout;
+            _swapQuestLoadout = other.SwapQuestLoadout;
             _autoSpellSwap = other.AutoSpellSwap;
             _counterfeitThreshold = other.CounterfeitThreshold;
             _spaghettiThreshold = other.SpaghettiThreshold;
@@ -285,6 +289,16 @@ namespace NGUInjector
             }
         }
 
+        public bool SwapQuestLoadout
+        {
+            get => _swapQuestLoadout;
+            set
+            {
+                if (value == _swapQuestLoadout) return;
+                _swapQuestLoadout = value; SaveSettings();
+            }
+        }
+
         public int[] PriorityBoosts
         {
             get => _priorityBoosts;
@@ -348,6 +362,16 @@ namespace NGUInjector
             set
             {
                 _yggdrasilLoadout = value;
+                SaveSettings();
+            }
+        }
+
+        public int[] QuestLoadout
+        {
+            get => _questLoadout;
+            set
+            {
+                _questLoadout = value;
                 SaveSettings();
             }
         }

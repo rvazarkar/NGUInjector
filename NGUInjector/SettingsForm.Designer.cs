@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.moneyPitError = new System.Windows.Forms.ErrorProvider(this.components);
             this.yggErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.questErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.invPrioErrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.invBlacklistErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.titanErrProvider = new System.Windows.Forms.ErrorProvider(this.components);
@@ -174,6 +175,12 @@
             this.GoldLoadoutAdd = new System.Windows.Forms.Button();
             this.GoldLoadout = new System.Windows.Forms.ListBox();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.QuestSwap = new System.Windows.Forms.CheckBox();
+            this.questRemoveButton = new System.Windows.Forms.Button();
+            this.questLoadoutItem = new System.Windows.Forms.NumericUpDown();
+            this.questItemLabel = new System.Windows.Forms.Label();
+            this.questAddButton = new System.Windows.Forms.Button();
+            this.questLoadoutBox = new System.Windows.Forms.ListBox();
             this.ButterMinors = new System.Windows.Forms.CheckBox();
             this.ButterMajors = new System.Windows.Forms.CheckBox();
             this.ManualMinor = new System.Windows.Forms.CheckBox();
@@ -210,8 +217,10 @@
             this.AutoDailySpin = new System.Windows.Forms.CheckBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.questErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.invBlacklistErrProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.titanErrProvider)).BeginInit();
@@ -239,6 +248,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ResnipeInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GoldItemBox)).BeginInit();
             this.tabPage8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.questLoadoutItem)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AbandonMinorThreshold)).BeginInit();
             this.tabPage9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WishAddInput)).BeginInit();
@@ -254,6 +264,10 @@
             // yggErrorProvider
             // 
             this.yggErrorProvider.ContainerControl = this;
+            // 
+            // questErrorProvider
+            // 
+            this.questErrorProvider.ContainerControl = this;
             // 
             // invPrioErrorProvider
             // 
@@ -714,10 +728,10 @@
             // yggdrasilLoadoutBox
             // 
             this.yggdrasilLoadoutBox.FormattingEnabled = true;
+            resources.ApplyResources(this.yggdrasilLoadoutBox, "yggdrasilLoadoutBox");
             this.yggdrasilLoadoutBox.Items.AddRange(new object[] {
             resources.GetString("yggdrasilLoadoutBox.Items"),
             resources.GetString("yggdrasilLoadoutBox.Items1")});
-            resources.ApplyResources(this.yggdrasilLoadoutBox, "yggdrasilLoadoutBox");
             this.yggdrasilLoadoutBox.Name = "yggdrasilLoadoutBox";
             // 
             // YggdrasilSwap
@@ -835,10 +849,10 @@
             // blacklistBox
             // 
             this.blacklistBox.FormattingEnabled = true;
+            resources.ApplyResources(this.blacklistBox, "blacklistBox");
             this.blacklistBox.Items.AddRange(new object[] {
             resources.GetString("blacklistBox.Items"),
             resources.GetString("blacklistBox.Items1")});
-            resources.ApplyResources(this.blacklistBox, "blacklistBox");
             this.blacklistBox.Name = "blacklistBox";
             // 
             // label2
@@ -884,10 +898,10 @@
             // priorityBoostBox
             // 
             this.priorityBoostBox.FormattingEnabled = true;
+            resources.ApplyResources(this.priorityBoostBox, "priorityBoostBox");
             this.priorityBoostBox.Items.AddRange(new object[] {
             resources.GetString("priorityBoostBox.Items"),
             resources.GetString("priorityBoostBox.Items1")});
-            resources.ApplyResources(this.priorityBoostBox, "priorityBoostBox");
             this.priorityBoostBox.Name = "priorityBoostBox";
             // 
             // ManageInventory
@@ -983,10 +997,10 @@
             // titanLoadout
             // 
             this.titanLoadout.FormattingEnabled = true;
+            resources.ApplyResources(this.titanLoadout, "titanLoadout");
             this.titanLoadout.Items.AddRange(new object[] {
             resources.GetString("titanLoadout.Items"),
             resources.GetString("titanLoadout.Items1")});
-            resources.ApplyResources(this.titanLoadout, "titanLoadout");
             this.titanLoadout.Name = "titanLoadout";
             // 
             // SwapTitanLoadout
@@ -1376,14 +1390,21 @@
             // GoldLoadout
             // 
             this.GoldLoadout.FormattingEnabled = true;
+            resources.ApplyResources(this.GoldLoadout, "GoldLoadout");
             this.GoldLoadout.Items.AddRange(new object[] {
             resources.GetString("GoldLoadout.Items"),
             resources.GetString("GoldLoadout.Items1")});
-            resources.ApplyResources(this.GoldLoadout, "GoldLoadout");
             this.GoldLoadout.Name = "GoldLoadout";
             // 
             // tabPage8
             // 
+            this.tabPage8.Controls.Add(this.label1);
+            this.tabPage8.Controls.Add(this.QuestSwap);
+            this.tabPage8.Controls.Add(this.questRemoveButton);
+            this.tabPage8.Controls.Add(this.questLoadoutItem);
+            this.tabPage8.Controls.Add(this.questItemLabel);
+            this.tabPage8.Controls.Add(this.questAddButton);
+            this.tabPage8.Controls.Add(this.questLoadoutBox);
             this.tabPage8.Controls.Add(this.ButterMinors);
             this.tabPage8.Controls.Add(this.ButterMajors);
             this.tabPage8.Controls.Add(this.ManualMinor);
@@ -1398,6 +1419,63 @@
             resources.ApplyResources(this.tabPage8, "tabPage8");
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // QuestSwap
+            // 
+            resources.ApplyResources(this.QuestSwap, "QuestSwap");
+            this.QuestSwap.Name = "QuestSwap";
+            this.QuestSwap.UseVisualStyleBackColor = true;
+            this.QuestSwap.CheckedChanged += new System.EventHandler(this.QuestSwap_CheckedChanged);
+            // 
+            // questRemoveButton
+            // 
+            resources.ApplyResources(this.questRemoveButton, "questRemoveButton");
+            this.questRemoveButton.Name = "questRemoveButton";
+            this.questRemoveButton.UseVisualStyleBackColor = true;
+            this.questRemoveButton.Click += new System.EventHandler(this.questRemoveButton_Click);
+            // 
+            // questLoadoutItem
+            // 
+            this.questLoadoutItem.CausesValidation = false;
+            resources.ApplyResources(this.questLoadoutItem, "questLoadoutItem");
+            this.questLoadoutItem.Maximum = new decimal(new int[] {
+            9999999,
+            0,
+            0,
+            0});
+            this.questLoadoutItem.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.questLoadoutItem.Name = "questLoadoutItem";
+            this.questLoadoutItem.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            this.questLoadoutItem.KeyDown += new System.Windows.Forms.KeyEventHandler(this.questLoadoutItem_KeyDown);
+            // 
+            // questItemLabel
+            // 
+            resources.ApplyResources(this.questItemLabel, "questItemLabel");
+            this.questItemLabel.Name = "questItemLabel";
+            // 
+            // questAddButton
+            // 
+            resources.ApplyResources(this.questAddButton, "questAddButton");
+            this.questAddButton.Name = "questAddButton";
+            this.questAddButton.UseVisualStyleBackColor = true;
+            this.questAddButton.Click += new System.EventHandler(this.questAddButton_Click);
+            // 
+            // questLoadoutBox
+            // 
+            this.questLoadoutBox.FormattingEnabled = true;
+            resources.ApplyResources(this.questLoadoutBox, "questLoadoutBox");
+            this.questLoadoutBox.Items.AddRange(new object[] {
+            resources.GetString("questLoadoutBox.Items"),
+            resources.GetString("questLoadoutBox.Items1")});
+            this.questLoadoutBox.Name = "questLoadoutBox";
             // 
             // ButterMinors
             // 
@@ -1566,10 +1644,10 @@
             // WishPriority
             // 
             this.WishPriority.FormattingEnabled = true;
+            resources.ApplyResources(this.WishPriority, "WishPriority");
             this.WishPriority.Items.AddRange(new object[] {
             resources.GetString("WishPriority.Items"),
             resources.GetString("WishPriority.Items1")});
-            resources.ApplyResources(this.WishPriority, "WishPriority");
             this.WishPriority.Name = "WishPriority";
             // 
             // tabPage10
@@ -1631,10 +1709,10 @@
             // MoneyPitLoadout
             // 
             this.MoneyPitLoadout.FormattingEnabled = true;
+            resources.ApplyResources(this.MoneyPitLoadout, "MoneyPitLoadout");
             this.MoneyPitLoadout.Items.AddRange(new object[] {
             resources.GetString("MoneyPitLoadout.Items"),
             resources.GetString("MoneyPitLoadout.Items1")});
-            resources.ApplyResources(this.MoneyPitLoadout, "MoneyPitLoadout");
             this.MoneyPitLoadout.Name = "MoneyPitLoadout";
             // 
             // MoneyPitThresholdSave
@@ -1681,6 +1759,11 @@
             resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
             // SettingsForm
             // 
             resources.ApplyResources(this, "$this");
@@ -1693,6 +1776,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.moneyPitError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.yggErrorProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.questErrorProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.invPrioErrorProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.invBlacklistErrProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.titanErrProvider)).EndInit();
@@ -1728,6 +1812,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.GoldItemBox)).EndInit();
             this.tabPage8.ResumeLayout(false);
             this.tabPage8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.questLoadoutItem)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AbandonMinorThreshold)).EndInit();
             this.tabPage9.ResumeLayout(false);
             this.tabPage9.PerformLayout();
@@ -1743,6 +1828,7 @@
         #endregion
         private System.Windows.Forms.ErrorProvider moneyPitError;
         private System.Windows.Forms.ErrorProvider yggErrorProvider;
+        private System.Windows.Forms.ErrorProvider questErrorProvider;
         private System.Windows.Forms.ErrorProvider invPrioErrorProvider;
         private System.Windows.Forms.ErrorProvider invBlacklistErrProvider;
         private System.Windows.Forms.ErrorProvider titanErrProvider;
@@ -1921,5 +2007,12 @@
         private System.Windows.Forms.CheckBox WishSortOrder;
         private System.Windows.Forms.CheckBox WishSortPriorities;
         private System.Windows.Forms.Button ProfileEditButton;
+        private System.Windows.Forms.Button questRemoveButton;
+        private System.Windows.Forms.NumericUpDown questLoadoutItem;
+        private System.Windows.Forms.Label questItemLabel;
+        private System.Windows.Forms.Button questAddButton;
+        private System.Windows.Forms.ListBox questLoadoutBox;
+        private System.Windows.Forms.CheckBox QuestSwap;
+        private System.Windows.Forms.Label label1;
     }
 }
