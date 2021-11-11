@@ -81,14 +81,17 @@ namespace NGUInjector.Managers
                 {
                     _character.settings.useMajorQuests = true;
                     SetIdleMode(false);
-                    _character.beastQuestController.startQuest();
                 }
                 else
                 {
                     _character.settings.useMajorQuests = false;
                     SetIdleMode(!Settings.ManualMinors);
-                    _character.beastQuestController.startQuest();
                 }
+
+
+                Log("Starting Quest");
+
+                _character.beastQuestController.startQuest();
 
                 return;
             }
@@ -98,13 +101,15 @@ namespace NGUInjector.Managers
             {
                 if (Settings.AllowMajorQuests && Settings.AbandonMinors && _character.beastQuest.curBankedQuests > 0)
                 {
-                    var progress = (_character.beastQuest.curDrops / (float) _character.beastQuest.targetDrops) * 100;
-                    if ( progress <= Settings.MinorAbandonThreshold)
+                    var progress = (_character.beastQuest.curDrops / (float)_character.beastQuest.targetDrops) * 100;
+                    if (progress <= Settings.MinorAbandonThreshold)
                     {
                         //If all this is true get rid of this minor quest and pick up a new one.
                         _character.settings.useMajorQuests = true;
                         _character.beastQuestController.skipQuest();
                         SetIdleMode(false);
+
+
                         _character.beastQuestController.startQuest();
                         //Combat logic will pick up from here
                         return;
@@ -116,9 +121,25 @@ namespace NGUInjector.Managers
                 }
 
                 SetIdleMode(!Settings.ManualMinors);
+
+                if (Settings.ManualMinors && Settings.SwapQuestLoadout && Settings.QuestLoadout.Length > 0)
+                {
+                    // Swap gear for minor quests if manual minors and swap gear for quests are both true
+                    LoadoutManager.TryQuestSwap();
+                }
+                else if (LoadoutManager.CurrentLock == LockType.Quest)
+                {
+                    LoadoutManager.RestoreGear();
+                    LoadoutManager.ReleaseLock();
+                }
             }
             else
             {
+
+                if (Settings.SwapQuestLoadout && Settings.QuestLoadout.Length > 0)
+                {
+                    LoadoutManager.TryQuestSwap();
+                }
                 SetIdleMode(false);
             }
         }

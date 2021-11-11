@@ -31,7 +31,7 @@ namespace NGUInjector
             {
                 {0, "None"}, {1, "Balanced"}, {2, "Power"}, {3, "Toughness"}
             };
-            CombatModeList = new Dictionary<int, string> {{0, "Manual"}, {1, "Idle"}};
+            CombatModeList = new Dictionary<int, string> { { 0, "Manual" }, { 1, "Idle" } };
             TitanList = new Dictionary<int, string>
             {
                 {0, "None"},
@@ -48,7 +48,7 @@ namespace NGUInjector
                 {11, "Rock Lobster"},
                 {12, "Amalgamate"}
             };
-            
+
             ZoneList = new Dictionary<int, string>
             {
                 {-1, "Safe Zone: Awakening Site"},
@@ -133,19 +133,20 @@ namespace NGUInjector
             CombatTargetZone.DataSource = new BindingSource(ZoneList, null);
             CombatTargetZone.ValueMember = "Key";
             CombatTargetZone.DisplayMember = "Value";
-            
+
             //Remove ITOPOD for non combat zones
             ZoneList.Remove(1000);
             ZoneList.Remove(-1);
 
             EnemyBlacklistZone.ValueMember = "Key";
             EnemyBlacklistZone.DisplayMember = "Value";
-            EnemyBlacklistZone.DataSource = new BindingSource(ZoneList.Where(x => !ZoneHelpers.TitanZones.Contains(x.Key) ).ToDictionary(x => x.Key, x=> x.Value), null);
+            EnemyBlacklistZone.DataSource = new BindingSource(ZoneList.Where(x => !ZoneHelpers.TitanZones.Contains(x.Key)).ToDictionary(x => x.Key, x => x.Value), null);
             EnemyBlacklistZone.SelectedIndex = 0;
 
 
             blacklistLabel.Text = "";
             yggItemLabel.Text = "";
+            questItemLabel.Text = "";
             priorityBoostLabel.Text = "";
             titanLabel.Text = "";
             GoldItemLabel.Text = "";
@@ -216,7 +217,7 @@ namespace NGUInjector
         {
             control.SelectedIndex = setting >= 1000 ? 43 : setting + 1;
         }
-        
+
         internal void UpdateFromSettings(SavedSettings newSettings)
         {
             _initializing = true;
@@ -224,7 +225,7 @@ namespace NGUInjector
             AutoFightBosses.Checked = newSettings.AutoFight;
             AutoITOPOD.Checked = newSettings.AutoQuestITOPOD;
             AutoMoneyPit.Checked = newSettings.AutoMoneyPit;
-            MoneyPitThreshold.Text = $"{newSettings.MoneyPitThreshold:#.##E+00}"; 
+            MoneyPitThreshold.Text = $"{newSettings.MoneyPitThreshold:#.##E+00}";
             ManageEnergy.Checked = newSettings.ManageEnergy;
             ManageMagic.Checked = newSettings.ManageMagic;
             ManageGear.Checked = newSettings.ManageGear;
@@ -233,6 +234,7 @@ namespace NGUInjector
             AutoRebirth.Checked = newSettings.AutoRebirth;
             ManageYggdrasil.Checked = newSettings.ManageYggdrasil;
             YggdrasilSwap.Checked = newSettings.SwapYggdrasilLoadouts;
+            QuestSwap.Checked = newSettings.SwapQuestLoadout;
             ManageInventory.Checked = newSettings.ManageInventory;
             ManageBoostConvert.Checked = newSettings.AutoConvertBoosts;
             SwapTitanLoadout.Checked = newSettings.SwapTitanLoadouts;
@@ -305,7 +307,20 @@ namespace NGUInjector
             {
                 yggdrasilLoadoutBox.Items.Clear();
             }
-            
+
+            temp = newSettings.QuestLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
+            if (temp.Count > 0)
+            {
+                questLoadoutBox.DataSource = null;
+                questLoadoutBox.DataSource = new BindingSource(temp, null);
+                questLoadoutBox.ValueMember = "Key";
+                questLoadoutBox.DisplayMember = "Value";
+            }
+            else
+            {
+                questLoadoutBox.Items.Clear();
+            }
+
 
             temp = newSettings.PriorityBoosts.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
             if (temp.Count > 0)
@@ -319,7 +334,7 @@ namespace NGUInjector
             {
                 priorityBoostBox.Items.Clear();
             }
-            
+
             temp = newSettings.BoostBlacklist.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
             if (temp.Count > 0)
             {
@@ -547,7 +562,7 @@ namespace NGUInjector
         private void yggRemoveButton_Click(object sender, EventArgs e)
         {
             yggErrorProvider.SetError(yggLoadoutItem, "");
-            var item= yggdrasilLoadoutBox.SelectedItem;
+            var item = yggdrasilLoadoutBox.SelectedItem;
             if (item == null)
                 return;
 
@@ -750,7 +765,7 @@ namespace NGUInjector
         {
             if (_initializing) return;
             var selected = CombatTargetZone.SelectedItem;
-            var item = (KeyValuePair<int, string>) selected;
+            var item = (KeyValuePair<int, string>)selected;
             Main.Settings.SnipeZone = item.Key;
         }
 
@@ -926,7 +941,7 @@ namespace NGUInjector
                 temp.Add(val);
                 Main.Settings.YggdrasilLoadout = temp.ToArray();
             }
-            
+
         }
 
         private void titanAddItem_KeyDown(object sender, KeyEventArgs e)
@@ -1060,7 +1075,7 @@ namespace NGUInjector
             var temp = Main.Settings.WishPriorities.ToList();
             var item = temp[index];
             temp.RemoveAt(index);
-            temp.Insert(index -1, item);
+            temp.Insert(index - 1, item);
             Main.Settings.WishPriorities = temp.ToArray();
             WishPriority.SelectedIndex = index - 1;
         }
@@ -1356,7 +1371,7 @@ namespace NGUInjector
         private void EnemyBlacklistZone_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selected = EnemyBlacklistZone.SelectedItem;
-            var item = (KeyValuePair<int, string>) selected;
+            var item = (KeyValuePair<int, string>)selected;
             var values = Main.Character.adventureController.enemyList[item.Key]
                 .Select(x => new KeyValuePair<int, string>(x.spriteID, x.name)).ToList();
             EnemyBlacklistNames.DataSource = null;
@@ -1411,6 +1426,67 @@ namespace NGUInjector
             var filename = Main.Settings.AllocationFile + ".json";
             var path = Path.Combine(Main.GetProfilesDir(), filename);
             Process.Start(path);
+        }
+
+        private void questRemoveButton_Click(object sender, EventArgs e)
+        {
+
+            questErrorProvider.SetError(questLoadoutItem, "");
+            var item = questLoadoutBox.SelectedItem;
+            if (item == null)
+                return;
+
+            var id = (KeyValuePair<int, string>)item;
+
+            var temp = Main.Settings.QuestLoadout.ToList();
+            temp.RemoveAll(x => x == id.Key);
+            Main.Settings.QuestLoadout = temp.ToArray();
+        }
+
+        private void questAddButton_Click(object sender, EventArgs e)
+        {
+
+            questErrorProvider.SetError(questLoadoutItem, "");
+            var val = decimal.ToInt32(questLoadoutItem.Value);
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
+            {
+                questErrorProvider.SetError(questLoadoutItem, "Not a valid item id");
+                return;
+            }
+
+            if (Main.Settings.QuestLoadout.Contains(val))
+                return;
+            var temp = Main.Settings.QuestLoadout.ToList();
+            temp.Add(val);
+            Main.Settings.QuestLoadout = temp.ToArray();
+        }
+
+        private void QuestSwap_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_initializing) return;
+            Main.Settings.SwapQuestLoadout = QuestSwap.Checked;
+        }
+
+        private void questLoadoutItem_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                questErrorProvider.SetError(questLoadoutItem, "");
+                var val = decimal.ToInt32(questLoadoutItem.Value);
+                if (val < 40 || val > Consts.MAX_GEAR_ID)
+                {
+                    questErrorProvider.SetError(questLoadoutItem, "Not a valid item id");
+                    return;
+                }
+
+                ActiveControl = questItemLabel;
+
+                if (Main.Settings.QuestLoadout.Contains(val))
+                    return;
+                var temp = Main.Settings.QuestLoadout.ToList();
+                temp.Add(val);
+
+            }
         }
     }
 }

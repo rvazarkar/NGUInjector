@@ -187,6 +187,8 @@ namespace NGUInjector
                         PriorityBoosts = new int[] { },
                         YggdrasilLoadout = new int[] { },
                         SwapYggdrasilLoadouts = false,
+                        QuestLoadout = new int[] { },
+                        SwapQuestLoadout = false,
                         SwapTitanLoadouts = false,
                         TitanLoadout = new int[] { },
                         ManageDiggers = true,
