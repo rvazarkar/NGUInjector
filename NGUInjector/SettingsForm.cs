@@ -158,6 +158,7 @@ namespace NGUInjector
             GoldItemBox.TextChanged += GoldItemBox_TextChanged;
             WishAddInput.TextChanged += WishAddInput_TextChanged;
             MoneyPitInput.TextChanged += MoneyPitLoadout_TextChanged;
+            questLoadoutItem.TextChanged += questLoadoutItem_TextChanged;
 
             prioUpButton.Text = char.ConvertFromUtf32(8593);
             prioDownButton.Text = char.ConvertFromUtf32(8595);
@@ -1441,6 +1442,16 @@ namespace NGUInjector
             var temp = Main.Settings.QuestLoadout.ToList();
             temp.RemoveAll(x => x == id.Key);
             Main.Settings.QuestLoadout = temp.ToArray();
+        }
+
+        private void questLoadoutItem_TextChanged(object sender, EventArgs e)
+        {
+            questErrorProvider.SetError(questLoadoutItem, "");
+            var val = decimal.ToInt32(questLoadoutItem.Value);
+            if (val < 40 || val > Consts.MAX_GEAR_ID)
+                return;
+            var itemName = Main.Character.itemInfo.itemName[val];
+            questItemLabel.Text = itemName;
         }
 
         private void questAddButton_Click(object sender, EventArgs e)

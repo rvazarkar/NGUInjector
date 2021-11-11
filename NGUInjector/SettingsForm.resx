@@ -4263,6 +4263,42 @@
   <data name="&gt;&gt;tabPage7.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 200</value>
+  </data>
+  <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 25</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Loadout</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>tabPage8</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="QuestSwap.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -4294,42 +4330,6 @@
     <value>tabPage8</value>
   </data>
   <data name="&gt;&gt;QuestSwap.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 9.75pt</value>
-  </data>
-  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 260</value>
-  </data>
-  <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 0, 4, 0</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>83, 25</value>
-  </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Loadout</value>
-  </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>tabPage8</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="questRemoveButton.AutoSize" type="System.Boolean, mscorlib">
@@ -4339,7 +4339,7 @@
     <value>NoControl</value>
   </data>
   <data name="questRemoveButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>353, 301</value>
+    <value>353, 243</value>
   </data>
   <data name="questRemoveButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
@@ -4462,13 +4462,13 @@
     <value>test2</value>
   </data>
   <data name="questLoadoutBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 303</value>
+    <value>13, 243</value>
   </data>
   <data name="questLoadoutBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
   </data>
   <data name="questLoadoutBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>307, 104</value>
+    <value>307, 164</value>
   </data>
   <data name="questLoadoutBox.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -4591,7 +4591,7 @@
     <value>NoControl</value>
   </data>
   <data name="QuestFastCombat.Location" type="System.Drawing.Point, System.Drawing">
-    <value>492, 206</value>
+    <value>492, 155</value>
   </data>
   <data name="QuestFastCombat.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
@@ -4651,7 +4651,7 @@
     <value>11</value>
   </data>
   <data name="AbandonMinorThreshold.Location" type="System.Drawing.Point, System.Drawing">
-    <value>302, 152</value>
+    <value>302, 117</value>
   </data>
   <data name="AbandonMinorThreshold.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
@@ -4681,7 +4681,7 @@
     <value>NoControl</value>
   </data>
   <data name="label13.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 155</value>
+    <value>9, 120</value>
   </data>
   <data name="label13.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -4714,7 +4714,7 @@
     <value>NoControl</value>
   </data>
   <data name="label12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 206</value>
+    <value>9, 155</value>
   </data>
   <data name="label12.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -4747,7 +4747,7 @@
     <value>Manual</value>
   </data>
   <data name="QuestCombatMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>302, 203</value>
+    <value>302, 152</value>
   </data>
   <data name="QuestCombatMode.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 5, 4, 5</value>
