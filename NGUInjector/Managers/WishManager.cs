@@ -93,6 +93,10 @@ namespace NGUInjector.Managers
             {
                 return false;
             }
+            if(Settings.WishBlacklist.Length > 0 && Settings.WishBlacklist.Contains(wishId))
+            {
+                return false;
+            }
             return true;          
         }
 

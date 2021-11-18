@@ -68,6 +68,7 @@ namespace NGUInjector
         [SerializeField] private bool _manageR3;
         [SerializeField] private bool _activateFruits;
         [SerializeField] private int[] _wishPriorities;
+        [SerializeField] private int[] _wishBlacklist;
         [SerializeField] private bool _wishSortPriorities;
         [SerializeField] private bool _wishSortOrder;
         [SerializeField] private bool _beastMode;
@@ -99,6 +100,8 @@ namespace NGUInjector
         [SerializeField] private bool _autoCastCards;
         [SerializeField] private int _autoCastCardType;
         [SerializeField] private bool _trashAdventureCards;
+        [SerializeField] private string[] _cardSortOrder;
+        [SerializeField] private bool _cardSortEnabled;
         [SerializeField] private int _trashCardCost;
         [SerializeField] private string[] _dontCastCardType;
         [SerializeField] private bool _trashChunkers;
@@ -232,6 +235,7 @@ namespace NGUInjector
             _manageR3 = other.ManageR3;
             _activateFruits = other.ActivateFruits;
             _wishPriorities = other.WishPriorities;
+            _wishBlacklist = other.WishBlacklist;
             _wishSortPriorities = other.WishSortPriorities;
             _wishSortOrder = other.WishSortOrder;
             _beastMode = other.BeastMode;
@@ -280,6 +284,8 @@ namespace NGUInjector
             _trashAdventureCards = other._trashAdventureCards;
             _trashCardCost = other._trashCardCost;
             _dontCastCardType = other._dontCastCardType;
+            _cardSortOrder = other._cardSortOrder;
+            _cardSortEnabled = other._cardSortEnabled;
             _trashChunkers = other._trashChunkers;
             _hackAdvance = other.HackAdvance;
             _manageCooking = other._manageCooking;
@@ -875,6 +881,16 @@ namespace NGUInjector
                 SaveSettings();
             }
         }
+        public int[] WishBlacklist
+        {
+            get => _wishBlacklist;
+            set
+            {
+                if (value == _wishBlacklist) return;
+                _wishBlacklist = value;
+                SaveSettings();
+            }
+        }
 
         public bool WishSortPriorities
         {
@@ -1225,6 +1241,26 @@ namespace NGUInjector
             {
                 if (value == _dontCastCardType) return;
                 _dontCastCardType = value;
+                SaveSettings();
+            }
+        }
+        public string[] CardSortOrder
+        {
+            get => _cardSortOrder;
+            set
+            {
+                if (value == _cardSortOrder) return;
+                _cardSortOrder = value;
+                SaveSettings();
+            }
+        }
+        public bool CardSortEnabled
+        {
+            get => _cardSortEnabled;
+            set
+            {
+                if (value == _cardSortEnabled) return;
+                _cardSortEnabled = value;
                 SaveSettings();
             }
         }

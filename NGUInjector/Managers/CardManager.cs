@@ -181,5 +181,68 @@ namespace NGUInjector.Managers
                 }
             }
         }
+    
+        public void SortCards()
+        {
+            try
+            {
+                Main.Log($"Sorting Cards by priorities: {Main.Settings.CardSortOrder.ToString()}");
+                _character.cards.cards.Sort(CompareCards);
+                for(var i = 0; i < _character.cards.cards.Count; i++)
+                {
+                    _cardsController.updateDeckCard(i);
+                }
+            }
+            catch (Exception e)
+            {
+                Main.Log(e.Message);
+                Main.Log(e.StackTrace);
+            }
+        }
+
+        private int CompareByPriority(string priority, Card c1, Card c2)
+        {
+            if (priority.ToUpper() == "RARITY")
+            {
+                return c2.cardRarity.CompareTo(c1.cardRarity);
+            }
+
+            if (priority.ToUpper() == "TIER")
+            {
+                return c2.tier.CompareTo(c1.tier);
+            }
+
+            if (priority.ToUpper() == "COST")
+            {
+                return c2.manaCosts.Sum().CompareTo(c1.manaCosts.Sum());
+            }
+
+            if (priority.StartsWith("TYPE:")) {
+                var bonusType = priority.Substring(5);
+
+                if (c1.bonusType.ToString() == bonusType && c2.bonusType.ToString() == bonusType)
+                    return 0;
+                else if (c2.bonusType.ToString() == bonusType)
+                    return 1;
+                else if (c1.bonusType.ToString() == bonusType)
+                    return -1;
+                else
+                    return 0;
+            }
+
+            return 0;
+        }
+
+        private int CompareCards(Card c1, Card c2)
+        {
+            foreach(var priority in Main.Settings.CardSortOrder)
+            {
+                var index = CompareByPriority(priority, c1, c2);
+
+                if(index != 0) return index;
+            }
+
+            return 0;
+        }
     }
 }

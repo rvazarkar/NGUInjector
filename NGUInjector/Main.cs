@@ -257,6 +257,7 @@ namespace NGUInjector
                         ActivateFruits = false,
                         ManageR3 = true,
                         WishPriorities = new int[] { },
+                        WishBlacklist = new int[] { },
                         BeastMode = true,
                         ManageNGUDiff = true,
                         AllocationFile = "default",
@@ -287,6 +288,8 @@ namespace NGUInjector
                         TrashAdventureCards = false,
                         AutoCastCards = false,
                         CardsTrashQuality = 0,
+                        CardSortOrder = new string[0],
+                        CardSortEnabled = false,
                         TrashCardCost = 0,
                         DontCastCardType = new string[0],
                         TrashChunkers = false,
@@ -850,7 +853,10 @@ namespace NGUInjector
                 {
                     _cardManager.CastCards();
                 }
-
+                if (Settings.CardSortEnabled && Settings.CardSortOrder.Length > 0)
+                {
+                    _cardManager.SortCards();
+                }
                 if (Settings.ManageCooking)
                 {
                     _cookingManager.manageFood();
