@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -46,7 +46,9 @@ namespace NGUInjector
                 {9, "Exile"},
                 {10, "IT HUNGERS"},
                 {11, "Rock Lobster"},
-                {12, "Amalgamate"}
+                {12, "Amalgamate"},
+                {13, "Tippi"},
+                {14, "Traitor"},
             };
             
             ZoneList = new Dictionary<int, string>
@@ -95,7 +97,9 @@ namespace NGUInjector
                 {40, "DUCK DUCK ZONE"},
                 {41, "The Nether Regions"},
                 {42, "AMALGAMATE"},
-                {43, "7 Aethereal Seas"}
+                {43, "7 Aethereal Seas"},
+                {44, "TIPPI THE TUTORIAL MOUSE"},
+                {45, "THE TRAITOR"}
             };
 
             SpriteEnemyList = new Dictionary<int, string>();
@@ -113,6 +117,17 @@ namespace NGUInjector
                     }
                 }
             }
+            List<string> rarities = Enum.GetNames(typeof(rarity)).ToList();
+            rarities.Insert(0, "Don't trash");
+            TrashQuality.Items.AddRange(rarities.ToArray());
+            
+            object[] arr = new object[31];
+            for (int i = 0; i < arr.Length; i++) arr[i] = i;
+            TrashTier.Items.AddRange(arr);
+            
+            object[] bonusTypes = Enum.GetNames(typeof(cardBonus)).Where(x => x != "none").ToArray();
+            DontCastSelection.Items.AddRange(bonusTypes);
+            DontCastSelection.SelectedIndex = 0;
 
             CubePriority.DataSource = new BindingSource(CubePriorityList, null);
             CubePriority.ValueMember = "Key";
@@ -292,6 +307,20 @@ namespace NGUInjector
 
             SetTitanGoldBox(newSettings);
             SetTitanSwapBox(newSettings);
+
+            balanceMayo.Checked = newSettings.ManageMayo;
+            TrashCards.Checked = newSettings.TrashCards;
+            TrashQuality.SelectedIndex = newSettings.CardsTrashQuality;
+            TrashTier.SelectedIndex = newSettings.TrashCardCost;
+            TrashAdventureCards.Checked = newSettings.TrashAdventureCards;
+            AutoCastCards.Checked = newSettings.AutoCastCards;
+            TrashChunkers.Checked = newSettings.TrashChunkers;
+
+            if (newSettings.DontCastCardType != null)
+            {
+                DontCastList.Items.Clear();
+                DontCastList.Items.AddRange(newSettings.DontCastCardType); 
+            }
 
             var temp = newSettings.YggdrasilLoadout.ToDictionary(x => x, x => Main.Character.itemInfo.itemName[x]);
             if (temp.Count > 0)
@@ -1406,11 +1435,64 @@ namespace NGUInjector
             Main.Settings.WishSortOrder = WishSortOrder.Checked;
         }
 
+        private void manageMayo_CheckedChanged(object sender, EventArgs e)
+        {
+            Main.Settings.ManageMayo = balanceMayo.Checked;
+        }
+
+        private void TrashCards_CheckedChanged(object sender, EventArgs e)
+        {
+            Main.Settings.TrashCards = TrashCards.Checked;
+        }
+
+        private void TrashQuality_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Main.Settings.CardsTrashQuality = TrashQuality.SelectedIndex;
+        }
+
+        private void AutoCastCards_CheckedChanged(object sender, EventArgs e)
+        {
+            Main.Settings.AutoCastCards = AutoCastCards.Checked;
+        }
+
         private void ProfileEditButton_Click(object sender, EventArgs e)
         {
             var filename = Main.Settings.AllocationFile + ".json";
             var path = Path.Combine(Main.GetProfilesDir(), filename);
             Process.Start(path);
+        }
+
+        private void trashAdventureCards_CheckedChanged(object sender, EventArgs e)
+        {
+            Main.Settings.TrashAdventureCards = TrashAdventureCards.Checked;
+        }
+
+        private void trashCardCost_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Main.Settings.TrashCardCost = (int)TrashTier.SelectedItem;
+        }
+
+        private void DontCastAdd_Click(object sender, EventArgs e)
+        {
+            if(DontCastSelection.SelectedItem != null && !DontCastList.Items.Contains(DontCastSelection.SelectedItem))
+            {
+                DontCastList.Items.Add(DontCastSelection.SelectedItem);
+                Main.Settings.DontCastCardType = DontCastList.Items.Cast<string>().ToArray();
+            }
+        }
+
+        private void DontCastRemove_Click(object sender, EventArgs e)
+        {
+            if(DontCastList.SelectedItem != null)
+            {
+                DontCastList.Items.RemoveAt(DontCastList.SelectedIndex);
+                Main.Settings.DontCastCardType = DontCastList.Items.Cast<string>().ToArray();
+            }
+        }
+
+        private void TrashChunkers_CheckedChanged(object sender, EventArgs e)
+        {
+            Main.Settings.TrashChunkers = TrashChunkers.Checked;
         }
     }
 }

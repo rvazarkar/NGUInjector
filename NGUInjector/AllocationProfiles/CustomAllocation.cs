@@ -24,10 +24,12 @@ namespace NGUInjector.AllocationProfiles
         private DiggerBreakpoint _currentDiggerBreakpoint;
         private WandoosBreakpoint _currentWandoosBreakpoint;
         private NGUDiffBreakpoint _currentNguBreakpoint;
+        private ConsumablesBreakpoint _currentConsumablesBreakpoint;
         private bool _hasGearSwapped;
         private bool _hasDiggerSwapped;
         private bool _hasWandoosSwapped;
         private bool _hasNGUSwapped;
+        private bool _didConsumeConsumables;
         private readonly string _allocationPath;
         private readonly string _profileName;
 
@@ -64,6 +66,13 @@ namespace NGUInjector.AllocationProfiles
                         var target = type == "TIME" ? ParseTime(rb["Target"]) : rb["Target"].AsDouble;
                         _wrapper.Breakpoints.Rebirth = BaseRebirth.CreateRebirth(target, type, rb["Challenges"].AsArray.Children.Select(x => x.Value.ToUpper()).ToArray());
                     }
+
+                    _wrapper.Breakpoints.ConsumablesBreakpoints = breakpoints["Consumables"].Children.Select(bp => new ConsumablesBreakpoint {
+                            Time = ParseTime(bp["Time"]),
+                            Consumables = ParseConsumableItemNames(bp["Items"].AsArray.Children.Select(x => x.Value.ToUpper()).ToArray()),
+                            Quantity = GetConsumablesQuantities(bp["Items"].AsArray.Children.Select(x => x.Value.ToUpper()).ToArray())
+                    }).OrderByDescending(x => x.Time).ToArray();
+
 
                     _wrapper.Breakpoints.Magic = breakpoints["Magic"].Children.Select(bp => new AllocationBreakPoint
                     {
@@ -109,7 +118,6 @@ namespace NGUInjector.AllocationProfiles
                         .Select(bp => new NGUDiffBreakpoint {Time = ParseTime(bp["Time"]), Diff = bp["Diff"].AsInt})
                         .Where(x => x.Diff <= 2).OrderByDescending(x => x.Time).ToArray();
 
-
                     Main.Log(BuildAllocationString());
 
                     _currentDiggerBreakpoint = null;
@@ -119,6 +127,7 @@ namespace NGUInjector.AllocationProfiles
                     _currentMagicBreakpoint = null;
                     _currentR3Breakpoint = null;
                     _currentNguBreakpoint = null;
+                    _currentConsumablesBreakpoint = null;
 
                     this.DoAllocations();
                 }
@@ -134,7 +143,8 @@ namespace NGUInjector.AllocationProfiles
                             Rebirth = new NoRebirth(), R3 = new AllocationBreakPoint[0],
                             Diggers = new DiggerBreakpoint[0], Energy = new AllocationBreakPoint[0],
                             Gear = new GearBreakpoint[0], Magic = new AllocationBreakPoint[0],
-                            NGUBreakpoints = new NGUDiffBreakpoint[0], Wandoos = new WandoosBreakpoint[0]
+                            NGUBreakpoints = new NGUDiffBreakpoint[0], Wandoos = new WandoosBreakpoint[0],
+                            ConsumablesBreakpoints = new ConsumablesBreakpoint[0]
                         }
                     };
 
@@ -145,6 +155,7 @@ namespace NGUInjector.AllocationProfiles
                     _currentMagicBreakpoint = null;
                     _currentR3Breakpoint = null;
                     _currentNguBreakpoint = null;
+                    _currentConsumablesBreakpoint = null;
                 }
             }
             else
@@ -207,6 +218,25 @@ namespace NGUInjector.AllocationProfiles
             }
         }
 
+        private string[] ParseConsumableItemNames(string[] itemNames)
+        {
+            string[] items = new string[itemNames.Length];
+            int i = 0;
+
+            foreach (string item in itemNames)
+            {
+                String value = item;
+                if (value.Contains(":"))
+                {
+                    value = item.Substring(0, item.IndexOf(":"));
+                }
+
+                items[i++] = value;
+            }
+
+            return items;
+        }
+
         private double ParseTime(JSONNode timeNode)
         {
             var time = 0;
@@ -253,6 +283,7 @@ namespace NGUInjector.AllocationProfiles
             builder.AppendLine($"{_wrapper.Breakpoints.Diggers.Length} Digger Breakpoints");
             builder.AppendLine($"{_wrapper.Breakpoints.Wandoos.Length} Wandoos Breakpoints");
             builder.AppendLine($"{_wrapper.Breakpoints.NGUBreakpoints.Length} NGU Difficulty Breakpoints");
+            builder.AppendLine($"{_wrapper.Breakpoints.ConsumablesBreakpoints.Length} Consumable Breakpoints");
             var rb = _wrapper.Breakpoints.Rebirth;
             if (rb is NoRebirth)
             {
@@ -403,6 +434,8 @@ namespace NGUInjector.AllocationProfiles
                 _currentMagicBreakpoint = null;
                 _currentR3Breakpoint = null;
                 _currentNguBreakpoint = null;
+                _currentConsumablesBreakpoint = null;
+                ConsumablesManager.resetLastConsumables();
             }
         }
 
@@ -707,8 +740,27 @@ namespace NGUInjector.AllocationProfiles
             if (!DiggerManager.CanSwap()) return;
             _hasDiggerSwapped = true;
             _currentDiggerBreakpoint = bp;
+
             DiggerManager.EquipDiggers(bp.Diggers);
             _character.allDiggers.refreshMenu();
+        }
+
+        public override void ConsumeConsumables()
+        {
+            if (_wrapper == null)
+                return;
+            var bp = GetCurrentConsumablesBreakpoint();
+            if (bp == null)
+                return;
+            if (bp.Time != _currentConsumablesBreakpoint.Time)
+            {
+                _didConsumeConsumables = false;
+            }
+            
+            if (_didConsumeConsumables) return;
+            _didConsumeConsumables = true;
+            _currentConsumablesBreakpoint = bp;
+            ConsumablesManager.EatConsumables(bp.Consumables, bp.Time, bp.Quantity);
         }
 
         private AllocationBreakPoint GetCurrentBreakpoint(bool energy)
@@ -802,6 +854,10 @@ namespace NGUInjector.AllocationProfiles
 
             if (_character.challenges.timeMachineChallenge.inChallenge)
                 return null;
+            if (!_character.buttons.brokenTimeMachine.interactable)
+                return null;
+            if (_character.machine.realBaseGold == 0.0)
+                return null;
 
             foreach (var b in bps)
             {
@@ -868,10 +924,58 @@ namespace NGUInjector.AllocationProfiles
             return null;
         }
 
+        private ConsumablesBreakpoint GetCurrentConsumablesBreakpoint()
+        {
+            var bps = _wrapper?.Breakpoints?.ConsumablesBreakpoints;
+            if (bps == null)
+                return null;
+            foreach (var b in bps)
+            {
+                if (_character.rebirthTime.totalseconds > b.Time)
+                {
+                    if (_currentConsumablesBreakpoint == null)
+                    {
+                        _didConsumeConsumables = false;
+                        _currentConsumablesBreakpoint = b;
+                    }
+
+                    return b;
+                }
+            }
+
+            _currentConsumablesBreakpoint = null;
+            return null;
+        }
+
         private void SetInput(float val)
         {
-            _character.energyMagicPanel.energyRequested.text = val.ToString();
+            _character.energyMagicPanel.energyRequested.text = val.ToString("000000000000000000");
             _character.energyMagicPanel.validateInput();
+        }
+
+        private int[] GetConsumablesQuantities(string[] consumableTypes)
+        {
+            int[] quantities = new int[consumableTypes.Length];
+            int i = 0;
+
+            foreach (string consumable in consumableTypes)
+            {
+                int index = 1;
+
+                if (consumable.Contains(":")) // "EPOT-A:5" = 5 energy A potions
+                {
+                    string[] split = consumable.Split(':');
+                    if (!int.TryParse(split[1], out index))
+                    {
+                        index = 1;
+                    }
+                }
+
+                //quantities[i++] = index;
+                quantities[i++] = 1; // default to 1 until things are working better, for now, no quantity support
+            }
+
+            return quantities;
         }
     }
 
@@ -892,6 +996,7 @@ namespace NGUInjector.AllocationProfiles
         [SerializeField] public WandoosBreakpoint[] Wandoos;
         [SerializeField] public BaseRebirth Rebirth;
         [SerializeField] public NGUDiffBreakpoint[] NGUBreakpoints;
+        [SerializeField] public ConsumablesBreakpoint[] ConsumablesBreakpoints;
 
     }
 
@@ -929,4 +1034,13 @@ namespace NGUInjector.AllocationProfiles
         public double Time;
         public int Diff;
     }
+
+    [Serializable]
+    internal class ConsumablesBreakpoint
+    {
+        [SerializeField] public double Time;
+        [SerializeField] public string[] Consumables;
+        [SerializeField] public int[] Quantity;
+    }
+
 }

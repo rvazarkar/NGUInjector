@@ -10,7 +10,8 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
     {
         Energy,
         Magic,
-        R3
+        R3,
+        Consumable
     }
 
     internal abstract class BaseBreakpoint
@@ -72,7 +73,7 @@ namespace NGUInjector.AllocationProfiles.BreakpointTypes
 
         protected void SetInput(float val)
         {
-            Character.energyMagicPanel.energyRequested.text = val.ToString();
+            Character.energyMagicPanel.energyRequested.text = val.ToString("000000000000000000");
             Character.energyMagicPanel.validateInput();
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -225,6 +226,8 @@ namespace NGUInjector
                     allocation.AllocateMagic();
                 if (Settings.ManageR3)
                     allocation.AllocateR3();
+                if (Settings.ManageConsumables)
+                    allocation.ConsumeConsumables();
 
                 if (Settings.ManageDiggers && Main.Character.buttons.diggers.interactable)
                 {
@@ -235,8 +238,12 @@ namespace NGUInjector
                 if (Settings.ManageWandoos && Main.Character.buttons.wandoos.interactable)
                     allocation.SwapOS();
 
-                Main.Character.energyMagicPanel.energyRequested.text = originalInput.ToString();
+                Main.Character.energyMagicPanel.energyRequested.text = originalInput.ToString(CultureInfo.InvariantCulture);
                 Main.Character.energyMagicPanel.validateInput();
+            }
+            catch (Exception e)
+            {
+                Main.Log($"Error while allocating: {e.ToString()}");
             }
             finally
             {

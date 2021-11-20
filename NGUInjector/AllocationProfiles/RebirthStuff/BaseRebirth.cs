@@ -428,6 +428,14 @@ namespace NGUInjector.AllocationProfiles.RebirthStuff
                     }
                 }
             }
+
+
+            if (rebirth)
+            {
+                // Use whatever blood we have left on blood number before rebirthing
+                Main.Log("Casting number blood spell before rebirth");
+                CharObj.bloodSpells.castRebirthSpell();
+            }
         }
     }
 }

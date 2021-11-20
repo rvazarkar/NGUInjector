@@ -12,12 +12,21 @@ namespace NGUInjector.Managers
         Yggdrasil,
         MoneyPit,
         Gold,
+        Quest,
+        Cooking,
         None
     }
     internal static class LoadoutManager
     {
         private static int[] _savedLoadout;
         private static int[] _tempLoadout;
+        private static int[] _originalQuestLoadout;
+        private static bool _swappedQuestToMoneyPit = false;
+        private static bool _swappedQuestToTitan = false;
+        public static bool SwappedQuestToMoneyPit { get => _swappedQuestToMoneyPit; }
+        public static bool SwappedQuestToTitan { get => _swappedQuestToTitan; }
+
+
         internal static LockType CurrentLock { get; set; }
 
         internal static bool CanSwap()
@@ -41,13 +50,29 @@ namespace NGUInjector.Managers
             ChangeGear(_savedLoadout);
         }
 
+        internal static void RestoreOriginalQuestGear()
+        {
+            Log($"Restoring original loadout");
+            ChangeGear(_originalQuestLoadout);
+        }
+
         internal static void TryTitanSwap()
         {
             if (Settings.TitanLoadout.Length == 0 && Settings.GoldDropLoadout.Length == 0)
                 return;
+
             //Skip if we're currently locked for yggdrasil (although this generally shouldn't happen)
-            if (!CanAcquireOrHasLock(LockType.Titan))
+            if (CurrentLock != LockType.Quest && !CanAcquireOrHasLock(LockType.Titan))
                 return;
+
+            var ts = ZoneHelpers.TitansSpawningSoon();
+
+            if (CurrentLock == LockType.Quest && ts.SpawningSoon)
+            {
+                SaveTempLoadout();
+                ReleaseLock();
+                _swappedQuestToTitan = true;
+            }
 
             //If we're currently holding the lock
             if (CurrentLock == LockType.Titan)
@@ -57,17 +82,25 @@ namespace NGUInjector.Managers
                     return;
 
                 //Titans have been AKed, restore back to original gear
-                RestoreGear();
-                ReleaseLock();
+                if (_swappedQuestToTitan)
+                {
+                    RestoreQuestLayoutFromTitan();
+                    _swappedQuestToTitan = !_swappedQuestToTitan;
+                }
+                else
+                {
+                    RestoreGear();
+                    ReleaseLock();
+                }
+
                 return;
             }
 
             //No lock currently, check if titans are spawning
-            var ts = ZoneHelpers.TitansSpawningSoon();
             if (ts.SpawningSoon)
             {
                 Log("Equipping Loadout for Titans");
-                
+
                 //Titans are spawning soon, grab a lock and swap
                 AcquireLock(LockType.Titan);
                 SaveCurrentLoadout();
@@ -103,9 +136,18 @@ namespace NGUInjector.Managers
 
         internal static bool TryMoneyPitSwap()
         {
-            if (!CanAcquireOrHasLock(LockType.MoneyPit))
+            if (CurrentLock == LockType.Quest)
+            {
+                SaveTempLoadout();
+                ReleaseLock();
+                _swappedQuestToMoneyPit = true;
+            }
+            
+            else if (!CanAcquireOrHasLock(LockType.MoneyPit))
+            {
                 return false;
-
+            }
+                
             Log("Equipping Money Pit");
             AcquireLock(LockType.MoneyPit);
             SaveCurrentLoadout();
@@ -132,11 +174,69 @@ namespace NGUInjector.Managers
             return true;
         }
 
+        internal static bool TryQuestSwap()
+        {
+
+            if (!CanAcquireOrHasLock(LockType.Quest))
+            {
+                return false;
+            }
+
+            //We already hold the lock so just return true
+            if (CurrentLock == LockType.Quest)
+            {
+                return true;
+            }
+
+            Log("Equipping Quest Loadout");
+            AcquireLock(LockType.Quest);
+            SaveOriginalQuestLoadout();
+            ChangeGear(Settings.QuestLoadout);
+
+            return true;
+        }
+
+        internal static bool HasQuestLock()
+        {
+            return CurrentLock == LockType.Quest;
+        }
+
+        internal static bool TryCookingSwap()
+        {
+            if (!CanAcquireOrHasLock(LockType.Cooking))
+            {
+                return false;
+            }
+
+            //We already hold the lock so just return true
+            if (CurrentLock == LockType.Cooking)
+            {
+                return true;
+            }
+
+            Log("Equipping Cooking Loadout");
+            AcquireLock(LockType.Cooking);
+            SaveCurrentLoadout();
+            ChangeGear(Settings.CookingLoadout);
+
+            return true;
+        }
+
+        internal static bool HasCookingLock()
+        {
+            return CurrentLock == LockType.Cooking;
+        }
+
         private static bool CanAcquireOrHasLock(LockType requestor)
         {
             if (CurrentLock == requestor)
             {
                 return true;
+            }
+
+            if (CurrentLock == LockType.Quest) {
+                LoadoutManager.RestoreOriginalQuestGear();
+                LoadoutManager.ReleaseLock();
             }
 
             if (CurrentLock == LockType.None)
@@ -151,7 +251,7 @@ namespace NGUInjector.Managers
         {
             if (gearIds.Length == 0)
                 return;
-            Log($"Received New Gear: {string.Join(",", gearIds.Select(x => x.ToString()).ToArray())}");
+            Log($"Received New Gear for {getLockTypeName(CurrentLock)}: {string.Join(",", gearIds.Select(x => x.ToString()).ToArray())}");
             var weaponSlot = -5;
             var accSlot = 10000;
             var controller = Controller;
@@ -235,7 +335,7 @@ namespace NGUInjector.Managers
                 Log(e.Message);
                 Log(e.StackTrace);
             }
-            
+
 
             controller.updateBonuses();
             controller.updateInventory();
@@ -296,7 +396,7 @@ namespace NGUInjector.Managers
             return null;
         }
 
-        private static void SaveCurrentLoadout()
+        private static List<int> GetCurrentGear()
         {
             var inv = Main.Character.inventory;
             var loadout = new List<int>
@@ -320,40 +420,69 @@ namespace NGUInjector.Managers
                 loadout.Add(Main.Character.inventory.accs[index].id);
             }
 
+            return loadout;
+        }
+
+        private static void SaveOriginalQuestLoadout()
+        {
+            var loadout = GetCurrentGear();
+            _originalQuestLoadout = loadout.ToArray();
+            Log($"Saved Original Quest Loadout {string.Join(",", _originalQuestLoadout.Select(x => x.ToString()).ToArray())}");
+        }
+
+        private static void SaveCurrentLoadout()
+        {
+            var loadout = GetCurrentGear();
             _savedLoadout = loadout.ToArray();
-            Log($"Saved Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
+            Log($"Saved Current Loadout {string.Join(",", _savedLoadout.Select(x => x.ToString()).ToArray())}");
         }
 
         internal static void SaveTempLoadout()
         {
-            var inv = Main.Character.inventory;
-            var loadout = new List<int>
-            {
-                inv.head.id,
-                inv.boots.id,
-                inv.chest.id,
-                inv.legs.id,
-                inv.weapon.id
-            };
-
-
-            if (Main.Character.inventoryController.weapon2Unlocked())
-            {
-                loadout.Add(inv.weapon2.id);
-            }
-
-            for (var id = 10000; Controller.accessoryID(id) < Main.Character.inventory.accs.Count; ++id)
-            {
-                var index = Controller.accessoryID(id);
-                loadout.Add(Main.Character.inventory.accs[index].id);
-            }
+            var loadout = GetCurrentGear();
             _tempLoadout = loadout.ToArray();
-            Log($"Saved Loadout {string.Join(",", _tempLoadout.Select(x => x.ToString()).ToArray())}");
+            Log($"Saved Temp Loadout {string.Join(",", _tempLoadout.Select(x => x.ToString()).ToArray())}");
         }
 
         internal static void RestoreTempLoadout()
         {
             ChangeGear(_tempLoadout);
+        }
+
+        internal static void RestoreQuestLayoutFromPit()
+        {
+            RestoreTempLoadout();
+            _swappedQuestToMoneyPit = false;
+            AcquireLock(LockType.Quest);
+        }
+
+        private static void RestoreQuestLayoutFromTitan()
+        {
+            RestoreTempLoadout();
+            AcquireLock(LockType.Quest);
+        }
+
+
+        public static string getLockTypeName(LockType currentLock)
+        {
+            switch (currentLock)
+            {
+                case LockType.Cooking:
+                    return "Cooking";
+                case LockType.Gold:
+                    return "Gold";
+                case LockType.MoneyPit:
+                    return "MoneyPit";
+                case LockType.None:
+                    return "None";
+                case LockType.Quest:
+                    return "Quest";
+                case LockType.Titan:
+                    return "Titan";
+                case LockType.Yggdrasil:
+                    return "Yggdrasil";
+            }
+            return "Unknown";
         }
 
         //private static float GetSeedGain(Equipment e)

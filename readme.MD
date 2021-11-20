@@ -1,10 +1,11 @@
+
 # NGUInjector
 
 NGUInjector is an automation platform for the steam version of NGU Idle.
 
 # Instructions
 
-Releases can be found in the releases section of the github page [here](https://github.com/rvazarkar/NGUInjector/releases). The latest release can be found [here](https://github.com/rvazarkar/NGUInjector/releases/latest). Do not download the source code archive, instead download the zip file with the release version in the name (3.0.0.zip for example). Extract the downloaded archive to a directory of your choice. To start automation, run inject.bat in the extracted folder when NGU Idle is open. DO NOT RUN AS ADMINISTRATOR.
+Releases can be found in the releases section of the github page [here](https://github.com/benanderson1/NGUInjector-Continued/releases/). Do not download the source code archive, instead download the zip file with the release version in the name (dist_3.6.3.zip for example). Extract the downloaded archive to a directory of your choice. To start automation, run inject.bat in the extracted folder when NGU Idle is open. DO NOT RUN AS ADMINISTRATOR.
 
 You'll know the injection has worked if you see the following in the upper left portion of NGU.
 
@@ -34,6 +35,28 @@ A logs folder will also be created with the following files:
 - **pitspin.log** - Logs important things like fruit harvests, money pit, daily spin. This log file will not be overwritten.
 
 Saving either file will automatically reload the settings in the configuration file. Reloading the game isn't necessary
+
+# Settings.json Configurations
+With the latest fork, many changes have been added that aren't found in the GUI.
+
+To access these settings, open the **settings.json** (in your Desktop folder, mentioned above) and scroll down to find the following configuration options:
+
+- **_manageCooking** - Set this to true to have the injector optimize your cooking efficiency
+- **_manageCookingLoadouts** - Set this to true to have the injector swap to a Cooking loadout when eating meals
+- **_manageQuestLoadouts** - Set this to true to have the injector swap to a Questing loadout when doing manual questing
+- **_cookingLoadout** - Assign your cooking loadout here. Follow similar pattern as other loadout fields (example: [448, 447, 444, 170, 263, 169, 128, 243, 136, 91, 446, 137, 256, 265, 266, 267, 268, 269])
+- **_questLoadout** - Assign your questing loadout here. Follow similar pattern as other loadout fields (example: [257, 170, 293, 236])
+- **_manageConsumables** - Set this to true to have injector manage consumables via breakpoints in your allocation file (see Section on Consumables below for details)
+- **_autoBuyConsumables** - Set this to true to have the injector auto purchase any consumables you try to use that you do not own. Will only buy consumables if you have the AP to purchase them.
+
+# Log Parsing
+
+Discord user WookieeNo1 has made a PowerShell script to prettify the log files. If you are interested in this, check out the github here: https://github.com/WookieeNo1/NGUIdleInjector-Pretty-Print
+
+This is what it looks like once you set it up:
+![loot.log](https://i.imgur.com/68fVGk7.png)
+![pitspin.log](https://i.imgur.com/nTMJ5jP.png)
+![inject.log](https://i.imgur.com/7tlf4qH.png)
 
 # Settings Configuration
 
@@ -174,6 +197,13 @@ An in game menu can be opened using the F1 button.
 - **Money Pit Threshold** - The amount of gold to wait for to throw gold into the money pit. Accepts scientific notation (ex: 1E+28)
 - **Loadout** - Items to equip before throwing money in the pit
 
+![Cards](https://i.imgur.com/0OXulFY.png)
+- **Manage Mayo** Will prioritize mayo production to be able to cast the first card in your deck asap. If you have no cards, it will equalize all mayo types.
+- **Auto Trash Cards** Will trash cards according to the settings below
+- **Trash Adventure Cards** If checked, adventure cards are trashed according to your settings. If not checked, no adventure cards are deleted, regarless of settings
+- **Auto Cast Cards** Will cast any card that is not trashed according to your settings
+- **Trash All Cards of Type** WIll trash these card types regardless of your other settings
+- **Trash Chunkers** Will trash chunkers of the types in your trash all list.
 # Allocation
 
 Allocation profiles can be found in the profiles folder and contain time breakpoints for configuring your gear, diggers, energy allocation and magic allocation. Sample allocation files can be found in the sampleprofile folder.
@@ -451,6 +481,57 @@ Challenges must be given a number afterwards to specify which challenge is being
 "Challenges": ["BASIC-1", "BASIC-2", "TC-1","NOEQ-1"]
 ```
 
+## Consumables
+A Consumables breakpoint is structured as follows:
+
+```
+"Consumables": [
+    {
+    "Time": 0,
+    "Items": ["EPOT-B", "MPOT-B"]
+    }
+]
+```
+
+Consumables are indexed as follows:
+- **EPOT-A** - Energy Potion alpha
+- **EPOT-B** - Energy Potion beta
+- **EPOT-C** - Energy Potion delta
+- **MPOT-A** - Magic Potion alpha
+- **MPOT-B** - Magic Potion beta
+- **MPOT-C** - Magic Potion delta
+- **R3POT-A** - R3 Potion alpha
+- **R3POT-B** - R3 Potion beta
+- **R3POT-C** - R3 Potion delta
+- **EBARBAR** - Energy Bar Bar
+- **MBARBAR** - Magic Bar Bar
+- **MUFFIN** - MacGuffin Muffin
+- **LC** - Lucky Charm
+- **SLC** - Super Lucky Charm
+- **MAYO** - Mayo Infuser
+
+**IMPORTANT NOTE: BE CAREFUL WHEN USING CONSUMABLE BREAKPOINTS**
+
+The injector cannot remember consumable usage across session. Therefore, if you restart NGU and/or the injector, it **will** run your latest Consumables breakpoint again -- and use any items again (except for beta pots and MacGuffin Muffins, those only activate if not already active).
+
+**_Example_**:
+Let's say you have it set to use a Lucky Charm 4 hours into your run.
+
+4 hours into your run, you use a Lucky Charm, all is well and life is good.
+
+But sometime after this, you restart your computer. :(
+
+When firing up NGU and injector, if the 4hour breakpoint is your latest one, it **will** run that one again **once** and use another Lucky Charm.
+
+If you had set that breakpoint to use a Lucky Charm AND a Super Lucky Charm, the injector will use **both** Lucky Charm and Super Lucky Charm again **once**.
+
+
+Be mindful of this or your AP will be sad. No one likes sad AP.
+
+
+Beta potions and Macguffin Muffins are smart enough to only activate if not already active.
+
+
 # Zone Stat Overrides
 
 The optimal zone for gold sniping is calculated using a set of values from pins that show stats necessary to do each zone. If the manual threshold is met for a zone, the script will snipe a boss without fast combat. If the idle threshold is met, the script will snipe a boss using fast combat. Beast Mode will always be turned off for this.
@@ -495,5 +576,5 @@ Lock a boost in your inventory and the script will automatically merge boosts on
 
 SharpMonoInjector can be found [here](https://github.com/warbler/SharpMonoInjector). This wouldn't be possible without the excellent work done there.
 Obviously 4G for making NGU Idle.
-Altizar on discord for WISH logic and some other fixes
+Altizar on discord for WISH logic, cooking logic and some other fixes
 Ingwar on discord for allocation profile logic and some other fixes

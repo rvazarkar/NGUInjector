@@ -35,6 +35,24 @@ namespace NGUInjector.Managers
             {
                 Log("Turning in quest");
                 _character.beastQuestController.completeQuest();
+
+                // Check if we need to swap back gear and release lock
+                if (LoadoutManager.HasQuestLock())
+                {
+                    // No more quests, swap back
+                   if (_character.beastQuest.curBankedQuests == 0)
+                    {
+                        LoadoutManager.RestoreOriginalQuestGear();
+                        LoadoutManager.ReleaseLock();
+                    }
+
+                   // else if majors are off and we're not manualing minors, swap back
+                   else if (!Settings.AllowMajorQuests && !Settings.ManualMinors)
+                    {
+                        LoadoutManager.RestoreOriginalQuestGear();
+                        LoadoutManager.ReleaseLock();
+                    }
+                }
             }
         }
 
@@ -55,12 +73,18 @@ namespace NGUInjector.Managers
             {
                 if (Settings.ManualMinors)
                 {
+                    EquipQuestingLoadout();
                     return questZone;
+                }
+                else if (LoadoutManager.HasQuestLock())
+                {
+                    LoadoutManager.RestoreOriginalQuestGear();
+                    LoadoutManager.ReleaseLock();
                 }
 
                 return -1;
             }
-
+            EquipQuestingLoadout();
             return _character.beastQuestController.curQuestZone();
         }
 
@@ -76,20 +100,35 @@ namespace NGUInjector.Managers
             //First logic: not in a quest
             if (!_character.beastQuest.inQuest)
             {
+                bool startedQuest = false;
+
                 //If we're allowing major quests and we have a quest available
                 if (Settings.AllowMajorQuests && _character.beastQuest.curBankedQuests > 0)
                 {
                     _character.settings.useMajorQuests = true;
                     SetIdleMode(false);
+                    EquipQuestingLoadout();
                     _character.beastQuestController.startQuest();
+                    startedQuest = true;
                 }
                 else
                 {
                     _character.settings.useMajorQuests = false;
                     SetIdleMode(!Settings.ManualMinors);
+                    if (Settings.ManualMinors)
+                    {
+                        EquipQuestingLoadout();
+                    }
                     _character.beastQuestController.startQuest();
+                    startedQuest = true;
                 }
 
+                // If we're not questing and we still have the lock, restore gear
+                if (!startedQuest && LoadoutManager.HasQuestLock())
+                {
+                    LoadoutManager.RestoreOriginalQuestGear();
+                    LoadoutManager.ReleaseLock();
+                }
                 return;
             }
 
@@ -105,6 +144,7 @@ namespace NGUInjector.Managers
                         _character.settings.useMajorQuests = true;
                         _character.beastQuestController.skipQuest();
                         SetIdleMode(false);
+                        EquipQuestingLoadout();
                         _character.beastQuestController.startQuest();
                         //Combat logic will pick up from here
                         return;
@@ -120,6 +160,21 @@ namespace NGUInjector.Managers
             else
             {
                 SetIdleMode(false);
+            }
+        }
+
+        internal void EquipQuestingLoadout()
+        {
+
+            if (Settings.ManageQuestLoadouts && Settings.QuestLoadout.Length > 0)
+            {
+                if (LoadoutManager.HasQuestLock())
+                    return;
+
+                if (!LoadoutManager.TryQuestSwap())
+                {
+                    Log("Tried to equip quest loadout but not unable to acquire lock");
+                }
             }
         }
     }

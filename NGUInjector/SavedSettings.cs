@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NGUInjector.Managers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -67,8 +68,9 @@ namespace NGUInjector
         [SerializeField] private bool _manageR3;
         [SerializeField] private bool _activateFruits;
         [SerializeField] private int[] _wishPriorities;
+        [SerializeField] private int[] _wishBlacklist;
         [SerializeField] private bool _wishSortPriorities;
-        [SerializeField] private bool _wishSortOrder;        
+        [SerializeField] private bool _wishSortOrder;
         [SerializeField] private bool _beastMode;
         [SerializeField] private int _cubePriority;
         [SerializeField] private bool _manageNguDiff;
@@ -92,7 +94,26 @@ namespace NGUInjector
         [SerializeField] private bool _moreBlockParry;
         [SerializeField] private int[] _specialBoostBlacklist;
         [SerializeField] private int[] _blacklistedBosses;
+        [SerializeField] private bool _manageMayo;
+        [SerializeField] private bool _trashCards;
+        [SerializeField] private int _cardsTrashQuality;
+        [SerializeField] private bool _autoCastCards;
+        [SerializeField] private int _autoCastCardType;
+        [SerializeField] private bool _trashAdventureCards;
+        [SerializeField] private string[] _cardSortOrder;
+        [SerializeField] private bool _cardSortEnabled;
+        [SerializeField] private int _trashCardCost;
+        [SerializeField] private string[] _dontCastCardType;
+        [SerializeField] private bool _trashChunkers;
         [SerializeField] private bool _hackAdvance;
+        [SerializeField] private bool _manageCooking;
+        [SerializeField] private bool _manageQuestLoadouts;
+        [SerializeField] private bool _manageCookingLoadouts;
+        [SerializeField] private int[] _questLoadout;
+        [SerializeField] private int[] _cookingLoadout;
+        [SerializeField] private bool _manageConsumables;
+        [SerializeField] private bool _autoBuyConsumables;
+        [SerializeField] private bool _doMove69;
 
         private readonly string _savePath;
         private bool _disableSave;
@@ -214,6 +235,7 @@ namespace NGUInjector
             _manageR3 = other.ManageR3;
             _activateFruits = other.ActivateFruits;
             _wishPriorities = other.WishPriorities;
+            _wishBlacklist = other.WishBlacklist;
             _wishSortPriorities = other.WishSortPriorities;
             _wishSortOrder = other.WishSortOrder;
             _beastMode = other.BeastMode;
@@ -221,9 +243,23 @@ namespace NGUInjector
             _manageNguDiff = other.ManageNGUDiff;
             _allocationFile = other.AllocationFile;
             _manageGoldLoadouts = other.ManageGoldLoadouts;
-            _titanGoldTargets = other.TitanGoldTargets;
-            _titanSwapTargets = other.TitanSwapTargets;
-            _titanMoneyDone = other.TitanMoneyDone;
+
+            bool[] tempTitanGoldTargets = new bool[other.TitanGoldTargets.Length];
+            Array.Copy(other.TitanGoldTargets, tempTitanGoldTargets, other.TitanGoldTargets.Length);
+            Array.Resize(ref tempTitanGoldTargets, ZoneHelpers.TitanCount());
+
+            _titanGoldTargets = tempTitanGoldTargets;
+
+            bool[] tempTitanSwapTargets = new bool[other.TitanSwapTargets.Length];
+            Array.Copy(other.TitanSwapTargets, tempTitanSwapTargets, other.TitanSwapTargets.Length);
+            Array.Resize(ref tempTitanSwapTargets, ZoneHelpers.TitanCount());
+            _titanSwapTargets = tempTitanSwapTargets;
+
+            bool[] tempTitanMoneyDone = new bool[other.TitanMoneyDone.Length];
+            Array.Copy(other.TitanMoneyDone, tempTitanMoneyDone, other.TitanMoneyDone.Length);
+            Array.Resize(ref tempTitanMoneyDone, ZoneHelpers.TitanCount());
+            _titanMoneyDone = tempTitanMoneyDone;
+
             _resnipeTime = other.ResnipeTime;
             _goldCBlockMode = other.GoldCBlockMode;
             _debugAllocation = other.DebugAllocation;
@@ -240,7 +276,26 @@ namespace NGUInjector
             _moreBlockParry = other.MoreBlockParry;
             _specialBoostBlacklist = other.SpecialBoostBlacklist;
             _blacklistedBosses = other.BlacklistedBosses;
+            _manageMayo = other._manageMayo;
+            _trashCards = other._trashCards;
+            _cardsTrashQuality = other._cardsTrashQuality;
+            _autoCastCards = other._autoCastCards;
+            _autoCastCardType = other._autoCastCardType;
+            _trashAdventureCards = other._trashAdventureCards;
+            _trashCardCost = other._trashCardCost;
+            _dontCastCardType = other._dontCastCardType;
+            _cardSortOrder = other._cardSortOrder;
+            _cardSortEnabled = other._cardSortEnabled;
+            _trashChunkers = other._trashChunkers;
             _hackAdvance = other.HackAdvance;
+            _manageCooking = other._manageCooking;
+            _manageQuestLoadouts = other._manageQuestLoadouts;
+            _manageCookingLoadouts = other._manageCookingLoadouts;
+            _questLoadout = other._questLoadout;
+            _cookingLoadout = other._cookingLoadout;
+            _manageConsumables = other._manageConsumables;
+            _autoBuyConsumables = other._autoBuyConsumables;
+            _doMove69 = other._doMove69;
         }
 
         public int SnipeZone
@@ -530,7 +585,7 @@ namespace NGUInjector
                 SaveSettings();
             }
         }
-        
+
         public bool SnipeBossOnly
         {
             get => _snipeBossOnly;
@@ -826,6 +881,16 @@ namespace NGUInjector
                 SaveSettings();
             }
         }
+        public int[] WishBlacklist
+        {
+            get => _wishBlacklist;
+            set
+            {
+                if (value == _wishBlacklist) return;
+                _wishBlacklist = value;
+                SaveSettings();
+            }
+        }
 
         public bool WishSortPriorities
         {
@@ -1096,7 +1161,119 @@ namespace NGUInjector
                 SaveSettings();
             }
         }
+        public bool ManageMayo
+        {
+            get => _manageMayo;
+            set
+            {
+                if (value == _manageMayo) return;
+                _manageMayo = value;
+                SaveSettings();
+            }
+        }
+        public bool TrashCards
+        {
+            get => _trashCards;
+            set
+            {
+                if (value == _trashCards) return;
+                _trashCards = value;
+                SaveSettings();
+            }
+        }
+        public int CardsTrashQuality
+        {
+            get => _cardsTrashQuality;
+            set
+            {
+                if (value == _cardsTrashQuality) return;
+                _cardsTrashQuality = value;
+                SaveSettings();
+            }
+        }
+        public bool AutoCastCards
+        {
+            get => _autoCastCards;
+            set
+            {
+                if (value == _autoCastCards) return;
+                _autoCastCards = value;
+                SaveSettings();
+            }
+        }
 
+        public int AutoCastCardType
+        {
+            get => _autoCastCardType;
+            set 
+            {
+                if (value == _autoCastCardType) return;
+                _autoCastCardType = value;
+                SaveSettings();
+            }
+        }
+
+        public bool TrashAdventureCards
+        {
+            get => _trashAdventureCards;
+            set
+            {
+                if (value == _trashAdventureCards) return;
+                _trashAdventureCards = value;
+                SaveSettings();
+            }
+        }
+
+        public int TrashCardCost
+        {
+            get => _trashCardCost;
+            set
+            {
+                if (value == _trashCardCost) return;
+                _trashCardCost = value;
+                SaveSettings();
+            }
+        }
+        public string[] DontCastCardType
+        {
+            get => _dontCastCardType;
+            set
+            {
+                if (value == _dontCastCardType) return;
+                _dontCastCardType = value;
+                SaveSettings();
+            }
+        }
+        public string[] CardSortOrder
+        {
+            get => _cardSortOrder;
+            set
+            {
+                if (value == _cardSortOrder) return;
+                _cardSortOrder = value;
+                SaveSettings();
+            }
+        }
+        public bool CardSortEnabled
+        {
+            get => _cardSortEnabled;
+            set
+            {
+                if (value == _cardSortEnabled) return;
+                _cardSortEnabled = value;
+                SaveSettings();
+            }
+        }
+        public bool TrashChunkers
+        {
+            get => _trashChunkers;
+            set
+            {
+                if (value == _trashChunkers) return;
+                _trashChunkers = value;
+                SaveSettings();
+            }
+        }
         internal bool NeedsGoldSwap()
         {
             for (var i = 0; i < TitanSwapTargets.Length; i++)
@@ -1118,6 +1295,92 @@ namespace NGUInjector
             {
                 if (value == _hackAdvance) return;
                 _hackAdvance = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ManageCooking
+        {
+            get => _manageCooking;
+            set
+            {
+                if (value == _manageCooking) return;
+                _manageCooking = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ManageQuestLoadouts
+        {
+            get => _manageQuestLoadouts;
+            set
+            {
+                if (value == _manageQuestLoadouts) return;
+                _manageQuestLoadouts = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ManageCookingLoadouts
+        {
+            get => _manageCookingLoadouts;
+            set
+            {
+                if (value == _manageCookingLoadouts) return;
+                _manageCookingLoadouts = value;
+                SaveSettings();
+            }
+        }
+
+        public int[] QuestLoadout
+        {
+            get => _questLoadout;
+            set
+            {
+                _questLoadout = value;
+                SaveSettings();
+            }
+        }
+
+        public int[] CookingLoadout
+        {
+            get => _cookingLoadout;
+            set
+            {
+                _cookingLoadout = value;
+                SaveSettings();
+            }
+        }
+
+        public bool AutoBuyConsumables
+        {
+            get => _autoBuyConsumables;
+            set
+            {
+                if (value == _autoBuyConsumables) return;
+                _autoBuyConsumables = value;
+                SaveSettings();
+            }
+        }
+
+        public bool ManageConsumables
+        {
+            get => _manageConsumables;
+            set
+            {
+                if (value == _manageConsumables) return;
+                _manageConsumables = value;
+                SaveSettings();
+            }
+        }
+
+        public bool DoMove69
+        {
+            get => _doMove69;
+            set
+            {
+                if (value == _doMove69) return;
+                _doMove69 = value;
                 SaveSettings();
             }
         }
