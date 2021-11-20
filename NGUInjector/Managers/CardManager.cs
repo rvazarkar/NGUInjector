@@ -12,6 +12,8 @@ namespace NGUInjector.Managers
         private readonly int _maxManas;
         private Cards _cards;
         private CardsController _cardsController;
+        private readonly IDictionary<cardBonus, float> _cardValues = new Dictionary<cardBonus, float>();
+
         public CardManager()
         {
 
@@ -21,6 +23,11 @@ namespace NGUInjector.Managers
                 _cards = _character.cards;
                 _cardsController = _character.cardsController;
                 _maxManas = _character.cardsController.maxManaGenSize();
+                foreach (cardBonus bonus in Enum.GetValues(typeof(cardBonus)))
+                {
+                    float bonusValue = _cardsController.generateCardEffect(bonus, 3, 1, 1, false);
+                    _cardValues.Add(bonus, bonusValue);
+                }
             }
             catch (Exception e)
             {
@@ -31,7 +38,7 @@ namespace NGUInjector.Managers
         int CurTogg() => _character.cardsController.curManaToggleCount();
         public void CheckManas()
         {
-            
+
             try
             {
                 List<Mana> manas = _character.cards.manas;
@@ -134,8 +141,9 @@ namespace NGUInjector.Managers
                                 }
                                 else if (Main.Settings.DontCastCardType.Contains(_card.bonusType.ToString()))
                                 {
-                                    if (_card.cardRarity != rarity.BigChonker ||_card.cardRarity == rarity.BigChonker && Main.Settings.TrashChunkers) { 
-                                    if (_card.isProtected) _card.isProtected = false;
+                                    if (_card.cardRarity != rarity.BigChonker || _card.cardRarity == rarity.BigChonker && Main.Settings.TrashChunkers)
+                                    {
+                                        if (_card.isProtected) _card.isProtected = false;
                                         Main.LogCard($"Trashed Card: Cost: {_card.manaCosts.Sum()} Rarity: {_card.cardRarity} Bonus Type: {_card.bonusType}, due to trash all settings");
                                         _cardsController.trashCard(id);
                                         continue;
@@ -181,14 +189,13 @@ namespace NGUInjector.Managers
                 }
             }
         }
-    
+
         public void SortCards()
         {
             try
             {
-                Main.Log($"Sorting Cards by priorities: {Main.Settings.CardSortOrder.ToString()}");
                 _character.cards.cards.Sort(CompareCards);
-                for(var i = 0; i < _character.cards.cards.Count; i++)
+                for (var i = 0; i < _character.cards.cards.Count; i++)
                 {
                     _cardsController.updateDeckCard(i);
                 }
@@ -198,6 +205,21 @@ namespace NGUInjector.Managers
                 Main.Log(e.Message);
                 Main.Log(e.StackTrace);
             }
+        }
+
+        private float getCardChange(Card card)
+        {
+            return (_cardsController.getBonus(card.bonusType) + card.effectAmount) / _cardsController.getBonus(card.bonusType);
+        }
+
+        private float getCardValue(Card card)
+        {
+            return (getCardChange(card) - 1) / card.manaCosts.Sum();
+        }
+
+        private float getCardNormalValue(Card card)
+        {
+            return getCardValue(card) / _cardValues[card.bonusType];
         }
 
         private int CompareByPriority(string priority, Card c1, Card c2)
@@ -217,10 +239,11 @@ namespace NGUInjector.Managers
                 return c2.manaCosts.Sum().CompareTo(c1.manaCosts.Sum());
             }
 
-            if (priority.StartsWith("TYPE:")) {
+            if (priority.ToUpper().StartsWith("TYPE:"))
+            {
                 var bonusType = priority.Substring(5);
 
-                if (c1.bonusType.ToString() == bonusType && c2.bonusType.ToString() == bonusType)
+                if (c1.bonusType.ToString() == c2.bonusType.ToString())
                     return 0;
                 else if (c2.bonusType.ToString() == bonusType)
                     return 1;
@@ -230,16 +253,36 @@ namespace NGUInjector.Managers
                     return 0;
             }
 
+            if (priority.ToUpper() == "PROTECTED")
+            {
+                return c2.isProtected.CompareTo(c1.isProtected);
+            }
+
+            if (priority.ToUpper() == "CHANGE")
+            {
+                return getCardChange(c2).CompareTo(getCardChange(c1));
+            }
+
+            if (priority.ToUpper() == "VALUE")
+            {
+                return getCardValue(c2).CompareTo(getCardValue(c1));
+            }
+
+            if (priority.ToUpper() == "NORMALVALUE")
+            {
+                return getCardNormalValue(c2).CompareTo(getCardNormalValue(c1));
+            }
+
             return 0;
         }
 
         private int CompareCards(Card c1, Card c2)
         {
-            foreach(var priority in Main.Settings.CardSortOrder)
+            foreach (var priority in Main.Settings.CardSortOrder)
             {
                 var index = CompareByPriority(priority, c1, c2);
 
-                if(index != 0) return index;
+                if (index != 0) return index;
             }
 
             return 0;
