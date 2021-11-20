@@ -48,6 +48,23 @@ To access these settings, open the **settings.json** (in your Desktop folder, me
 - **_questLoadout** - Assign your questing loadout here. Follow similar pattern as other loadout fields (example: [257, 170, 293, 236])
 - **_manageConsumables** - Set this to true to have injector manage consumables via breakpoints in your allocation file (see Section on Consumables below for details)
 - **_autoBuyConsumables** - Set this to true to have the injector auto purchase any consumables you try to use that you do not own. Will only buy consumables if you have the AP to purchase them.
+- **_wishBlacklist** - Assign wishes you never want to cast here. Any which in this list will be ignored when working out the wish priorities (example: [131, 132, 128, 135,139]
+- **_cardSortEnabled** - Set this to true to have the injector sort cards based on the priorities given in **_cardSortOrder**. (**false** by default).
+- **_cardSortOrder** - Give a list of priorities to sort the cards by. The cards will be sorted by the first priority, then any cards that match will be sorted by the second priority, and so on. The available priority options are:
+  - **"RARITY"** - The card rarity ("Good"/"Okay", etc.). (high->low)
+  - **"TIER"** - The card tier. (high->low)
+  - **"COST"** - The total mayo cost. (high->low)
+  - **"PROTECTED"** - Whether the card is protected. (protected, then not protected)
+  - **"CHANGE"** - The actual change in the bonus. (e.g. if you're current total Wish bonus is 200%, and the card bonus is 2%, the change will be 1%). (high->low)
+  - **"VALUE"** - The CHANGE value divided by the card cost. (high->low)
+  - **"NORMALVALUE"** - The VALUE, normalized by the card bonus type. (e.g. Gold always gives higher changes than PP, so this will try to account for that). (high->low)
+  - **"TYPE:xxxx"** - The card bonus type. Replace 'xxxx' with a specific card bonus type, i.e. one of: "energyNGUSpeed", "magicNGUSpeed", "wandoosSpeed", "augSpeed", "TMSpeed", "hackSpeed", "wishSpeed", "atkDefStats", "adventureStat", "dropChance", "goldDrop", "dayCareSpeed", "PP", "QP".
+  - **Example:** 
+    ```
+      "_cardSortEnabled": true,
+      "_cardSortOrder": ["PROTECTED", "TYPE:adventureStat", "TYPE:hackSpeed", "VALUE"]
+    ```
+    This will place any protected cards first, then if multiple are protected, it will prioritise adv. stat cards, then hack speed cards, then for any others (as well as adv. and hack cards that are both protected) it will order them by their value.
 
 # Log Parsing
 
