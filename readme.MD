@@ -122,9 +122,9 @@ An in game menu can be opened using the F1 button.
 - **Beast Mode** - Whether to use beast mode or not while in combat
 - **Block/Parry with Buffs** - If checked, combat will use block/parry along with offensive/defensive/ultimate buffs.
 - **Combat Mode** - If set to manual, will execute a custom combat routine. If set to idle, will just idle the zone.
-- **Target Zone** - The target zone to snipe/do combat in. ITOPOD is at the bottom of the list.
+- **Target Zone** - The target zone to snipe/do combat in. Setting this to "Safe Zone: Awakening" will not change zones.
 - **Allow Fallthrough** - If set to true, combat will use the highest unlocked zone you have until the target zone is unlocked.
-- **ITOPOD** - Equivalent to setting target zone to ITOPOD, just a quicker option
+- **ITOPOD** - Checking this will set the target zone to ITOPOD, regardless of what the dropdown menu is set to (unless it is set to "Safe Zone: Awakening").
 
 - **ITOPOD Settings** - Settings below this apply only to ITOPOD combat
 - **Combat Mode** - If set to manual, will execute a custom combat routine. If set to idle, will just idle the zone.
