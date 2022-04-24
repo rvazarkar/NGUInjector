@@ -390,7 +390,7 @@ namespace NGUInjector.Managers
                 .Where(x => x.id == id && x.equipment.isEquipment()).ToArray();
             if (items.Length != 0)
             {
-                return moneyPit ? items.OrderByDescending(x => x.level).First() : items.MaxItem();
+                return moneyPit ? items.OrderByDescending(x => x.level == 100 ? 0 : x.level).First() : items.MaxItem();
             }
 
             return null;

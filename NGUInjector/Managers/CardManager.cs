@@ -25,7 +25,7 @@ namespace NGUInjector.Managers
                 _maxManas = _character.cardsController.maxManaGenSize();
                 foreach (cardBonus bonus in Enum.GetValues(typeof(cardBonus)))
                 {
-                    float bonusValue = _cardsController.generateCardEffect(bonus, 3, 1, 1, false);
+                    float bonusValue = _cardsController.generateCardEffect(bonus, 6, 1, 1, false);
                     _cardValues.Add(bonus, bonusValue);
                 }
             }
@@ -123,9 +123,25 @@ namespace NGUInjector.Managers
                         while (id < _cards.cards.Count)
                         {
                             Card _card = _cards.cards[id];
-                            if (_card.bonusType != cardBonus.adventureStat || _card.bonusType == cardBonus.adventureStat && Main.Settings.TrashAdventureCards)
+
+                            if (_card.bonusType != cardBonus.adventureStat || (_card.bonusType == cardBonus.adventureStat && Main.Settings.TrashAdventureCards))
                             {
-                                if ((int)_cards.cards[id].cardRarity <= Main.Settings.CardsTrashQuality - 1)
+                                if(_card.type == cardType.end)
+                                {
+                                    if (Main.Character.inventory.accessories.Any(c => c.id == 492))
+                                    {
+                                        _cardsController.trashCard(id);
+                                        Main.LogCard($"Trashed Card: Bonus Type: END, due to already having the END piece");
+                                        continue;
+                                    }
+                                    else if (_cards.cards.Count(c => c.type == cardType.end) > 1)
+                                    {
+                                        _cardsController.trashCard(id);
+                                        Main.LogCard($"Trashed Card: Bonus Type: END, due to already having one in the cards list");
+                                        continue;
+                                    }
+                                }
+                                else if ((int)_cards.cards[id].cardRarity <= Main.Settings.CardsTrashQuality - 1)
                                 {
                                     Main.LogCard($"Trashed Card: Cost: {_card.manaCosts.Sum()} Rarity: {_card.cardRarity} Bonus Type: {_card.bonusType}, due to Quality settings");
                                     if (_card.isProtected) _card.isProtected = false;
@@ -270,6 +286,10 @@ namespace NGUInjector.Managers
 
             if (priority.ToUpper() == "NORMALVALUE")
             {
+                if(c1.bonusType == c2.bonusType)
+                {
+                    return getCardValue(c2).CompareTo(getCardValue(c1));
+                }
                 return getCardNormalValue(c2).CompareTo(getCardNormalValue(c1));
             }
 

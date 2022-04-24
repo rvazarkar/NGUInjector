@@ -57,6 +57,7 @@ namespace NGUInjector
         [SerializeField] private int _bloodMacGuffinAThreshold;
         [SerializeField] private int _bloodMacGuffinBThreshold;
         [SerializeField] private bool _autoBuyEm;
+        [SerializeField] private bool _autoBuyAdventure;
         [SerializeField] private double _bloodNumberThreshold;
         [SerializeField] private int[] _quickLoadout;
         [SerializeField] private int[] _quickDiggers;
@@ -114,6 +115,7 @@ namespace NGUInjector
         [SerializeField] private bool _manageConsumables;
         [SerializeField] private bool _autoBuyConsumables;
         [SerializeField] private bool _doMove69;
+        [SerializeField] private int[] _mergeBlacklist;
 
         private readonly string _savePath;
         private bool _disableSave;
@@ -224,6 +226,7 @@ namespace NGUInjector
             _bloodMacGuffinAThreshold = other.BloodMacGuffinAThreshold;
             _bloodMacGuffinBThreshold = other.BloodMacGuffinBThreshold;
             _autoBuyEm = other.AutoBuyEM;
+            _autoBuyAdventure = other.AutoBuyAdventure;
             _bloodNumberThreshold = other.BloodNumberThreshold;
             _quickDiggers = other.QuickDiggers;
             _quickLoadout = other.QuickLoadout;
@@ -296,6 +299,7 @@ namespace NGUInjector
             _manageConsumables = other._manageConsumables;
             _autoBuyConsumables = other._autoBuyConsumables;
             _doMove69 = other._doMove69;
+            _mergeBlacklist = other._mergeBlacklist;
         }
 
         public int SnipeZone
@@ -768,6 +772,17 @@ namespace NGUInjector
             {
                 if (value == _autoBuyEm) return;
                 _autoBuyEm = value;
+                SaveSettings();
+            }
+        }
+
+        public bool AutoBuyAdventure
+        {
+            get => _autoBuyAdventure;
+            set
+            {
+                if (value == _autoBuyAdventure) return;
+                _autoBuyAdventure = value;
                 SaveSettings();
             }
         }
@@ -1381,6 +1396,16 @@ namespace NGUInjector
             {
                 if (value == _doMove69) return;
                 _doMove69 = value;
+                SaveSettings();
+            }
+        }
+
+        public int[] MergeBlacklist
+        {
+            get => _mergeBlacklist;
+            set
+            {
+                _mergeBlacklist = value;
                 SaveSettings();
             }
         }

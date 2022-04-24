@@ -104,7 +104,7 @@ namespace NGUInjector.Managers
         {
             if (Settings.WishSortOrder)
             {
-                return _character.wishesController.wishSpeedDivider(wishId);
+                return _character.wishesController.wishSpeedDivider(wishId) * (1f - _character.wishes.wishes[wishId].progress);
             }
             return _character.wishesController.properties[wishId].wishSpeedDivider;
         }

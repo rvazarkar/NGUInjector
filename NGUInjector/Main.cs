@@ -238,6 +238,7 @@ namespace NGUInjector
                         MinorAbandonThreshold = 30,
                         QuestCombatMode = 0,
                         AutoBuyEM = false,
+                        AutoBuyAdventure = false,
                         AutoSpellSwap = false,
                         CounterfeitThreshold = 400,
                         SpaghettiThreshold = 30,
@@ -293,59 +294,60 @@ namespace NGUInjector
                         TrashCardCost = 0,
                         DontCastCardType = new string[0],
                         TrashChunkers = false,
-                        HackAdvance = false
+                        HackAdvance = false,
+                        MergeBlacklist = new int[] { }
                     };
 
-                    Settings.MassUpdate(temp);
+                Settings.MassUpdate(temp);
 
-                    Log($"Created default settings");
-                }
+                Log($"Created default settings");
+            }
 
                 settingsForm = new SettingsForm();
 
-                if (string.IsNullOrEmpty(Settings.AllocationFile))
-                {
-                    Settings.SetSaveDisabled(true);
-                    Settings.AllocationFile = "default";
-                    Settings.SetSaveDisabled(false);
-                }
+            if (string.IsNullOrEmpty(Settings.AllocationFile))
+            {
+                Settings.SetSaveDisabled(true);
+                Settings.AllocationFile = "default";
+                Settings.SetSaveDisabled(false);
+            }
 
-                if (Settings.TitanGoldTargets == null || Settings.TitanGoldTargets.Length == 0)
-                {
-                    Settings.SetSaveDisabled(true);
-                    Settings.TitanGoldTargets = new bool[ZoneHelpers.TitanZones.Length];
-                    Settings.SetSaveDisabled(false);
-                }
+            if (Settings.TitanGoldTargets == null || Settings.TitanGoldTargets.Length == 0)
+            {
+                Settings.SetSaveDisabled(true);
+                Settings.TitanGoldTargets = new bool[ZoneHelpers.TitanZones.Length];
+                Settings.SetSaveDisabled(false);
+            }
 
-                if (Settings.TitanMoneyDone == null || Settings.TitanMoneyDone.Length == 0)
-                {
-                    Settings.SetSaveDisabled(true);
-                    Settings.TitanMoneyDone = new bool[ZoneHelpers.TitanZones.Length];
-                    Settings.SetSaveDisabled(false);
-                }
+            if (Settings.TitanMoneyDone == null || Settings.TitanMoneyDone.Length == 0)
+            {
+                Settings.SetSaveDisabled(true);
+                Settings.TitanMoneyDone = new bool[ZoneHelpers.TitanZones.Length];
+                Settings.SetSaveDisabled(false);
+            }
 
-                if (Settings.TitanSwapTargets == null || Settings.TitanSwapTargets.Length == 0)
-                {
-                    Settings.SetSaveDisabled(true);
-                    Settings.TitanSwapTargets = new bool[ZoneHelpers.TitanZones.Length];
-                    Settings.SetSaveDisabled(false);
-                }
+            if (Settings.TitanSwapTargets == null || Settings.TitanSwapTargets.Length == 0)
+            {
+                Settings.SetSaveDisabled(true);
+                Settings.TitanSwapTargets = new bool[ZoneHelpers.TitanZones.Length];
+                Settings.SetSaveDisabled(false);
+            }
 
-                if (Settings.SpecialBoostBlacklist == null)
-                {
-                    Settings.SetSaveDisabled(true);
-                    Settings.SpecialBoostBlacklist = new int[0];
-                    Settings.SetSaveDisabled(false);
-                }
+            if (Settings.SpecialBoostBlacklist == null)
+            {
+                Settings.SetSaveDisabled(true);
+                Settings.SpecialBoostBlacklist = new int[0];
+                Settings.SetSaveDisabled(false);
+            }
 
-                if (Settings.BlacklistedBosses == null)
-                {
-                    Settings.SetSaveDisabled(true);
-                    Settings.BlacklistedBosses = new int[0];
-                    Settings.SetSaveDisabled(false);
-                }
+            if (Settings.BlacklistedBosses == null)
+            {
+                Settings.SetSaveDisabled(true);
+                Settings.BlacklistedBosses = new int[0];
+                Settings.SetSaveDisabled(false);
+            }
 
-                WishManager = new WishManager();
+            WishManager = new WishManager();
 
                 LoadAllocation();
                 LoadAllocationProfiles();
@@ -740,56 +742,112 @@ namespace NGUInjector
                     _yggManager.CheckFruits();
                 }
 
-                if (Settings.AutoBuyEM)
+                if (Settings.AutoBuyEM || Settings.AutoBuyAdventure)
                 {
                     //We haven't unlocked custom purchases yet
                     if (Character.highestBoss < 17) return;
+
+
+                    long total = 0;
+
+                    var buyEnergy = false;
+                    var buyR3 = false;
+                    var buyMagic = false;
+
+                    var buyPower = false;
+                    var buyToughness = false;
+                    var buyHP = false;
+                    var buyRegen = false;
+
 
                     var ePurchase = Character.energyPurchases;
                     var mPurchase = Character.magicPurchases;
                     var r3Purchase = Character.res3Purchases;
 
-                    var energy = ePurchase.customAllCost() > 0;
-                    var r3 = Character.res3.res3On && r3Purchase.customAllCost() > 0;
-                    var magic = Character.highestBoss >= 37 && mPurchase.customAllCost() > 0;
-
-                    long total = 0;
-
-                    if (energy)
+                    if (Settings.AutoBuyEM)
                     {
-                        total += ePurchase.customAllCost();
+
+                        var energy = ePurchase.customAllCost() > 0;
+                        var r3 = Character.res3.res3On && r3Purchase.customAllCost() > 0;
+                        var magic = Character.highestBoss >= 37 && mPurchase.customAllCost() > 0;
+
+                        if (energy)
+                        {
+                            total += ePurchase.customAllCost();
+                        }
+
+                        if (magic)
+                        {
+                            total += mPurchase.customAllCost();
+                        }
+
+                        if (r3)
+                        {
+                            total += r3Purchase.customAllCost();
+                        }
+
+                        buyEnergy = energy;
+                        buyR3 = r3;
+                        buyMagic = magic;
                     }
 
-                    if (magic)
-                    {
-                        total += mPurchase.customAllCost();
-                    }
+                    var aPurchase = Character.adventurePurchases;
+                    var power = aPurchase.customPowerCost(Character.settings.customPowerInput);
+                    var toughness = aPurchase.customToughnessCost(Character.settings.customToughnessInput);
+                    var health = aPurchase.customHPCost(Character.settings.customHPInput);
+                    var regen = aPurchase.customRegenCost(Character.settings.customRegenInput);
 
-                    if (r3)
+                    if (Settings.AutoBuyAdventure)
                     {
-                        total += r3Purchase.customAllCost();
+                        total += power + toughness + health + regen;
+
+                        buyPower = power > 0;
+                        buyToughness = toughness > 0;
+                        buyHP = health > 0;
+                        buyRegen = health > 0;
                     }
 
                     if (total > 0)
                     {
                         var numPurchases = Math.Floor((double)(Character.realExp / total));
+                        numPurchases = Math.Min(numPurchases, 10);
 
                         if (numPurchases > 0)
                         {
                             var t = string.Empty;
-                            if (energy)
+                            if (buyEnergy)
                             {
                                 t += "/exp";
                             }
 
-                            if (magic)
+                            if (buyMagic)
                             {
                                 t += "/magic";
                             }
 
-                            if (r3)
+                            if (buyR3)
                             {
                                 t += "/res3";
+                            }
+
+                            if (buyPower)
+                            {
+                                t += "/power";
+                            }
+
+                            if (buyToughness)
+                            {
+                                t += "/tougness";
+                            }
+
+                            if (buyHP)
+                            {
+                                t += "/hp";
+                            }
+
+                            if (buyHP)
+                            {
+                                t += "/regen";
                             }
 
                             t = t.Substring(1);
@@ -797,25 +855,53 @@ namespace NGUInjector
                             Log($"Buying {numPurchases} {t} purchases");
                             for (var i = 0; i < numPurchases; i++)
                             {
-                                if (energy)
+                                if (buyEnergy)
                                 {
                                     var ePurchaseMethod = ePurchase.GetType().GetMethod("buyCustomAll",
                                         BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                                     ePurchaseMethod?.Invoke(ePurchase, null);
                                 }
 
-                                if (magic)
+                                if (buyMagic)
                                 {
                                     var mPurchaseMethod = mPurchase.GetType().GetMethod("buyCustomAll",
                                         BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                                     mPurchaseMethod?.Invoke(mPurchase, null);
                                 }
 
-                                if (r3)
+                                if (buyR3)
                                 {
                                     var r3PurchaseMethod = r3Purchase.GetType().GetMethod("buyCustomAll",
                                         BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                                     r3PurchaseMethod?.Invoke(r3Purchase, null);
+                                }
+
+                                if (buyPower)
+                                {
+                                    var pPurchaseMethod = aPurchase.GetType().GetMethod("buyCustomPower",
+                                        BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                    pPurchaseMethod?.Invoke(aPurchase, null);
+                                }
+
+                                if (buyToughness)
+                                {
+                                    var tPurchaseMethod = aPurchase.GetType().GetMethod("buyCustomToughness",
+                                        BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                    tPurchaseMethod?.Invoke(aPurchase, null);
+                                }
+
+                                if (buyHP)
+                                {
+                                    var hpPurchaseMethod = aPurchase.GetType().GetMethod("buyCustomHP",
+                                        BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                    hpPurchaseMethod?.Invoke(aPurchase, null);
+                                }
+
+                                if (buyRegen)
+                                {
+                                    var rPurchaseMethod = aPurchase.GetType().GetMethod("buyCustomregen",
+                                        BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                    rPurchaseMethod?.Invoke(aPurchase, null);
                                 }
                             }
                         }
